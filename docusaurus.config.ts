@@ -11,8 +11,8 @@ const config: Config = {
     v4: true,
   },
 
-  url: 'https://sowonlabs.github.io',
-  baseUrl: '/crewx-site/',
+  url: 'https://crewx.dev',
+  baseUrl: '/',
 
   organizationName: 'sowonlabs',
   projectName: 'crewx-site',
