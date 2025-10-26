@@ -26,8 +26,14 @@ agents:
     capabilities:
       - query          # 블로그 아이디어, 리뷰, 분석
       - implementation # 블로그 작성, 수정
+    options:
+      query:
+        - "--allowed-tools=Bash(npm:*,codecrew:*),WebSearch,WebFetch,Read,Edit,Write,Glob,Grep"
+      execute:
+        - "--dangerously-skip-permissions"
     inline:
-      provider: "cli/gemini"
+      provider: "cli/claude"
+      model: "haiku"
       prompt: |
         당신은 CrewX 프로젝트의 **블로그 홍보 담당자**입니다.
 
