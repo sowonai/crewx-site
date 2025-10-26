@@ -63,7 +63,7 @@ Each AI handles its strengths. No additional costs—just your existing subscrip
 Create a Work Breakdown Structure once, then automate the entire workflow:
 
 ```bash
-crewx x "@crew prepare release tests for v2.0"
+crewx execute "@crew prepare release tests for v2.0"
 ```
 
 In response:
@@ -105,10 +105,19 @@ One simple configuration, infinite analytical power running 24/7.
 Extend agents beyond your local machine:
 
 ```yaml
+providers:
+  - id: remote_research_server
+    type: remote
+    location: "https://research-server.example.com"
+    external_agent_id: "research_team"
+    auth:
+      type: bearer
+      token: "${REMOTE_TOKEN}"
+
 agents:
   - id: "remote-researcher"
-    endpoint: "https://research-server.example.com"
-    provider: "cli/claude"
+    provider: "remote/remote_research_server"
+    description: "Research team on dedicated server"
 ```
 
 Access AI tools running on remote servers, cloud instances, or specialized hardware—seamlessly integrated into your local workflow.
@@ -146,24 +155,43 @@ Use CrewX however suits your workflow:
 
 ## Getting Started
 
-### 1. Install CrewX
+### 🚀 Quick Start (30 Seconds)
+
+The fastest way to get started:
 
 ```bash
+# One command to scaffold everything
+npx crewx-quickstart
+
+# Talk to your AI team immediately
+crewx query "@quickstart hi"
+```
+
+This creates:
+- ✅ `crewx.yaml` with a ready-to-use `@quickstart` agent
+- ✅ `.env.slack` template for Slack integration
+- ✅ `start-slack.sh` script to launch your bot
+- ✅ Helpful documentation and examples
+
+### 📦 Manual Setup (Full Control)
+
+Prefer to configure everything yourself?
+
+```bash
+# 1. Install CrewX globally
 npm install -g crewx
-```
 
-### 2. Initialize Your Project
-
-```bash
+# 2. Initialize in your project
 crewx init
+
+# 3. Check your setup
+crewx doctor
 ```
 
-This creates an `agents.yaml` file where you define your team.
-
-### 3. Create Your First Agent Pair
+This creates a `crewx.yaml` file where you define your team:
 
 ```yaml
-# agents.yaml
+# crewx.yaml
 agents:
   - id: "analyst"
     name: "Data Analyst"
@@ -183,7 +211,11 @@ agents:
 ### 4. Run Your First Multi-Agent Workflow
 
 ```bash
-crewx x "@analyst @reporter analyze our Q3 metrics and draft a report"
+# Read-only analysis
+crewx query "@analyst @reporter analyze our Q3 metrics"
+
+# File creation/modification
+crewx execute "@analyst @reporter analyze Q3 and draft a report"
 ```
 
 ## What Makes CrewX Different
@@ -216,7 +248,11 @@ Whether you're:
 ## Ready to Build Your AI Team?
 
 ```bash
-# Get started now
+# Get started in 30 seconds
+npx crewx-quickstart
+crewx query "@quickstart hi"
+
+# Or install globally for more control
 npm install -g crewx
 crewx init
 
@@ -224,7 +260,7 @@ crewx init
 crewx query "@claude what can I do with CrewX?"
 
 # Build something amazing
-crewx x "@your-team solve this problem"
+crewx execute "@your-team solve this problem"
 ```
 
 **Join the CrewX community:**
