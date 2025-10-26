@@ -9,6 +9,7 @@ package-lock.json
 .docusaurus
 .cache-loader
 .obsidian
+.crewx
 
 # Misc
 .DS_Store
@@ -16,6 +17,7 @@ package-lock.json
 .env.development.local
 .env.test.local
 .env.production.local
+.env.slack
 
 npm-debug.log*
 yarn-debug.log*
