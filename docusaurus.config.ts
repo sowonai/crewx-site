@@ -11,7 +11,7 @@ const config: Config = {
     v4: true,
   },
 
-  url: 'https://crewx.dev',
+  url: 'https://www.crewx.dev',
   baseUrl: '/',
 
   organizationName: 'sowonlabs',
