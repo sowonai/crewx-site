@@ -1,0 +1,16 @@
+.features {
+  display: flex;
+  align-items: center;
+  padding: 2rem 0;
+  width: 100%;
+}
+
+.featureEmoji {
+  font-size: 6rem;
+  margin: 2rem 0;
+}
+
+.featureSvg {
+  height: 200px;
+  width: 200px;
+}

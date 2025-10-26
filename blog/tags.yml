@@ -1,0 +1,24 @@
+crewx:
+  label: CrewX
+  permalink: /crewx
+  description: CrewX product updates and announcements
+
+ai:
+  label: AI
+  permalink: /ai
+  description: AI and machine learning topics
+
+slack:
+  label: Slack
+  permalink: /slack
+  description: Slack integration and collaboration
+
+tutorial:
+  label: Tutorial
+  permalink: /tutorial
+  description: How-to guides and tutorials
+
+release:
+  label: Release
+  permalink: /release
+  description: Product releases and updates
