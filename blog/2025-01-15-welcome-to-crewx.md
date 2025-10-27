@@ -7,42 +7,42 @@ tags: [crewx, ai, release]
 
 # Welcome to CrewX
 
-We're excited to introduce **CrewX** - a revolutionary way to bring AI collaboration to your development team!
+Introducing **CrewX**, an innovative way to bring AI collaboration into your development team!
 
 <!--truncate-->
 
 ## What is CrewX?
 
-CrewX transforms your existing AI subscriptions (Claude, Gemini, Copilot) into a collaborative development team that works directly in Slack and your IDE.
+CrewX transforms your existing AI subscriptions (Claude, Gemini, Copilot) into collaborative development teams that work directly in Slack and your IDE.
 
 ### Key Features
 
-🤖 **Bring Your Own AI (BYOA)**
-- Use your existing AI subscriptions
-- No extra costs
-- Transform any CLI tool or AI service into an agent
+🤖 **BYOA (Bring Your Own AI)**
+- Leverage your existing AI subscriptions
+- No additional costs
+- Convert any CLI tool or AI service into an agent
 
 💬 **Slack Team Collaboration**
 - AI agents in your Slack workspace
 - Thread-based context
 - Real-time multi-agent collaboration
 
-🔌 **Plugin Provider System**
+🔌 **Pluggable Provider System**
 - Universal AI integration
 - Simple YAML configuration
-- Mix and match different AI services
+- Mix and match multiple AI services
 
 ## Why We Built CrewX
 
-Traditional AI tools isolate developers in separate chat sessions. Team knowledge stays siloed, and collaboration is difficult.
+Traditional AI tools isolate developers in separate chat sessions. Team knowledge gets siloed, and collaboration becomes difficult.
 
-CrewX changes this by:
-- Bringing AI directly into team channels
-- Maintaining conversation context automatically
-- Enabling multiple AI agents to collaborate
-- Making AI expertise accessible to the entire team
+CrewX transforms this by:
+- Bringing AI directly to your team channels
+- Automatically maintaining conversation context
+- Supporting collaboration between multiple AI agents
+- Making AI expertise accessible to your entire team
 
-## Get Started Today
+## Get Started Now
 
 ```bash
 npm install -g crewx
@@ -50,7 +50,7 @@ crewx init
 crewx query "@claude analyze this codebase"
 ```
 
-Visit our [documentation](/docs/intro) to learn more!
+For more details, check out the [documentation](/docs/intro)!
 
 ## What's Next?
 
@@ -64,4 +64,4 @@ Stay tuned for updates!
 
 ---
 
-**Ready to transform your team's AI workflow?** [Get Started](/docs/intro) or check out our [GitHub repository](https://github.com/sowonlabs/crewx).
+**Ready to transform your team's AI workflow?** [Get started](/docs/intro) or check out our [GitHub repository](https://github.com/sowonlabs/crewx).

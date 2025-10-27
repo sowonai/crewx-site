@@ -3,6 +3,7 @@ import Layout from '@theme/Layout';
 import {translate} from '@docusaurus/Translate';
 import HomepageHeader from '@site/src/components/HomepageHeader';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
+import HomepageQuickStart from '@site/src/components/HomepageQuickStart';
 
 export default function Home(): ReactNode {
   return (
@@ -20,6 +21,7 @@ export default function Home(): ReactNode {
       <HomepageHeader />
       <main>
         <HomepageFeatures />
+        <HomepageQuickStart />
       </main>
     </Layout>
   );

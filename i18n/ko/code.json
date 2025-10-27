@@ -369,5 +369,37 @@
   "homepage.title": {
     "message": "CrewX에 오신 것을 환영합니다",
     "description": "The homepage meta title"
+  },
+  "homepage.quickstart.title": {
+    "message": "빠른 시작",
+    "description": "Quick Start section title"
+  },
+  "homepage.quickstart.install.title": {
+    "message": "CrewX 설치",
+    "description": "Install step title"
+  },
+  "homepage.quickstart.install.description": {
+    "message": "30초 만에 바로 사용 가능한 CrewX 워크스페이스 생성",
+    "description": "Install step description"
+  },
+  "homepage.quickstart.verify.title": {
+    "message": "설정 확인",
+    "description": "Verify step title"
+  },
+  "homepage.quickstart.verify.description": {
+    "message": "AI 프로바이더(Claude, Gemini, Copilot)가 설치되어 있는지 확인",
+    "description": "Verify step description"
+  },
+  "homepage.quickstart.start.title": {
+    "message": "사용 시작",
+    "description": "Start step title"
+  },
+  "homepage.quickstart.start.description": {
+    "message": "CLI에서 에이전트에게 질문하거나, Slack 봇 또는 MCP 서버로 배포",
+    "description": "Start step description"
+  },
+  "homepage.quickstart.modes.title": {
+    "message": "세 가지 배포 모드",
+    "description": "Deployment modes title"
   }
 }

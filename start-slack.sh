@@ -20,7 +20,7 @@ if [[ -z "${SLACK_BOT_TOKEN:-}" || -z "${SLACK_SIGNING_SECRET:-}" || -z "${SLACK
   exit 1
 fi
 
-DEFAULT_AGENT="${CREWX_DEFAULT_AGENT:-blog-manager}"
+DEFAULT_AGENT="${CREWX_DEFAULT_AGENT:-blog_manager}"
 
 echo "🚀 Starting CrewX Slack bot (agent: ${DEFAULT_AGENT})"
 echo "   Press Ctrl+C to stop."

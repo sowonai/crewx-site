@@ -13,7 +13,9 @@
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "translate:check": "node scripts/translate-blog.mjs check",
+    "translate:ko-to-en": "node scripts/translate-blog.mjs translate"
   },
   "keywords": [
     "crewx",
