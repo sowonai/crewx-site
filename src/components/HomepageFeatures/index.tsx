@@ -1,6 +1,7 @@
 import type {ReactNode} from 'react';
 import clsx from 'clsx';
 import Heading from '@theme/Heading';
+import Translate, {translate} from '@docusaurus/Translate';
 import styles from './styles.module.css';
 
 type FeatureItem = {
@@ -11,34 +12,51 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Slack Team Collaboration',
+    title: translate({
+      id: 'homepage.features.slackCollaboration.title',
+      message: 'Slack Team Collaboration',
+      description: 'Title for Slack Team Collaboration feature',
+    }),
     emoji: '💬',
     description: (
-      <>
-        Bring AI agents directly into your team's Slack workspace. 
-        <code>@claude</code>, <code>@gemini</code>, and <code>@copilot</code> work 
-        together in real-time with thread-based context.
-      </>
+      <Translate
+        id="homepage.features.slackCollaboration.description"
+        description="Description for Slack Team Collaboration feature">
+        Bring AI agents directly into your team's Slack workspace.
+        @claude, @gemini, and @copilot work together in real-time with thread-based context.
+      </Translate>
     ),
   },
   {
-    title: 'Bring Your Own AI',
+    title: translate({
+      id: 'homepage.features.byoa.title',
+      message: 'Bring Your Own AI',
+      description: 'Title for BYOA feature',
+    }),
     emoji: '🤖',
     description: (
-      <>
-        Use your existing AI subscriptions. Transform any CLI tool or AI service 
+      <Translate
+        id="homepage.features.byoa.description"
+        description="Description for BYOA feature">
+        Use your existing AI subscriptions. Transform any CLI tool or AI service
         into an agent with simple YAML configuration. No coding required.
-      </>
+      </Translate>
     ),
   },
   {
-    title: 'Plugin Provider System',
+    title: translate({
+      id: 'homepage.features.pluginSystem.title',
+      message: 'Plugin Provider System',
+      description: 'Title for Plugin Provider System feature',
+    }),
     emoji: '🔌',
     description: (
-      <>
-        Universal AI integration. Connect OpenAI, Anthropic, Ollama, LiteLLM, or 
+      <Translate
+        id="homepage.features.pluginSystem.description"
+        description="Description for Plugin Provider System feature">
+        Universal AI integration. Connect OpenAI, Anthropic, Ollama, LiteLLM, or
         integrate frameworks like LangChain, CrewAI, and AutoGPT seamlessly.
-      </>
+      </Translate>
     ),
   },
 ];
