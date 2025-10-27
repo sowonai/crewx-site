@@ -14,66 +14,66 @@ export default function HomepageQuickStart() {
           })}
         </h2>
 
-        <div className={styles.steps}>
-          <div className={styles.step}>
-            <div className={styles.stepNumber}>1</div>
-            <h3>
+        <div className={styles.methods}>
+          {/* Method 1: Quickstart - Full Setup with Slack */}
+          <div className={styles.method}>
+            <div className={styles.methodBadge}>
               {translate({
-                id: 'homepage.quickstart.install.title',
-                message: 'Install CrewX',
-                description: 'Install step title',
+                id: 'homepage.quickstart.method1.badge',
+                message: 'Recommended',
+                description: 'Recommended badge',
+              })}
+            </div>
+            <h3 className={styles.methodTitle}>
+              {translate({
+                id: 'homepage.quickstart.method1.title',
+                message: '🚀 Full Setup with Slack (5 min)',
+                description: 'Method 1 title',
               })}
             </h3>
+            <p className={styles.methodDescription}>
+              {translate({
+                id: 'homepage.quickstart.method1.description',
+                message: 'Complete workspace setup including Slack bot configuration',
+                description: 'Method 1 description',
+              })}
+            </p>
             <pre className={styles.code}>
               <code>npx crewx-quickstart</code>
             </pre>
-            <p className={styles.description}>
+            <p className={styles.methodNote}>
               {translate({
-                id: 'homepage.quickstart.install.description',
-                message: 'Scaffold a ready-to-run CrewX workspace in 30 seconds',
-                description: 'Install step description',
+                id: 'homepage.quickstart.method1.note',
+                message: 'Creates crewx.yaml, Slack manifest, and setup scripts',
+                description: 'Method 1 note',
               })}
             </p>
           </div>
 
-          <div className={styles.step}>
-            <div className={styles.stepNumber}>2</div>
-            <h3>
+          {/* Method 2: Global Install - For Quick CLI Usage */}
+          <div className={styles.method}>
+            <h3 className={styles.methodTitle}>
               {translate({
-                id: 'homepage.quickstart.verify.title',
-                message: 'Verify Setup',
-                description: 'Verify step title',
+                id: 'homepage.quickstart.method2.title',
+                message: '⚡ Global Install (CLI Only)',
+                description: 'Method 2 title',
               })}
             </h3>
-            <pre className={styles.code}>
-              <code>crewx doctor</code>
-            </pre>
-            <p className={styles.description}>
+            <p className={styles.methodDescription}>
               {translate({
-                id: 'homepage.quickstart.verify.description',
-                message: 'Check that your AI providers (Claude, Gemini, Copilot) are installed',
-                description: 'Verify step description',
+                id: 'homepage.quickstart.method2.description',
+                message: 'For users who just need the CLI tool',
+                description: 'Method 2 description',
               })}
             </p>
-          </div>
-
-          <div className={styles.step}>
-            <div className={styles.stepNumber}>3</div>
-            <h3>
-              {translate({
-                id: 'homepage.quickstart.start.title',
-                message: 'Start Using',
-                description: 'Start step title',
-              })}
-            </h3>
             <pre className={styles.code}>
-              <code>crewx q "@claude analyze this code"</code>
+              <code>npm install -g crewx</code>
             </pre>
-            <p className={styles.description}>
+            <p className={styles.methodNote}>
               {translate({
-                id: 'homepage.quickstart.start.description',
-                message: 'Query agents from CLI, or deploy as Slack bot or MCP server',
-                description: 'Start step description',
+                id: 'homepage.quickstart.method2.note',
+                message: 'Then run: crewx init && crewx doctor',
+                description: 'Method 2 note',
               })}
             </p>
           </div>

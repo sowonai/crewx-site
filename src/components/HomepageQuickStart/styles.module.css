@@ -9,43 +9,58 @@
   margin-bottom: 3rem;
 }
 
-.steps {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+.methods {
+  display: flex;
+  flex-direction: column;
   gap: 2rem;
-  margin-bottom: 3rem;
+  max-width: 800px;
+  margin: 0 auto 3rem;
 }
 
-.step {
+.method {
+  position: relative;
   padding: 2rem;
   background: var(--ifm-card-background-color);
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
+  border: 2px solid var(--ifm-color-emphasis-200);
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.step:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+.method:hover {
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
-.stepNumber {
-  display: inline-block;
-  width: 40px;
-  height: 40px;
-  line-height: 40px;
-  text-align: center;
+.methodBadge {
+  position: absolute;
+  top: -12px;
+  right: 20px;
   background: var(--ifm-color-primary);
   color: white;
-  border-radius: 50%;
-  font-size: 1.5rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
   font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.methodTitle {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--ifm-heading-color);
+}
+
+.methodDescription {
+  color: var(--ifm-color-secondary-darker);
   margin-bottom: 1rem;
 }
 
-.step h3 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+.methodNote {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  color: var(--ifm-color-secondary-dark);
+  font-style: italic;
 }
 
 .code {
@@ -118,15 +133,21 @@
 }
 
 @media screen and (max-width: 768px) {
-  .steps {
-    grid-template-columns: 1fr;
-  }
-
   .modeCards {
     grid-template-columns: 1fr;
   }
 
   .title {
     font-size: 2rem;
+  }
+
+  .method {
+    padding: 1.5rem;
+  }
+
+  .methodBadge {
+    top: -10px;
+    right: 10px;
+    font-size: 0.7rem;
   }
 }

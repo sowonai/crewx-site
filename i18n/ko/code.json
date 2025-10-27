@@ -374,29 +374,33 @@
     "message": "빠른 시작",
     "description": "Quick Start section title"
   },
-  "homepage.quickstart.install.title": {
-    "message": "CrewX 설치",
-    "description": "Install step title"
+  "homepage.quickstart.method1.badge": {
+    "message": "추천",
+    "description": "Recommended badge"
   },
-  "homepage.quickstart.install.description": {
-    "message": "30초 만에 바로 사용 가능한 CrewX 워크스페이스 생성",
-    "description": "Install step description"
+  "homepage.quickstart.method1.title": {
+    "message": "🚀 Slack까지 완전 세팅 (5분)",
+    "description": "Method 1 title"
   },
-  "homepage.quickstart.verify.title": {
-    "message": "설정 확인",
-    "description": "Verify step title"
+  "homepage.quickstart.method1.description": {
+    "message": "Slack 봇 설정을 포함한 완전한 워크스페이스 구성",
+    "description": "Method 1 description"
   },
-  "homepage.quickstart.verify.description": {
-    "message": "AI 프로바이더(Claude, Gemini, Copilot)가 설치되어 있는지 확인",
-    "description": "Verify step description"
+  "homepage.quickstart.method1.note": {
+    "message": "crewx.yaml, Slack manifest, 설정 스크립트 자동 생성",
+    "description": "Method 1 note"
   },
-  "homepage.quickstart.start.title": {
-    "message": "사용 시작",
-    "description": "Start step title"
+  "homepage.quickstart.method2.title": {
+    "message": "⚡ 전역 설치 (CLI만)",
+    "description": "Method 2 title"
   },
-  "homepage.quickstart.start.description": {
-    "message": "CLI에서 에이전트에게 질문하거나, Slack 봇 또는 MCP 서버로 배포",
-    "description": "Start step description"
+  "homepage.quickstart.method2.description": {
+    "message": "CLI 도구만 필요한 사용자 또는 다른 사람에게 설치해줄 때",
+    "description": "Method 2 description"
+  },
+  "homepage.quickstart.method2.note": {
+    "message": "설치 후 실행: crewx init && crewx doctor",
+    "description": "Method 2 note"
   },
   "homepage.quickstart.modes.title": {
     "message": "세 가지 배포 모드",
