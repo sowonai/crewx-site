@@ -3,7 +3,7 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'CrewX',
+  title: 'SowonAI CrewX',
   tagline: 'Bring Your Own AI(BYOA) team in Slack/IDE with your existing subscriptions',
   favicon: 'img/favicon.ico',
 
@@ -116,6 +116,14 @@ const config: Config = {
               label: 'GitHub',
               href: 'https://github.com/sowonlabs/crewx',
             },
+            {
+              label: 'Twitter',
+              href: 'https://x.com/dohapark81',
+            },
+            {
+              label: 'Threads',
+              href: 'https://www.threads.com/@sowonlabs',
+            },
           ],
         },
         {
@@ -124,10 +132,6 @@ const config: Config = {
             {
               label: 'Blog',
               to: '/blog',
-            },
-            {
-              label: 'SowonLabs',
-              href: 'https://sowonlabs.com',
             },
           ],
         },

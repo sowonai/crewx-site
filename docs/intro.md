@@ -2,63 +2,281 @@
 sidebar_position: 1
 ---
 
-# Welcome to CrewX
+# Introduction
 
-**Bring Your Own AI (BYOA) team in Slack/IDE with your existing subscriptions**
+> Bring Your Own AI(BYOA) team in Slack/IDE(MCP) with your existing subscriptions
 
 Transform Claude, Gemini, Codex and Copilot into a collaborative development team. No extra costs—just your existing AI subscriptions working together.
 
 ## Why CrewX?
 
-### Slack Team Collaboration - Your AI Team in Slack
-
+### **Slack Team Collaboration** - Your AI Team in Slack
 Bring AI agents directly into your team's workspace:
-
 - **Team-wide AI access** - Everyone benefits from AI expertise in Slack channels
 - **Thread-based context** - Maintains conversation history automatically
 - **Multi-agent collaboration** - `@claude`, `@gemini`, `@copilot` work together in real-time
 - **Natural integration** - Works like chatting with team members
 - **Shared knowledge** - Team learns from AI interactions, not isolated sessions
 
-### Plugin Provider System - Universal AI Integration
+### **Remote Agents** - Distributed AI Teams (Experimental)
+Connect and orchestrate CrewX instances across projects and servers:
+- **Cross-project experts** - Frontend dev asks backend team's API specialist agent
+- **Team collaboration** - Each team builds their own agents, entire org can use them
+- **Expert knowledge sharing** - Ask senior's code review agent, security team's audit agent anytime
+- **Separate but connected** - Each project keeps its own context, collaborate when needed
 
+```yaml
+# Access another project's specialized agents
+providers:
+  - id: backend_project
+    type: remote
+    location: "file:///workspace/backend-api/crewx.yaml"
+    external_agent_id: "api_expert"
+
+# Use their expertise in your project
+crewx query "@api_expert design user authentication API"
+crewx execute "@api_expert implement OAuth flow"
+```
+
+### **Plugin Provider System** - Universal AI Integration
 Transform any CLI tool or AI service into an agent:
-
 - **Bring Your Own AI** - OpenAI, Anthropic, Ollama, LiteLLM, or any AI service
 - **Bring Your Own Tools** - jq, curl, ffmpeg, or any CLI tool becomes an agent
 - **Bring Your Own Framework** - Integrate LangChain, CrewAI, AutoGPT seamlessly
 - **No coding required** - Simple YAML configuration
 - **Mix and match** - Combine different AI services in one workflow
 
+```yaml
+# Example: Add any AI service as a plugin
+providers:
+  - id: ollama
+    type: plugin
+    cli_command: ollama
+    default_model: "llama3"
+    query_args: ["run", "{model}"]
+    prompt_in_args: false
+
+agents:
+  - id: "local_llama"
+    provider: "plugin/ollama"
+```
+
+### Other Benefits
+- **No additional costs** - Use existing Claude Pro, Gemini, Codex or GitHub Copilot subscriptions
+- **Multi-agent collaboration** - Different AI models working on specialized tasks
+- **Parallel execution** - Multiple agents working simultaneously
+- **Flexible integration** - CLI, MCP server, or Slack bot
+
 ## Quick Start
 
-### Installation
-
+### 🚀 One-Command Setup (Recommended)
 ```bash
-npm install -g crewx
+# Interactive setup - creates crewx.yaml and helps with Slack setup
+npx crewx-quickstart
 ```
 
-### Basic Usage
-
+### 📦 Manual Installation
 ```bash
-# Initialize a new CrewX project
+# Install
+npm install -g crewx
+
+# Initialize
 crewx init
 
-# Query an AI agent
-crewx query "@claude analyze this codebase"
+# Check system
+crewx doctor
 
-# Execute a task
-crewx execute "@gemini implement user authentication"
+# Try it out
+crewx query "@claude analyze my code"
+crewx execute "@claude create a login component"
 ```
 
-## What's Next?
+## Three Ways to Use
 
-- Learn about [Core Concepts](./tutorial-basics/create-a-document.md)
-- Explore [Advanced Features](./tutorial-extras/manage-docs-versions.md)
-- Check out [Examples](./tutorial-basics/congratulations.md)
+### Slack Mode - Team Collaboration (Recommended)
+```bash
+# Start CrewX in your Slack workspace (read-only query mode)
+crewx slack
 
-## Get Involved
+# Allow agents to run execute tasks (file changes, migrations, etc.)
+crewx slack --mode execute
 
-- [GitHub Repository](https://github.com/sowonlabs/crewx)
-- [Report Issues](https://github.com/sowonlabs/crewx/issues)
-- [Join Discussions](https://github.com/sowonlabs/crewx/discussions)
+# Your team can now:
+# - @mention AI agents in channels
+# - Maintain context in threads
+# - Share AI insights with the whole team
+```
+👉 **[Complete Slack Setup Guide →](./getting-started/slack-setup.md)**
+
+### CLI Mode - Direct terminal usage
+```bash
+crewx query "@claude review this code"
+crewx execute "@gemini optimize performance"
+crewx query "@claude @gemini @copilot compare approaches"
+```
+
+### MCP Server Mode - IDE integration
+```bash
+crewx mcp  # VS Code, Claude Desktop, Cursor
+```
+
+## Supported AI Tools
+
+- **Claude Code** - Advanced reasoning and analysis
+- **Gemini CLI** - Real-time web access
+- **GitHub Copilot CLI** - Specialized coding assistant
+- **Codex CLI** - Open inference with workspace-aware execution
+
+## Basic Usage
+
+```bash
+# Read-only analysis
+crewx query "@claude explain this function"
+
+# File creation/modification
+crewx execute "@claude implement user authentication"
+
+# Parallel tasks
+crewx execute "@claude create tests" "@gemini write docs"
+
+# Pipeline workflows
+crewx query "@architect design API" | \
+crewx execute "@backend implement it"
+
+# Thread-based conversations
+crewx query "@claude design login" --thread "auth-feature"
+crewx execute "@gemini implement it" --thread "auth-feature"
+
+# Codex CLI agent
+crewx query "@codex draft a release checklist"
+```
+
+Built-in CLI providers:
+
+- `cli/claude`
+- `cli/gemini`
+- `cli/copilot`
+- `cli/codex`
+
+## Create Custom Agents
+
+```bash
+# Let SowonAI CrewX create agents for you
+crewx execute "@crewx Create a Python expert agent"
+crewx execute "@crewx Create a React specialist with TypeScript"
+crewx execute "@crewx Create a DevOps agent for Docker"
+
+# Test your new agent
+crewx query "@python_expert Review my code"
+```
+
+## Agent Configuration
+
+Create `crewx.yaml` (or `agents.yaml` for backward compatibility):
+
+```yaml
+agents:
+  - id: "frontend_dev"
+    name: "React Expert"
+    working_directory: "./src"
+    inline:
+      type: "agent"
+      provider: "cli/claude"  # Built-in CLI provider
+      prompt: |
+        You are a senior React developer.
+        Provide detailed examples and best practices.
+```
+
+> **Note:** `crewx.yaml` is the preferred configuration file name. The legacy `agents.yaml` is still supported for backward compatibility. If both files exist, `crewx.yaml` takes priority.
+
+## Layout System
+
+CrewX layouts provide reusable prompt templates that separate structure from content.
+
+### Quick Example
+
+```yaml
+# crewx.yaml
+agents:
+  - id: full_agent
+    inline:
+      layout: "crewx/default"  # Full agent profile
+      prompt: |
+        You are a comprehensive assistant.
+
+  - id: simple_agent
+    inline:
+      layout: "crewx/minimal"  # Lightweight wrapper
+      prompt: |
+        You are a simple assistant.
+```
+
+**Features:**
+- 🎨 **Reusable Templates** - Share layouts across agents
+- ⚛️ **Props Schema** - React PropTypes-style validation for custom layouts
+- 🔧 **Built-in Layouts** - `crewx/default`, `crewx/minimal`
+- 🛡️ **Security Containers** - Automatic prompt wrapping
+
+👉 **[Layout System Guide →](./advanced/layouts.md)** for detailed usage
+
+## Remote Agents (Experimental)
+
+Connect to other CrewX instances and delegate tasks across projects or servers.
+
+**Quick Example:**
+```bash
+# Add a remote CrewX instance
+providers:
+  - id: backend_server
+    type: remote
+    location: "http://api.example.com:3000"
+    external_agent_id: "backend_team"
+
+agents:
+  - id: "remote_backend"
+    provider: "remote/backend_server"
+
+# Use it like any other agent
+crewx query "@remote_backend check API status"
+```
+
+**Use Cases:**
+- **Project isolation** - Separate configurations for different codebases
+- **Distributed teams** - Each team runs their own CrewX with specialized agents
+- **Resource sharing** - Access powerful compute resources remotely
+- **Multi-project coordination** - Orchestrate work across multiple projects
+
+👉 **[Remote Agents Guide →](./advanced/remote-agents.md)** for detailed setup and configuration
+
+## Documentation
+
+### User Guides
+- [📖 CLI Guide](./cli/commands.md) - Complete CLI reference
+- [🔌 MCP Integration](./integration/mcp.md) - IDE setup and MCP servers
+- [⚙️ Agent Configuration](./configuration/agents.md) - Custom agents and advanced config
+- [🌐 Remote Agents](./advanced/remote-agents.md) - Connect to remote CrewX instances
+- [📚 Template System](./advanced/templates.md) - Knowledge management and dynamic prompts for agents
+- [📝 Template Variables](./advanced/template-variables.md) - Dynamic variables in agent configurations and TemplateContext usage
+- [🎨 Layout System](./advanced/layouts.md) - Reusable prompt templates with React PropTypes-style props
+- [🔧 Troubleshooting](./troubleshooting/common-issues.md) - Common issues and solutions
+- [💬 Slack Integration](./getting-started/slack-setup.md) - Slack bot setup
+
+### Developer Guides
+- [🔧 Development Workflow](./contributing/development.md) - Contributing guidelines
+- [🏗️ SDK API Reference](https://github.com/sowonlabs/crewx/tree/main/packages/sdk) - Build custom integrations
+- [⚙️ CLI Development](https://github.com/sowonlabs/crewx/tree/main/packages/cli) - CLI architecture and development
+
+## License
+
+- **SDK** (`@sowonai/crewx-sdk`): Apache-2.0 License
+- **CLI** (`crewx`): MIT License
+
+Copyright (c) 2025 SowonLabs
+
+## Contributing
+
+We welcome contributions! Please read our [Contributing Guide](./contributing/guide.md) before submitting pull requests.
+
+---
+
+Built by [SowonLabs](https://github.com/sowonlabs)
