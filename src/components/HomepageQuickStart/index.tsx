@@ -83,7 +83,7 @@ export default function HomepageQuickStart() {
           <h3 className={styles.modesTitle}>
             {translate({
               id: 'homepage.quickstart.modes.title',
-              message: 'Three Deployment Modes',
+              message: '3 Ways to Use CrewX',
               description: 'Deployment modes title',
             })}
           </h3>

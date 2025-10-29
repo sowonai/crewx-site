@@ -34,8 +34,7 @@ export default function HomepageHeader(): ReactNode {
           </Link>
           <Link
             className="button button--secondary button--lg"
-            to="https://github.com/sowonlabs/crewx"
-            style={{marginLeft: '1rem'}}>
+            to="https://github.com/sowonlabs/crewx">
             <Translate
               id="homepage.viewOnGitHub"
               description="View on GitHub button text">
