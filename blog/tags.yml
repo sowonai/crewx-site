@@ -22,3 +22,8 @@ release:
   label: Release
   permalink: /release
   description: Product releases and updates
+
+skills:
+  label: Skills
+  permalink: /skills
+  description: CrewX Skills system and Claude Code integration
