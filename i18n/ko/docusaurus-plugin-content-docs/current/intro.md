@@ -61,6 +61,38 @@ agents:
     provider: "plugin/ollama"
 ```
 
+### **Claude Skills 호환** - 재사용 가능한 AI 전문성
+Claude Code 스킬 형식을 사용하여 전문화된 AI 능력을 공유하고 재사용하세요:
+- **100% Claude Code 호환** - 기존 Claude 스킬을 수정 없이 사용
+- **에이전트 강화** - 모든 에이전트에 전문 능력 추가
+- **점진적 공개** - 스킬은 메타데이터를 먼저 로드하고 필요 시 콘텐츠 로드
+- **에이전트 간 공유** - 하나의 스킬, 여러 에이전트
+- **간단한 YAML + Markdown** - 생성 및 유지관리가 쉬움
+
+```yaml
+# 에이전트에 스킬 활성화
+skills:
+  paths:
+    - ./skills                    # 사용자 정의 스킬 디렉토리
+  include:
+    - hello                       # 로드할 특정 스킬
+    - code-reviewer
+    - api-designer
+
+agents:
+  - id: "senior_dev"
+    provider: "cli/claude"
+    skills:
+      include:
+        - code-reviewer           # 에이전트별 스킬
+        - api-designer
+    inline:
+      prompt: |
+        You are a senior developer with specialized skills.
+```
+
+👉 **[Skills 시스템 가이드 →](./advanced/skills.md)** 자세한 사용법은 여기를 참조하세요
+
 ### 기타 이점
 - **추가 비용 없음** - 기존 Claude Pro, Gemini, Codex 또는 GitHub Copilot 구독 사용
 - **다중 에이전트 협업** - 다양한 AI 모델이 전문화된 작업에서 작동합니다

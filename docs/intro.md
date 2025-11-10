@@ -61,6 +61,38 @@ agents:
     provider: "plugin/ollama"
 ```
 
+### **Claude Skills Compatible** - Reusable AI Expertise
+Share and reuse specialized AI capabilities using Claude Code skills format:
+- **100% Claude Code compatible** - Use existing Claude skills without modification
+- **Agent enhancement** - Add specialized capabilities to any agent
+- **Progressive disclosure** - Skills load metadata first, content on-demand
+- **Cross-agent sharing** - One skill, multiple agents
+- **Simple YAML + Markdown** - Easy to create and maintain
+
+```yaml
+# Enable skills for your agents
+skills:
+  paths:
+    - ./skills                    # Custom skill directories
+  include:
+    - hello                       # Specific skills to load
+    - code-reviewer
+    - api-designer
+
+agents:
+  - id: "senior_dev"
+    provider: "cli/claude"
+    skills:
+      include:
+        - code-reviewer           # Agent-specific skills
+        - api-designer
+    inline:
+      prompt: |
+        You are a senior developer with specialized skills.
+```
+
+👉 **[Skills System Guide →](./advanced/skills.md)** for detailed usage
+
 ### Other Benefits
 - **No additional costs** - Use existing Claude Pro, Gemini, Codex or GitHub Copilot subscriptions
 - **Multi-agent collaboration** - Different AI models working on specialized tasks
