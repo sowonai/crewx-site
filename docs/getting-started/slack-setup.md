@@ -157,6 +157,9 @@ source .env.slack && crewx slack
 # Allow agents to perform execute tasks (file changes, migrations, etc.)
 source .env.slack && crewx slack --mode execute
 
+# Mention-Only mode: Bot only responds when @mentioned
+source .env.slack && crewx slack --mention-only
+
 # Switch the default agent
 source .env.slack && crewx slack --agent gemini
 source .env.slack && crewx slack --agent copilot
@@ -174,6 +177,83 @@ You should see:
 🤖 Using default agent for Slack: claude
 ⚙️  Slack bot mode: query
 ```
+
+---
+
+## 🎯 Mention-Only Mode
+
+By default, CrewX Slack Bot responds to all messages in channels where it's invited. **Mention-Only mode** changes this behavior so the bot only responds when explicitly @mentioned.
+
+### When to Use Mention-Only Mode
+
+**Use Mention-Only when:**
+- Bot is in busy channels where not all messages need AI responses
+- You want to reduce noise and token usage
+- Team prefers opt-in AI assistance
+- Bot shares space with other bots or workflows
+
+**Use Default mode when:**
+- Dedicated AI assistance channels
+- Small team channels where AI context is always helpful
+- You want seamless, always-available AI support
+
+### How It Works
+
+**Default Mode (Always Listening):**
+```
+User: "How do I implement authentication?"
+Bot: 🤖 [Responds automatically]
+```
+
+**Mention-Only Mode:**
+```
+User: "How do I implement authentication?"
+Bot: [No response]
+
+User: "@crewx How do I implement authentication?"
+Bot: 🤖 [Responds when mentioned]
+```
+
+### Starting in Mention-Only Mode
+
+```bash
+# Query mode with mention-only
+source .env.slack && crewx slack --mention-only
+
+# Execute mode with mention-only
+source .env.slack && crewx slack --mode execute --mention-only
+
+# With specific agent
+source .env.slack && crewx slack --agent gemini --mention-only
+```
+
+### Direct Messages (DMs)
+
+Mention-Only mode **does not affect** direct messages. The bot always responds to DMs regardless of this setting:
+
+```
+# DMs always work in both modes
+[Direct message to @crewx]
+User: "Help me debug this error"
+Bot: 🤖 [Always responds in DMs]
+```
+
+### Comparison Table
+
+| Feature | Default Mode | Mention-Only Mode |
+|---------|--------------|-------------------|
+| Channel messages | All messages | Only @mentions |
+| Thread replies | All messages in thread | Only when @mentioned |
+| Direct messages | ✅ Responds | ✅ Responds |
+| Token usage | Higher (all messages) | Lower (opt-in only) |
+| Best for | Dedicated AI channels | Busy multi-purpose channels |
+
+### Tips
+
+1. **Choose mode per workspace** - Different Slack workspaces may need different modes
+2. **Combine with channels** - Use default mode in `#ai-help` channel, mention-only in `#general`
+3. **Team preference** - Ask your team which mode they prefer
+4. **Test both** - Try each mode to see what fits your workflow
 
 ---
 

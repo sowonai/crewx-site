@@ -157,6 +157,9 @@ source .env.slack && crewx slack
 # 에이전트가 실행 작업을 수행하도록 허용 (파일 변경, 마이그레이션 등)
 source .env.slack && crewx slack --mode execute
 
+# Mention-Only 모드: @멘션했을 때만 봇이 응답
+source .env.slack && crewx slack --mention-only
+
 # 기본 에이전트 전환
 source .env.slack && crewx slack --agent gemini
 source .env.slack && crewx slack --agent copilot
@@ -174,6 +177,83 @@ source .env.slack && crewx slack --agent gemini --log
 🤖 Using default agent for Slack: claude
 ⚙️  Slack bot mode: query
 ```
+
+---
+
+## 🎯 Mention-Only 모드
+
+기본적으로 CrewX Slack Bot은 초대된 채널의 모든 메시지에 응답합니다. **Mention-Only 모드**는 명시적으로 @멘션했을 때만 봇이 응답하도록 동작을 변경합니다.
+
+### Mention-Only 모드 사용 시기
+
+**Mention-Only를 사용해야 할 때:**
+- 봇이 모든 메시지에 AI 응답이 필요하지 않은 바쁜 채널에 있을 때
+- 노이즈와 토큰 사용량을 줄이고 싶을 때
+- 팀이 옵트인 AI 지원을 선호할 때
+- 봇이 다른 봇이나 워크플로우와 공간을 공유할 때
+
+**기본 모드를 사용해야 할 때:**
+- 전용 AI 지원 채널
+- AI 컨텍스트가 항상 유용한 소규모 팀 채널
+- 원활하고 항상 사용 가능한 AI 지원을 원할 때
+
+### 작동 방식
+
+**기본 모드 (항상 듣기):**
+```
+사용자: "인증을 어떻게 구현하나요?"
+봇: 🤖 [자동으로 응답]
+```
+
+**Mention-Only 모드:**
+```
+사용자: "인증을 어떻게 구현하나요?"
+봇: [응답 없음]
+
+사용자: "@crewx 인증을 어떻게 구현하나요?"
+봇: 🤖 [멘션했을 때 응답]
+```
+
+### Mention-Only 모드로 시작하기
+
+```bash
+# Mention-only로 쿼리 모드
+source .env.slack && crewx slack --mention-only
+
+# Mention-only로 실행 모드
+source .env.slack && crewx slack --mode execute --mention-only
+
+# 특정 에이전트와 함께
+source .env.slack && crewx slack --agent gemini --mention-only
+```
+
+### 다이렉트 메시지 (DM)
+
+Mention-Only 모드는 다이렉트 메시지에 **영향을 주지 않습니다**. 봇은 이 설정과 관계없이 항상 DM에 응답합니다:
+
+```
+# 두 모드 모두에서 DM은 항상 작동
+[@crewx에게 다이렉트 메시지]
+사용자: "이 오류를 디버그하는 데 도움을 줘"
+봇: 🤖 [DM에서 항상 응답]
+```
+
+### 비교표
+
+| 기능 | 기본 모드 | Mention-Only 모드 |
+|------|-----------|-------------------|
+| 채널 메시지 | 모든 메시지 | @멘션만 |
+| 스레드 답변 | 스레드의 모든 메시지 | @멘션했을 때만 |
+| 다이렉트 메시지 | ✅ 응답 | ✅ 응답 |
+| 토큰 사용량 | 높음 (모든 메시지) | 낮음 (옵트인만) |
+| 최적 사용처 | 전용 AI 채널 | 바쁜 다목적 채널 |
+
+### 팁
+
+1. **워크스페이스별로 모드 선택** - 서로 다른 Slack 워크스페이스에는 서로 다른 모드가 필요할 수 있습니다
+2. **채널과 결합** - `#ai-help` 채널에서는 기본 모드 사용, `#general`에서는 mention-only 사용
+3. **팀 선호도** - 팀에게 어떤 모드를 선호하는지 물어보세요
+4. **둘 다 테스트** - 각 모드를 시도하여 워크플로우에 맞는 것을 확인하세요
 
 ---
 

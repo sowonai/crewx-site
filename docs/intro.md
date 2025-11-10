@@ -255,11 +255,12 @@ crewx query "@remote_backend check API status"
 - [🔌 MCP Integration](./integration/mcp.md) - IDE setup and MCP servers
 - [⚙️ Agent Configuration](./configuration/agents.md) - Custom agents and advanced config
 - [🌐 Remote Agents](./advanced/remote-agents.md) - Connect to remote CrewX instances
+- [🎯 Skills System](./advanced/skills.md) - Reusable AI capabilities (Claude Code compatible)
 - [📚 Template System](./advanced/templates.md) - Knowledge management and dynamic prompts for agents
 - [📝 Template Variables](./advanced/template-variables.md) - Dynamic variables in agent configurations and TemplateContext usage
 - [🎨 Layout System](./advanced/layouts.md) - Reusable prompt templates with React PropTypes-style props
 - [🔧 Troubleshooting](./troubleshooting/common-issues.md) - Common issues and solutions
-- [💬 Slack Integration](./getting-started/slack-setup.md) - Slack bot setup
+- [💬 Slack Integration](./getting-started/slack-setup.md) - Slack bot setup and Mention-Only mode
 
 ### Developer Guides
 - [🔧 Development Workflow](./contributing/development.md) - Contributing guidelines

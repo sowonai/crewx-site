@@ -255,11 +255,12 @@ crewx query "@remote_backend check API status"
 - [🔌 MCP 통합](./integration/mcp.md) - IDE 설정 및 MCP 서버
 - [⚙️ 에이전트 구성](./configuration/agents.md) - 사용자 정의 에이전트 및 고급 구성
 - [🌐 원격 에이전트](./advanced/remote-agents.md) - 원격 CrewX 인스턴스에 연결
+- [🎯 Skills 시스템](./advanced/skills.md) - 재사용 가능한 AI 능력 (Claude Code 호환)
 - [📚 템플릿 시스템](./advanced/templates.md) - 에이전트를 위한 지식 관리 및 동적 프롬프트
 - [📝 템플릿 변수](./advanced/template-variables.md) - 에이전트 구성 및 TemplateContext 사용의 동적 변수
 - [🎨 레이아웃 시스템](./advanced/layouts.md) - React PropTypes 스타일 props를 가진 재사용 가능한 프롬프트 템플릿
 - [🔧 문제 해결](./troubleshooting/common-issues.md) - 일반적인 문제 및 솔루션
-- [💬 Slack 통합](./getting-started/slack-setup.md) - Slack 봇 설정
+- [💬 Slack 통합](./getting-started/slack-setup.md) - Slack 봇 설정 및 Mention-Only 모드
 
 ### 개발자 가이드
 - [🔧 개발 워크플로우](./contributing/development.md) - 기여 가이드라인
