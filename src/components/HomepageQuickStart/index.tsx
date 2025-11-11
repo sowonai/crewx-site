@@ -27,14 +27,14 @@ export default function HomepageQuickStart() {
             <h3 className={styles.methodTitle}>
               {translate({
                 id: 'homepage.quickstart.method1.title',
-                message: '🚀 Full Setup with Slack (5 min)',
+                message: '🚀 Quick Setup (30 sec)',
                 description: 'Method 1 title',
               })}
             </h3>
             <p className={styles.methodDescription}>
               {translate({
                 id: 'homepage.quickstart.method1.description',
-                message: 'Complete workspace setup including Slack bot configuration',
+                message: 'Generate workspace config and Slack templates',
                 description: 'Method 1 description',
               })}
             </p>

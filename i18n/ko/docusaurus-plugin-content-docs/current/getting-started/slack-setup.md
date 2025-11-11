@@ -2,7 +2,27 @@
 
 CrewX Slack 봇을 워크스페이스에 연결하기 위한 단계별 지침입니다.
 
-## 📋 개요
+## Quick Start
+
+**crewx-quickstart 사용** (권장):
+```bash
+npx crewx-quickstart
+```
+
+생성되는 파일:
+- `crewx.yaml` - 에이전트 설정
+- `.env.slack` - 환경변수 템플릿
+- `start-slack.sh` - Slack 봇 빠른 실행 스크립트
+- `slack-app-manifest.yaml` - 사전 구성된 Slack 앱 설정
+
+실행 후:
+1. 아래 Slack 앱 설정에서 자격증명 받기
+2. `.env.slack`에 토큰 입력
+3. `./start-slack.sh` 실행해서 봇 시작
+
+---
+
+## Slack 앱 설정
 
 통합을 위해 3개의 Slack 자격증명이 필요합니다. Slack 앱을 생성한 후 다음을 수집하여 안전하게 보관하세요:
 
@@ -12,7 +32,7 @@ CrewX Slack 봇을 워크스페이스에 연결하기 위한 단계별 지침입
 
 ---
 
-## ⚡ 빠른 설정 (매니페스트 사용)
+### 방법 1: 매니페스트 사용 (빠름)
 
 범위와 이벤트를 수동으로 구성하고 싶지 않다면 이 저장소에 포함된 매니페스트를 가져올 수 있습니다.
 
@@ -26,9 +46,9 @@ CrewX Slack 봇을 워크스페이스에 연결하기 위한 단계별 지침입
 
 ---
 
-## 🚀 단계별 설정
+### 방법 2: 수동 설정
 
-### 단계 1: Slack 앱 생성
+#### 단계 1: Slack 앱 생성
 
 1. [https://api.slack.com/apps](https://api.slack.com/apps)를 방문합니다.
 2. **Create New App**을 클릭합니다.
@@ -39,7 +59,7 @@ CrewX Slack 봇을 워크스페이스에 연결하기 위한 단계별 지침입
 
 ---
 
-### 단계 2: Bot Token 범위 추가 ⚡
+#### 단계 2: Bot Token 범위 추가 ⚡
 
 > **중요:** 앱을 설치하고 토큰을 받기 전에 범위를 구성해야 합니다.
 
@@ -69,7 +89,7 @@ CrewX Slack 봇을 워크스페이스에 연결하기 위한 단계별 지침입
 
 ---
 
-### 단계 3: Socket Mode 활성화 🔌
+#### 단계 3: Socket Mode 활성화 🔌
 
 1. 사이드바에서 **Socket Mode**를 엽니다.
 2. **Enable Socket Mode**를 **On**으로 토글합니다.
@@ -85,7 +105,7 @@ CrewX Slack 봇을 워크스페이스에 연결하기 위한 단계별 지침입
 
 ---
 
-### 단계 4: 이벤트 구독 구성 📡
+#### 단계 4: 이벤트 구독 구성 📡
 
 1. 사이드바에서 **Event Subscriptions**를 엽니다.
 2. **Enable Events**를 **On**으로 토글합니다.
@@ -101,7 +121,7 @@ CrewX Slack 봇을 워크스페이스에 연결하기 위한 단계별 지침입
 
 ---
 
-### 단계 5: 앱을 워크스페이스에 설치 🏢
+#### 단계 5: 앱을 워크스페이스에 설치 🏢
 
 1. 사이드바에서 **Install App**을 엽니다.
 2. **Install to Workspace**를 클릭합니다.
@@ -115,7 +135,7 @@ CrewX Slack 봇을 워크스페이스에 연결하기 위한 단계별 지침입
 
 ---
 
-### 단계 6: Signing Secret 수집 🔐
+#### 단계 6: Signing Secret 수집 🔐
 
 1. **Basic Information**으로 이동합니다.
 2. **App Credentials** 아래에서 **Signing Secret**을 찾습니다.
@@ -125,7 +145,9 @@ CrewX Slack 봇을 워크스페이스에 연결하기 위한 단계별 지침입
 
 ---
 
-## 🧾 환경 변수
+## 설정
+
+### 환경 변수
 
 프로젝트 루트에 `.env.slack` 파일을 생성합니다:
 
@@ -143,7 +165,7 @@ SLACK_MAX_RESPONSE_LENGTH=400000
 
 ---
 
-## 🚀 봇 실행
+### 봇 실행
 
 환경 변수가 준비되면 Slack 봇을 시작합니다:
 
@@ -180,11 +202,13 @@ source .env.slack && crewx slack --agent gemini --log
 
 ---
 
-## 🎯 Mention-Only 모드
+## 사용 옵션
+
+### Mention-Only 모드
 
 기본적으로 CrewX Slack Bot은 초대된 채널의 모든 메시지에 응답합니다. **Mention-Only 모드**는 명시적으로 @멘션했을 때만 봇이 응답하도록 동작을 변경합니다.
 
-### Mention-Only 모드 사용 시기
+#### 사용 시기
 
 **Mention-Only를 사용해야 할 때:**
 - 봇이 모든 메시지에 AI 응답이 필요하지 않은 바쁜 채널에 있을 때
@@ -197,7 +221,7 @@ source .env.slack && crewx slack --agent gemini --log
 - AI 컨텍스트가 항상 유용한 소규모 팀 채널
 - 원활하고 항상 사용 가능한 AI 지원을 원할 때
 
-### 작동 방식
+#### 작동 방식
 
 **기본 모드 (항상 듣기):**
 ```
@@ -214,7 +238,7 @@ source .env.slack && crewx slack --agent gemini --log
 봇: 🤖 [멘션했을 때 응답]
 ```
 
-### Mention-Only 모드로 시작하기
+#### Mention-Only 모드로 시작하기
 
 ```bash
 # Mention-only로 쿼리 모드
@@ -227,7 +251,7 @@ source .env.slack && crewx slack --mode execute --mention-only
 source .env.slack && crewx slack --agent gemini --mention-only
 ```
 
-### 다이렉트 메시지 (DM)
+#### 다이렉트 메시지
 
 Mention-Only 모드는 다이렉트 메시지에 **영향을 주지 않습니다**. 봇은 이 설정과 관계없이 항상 DM에 응답합니다:
 
@@ -248,7 +272,7 @@ Mention-Only 모드는 다이렉트 메시지에 **영향을 주지 않습니다
 | 토큰 사용량 | 높음 (모든 메시지) | 낮음 (옵트인만) |
 | 최적 사용처 | 전용 AI 채널 | 바쁜 다목적 채널 |
 
-### 팁
+#### 팁
 
 1. **워크스페이스별로 모드 선택** - 서로 다른 Slack 워크스페이스에는 서로 다른 모드가 필요할 수 있습니다
 2. **채널과 결합** - `#ai-help` 채널에서는 기본 모드 사용, `#general`에서는 mention-only 사용
@@ -257,7 +281,7 @@ Mention-Only 모드는 다이렉트 메시지에 **영향을 주지 않습니다
 
 ---
 
-## 🧪 빠른 테스트 체크리스트
+## 테스트
 
 1. 채널에 봇을 초대합니다:
    ```
@@ -271,7 +295,7 @@ Mention-Only 모드는 다이렉트 메시지에 **영향을 주지 않습니다
 
 ---
 
-## ❓ 문제 해결
+## 문제 해결
 
 ### 봇이 응답하지 않음
 
@@ -312,15 +336,15 @@ source .env.slack && crewx slack --log-level debug
 
 ---
 
-## 📚 다음 단계
+## 다음 단계
 
-- [Slack Bot 사용 가이드](./README_SLACK_BOT.md)
-- [고급 구성](./SLACK_BOT_SETUP.md)
-- [에이전트 커스터마이징](./crewx.yaml)
+- [CLI 명령어](../cli/commands.md) - 모든 CrewX 명령어 배우기
+- [에이전트 설정](../configuration/agents.md) - 에이전트 커스터마이징
+- [소개](../intro.md) - CrewX에 대해 더 알아보기
 
 ---
 
-## 🔒 보안 주의사항
+## 보안
 
 - `.env.slack`을 소스 제어에 커밋하지 마세요.
 - 공개 채널이나 저장소에서 토큰을 공유하지 마세요.

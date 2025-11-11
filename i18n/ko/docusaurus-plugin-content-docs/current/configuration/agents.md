@@ -360,5 +360,5 @@ crewx doctor
 ## Advanced Configuration
 
 문서 및 템플릿과 같은 고급 기능은 다음을 참조하세요:
-- [Template System Guide](templates.md)
-- [Layout System Guide](layouts.md)
+- [Template System Guide](../advanced/templates.md)
+- [Layout System Guide](../advanced/layouts.md)

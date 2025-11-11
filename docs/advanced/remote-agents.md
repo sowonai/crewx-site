@@ -550,6 +550,6 @@ crewx query "@architect review authentication code"
 
 ## See Also
 
-- [Agent Configuration](./agent-configuration.md) - General agent setup
-- [MCP Integration](./mcp-integration.md) - MCP server configuration
-- [CLI Guide](./cli-guide.md) - Command-line reference
+- [Agent Configuration](../configuration/agents.md) - General agent setup
+- [MCP Integration](../integration/mcp.md) - MCP server configuration
+- [CLI Commands](../cli/commands.md) - Command-line reference

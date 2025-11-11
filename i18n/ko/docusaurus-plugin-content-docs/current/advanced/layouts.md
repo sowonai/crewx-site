@@ -924,23 +924,16 @@ agents:
 
 ### 관련 문서
 
-- [템플릿 시스템](templates.md) - 문서 관리 및 템플릿 변수
-- [템플릿 변수](template-variables.md) - 사용 가능한 변수 및 도우미
-- [에이전트 구성](agent-configuration.md) - 완벽한 에이전트 설정 가이드
-
-### 개발자 문서
-
-- [컨텍스트 통합 표준](../packages/docs/context-integration-standard.md) - 레이아웃 렌더링 파이프라인 (WBS-14)
-- [레이아웃 DSL 참조](../packages/docs/layout-dsl-field-reference.md) - 기술적 레이아웃 사양
-- [WBS-11 레이아웃 스펙](../wbs/wbs-11-layout-spec.md) - 원본 레이아웃 요구사항
+- [템플릿 시스템](./templates.md) - 문서 관리 및 템플릿 변수
+- [템플릿 변수](./template-variables.md) - 사용 가능한 변수 및 도우미
+- [에이전트 구성](../configuration/agents.md) - 완벽한 에이전트 설정 가이드
 
 ### 빠른 링크
 
 **사용자의 경우:**
-- 프롬프트에서 템플릿을 사용하고 싶으신가요? → [템플릿 시스템](templates.md)
-- 변수를 참조해야 하나요? → [템플릿 변수](template-variables.md)
-- 사용자 정의 에이전트를 설정하시나요? → [에이전트 구성](agent-configuration.md)
+- 프롬프트에서 템플릿을 사용하고 싶으신가요? → [템플릿 시스템](./templates.md)
+- 변수를 참조해야 하나요? → [템플릿 변수](./template-variables.md)
+- 사용자 정의 에이전트를 설정하시나요? → [에이전트 구성](../configuration/agents.md)
 
 **개발자의 경우:**
-- 사용자 정의 레이아웃을 만드시나요? → [레이아웃 DSL 참조](../packages/docs/layout-dsl-field-reference.md)
-- 파이프라인을 이해하시나요? → [컨텍스트 통합 표준](../packages/docs/context-integration-standard.md)
+- 기술적 구현 세부사항은 [CrewX GitHub 저장소](https://github.com/sowonlabs/crewx)를 참고하세요

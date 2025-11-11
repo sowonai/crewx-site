@@ -145,7 +145,7 @@ Set `CREWX_CONFIG` to specify your configuration file location:
 
 ### Agent Configuration
 
-Create `crewx.yaml` (see [Agent Configuration Guide](agent-configuration.md)):
+Create `crewx.yaml` (see [Agent Configuration Guide](../configuration/agents.md)):
 
 ```yaml
 agents:
@@ -184,4 +184,4 @@ agents:
 - Verify agent configuration in `crewx.yaml`
 - Check task logs with `crewx_getTaskLogs`
 
-See [Troubleshooting Guide](troubleshooting.md) for more solutions.
+See [Troubleshooting Guide](../troubleshooting/common-issues.md) for more solutions.

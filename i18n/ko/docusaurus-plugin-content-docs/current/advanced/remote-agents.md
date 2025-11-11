@@ -550,6 +550,6 @@ crewx query "@architect review authentication code"
 
 ## 참고
 
-- [에이전트 설정](./agent-configuration.md) - 일반적인 에이전트 설정
-- [MCP 통합](./mcp-integration.md) - MCP 서버 설정
-- [CLI 가이드](./cli-guide.md) - 명령줄 참고
+- [에이전트 설정](../configuration/agents.md) - 일반적인 에이전트 설정
+- [MCP 통합](../integration/mcp.md) - MCP 서버 설정
+- [CLI 가이드](../cli/commands.md) - 명령줄 참고

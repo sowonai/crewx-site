@@ -924,23 +924,16 @@ agents:
 
 ### Related Documentation
 
-- [Template System](templates.md) - Document management and template variables
-- [Template Variables](template-variables.md) - Available variables and helpers
-- [Agent Configuration](agent-configuration.md) - Complete agent setup guide
-
-### Developer Documentation
-
-- [Context Integration Standard](../packages/docs/context-integration-standard.md) - Layout rendering pipeline (WBS-14)
-- [Layout DSL Reference](../packages/docs/layout-dsl-field-reference.md) - Technical layout specification
-- [WBS-11 Layout Spec](../wbs/wbs-11-layout-spec.md) - Original layout requirements
+- [Template System](./templates.md) - Document management and template variables
+- [Template Variables](./template-variables.md) - Available variables and helpers
+- [Agent Configuration](../configuration/agents.md) - Complete agent setup guide
 
 ### Quick Links
 
 **For Users:**
-- Want to use templates in your prompts? → [Template System](templates.md)
-- Need to reference variables? → [Template Variables](template-variables.md)
-- Setting up custom agents? → [Agent Configuration](agent-configuration.md)
+- Want to use templates in your prompts? → [Template System](./templates.md)
+- Need to reference variables? → [Template Variables](./template-variables.md)
+- Setting up custom agents? → [Agent Configuration](../configuration/agents.md)
 
 **For Developers:**
-- Building custom layouts? → [Layout DSL Reference](../packages/docs/layout-dsl-field-reference.md)
-- Understanding the pipeline? → [Context Integration Standard](../packages/docs/context-integration-standard.md)
+- For technical implementation details, see the [CrewX GitHub repository](https://github.com/sowonlabs/crewx)

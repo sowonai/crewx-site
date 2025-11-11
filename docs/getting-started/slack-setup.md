@@ -1,34 +1,47 @@
 # Slack App Installation Guide
 
-Step-by-step instructions for connecting the CrewX Slack bot to your workspace.
+Connect CrewX to your Slack workspace in a few simple steps.
 
-## 📋 Overview
+## Quick Start
 
-The integration requires three Slack credentials. After creating the Slack App, gather the following and store them securely:
+**Using crewx-quickstart** (recommended):
+```bash
+npx crewx-quickstart
+```
 
+This creates:
+- `crewx.yaml` - Agent configuration
+- `.env.slack` - Environment variables template
+- `start-slack.sh` - Quick launch script for Slack bot
+- `slack-app-manifest.yaml` - Pre-configured Slack app settings
+
+After running this:
+1. Follow the Slack App Setup below to get your credentials
+2. Fill in `.env.slack` with your tokens
+3. Run `./start-slack.sh` to start the bot
+
+---
+
+## Slack App Setup
+
+You'll need three Slack credentials:
 1. **Bot User OAuth Token** (`xoxb-…`)
 2. **App-Level Token** (`xapp-…`)
 3. **Signing Secret**
 
----
+Choose one of two setup methods:
 
-## ⚡ Quick Setup (using the manifest)
+### Method 1: Using Manifest (Quick)
 
-If you prefer not to configure scopes and events manually, you can import the manifest bundled in this repository.
+1. Go to [Slack App dashboard](https://api.slack.com/apps)
+2. Click **Create New App → From an app manifest**
+3. Choose your workspace and paste contents of `slack-app-manifest.yaml`
+4. Click **Create** - scopes and events are pre-configured
+5. Skip to [Get Credentials](#get-credentials) section
 
-1. Go to the [Slack App dashboard](https://api.slack.com/apps).
-2. Select **Create New App → From an app manifest**.
-3. Choose your workspace and paste the contents of `slack-app-manifest.yaml` from the project root.
-4. Review the summary and click **Create**. All required scopes, events, and Socket Mode settings will be preconfigured.
-5. Continue with the sections below to issue tokens and configure environment variables.
+### Method 2: Manual Setup
 
-> The manifest includes OAuth scopes, event subscriptions, and Socket Mode configuration, so you can skip the manual setup steps if desired.
-
----
-
-## 🚀 Step-by-step setup
-
-### Step 1: Create the Slack App
+#### Step 1: Create the Slack App
 
 1. Visit [https://api.slack.com/apps](https://api.slack.com/apps).
 2. Click **Create New App**.
@@ -39,7 +52,7 @@ If you prefer not to configure scopes and events manually, you can import the ma
 
 ---
 
-### Step 2: Add Bot Token scopes ⚡
+#### Step 2: Add Bot Token scopes ⚡
 
 > **Important:** Scopes must be configured before you can install the app and receive tokens.
 
@@ -69,7 +82,7 @@ If you prefer not to configure scopes and events manually, you can import the ma
 
 ---
 
-### Step 3: Enable Socket Mode 🔌
+#### Step 3: Enable Socket Mode 🔌
 
 1. In the sidebar, open **Socket Mode**.
 2. Toggle **Enable Socket Mode** to **On**.
@@ -85,7 +98,7 @@ Example: xapp-1-A01234567-1234567890123-abcdefghijklmnop
 
 ---
 
-### Step 4: Configure Event Subscriptions 📡
+#### Step 4: Configure Event Subscriptions 📡
 
 1. In the sidebar, open **Event Subscriptions**.
 2. Toggle **Enable Events** to **On**.
@@ -101,7 +114,7 @@ Example: xapp-1-A01234567-1234567890123-abcdefghijklmnop
 
 ---
 
-### Step 5: Install the app to your workspace 🏢
+#### Step 5: Install the app to your workspace 🏢
 
 1. Open **Install App** in the sidebar.
 2. Click **Install to Workspace**.
@@ -115,7 +128,7 @@ Example: xoxb-XXXXXXXXXXXX-XXXXXXXXXXXXX-XXXXXXXXXXXXXXXXXXXXXXXX
 
 ---
 
-### Step 6: Collect the Signing Secret 🔐
+#### Step 6: Collect the Signing Secret 🔐
 
 1. Navigate to **Basic Information**.
 2. Under **App Credentials**, locate **Signing Secret**.
@@ -125,7 +138,9 @@ Example: xoxb-XXXXXXXXXXXX-XXXXXXXXXXXXX-XXXXXXXXXXXXXXXXXXXXXXXX
 
 ---
 
-## 🧾 Environment variables
+## Configuration
+
+### Environment Variables
 
 Create a `.env.slack` file in the project root:
 
@@ -141,9 +156,7 @@ SLACK_MAX_RESPONSE_LENGTH=400000
 
 > Do not commit this file to source control.
 
----
-
-## 🚀 Run the bot
+### Run the Bot
 
 After the environment variables are in place, start the Slack bot:
 
@@ -180,11 +193,13 @@ You should see:
 
 ---
 
-## 🎯 Mention-Only Mode
+## Usage Options
 
-By default, CrewX Slack Bot responds to all messages in channels where it's invited. **Mention-Only mode** changes this behavior so the bot only responds when explicitly @mentioned.
+### Mention-Only Mode
 
-### When to Use Mention-Only Mode
+By default, CrewX responds to all messages in channels. **Mention-Only mode** changes this so the bot only responds when @mentioned.
+
+#### When to Use
 
 **Use Mention-Only when:**
 - Bot is in busy channels where not all messages need AI responses
@@ -197,7 +212,7 @@ By default, CrewX Slack Bot responds to all messages in channels where it's invi
 - Small team channels where AI context is always helpful
 - You want seamless, always-available AI support
 
-### How It Works
+#### How It Works
 
 **Default Mode (Always Listening):**
 ```
@@ -214,7 +229,7 @@ User: "@crewx How do I implement authentication?"
 Bot: 🤖 [Responds when mentioned]
 ```
 
-### Starting in Mention-Only Mode
+#### Starting in Mention-Only Mode
 
 ```bash
 # Query mode with mention-only
@@ -227,7 +242,7 @@ source .env.slack && crewx slack --mode execute --mention-only
 source .env.slack && crewx slack --agent gemini --mention-only
 ```
 
-### Direct Messages (DMs)
+#### Direct Messages
 
 Mention-Only mode **does not affect** direct messages. The bot always responds to DMs regardless of this setting:
 
@@ -238,7 +253,7 @@ User: "Help me debug this error"
 Bot: 🤖 [Always responds in DMs]
 ```
 
-### Comparison Table
+#### Comparison
 
 | Feature | Default Mode | Mention-Only Mode |
 |---------|--------------|-------------------|
@@ -248,7 +263,7 @@ Bot: 🤖 [Always responds in DMs]
 | Token usage | Higher (all messages) | Lower (opt-in only) |
 | Best for | Dedicated AI channels | Busy multi-purpose channels |
 
-### Tips
+#### Tips
 
 1. **Choose mode per workspace** - Different Slack workspaces may need different modes
 2. **Combine with channels** - Use default mode in `#ai-help` channel, mention-only in `#general`
@@ -257,21 +272,17 @@ Bot: 🤖 [Always responds in DMs]
 
 ---
 
-## 🧪 Quick test checklist
+## Testing
 
-1. Invite the bot to a channel:
-   ```
-   /invite @crewx
-   ```
-2. Send a message:
-   ```
-   @crewx Hello! What can you help me with?
-   ```
-3. The bot replies in-thread ✔️
+Test your setup:
+
+1. Invite the bot to a channel: `/invite @crewx`
+2. Send a message: `@crewx Hello! What can you help me with?`
+3. The bot should reply in-thread ✔️
 
 ---
 
-## ❓ Troubleshooting
+## Troubleshooting
 
 ### Bot is not responding
 
@@ -312,20 +323,19 @@ source .env.slack && crewx slack --log-level debug
 
 ---
 
-## 📚 Next steps
+## Next Steps
 
-- [Slack Bot Usage Guide](./README_SLACK_BOT.md)
-- [Advanced configuration](./SLACK_BOT_SETUP.md)
-- [Agent customization](./crewx.yaml)
+- [CLI Commands](../cli/commands.md) - Learn all CrewX commands
+- [Agent Configuration](../configuration/agents.md) - Customize your agents
+- [Introduction](../intro.md) - Learn more about CrewX
+
+## Security
+
+**Important:**
+- Never commit `.env.slack` to source control
+- Do not share tokens in public channels or repositories
+- Rotate credentials immediately if leaked at [Slack App dashboard](https://api.slack.com/apps)
 
 ---
 
-## 🔒 Security notes
-
-- Never commit `.env.slack` to source control.
-- Do not share tokens in public channels or repositories.
-- If a credential leaks, rotate it immediately from [https://api.slack.com/apps](https://api.slack.com/apps).
-
----
-
-**You’re all set!** 🎉 CrewX is ready to work inside Slack.
+**You're all set!** 🎉 CrewX is ready to work inside Slack.

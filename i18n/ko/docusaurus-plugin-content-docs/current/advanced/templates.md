@@ -623,5 +623,5 @@ crewx query "@dev analyze this feature"
 ## 참고
 
 - [레이아웃 시스템 가이드](layouts.md) - props를 가진 재사용 가능한 프롬프트 템플릿
-- [에이전트 설정 가이드](agent-configuration.md) - 에이전트 설정
-- [CLI 가이드](cli-guide.md) - 명령줄 사용법
+- [에이전트 설정 가이드](../configuration/agents.md) - 에이전트 설정
+- [CLI 가이드](../cli/commands.md) - 명령줄 사용법

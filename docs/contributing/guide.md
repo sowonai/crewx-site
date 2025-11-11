@@ -5,9 +5,9 @@ Thanks for taking the time to contribute! This guide walks you through the CrewX
 ## 📦 Project Overview
 - **Packages**: `packages/sdk` (Apache-2.0 + CLA) and `packages/cli` (MIT)
 - **Build tooling**: TypeScript, NestJS CLI, npm workspaces
-- **Key docs**: [requirements-monorepo.md](requirements-monorepo.md), [BUILD.md](BUILD.md), [RELEASE.md](RELEASE.md)
+- **Key docs**: See the [CrewX GitHub repository](https://github.com/sowonlabs/crewx) for technical documentation
 
-Before you start, please read our [Code of Conduct](CODE_OF_CONDUCT.md) and sign the [Contributor License Agreement](docs/CLA.md).
+Before you start, please read the [Code of Conduct](https://github.com/sowonlabs/crewx/blob/main/CODE_OF_CONDUCT.md) and [Contributor License Agreement](https://github.com/sowonlabs/crewx/blob/main/docs/CLA.md).
 
 ## ✅ Prerequisites
 - Node.js 20+
@@ -104,11 +104,11 @@ Please include whether the issue affects CLI usage, SDK APIs, or both.
 - SDK uses semantic versioning (SemVer) starting at `0.1.x`.
 - CLI is distributed under the `crewx` npm package and depends on the SDK via `workspace:*`.
 - Breaking changes require documentation updates and deprecation notes.
-- See [RELEASE.md](RELEASE.md) for changeset and publishing flow.
+- See the [GitHub repository](https://github.com/sowonlabs/crewx) for release workflow details.
 
 ## 🔎 Review Criteria
 Maintainers look for:
-- Alignment with architecture goals from `requirements-monorepo.md`
+- Alignment with project architecture goals
 - Backwards compatibility and migration guidance
 - Tests validating new behaviour or guarding regressions
 - Documentation updates for new public APIs or flags

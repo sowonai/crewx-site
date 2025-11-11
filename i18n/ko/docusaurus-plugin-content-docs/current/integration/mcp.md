@@ -145,7 +145,7 @@ CrewX를 MCP 서버로 사용할 때 이러한 도구들을 사용할 수 있습
 
 ### 에이전트 설정
 
-`crewx.yaml`을 생성합니다 ([에이전트 설정 가이드](agent-configuration.md) 참조):
+`crewx.yaml`을 생성합니다 ([에이전트 설정 가이드](../configuration/agents.md) 참조):
 
 ```yaml
 agents:
@@ -184,4 +184,4 @@ agents:
 - `crewx.yaml`에서 에이전트 설정 확인
 - `crewx_getTaskLogs`로 작업 로그 확인
 
-더 많은 해결책은 [문제 해결 가이드](troubleshooting.md)를 참조하세요.
+더 많은 해결책은 [문제 해결 가이드](../troubleshooting/common-issues.md)를 참조하세요.

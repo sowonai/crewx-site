@@ -5,9 +5,9 @@
 ## 📦 프로젝트 개요
 - **패키지**: `packages/sdk` (Apache-2.0 + CLA) 및 `packages/cli` (MIT)
 - **빌드 도구**: TypeScript, NestJS CLI, npm 워크스페이스
-- **주요 문서**: [requirements-monorepo.md](requirements-monorepo.md), [BUILD.md](BUILD.md), [RELEASE.md](RELEASE.md)
+- **주요 문서**: 기술 문서는 [CrewX GitHub 저장소](https://github.com/sowonlabs/crewx)를 참고하세요
 
-시작하기 전에 [행동 강령](CODE_OF_CONDUCT.md)을 읽고 [기여자 라이선스 계약](docs/CLA.md)에 서명해주세요.
+시작하기 전에 [행동 강령](https://github.com/sowonlabs/crewx/blob/main/CODE_OF_CONDUCT.md)을 읽고 [기여자 라이선스 계약](https://github.com/sowonlabs/crewx/blob/main/docs/CLA.md)에 서명해주세요.
 
 ## ✅ 사전 요구사항
 - Node.js 20+
@@ -104,11 +104,11 @@ GitHub 이슈 템플릿을 사용하여 분류를 돕습니다:
 - SDK는 `0.1.x`부터 시작하는 의미체계적 버전 관리 (SemVer)를 사용합니다.
 - CLI는 `crewx` npm 패키지로 배포되며 `workspace:*`를 통해 SDK에 의존합니다.
 - 주요 변경사항은 문서 업데이트 및 지원 중단 알림이 필요합니다.
-- 변경 세트 및 발행 흐름은 [RELEASE.md](RELEASE.md)를 참조하세요.
+- 릴리스 워크플로우 세부사항은 [GitHub 저장소](https://github.com/sowonlabs/crewx)를 참조하세요.
 
 ## 🔎 검토 기준
 유지보수자는 다음을 확인합니다:
-- `requirements-monorepo.md`의 아키텍처 목표와 정렬
+- 프로젝트 아키텍처 목표와의 정렬
 - 하위 호환성 및 마이그레이션 지침
 - 새로운 동작을 검증하거나 회귀를 방지하는 테스트
 - 새로운 공개 API 또는 플래그에 대한 문서 업데이트

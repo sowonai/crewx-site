@@ -360,5 +360,5 @@ This validates:
 ## Advanced Configuration
 
 For advanced features like documents and templates, see:
-- [Template System Guide](templates.md)
-- [Layout System Guide](layouts.md)
+- [Template System Guide](../advanced/templates.md)
+- [Layout System Guide](../advanced/layouts.md)

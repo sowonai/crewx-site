@@ -205,7 +205,7 @@ crewx slack --agent custom_agent   # Use custom agent
    Or set an environment variable: `CREWX_SLACK_LOG_CONVERSATIONS=true`.  
    When enabled, Slack threads are mirrored to `.crewx/conversations/` just like CLI sessions, which is useful for agent performance reviews.
 
-See [SLACK_INSTALL.md](../SLACK_INSTALL.md) for full setup guide.
+See [Slack Setup Guide](../getting-started/slack-setup.md) for full setup guide.
 
 ## MCP Server Mode
 
@@ -236,14 +236,14 @@ crewx mcp server \
 
 **Use cases:**
 - IDE integration (VS Code, Cursor, Claude Desktop)
-- Remote agent access (see [Remote Agents Guide](./remote-agents.md))
+- Remote agent access (see [Remote Agents Guide](../advanced/remote-agents.md))
 - Team collaboration via HTTP
 
 **Exposed MCP tools:**
 - `crewx_queryAgent` - Read-only agent queries
 - `crewx_executeAgent` - Agent execution with file operations
 
-See [MCP Integration Guide](./mcp-integration.md) for IDE setup and [Remote Agents Guide](./remote-agents.md) for remote access configuration.
+See [MCP Integration Guide](../integration/mcp.md) for IDE setup and [Remote Agents Guide](../advanced/remote-agents.md) for remote access configuration.
 
 ## Advanced Features
 
@@ -426,7 +426,7 @@ crewx query "@coordinator design cross-service authentication"
 crewx execute "@ml_server train recommendation model"
 ```
 
-See [Remote Agents Guide](./remote-agents.md) for setup and configuration.
+See [Remote Agents Guide](../advanced/remote-agents.md) for setup and configuration.
 
 ## Tips
 

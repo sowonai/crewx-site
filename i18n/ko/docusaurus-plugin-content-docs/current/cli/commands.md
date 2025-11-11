@@ -205,7 +205,7 @@ crewx slack --agent custom_agent   # 사용자 정의 에이전트 사용
    또는 환경 변수 설정: `CREWX_SLACK_LOG_CONVERSATIONS=true`.
    활성화되면 Slack 스레드가 CLI 세션처럼 `.crewx/conversations/`로 미러링되어 에이전트 성능 검토에 유용합니다.
 
-[SLACK_INSTALL.md](../SLACK_INSTALL.md)에서 전체 설정 가이드를 참고하세요.
+[SLACK_INSTALL.md](../getting-started/slack-setup.md)에서 전체 설정 가이드를 참고하세요.
 
 ## MCP 서버 모드
 
@@ -236,14 +236,14 @@ crewx mcp server \
 
 **사용 사례:**
 - IDE 통합(VS Code, Cursor, Claude Desktop)
-- 원격 에이전트 접근([원격 에이전트 가이드](./remote-agents.md) 참고)
+- 원격 에이전트 접근([원격 에이전트 가이드](../advanced/remote-agents.md) 참고)
 - HTTP를 통한 팀 협업
 
 **노출된 MCP 도구:**
 - `crewx_queryAgent` - 읽기 전용 에이전트 쿼리
 - `crewx_executeAgent` - 파일 작업을 포함한 에이전트 실행
 
-[MCP 통합 가이드](./mcp-integration.md)에서 IDE 설정을 보고 [원격 에이전트 가이드](./remote-agents.md)에서 원격 접근 구성을 참고하세요.
+[MCP 통합 가이드](../integration/mcp.md)에서 IDE 설정을 보고 [원격 에이전트 가이드](../advanced/remote-agents.md)에서 원격 접근 구성을 참고하세요.
 
 ## 고급 기능
 
@@ -426,7 +426,7 @@ crewx query "@coordinator design cross-service authentication"
 crewx execute "@ml_server train recommendation model"
 ```
 
-[원격 에이전트 가이드](./remote-agents.md)에서 설정 및 구성을 참고하세요.
+[원격 에이전트 가이드](../advanced/remote-agents.md)에서 설정 및 구성을 참고하세요.
 
 ## 팁
 

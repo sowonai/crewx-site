@@ -379,11 +379,11 @@
     "description": "Recommended badge"
   },
   "homepage.quickstart.method1.title": {
-    "message": "🚀 Slack까지 완전 세팅 (5분)",
+    "message": "🚀 빠른 설정 (30초)",
     "description": "Method 1 title"
   },
   "homepage.quickstart.method1.description": {
-    "message": "Slack 봇 설정을 포함한 완전한 워크스페이스 구성",
+    "message": "워크스페이스 설정과 Slack 템플릿 자동 생성",
     "description": "Method 1 description"
   },
   "homepage.quickstart.method1.note": {

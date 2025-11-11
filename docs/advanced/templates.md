@@ -608,6 +608,6 @@ Always have an `{{else}}` clause:
 
 ## See Also
 
-- [Layout System Guide](layouts.md) - Reusable prompt templates with props
-- [Agent Configuration Guide](agent-configuration.md) - Agent setup
-- [CLI Guide](cli-guide.md) - Command-line usage
+- [Layout System Guide](./layouts.md) - Reusable prompt templates with props
+- [Agent Configuration Guide](../configuration/agents.md) - Agent setup
+- [CLI Commands](../cli/commands.md) - Command-line usage
