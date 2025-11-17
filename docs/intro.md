@@ -154,10 +154,18 @@ crewx mcp  # VS Code, Claude Desktop, Cursor
 
 ## Supported AI Tools
 
+### CLI Providers (Local)
 - **Claude Code** - Advanced reasoning and analysis
 - **Gemini CLI** - Real-time web access
 - **GitHub Copilot CLI** - Specialized coding assistant
 - **Codex CLI** - Open inference with workspace-aware execution
+
+### API Providers (Cloud & Local)
+CrewX supports unified HTTP-based API providers including:
+- **Ollama**, **OpenRouter**, **Anthropic**, **OpenAI**
+- Support for **LiteLLM**, **Google AI**, **AWS Bedrock**, and more
+
+👉 **[Complete API Provider Guide →](./configuration/api-providers.md)** for detailed setup and examples
 
 ## Basic Usage
 
@@ -286,6 +294,7 @@ crewx query "@remote_backend check API status"
 - [📖 CLI Guide](./cli/commands.md) - Complete CLI reference
 - [🔌 MCP Integration](./integration/mcp.md) - IDE setup and MCP servers
 - [⚙️ Agent Configuration](./configuration/agents.md) - Custom agents and advanced config
+- [🤖 API Providers](./configuration/api-providers.md) - Direct API integration setup (OpenAI, Anthropic, Google AI, Groq)
 - [🌐 Remote Agents](./advanced/remote-agents.md) - Connect to remote CrewX instances
 - [🎯 Skills System](./advanced/skills.md) - Reusable AI capabilities (Claude Code compatible)
 - [📚 Template System](./advanced/templates.md) - Knowledge management and dynamic prompts for agents

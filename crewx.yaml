@@ -16,7 +16,83 @@ documents:
     You can add Markdown content here. It will be piped to the model
     whenever quickstart agents are invoked.
 
-    Read first crewx-manual.md 
+    Read first crewx-manual.md
+
+  crewx-source-info: |
+    ## CrewX Source Code Repository
+
+    CrewX 메인 소스 코드 저장소:
+    - **저장소 경로**: /Users/doha/git/crewx
+    - **타입**: Monorepo (packages: cli, crewx, sdk)
+
+    ### 주요 디렉토리 구조
+    ```
+    /Users/doha/git/crewx/
+    ├── packages/
+    │   ├── cli/                  # CLI 패키지
+    │   │   └── CHANGELOG.md      # CLI 변경 이력
+    │   ├── crewx/                # Core 패키지
+    │   │   └── CHANGELOG.md      # Core 변경 이력
+    │   └── sdk/                  # SDK 패키지
+    │       └── CHANGELOG.md      # SDK 변경 이력
+    ├── reports/
+    │   └── releases/             # 릴리스 리포트 디렉토리
+    │       ├── 0.6.0/           # 버전별 리포트
+    │       ├── 0.7.0/
+    │       └── ...
+    ├── package.json              # Root package.json (버전 정보)
+    ├── README.md                 # 프로젝트 README
+    └── GUIDE_KR.md              # 한국어 가이드
+    ```
+
+    ### 릴리스 정보 확인 방법
+    1. **현재 버전**: `/Users/doha/git/crewx/package.json`에서 `version` 필드 확인
+    2. **릴리스 리포트**: `/Users/doha/git/crewx/reports/releases/[버전]/`
+       - `qa-report-PASS.md`: QA 통과 리포트 (주요 기능 및 테스트 결과)
+       - `qa-report-FAIL.md`: 초기 테스트 실패 리포트 (있는 경우)
+    3. **변경 이력**: 각 패키지의 `CHANGELOG.md` 파일
+    4. **Git 로그**: `cd /Users/doha/git/crewx && git log v[이전버전]..v[현재버전]`
+
+    ### 블로그/문서 작성 시 참고
+    - 릴리스 정보가 필요할 때 위 경로들을 직접 Read 도구로 읽어서 확인
+    - QA 리포트는 가장 신뢰할 수 있는 릴리스 정보 소스
+    - Git 커밋 로그로 상세한 변경사항 추적 가능
+
+  release-workflow-guide: |
+    ## 릴리스 문서 작성 워크플로우
+
+    새로운 버전 릴리스 시 다음 순서로 문서를 업데이트하세요:
+
+    ### 1. 릴리스 정보 수집
+    - CrewX 소스의 QA 리포트 확인 (`/Users/doha/git/crewx/reports/releases/[버전]/qa-report-PASS.md`)
+    - 실제 구현된 기능과 계획된 기능 구분
+    - 코드 확인: `packages/sdk/src/core/providers/` 에서 실제 구현 확인
+
+    ### 2. 문서 작성 순서
+    a. **릴리스 블로그 작성** (한글 우선)
+       - 파일: `i18n/ko/docusaurus-plugin-content-blog/YYYY-MM-DD-[slug].md`
+       - 확인된 기능만 "현재 지원" 섹션에 포함
+       - 계획된 기능은 "향후 지원 예정" 섹션에 별도 표시
+
+    b. **기술 문서 작성/업데이트**
+       - 새 기능 가이드: `docs/configuration/` 또는 `docs/advanced/`
+       - 기존 문서 업데이트: `docs/intro.md`의 Supported AI Tools 섹션 등
+       - README.md 스타일 참고
+
+    c. **다국어 지원**
+       - 한글 문서 작성 후 `npm run translate:ko-to-en` 실행
+       - 또는 `@blog_translator` 에이전트 사용
+
+    ### 3. 문서 작성 시 주의사항
+    - **구현 확인**: QA 리포트만 믿지 말고 코드도 확인
+    - **명확한 구분**: "✅ 현재 지원" vs "🔮 향후 지원 예정"
+    - **일관성**: 모든 문서에서 동일한 제공자 목록 사용
+    - **업데이트**: intro.md, README 참조 문서도 함께 업데이트
+
+    ### 4. 문서 검증
+    - `npm run build` 실행하여 빌드 성공 확인
+    - 링크 깨짐 확인
+    - 영어/한글 양쪽 버전 확인 
 
 # Custom agents powered by CrewX.
 agents:
@@ -236,6 +312,9 @@ agents:
         <documents>
         <document name="onboarding-notes">
         {{{documents.onboarding-notes.content}}}
+        </document>
+        <document name="crewx-source-info">
+        {{{documents.crewx-source-info.content}}}
         </document>
         </documents>
 

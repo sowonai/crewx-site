@@ -154,10 +154,18 @@ crewx mcp  # VS Code, Claude Desktop, Cursor
 
 ## 지원하는 AI 도구
 
+### CLI Providers (로컬)
 - **Claude Code** - 고급 추론 및 분석
 - **Gemini CLI** - 실시간 웹 접근
 - **GitHub Copilot CLI** - 전문화된 코딩 어시스턴트
 - **Codex CLI** - 워크스페이스 인식 실행을 통한 오픈 추론
+
+### API Providers (클라우드 & 로컬)
+CrewX는 다음을 포함한 통합 HTTP 기반 API 제공자를 지원합니다:
+- **Ollama**, **OpenRouter**, **Anthropic**, **OpenAI**
+- **LiteLLM**, **Google AI**, **AWS Bedrock** 등도 지원
+
+👉 **[완전한 API Provider 가이드 →](./configuration/api-providers.md)** 자세한 설정 및 예제는 여기를 참조하세요
 
 ## 기본 사용법
 
@@ -286,6 +294,7 @@ crewx query "@remote_backend check API status"
 - [📖 CLI 가이드](./cli/commands.md) - 완전한 CLI 참조
 - [🔌 MCP 통합](./integration/mcp.md) - IDE 설정 및 MCP 서버
 - [⚙️ 에이전트 구성](./configuration/agents.md) - 사용자 정의 에이전트 및 고급 구성
+- [🤖 API Providers](./configuration/api-providers.md) - 직접 API 통합 설정 (OpenAI, Anthropic, Google AI, Groq)
 - [🌐 원격 에이전트](./advanced/remote-agents.md) - 원격 CrewX 인스턴스에 연결
 - [🎯 Skills 시스템](./advanced/skills.md) - 재사용 가능한 AI 능력 (Claude Code 호환)
 - [📚 템플릿 시스템](./advanced/templates.md) - 에이전트를 위한 지식 관리 및 동적 프롬프트
