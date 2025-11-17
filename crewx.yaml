@@ -94,8 +94,46 @@ documents:
     - 링크 깨짐 확인
     - 영어/한글 양쪽 버전 확인 
 
+# Remote agents - Import from CrewX project
+providers:
+  - id: crewx_project
+    type: remote
+    location: "file:///Users/doha/git/crewx/crewx.yaml"
+    external_agent_id: "crewx_claude_dev"
+    display_name: "CrewX Project (Claude Dev)"
+    description: "CrewX developer agent from main project"
+    timeout:
+      query: 300000
+      execute: 600000
+
+  - id: crewx_project_codex
+    type: remote
+    location: "file:///Users/doha/git/crewx/crewx.yaml"
+    external_agent_id: "crewx_codex_dev"
+    display_name: "CrewX Project (Codex Dev)"
+    description: "CrewX Codex developer agent from main project"
+    timeout:
+      query: 300000
+      execute: 600000
+
 # Custom agents powered by CrewX.
 agents:
+  # Remote agents from CrewX project
+  - id: "crewx_claude_dev"
+    name: "CrewX Developer (Claude)"
+    provider: "remote/crewx_project"
+    description: "CrewX 프로젝트 전문 개발 에이전트 (Claude 기반)"
+    role: "developer"
+    team: "Development Team"
+
+  - id: "crewx_codex_dev"
+    name: "CrewX Developer (Codex)"
+    provider: "remote/crewx_project_codex"
+    description: "CrewX 프로젝트 전문 개발 에이전트 (Codex 기반)"
+    role: "developer"
+    team: "Development Team"
+
+  # Local agents
   - id: blog_manager
     name: "CrewX Blog Manager"
     description: "CrewX 블로그 콘텐츠 제작 및 홍보 전문 에이전트"
