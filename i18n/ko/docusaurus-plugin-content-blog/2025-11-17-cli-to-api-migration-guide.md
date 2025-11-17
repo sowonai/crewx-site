@@ -14,9 +14,8 @@ tags: [crewx, tutorial, ai]
 당신은 개발자로서 다음과 같은 여정을 걷게 됩니다:
 
 1. **로컬 개발**: CLI Provider로 AI 에이전트를 빠르게 프로토타이핑
-2. **테스트 및 검증**: 로컬 환경에서 에이전트 동작 확인
-3. **프로덕션 준비**: API Provider로 전환하여 웹 애플리케이션에 통합
-4. **팀 공유** (선택): Slack Bot으로 팀 전체와 공유
+2. **API Provider 전환**: 프로덕션 환경을 위한 설정 변경
+3. **프로덕션 배포**: CLI 명령어로 자동화 및 운영
 
 이 과정을 하나씩 살펴보겠습니다.
 
@@ -183,267 +182,241 @@ NODE_ENV=production
 
 ---
 
-## Step 3: 웹서버 통합 (SDK 사용)
+## Step 3: 프로덕션 배포 (CLI 기반)
 
-### TypeScript 웹서버 예제
+### CLI로 프로덕션 운영하기
 
-이제 API Provider를 사용해서 웹 애플리케이션에 AI 에이전트를 통합해봅시다.
+API Provider로 전환한 후에도 CLI 명령어를 활용해서 프로덕션 환경을 효율적으로 운영할 수 있습니다.
 
-**프로젝트 설정:**
+### 프로덕션 환경 설정
 
-```bash
-# 프로젝트 생성
-mkdir ai-web-app
-cd ai-web-app
-npm init -y
-
-# 의존성 설치
-npm install express @sowonai/crewx-sdk
-npm install -D typescript @types/node @types/express
-```
-
-**TypeScript 설정 (tsconfig.json):**
-
-```json
-{
-  "compilerOptions": {
-    "target": "ES2020",
-    "module": "commonjs",
-    "outDir": "./dist",
-    "strict": true,
-    "esModuleInterop": true
-  },
-  "include": ["src/**/*"]
-}
-```
-
-**웹서버 구현 (src/server.ts):**
-
-```typescript
-import express from 'express';
-import { CrewX } from '@sowonai/crewx-sdk';
-
-// CrewX 초기화
-const crewx = new CrewX({
-  configPath: './crewx.yaml',
-  // 커스텀 도구 주입 (선택)
-  tools: [
-    {
-      name: 'web_search',
-      description: '웹 검색을 수행합니다',
-      parameters: z.object({
-        query: z.string().describe('검색 쿼리'),
-      }),
-      execute: async ({ query }, context) => {
-        // 실제 웹 검색 API 호출
-        const results = await searchAPI(query);
-        return { results };
-      },
-    },
-  ],
-});
-
-const app = express();
-app.use(express.json());
-
-// AI 에이전트 엔드포인트
-app.post('/api/agent/query', async (req, res) => {
-  try {
-    const { agentId, input } = req.body;
-
-    // 에이전트 호출 (query 모드)
-    const response = await crewx.runAgent(agentId, {
-      input,
-      mode: 'query',
-    });
-
-    res.json({
-      success: true,
-      content: response.content,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: error.message,
-    });
-  }
-});
-
-// 에이전트 실행 엔드포인트 (파일 수정 가능)
-app.post('/api/agent/execute', async (req, res) => {
-  try {
-    const { agentId, input } = req.body;
-
-    // 에이전트 호출 (execute 모드)
-    const response = await crewx.runAgent(agentId, {
-      input,
-      mode: 'execute',
-    });
-
-    res.json({
-      success: true,
-      content: response.content,
-      toolCalls: response.toolCalls,  // 실행된 도구 목록
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: error.message,
-    });
-  }
-});
-
-// 서버 시작
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 AI Web Server running on port ${PORT}`);
-});
-```
-
-**프론트엔드 통합 예제:**
-
-```typescript
-// 클라이언트 측 코드
-async function askAI(question: string) {
-  const response = await fetch('/api/agent/query', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      agentId: 'prod_assistant',
-      input: question,
-    }),
-  });
-
-  const data = await response.json();
-
-  if (data.success) {
-    console.log('AI 응답:', data.content);
-  } else {
-    console.error('에러:', data.error);
-  }
-}
-
-// 사용 예시
-askAI('현재 시스템 상태를 분석해줘');
-```
-
-### 커스텀 도구 추가
-
-API Provider에서는 함수 주입 방식으로 커스텀 도구를 추가할 수 있습니다:
-
-**도구 정의 (tools/database.tool.ts):**
-
-```typescript
-import { z } from 'zod';
-import { FrameworkToolDefinition } from '@sowonai/crewx-sdk';
-
-export const queryDatabaseTool: FrameworkToolDefinition = {
-  name: 'query_database',
-  description: 'SQL 쿼리를 실행합니다 (SELECT만 허용)',
-
-  parameters: z.object({
-    query: z.string().describe('SQL SELECT 쿼리'),
-  }),
-
-  execute: async ({ query }, context) => {
-    // 보안: SELECT만 허용
-    if (!query.trim().toLowerCase().startsWith('select')) {
-      throw new Error('SELECT 쿼리만 허용됩니다');
-    }
-
-    // 데이터베이스 연결
-    const dbUrl = context.env.DATABASE_URL;
-    const results = await executeQuery(dbUrl, query);
-
-    return {
-      rows: results,
-      count: results.length,
-    };
-  },
-};
-```
-
-**도구 주입:**
-
-```typescript
-import { queryDatabaseTool } from './tools/database.tool';
-
-const crewx = new CrewX({
-  configPath: './crewx.yaml',
-  tools: [queryDatabaseTool],  // 도구 주입
-});
-```
-
-**crewx.yaml에서 활성화:**
+**crewx.yaml 프로덕션 설정:**
 
 ```yaml
 agents:
-  - id: "data_analyst"
+  - id: "prod_assistant"
+    name: "Production Assistant"
     provider: "api/anthropic"
     model: "claude-sonnet-4-5-20250929"
-    tools: ["query_database"]  # 도구 활성화
+    working_directory: "/var/app/production"
+    options:
+      query:
+        tools: ["read_file", "grep", "find"]
+      execute:
+        tools: ["read_file", "write_file", "run_shell"]
     inline:
       prompt: |
-        당신은 데이터 분석가입니다.
-        query_database 도구를 사용해서 데이터를 조회하고 분석하세요.
+        당신은 프로덕션 AI 어시스턴트입니다.
+
+        역할:
+        - 로그 분석 및 모니터링
+        - 자동화된 버그 수정
+        - 성능 최적화 제안
+        - 보안 취약점 점검
 ```
 
----
+### 자동화 스크립트 작성
 
-## Step 4: (선택) Slack으로 팀 공유
-
-프로덕션 에이전트를 Slack Bot으로 팀 전체와 공유할 수 있습니다.
-
-### Slack Bot 설정
-
-**환경 변수 설정:**
+**1. 로그 분석 자동화 (scripts/analyze-logs.sh):**
 
 ```bash
-# .env.slack 파일
-SLACK_BOT_TOKEN=xoxb-xxxxxxxxxxxxx
-SLACK_APP_TOKEN=xapp-xxxxxxxxxxxxx
-SLACK_SIGNING_SECRET=xxxxxxxxxxxxx
+#!/bin/bash
 
-# CrewX 설정
-CREWX_CONFIG=./crewx.yaml
+# 프로덕션 로그 분석
+CREWX_CONFIG=./crewx.yaml crewx query "@prod_assistant \
+  /var/log/app/error.log 파일을 분석해서 최근 1시간 이내 발생한 에러를 요약해줘"
 ```
 
-**Slack Bot 실행:**
+**2. 일일 리포트 생성 (scripts/daily-report.sh):**
 
 ```bash
-# 읽기 전용 모드 (query만)
-crewx slack
+#!/bin/bash
 
-# 실행 모드 (execute 가능)
-crewx slack --mode execute
+# 일일 시스템 상태 리포트
+REPORT_FILE="reports/daily-$(date +%Y%m%d).md"
+
+CREWX_CONFIG=./crewx.yaml crewx query "@prod_assistant \
+  시스템 상태를 분석하고 다음을 포함한 리포트를 작성해줘:
+  1. 서버 리소스 사용량
+  2. 최근 24시간 에러 로그 요약
+  3. 성능 지표 분석
+  4. 보안 취약점 점검 결과" > "$REPORT_FILE"
+
+echo "Daily report saved to $REPORT_FILE"
 ```
 
-### Slack에서 사용하기
+**3. 긴급 버그 수정 (scripts/hotfix.sh):**
 
-**채널에서 호출:**
+```bash
+#!/bin/bash
 
-```
-@CrewX 현재 시스템 상태를 분석해줘
-```
+FILE=$1
+ISSUE=$2
 
-**DM으로 호출:**
+# 긴급 버그 수정
+CREWX_CONFIG=./crewx.yaml crewx execute "@prod_assistant \
+  $FILE 파일의 버그를 수정해주세요: $ISSUE"
 
-```
-서버 로그에서 에러를 찾아줘
-```
-
-**특정 에이전트 지정:**
-
-```
-@CrewX @prod_assistant 데이터베이스 쿼리 최적화해줘
+# Git 커밋
+git add "$FILE"
+git commit -m "fix: Hotfix for $ISSUE"
+git push origin main
 ```
 
-### Slack Bot 장점
+### Cron Job으로 정기 작업 자동화
 
-✅ **팀 협업**: 모든 팀원이 AI 에이전트 활용
-✅ **컨텍스트 유지**: 스레드 기반 대화로 맥락 보존
-✅ **투명성**: 팀 전체가 AI 인사이트 공유
-✅ **편의성**: Slack에서 바로 사용, 별도 앱 불필요
+**crontab 설정:**
+
+```bash
+# Crontab 편집
+crontab -e
+```
+
+```cron
+# 매일 오전 9시 일일 리포트 생성
+0 9 * * * /var/app/scripts/daily-report.sh
+
+# 매 시간마다 로그 분석
+0 * * * * /var/app/scripts/analyze-logs.sh
+
+# 매주 월요일 오전 10시 보안 감사
+0 10 * * 1 CREWX_CONFIG=/var/app/crewx.yaml crewx query "@prod_assistant 전체 코드베이스를 스캔해서 보안 취약점을 찾아줘"
+```
+
+### CI/CD 파이프라인 통합
+
+**GitHub Actions 예제 (.github/workflows/ai-review.yml):**
+
+```yaml
+name: AI Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  ai-review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install CrewX
+        run: npm install -g crewx
+
+      - name: AI Code Review
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          crewx query "@prod_assistant \
+            PR #${{ github.event.pull_request.number }}의 변경사항을 리뷰하고 \
+            다음을 확인해줘:
+            1. 코드 품질 및 베스트 프랙티스
+            2. 잠재적 버그 및 에러
+            3. 성능 이슈
+            4. 보안 취약점" > review.md
+
+          cat review.md
+```
+
+**GitLab CI 예제 (.gitlab-ci.yml):**
+
+```yaml
+ai_code_review:
+  stage: test
+  script:
+    - npm install -g crewx
+    - export CREWX_CONFIG=./crewx.yaml
+    - |
+      crewx query "@prod_assistant \
+        최근 커밋을 분석하고 개선사항을 제안해줘" > ai-review.txt
+    - cat ai-review.txt
+  only:
+    - merge_requests
+```
+
+### Docker 컨테이너에서 실행
+
+**Dockerfile:**
+
+```dockerfile
+FROM node:20-alpine
+
+# CrewX 설치
+RUN npm install -g crewx
+
+# 프로젝트 파일 복사
+WORKDIR /app
+COPY crewx.yaml .
+COPY scripts/ ./scripts/
+
+# 환경 변수 설정
+ENV ANTHROPIC_API_KEY=your_api_key
+ENV CREWX_CONFIG=/app/crewx.yaml
+
+# Cron 설정
+RUN apk add --no-cache dcron
+COPY crontab /etc/crontabs/root
+
+CMD ["crond", "-f"]
+```
+
+**docker-compose.yml:**
+
+```yaml
+version: '3.8'
+
+services:
+  crewx-automation:
+    build: .
+    volumes:
+      - ./logs:/var/log/app
+      - ./reports:/app/reports
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - CREWX_CONFIG=/app/crewx.yaml
+    restart: unless-stopped
+```
+
+### 프로덕션 모니터링
+
+**실시간 로그 모니터링:**
+
+```bash
+# 로그 파일 변경 감지 및 자동 분석
+tail -f /var/log/app/error.log | while read line; do
+  if echo "$line" | grep -i "error\|fatal\|exception"; then
+    crewx query "@prod_assistant 다음 에러를 분석해줘: $line"
+  fi
+done
+```
+
+**시스템 헬스 체크:**
+
+```bash
+#!/bin/bash
+
+# 시스템 상태 확인
+HEALTH_STATUS=$(crewx query "@prod_assistant \
+  다음 지표를 확인하고 시스템 상태를 평가해줘:
+  - CPU 사용률: $(top -bn1 | grep 'Cpu(s)' | awk '{print $2}')
+  - 메모리 사용률: $(free | grep Mem | awk '{print $3/$2 * 100.0}')
+  - 디스크 사용률: $(df -h / | awk 'NR==2 {print $5}')
+")
+
+echo "$HEALTH_STATUS"
+
+# Slack/Discord로 알림 (선택)
+if echo "$HEALTH_STATUS" | grep -i "critical\|warning"; then
+  curl -X POST -H 'Content-type: application/json' \
+    --data "{\"text\":\"🚨 System Health Alert:\n$HEALTH_STATUS\"}" \
+    $SLACK_WEBHOOK_URL
+fi
+```
 
 ---
 
@@ -458,27 +431,28 @@ crewx slack --mode execute
 crewx query "@dev_assistant PR #123의 변경사항을 리뷰해줘"
 ```
 
-**프로덕션 (API + Slack):**
+**프로덕션 (GitHub Actions):**
 
-```typescript
-// GitHub Webhook → API → Slack 알림
-app.post('/webhook/github/pr', async (req, res) => {
-  const { pull_request } = req.body;
+```yaml
+# .github/workflows/pr-review.yml
+name: AI Code Review
+on:
+  pull_request:
+    types: [opened, synchronize]
 
-  // AI 에이전트로 코드 리뷰
-  const review = await crewx.runAgent('prod_assistant', {
-    input: `PR #${pull_request.number}를 리뷰해주세요`,
-    mode: 'query',
-  });
-
-  // Slack으로 결과 전송
-  await slack.postMessage({
-    channel: '#code-review',
-    text: `🤖 AI Code Review for PR #${pull_request.number}\n\n${review.content}`,
-  });
-
-  res.status(200).send('OK');
-});
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install CrewX
+        run: npm install -g crewx
+      - name: AI Review
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          REVIEW=$(crewx query "@prod_assistant PR #${{ github.event.pull_request.number }}를 리뷰해줘")
+          echo "$REVIEW" >> $GITHUB_STEP_SUMMARY
 ```
 
 ### 시나리오 2: 버그 자동 수정
@@ -490,24 +464,24 @@ app.post('/webhook/github/pr', async (req, res) => {
 crewx execute "@dev_assistant src/api.ts의 null 참조 에러를 수정해줘"
 ```
 
-**프로덕션 (API):**
+**프로덕션 (자동화 스크립트):**
 
-```typescript
-// 웹 대시보드에서 버그 수정 요청
-app.post('/api/fix-bug', async (req, res) => {
-  const { file, description } = req.body;
+```bash
+#!/bin/bash
+# scripts/auto-fix.sh
 
-  const result = await crewx.runAgent('prod_assistant', {
-    input: `${file}의 버그를 수정해주세요: ${description}`,
-    mode: 'execute',
-  });
+ERROR_FILE=$1
+ERROR_DESC=$2
 
-  res.json({
-    success: true,
-    changes: result.toolCalls.filter(t => t.name === 'write_file'),
-    message: result.content,
-  });
-});
+# AI로 버그 수정
+crewx execute "@prod_assistant $ERROR_FILE의 버그를 수정해주세요: $ERROR_DESC"
+
+# 자동 커밋
+git add "$ERROR_FILE"
+git commit -m "fix: Auto-fix by AI - $ERROR_DESC"
+git push origin hotfix/auto-fix-$(date +%s)
+
+echo "✅ Bug fix completed and pushed"
 ```
 
 ---
@@ -530,22 +504,14 @@ app.post('/api/fix-bug', async (req, res) => {
 - [ ] 도구 및 MCP 설정
 - [ ] 로컬에서 API Provider 테스트
 
-### ✅ Phase 3: 웹서버 통합
+### ✅ Phase 3: 프로덕션 배포 (CLI 기반)
 
-- [ ] `@sowonai/crewx-sdk` 설치
-- [ ] TypeScript/Node.js 웹서버 구현
-- [ ] API 엔드포인트 생성 (`/api/agent/query`, `/api/agent/execute`)
-- [ ] 커스텀 도구 개발 및 주입
-- [ ] 프론트엔드 통합
-- [ ] 프로덕션 배포
-
-### ✅ Phase 4: Slack Bot (선택)
-
-- [ ] Slack App 생성 (https://api.slack.com/apps)
-- [ ] Bot Token 및 App Token 발급
-- [ ] `.env.slack` 파일 설정
-- [ ] `crewx slack` 명령으로 Bot 실행
-- [ ] 팀원에게 사용법 공유
+- [ ] 프로덕션 환경 `crewx.yaml` 설정
+- [ ] 자동화 스크립트 작성 (로그 분석, 리포트 생성 등)
+- [ ] Cron Job 설정으로 정기 작업 자동화
+- [ ] CI/CD 파이프라인 통합 (GitHub Actions, GitLab CI 등)
+- [ ] Docker 컨테이너 설정 (선택)
+- [ ] 프로덕션 모니터링 구성
 
 ---
 
@@ -555,17 +521,16 @@ CrewX의 마이그레이션 경로는 명확합니다:
 
 1. **로컬 개발**: CLI Provider로 빠르게 프로토타이핑
 2. **프로덕션 전환**: API Provider로 마이그레이션
-3. **웹 통합**: SDK를 사용해서 웹 애플리케이션에 녹이기
-4. **팀 공유**: Slack Bot으로 전사 확대
+3. **자동화 배포**: CLI 명령어로 운영 및 자동화
 
 **핵심 인사이트:**
 
 ✨ **동일한 crewx.yaml**: CLI와 API Provider 모두 동일한 설정 파일 사용
 ✨ **점진적 마이그레이션**: 로컬과 프로덕션을 병행하며 단계적으로 전환
-✨ **유연한 배포**: CLI, API, Slack 모두 같은 에이전트 활용
-✨ **확장 가능**: 커스텀 도구, MCP 서버로 무한 확장
+✨ **CLI 기반 자동화**: Cron, CI/CD로 프로덕션 운영
+✨ **확장 가능**: 스크립트, Docker, 모니터링으로 무한 확장
 
-이제 여러분도 로컬에서 개발한 AI 에이전트를 프로덕션 서비스에 바로 적용할 수 있습니다. CrewX와 함께 AI 팀을 구축하세요! 🚀
+이제 여러분도 로컬에서 개발한 AI 에이전트를 프로덕션 환경에 CLI 명령어로 바로 배포하고 운영할 수 있습니다. CrewX와 함께 AI 자동화를 시작하세요! 🚀
 
 ---
 
@@ -573,4 +538,3 @@ CrewX의 마이그레이션 경로는 명확합니다:
 
 - [CrewX GitHub Repository](https://github.com/sowonlabs/crewx)
 - [API Provider 가이드](https://github.com/sowonlabs/crewx/blob/main/docs/api-provider-guide.md)
-- [Slack 통합 가이드](https://github.com/sowonlabs/crewx/blob/main/SLACK_INSTALL.md)
