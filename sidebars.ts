@@ -25,7 +25,7 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'CLI',
-      items: ['cli/commands'],
+      items: ['cli/commands', 'cli/templates'],
     },
     {
       type: 'category',

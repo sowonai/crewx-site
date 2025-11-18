@@ -42,6 +42,22 @@ crewx doctor --config path/to/config.yaml  # Use custom config
 - Session limits and performance
 - Provides troubleshooting recommendations
 
+### `crewx template`
+Manage project templates for agents and documents.
+
+```bash
+crewx template list                 # List available templates
+crewx template install <name>       # Install a template
+crewx template info <name>          # Show template information
+```
+
+**Features:**
+- Package agent configurations and documents as reusable templates
+- Share team workflows and best practices
+- Quick project setup with pre-configured agents
+
+See [Template Management Guide](templates.md) for detailed usage.
+
 ### `crewx query`
 Read-only analysis and queries.
 

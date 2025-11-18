@@ -1,6 +1,12 @@
-# Template System Guide
+# Handlebars Template System
 
-Complete guide for using the template system in CrewX, including document management, Handlebars helpers, and dynamic prompts.
+Complete guide for using **Handlebars templates** in CrewX agent prompts, including document management, template variables, and dynamic prompt generation.
+
+:::info What is this?
+This guide covers **Handlebars templates** for dynamic agent prompts (e.g., `{{agent.id}}`, `{{{documents.guide.content}}}`).
+
+For **project templates** that package agents and documents, see [Template Management Guide](../cli/templates.md).
+:::
 
 ## Table of Contents
 
@@ -14,10 +20,10 @@ Complete guide for using the template system in CrewX, including document manage
 
 ## Overview
 
-CrewX's template system enables:
-- **Knowledge sharing** across agents
+CrewX's Handlebars template system enables:
+- **Knowledge sharing** across agents via document references
 - **Project documentation** access through template variables
-- **Dynamic prompts** with Handlebars
+- **Dynamic prompts** with Handlebars syntax
 - **Context preservation** in agent system prompts
 - **Coding standards** enforcement
 
