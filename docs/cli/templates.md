@@ -1,15 +1,15 @@
-# Template Management Guide
+# Project Scaffolding
 
-CrewX templates allow you to package agent configurations and documents as reusable project templates. Share your team's workflows, best practices, and specialized agents across projects.
+CrewX project scaffolding allows you to package agent configurations and documents as reusable templates. Share your team's workflows, best practices, and specialized agents across projects using the `crewx template` command.
 
 ## Overview
 
-Templates in CrewX are **project scaffolding packages** that include:
+The `crewx template` command provides **project scaffolding** capabilities that include:
 - Pre-configured agents (`agents/` directory)
 - Supporting documents (`documents/` directory)
 - Team workflows and best practices
 
-This is different from the [Handlebars template system](../advanced/templates.md) used for dynamic document references in agent prompts.
+This is different from the [Handlebars Template System](../advanced/templates.md) used for dynamic variable substitution in agent prompts.
 
 ## Template Commands
 
@@ -243,24 +243,24 @@ git checkout v1.2.0
 crewx template install ./templates/review-system
 ```
 
-## Template vs Handlebars Templates
+## Project Scaffolding vs Handlebars Template System
 
-CrewX has two different "template" concepts:
+CrewX has two different "template" features that serve different purposes:
 
-| Feature | Project Templates | Handlebars Templates |
-|---------|------------------|---------------------|
-| **Purpose** | Package & distribute agents | Dynamic prompts |
-| **Commands** | `crewx template` | N/A (in `crewx.yaml`) |
+| Feature | Project Scaffolding | Handlebars Template System |
+|---------|---------------------|----------------------------|
+| **Purpose** | Package & distribute agents | Dynamic variable substitution |
+| **Commands** | `crewx template` | N/A (built into agent prompts) |
 | **Location** | `templates/` directory | Agent `prompt` field |
 | **Content** | Agents + documents | Variables + helpers |
 | **Use case** | Team sharing, reuse | Prompt customization |
 
-**Project Templates:**
+**Project Scaffolding (`crewx template`):**
 ```bash
 crewx template install wbs-automation
 ```
 
-**Handlebars Templates:**
+**Handlebars Template System (in agent prompts):**
 ```yaml
 agents:
   - id: my_agent
@@ -271,7 +271,7 @@ agents:
         {{{documents.guide.content}}}
 ```
 
-See the Handlebars Template System guide in Advanced section for dynamic prompt templates.
+See the [Handlebars Template System](../advanced/templates.md) guide for dynamic prompt templates.
 
 ## Example Workflows
 
@@ -366,6 +366,6 @@ export OPENAI_API_KEY="your-key"
 
 ## Next Steps
 
-- Explore Handlebars Templates in Advanced section for dynamic prompts
-- Learn about Agent Configuration
+- Learn about [Handlebars Template System](../advanced/templates.md) for dynamic prompt variables
+- Explore Agent Configuration
 - Check Remote Agents guide for team collaboration
