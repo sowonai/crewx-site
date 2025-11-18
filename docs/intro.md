@@ -61,6 +61,26 @@ agents:
     provider: "plugin/ollama"
 ```
 
+### **Project Scaffolding** - Template System
+Download and install project templates with pre-configured agents and documents:
+- **Instant setup** - Install ready-to-use agent configurations
+- **Team sharing** - Package and distribute agent setups across projects
+- **Template management** - List, install, and manage templates via CLI
+- **Quick start** - Get started with proven agent configurations
+
+```bash
+# List available templates
+crewx template list
+
+# Install a template
+crewx template install wbs-automation
+
+# Check installed agents
+crewx agent ls
+```
+
+👉 **[Project Scaffolding Guide →](./cli/templates.md)** for detailed usage
+
 ### **Claude Skills Compatible** - Reusable AI Expertise
 Share and reuse specialized AI capabilities using Claude Code skills format:
 - **100% Claude Code compatible** - Use existing Claude skills without modification
