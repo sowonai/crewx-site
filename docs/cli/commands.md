@@ -47,7 +47,7 @@ Manage project templates for agents and documents.
 
 ```bash
 crewx template list                 # List available templates
-crewx template install <name>       # Install a template
+crewx template init <name>          # Install a template
 crewx template info <name>          # Show template information
 ```
 

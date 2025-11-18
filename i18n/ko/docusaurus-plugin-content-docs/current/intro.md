@@ -73,7 +73,7 @@ agents:
 crewx template list
 
 # 템플릿 설치
-crewx template install wbs-automation
+crewx template init wbs-automation
 
 # 설치된 에이전트 확인
 crewx agent ls

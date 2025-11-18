@@ -24,7 +24,7 @@ Shows all available templates with their descriptions.
 ### Install a Template
 
 ```bash
-crewx template install <template-name>
+crewx template init <template-name>
 ```
 
 Installs the specified template to your project:
@@ -34,7 +34,7 @@ Installs the specified template to your project:
 
 **Example:**
 ```bash
-crewx template install wbs-automation
+crewx template init wbs-automation
 # Installed agents:
 # - @crewx_claude_dev (main developer)
 # - @crewx_codex_dev (assistant developer)
@@ -93,7 +93,7 @@ Displays detailed information about a template:
 **Usage Example:**
 ```bash
 # Install template
-crewx template install wbs-automation
+crewx template init wbs-automation
 
 # Complex work → Claude
 crewx x "@crewx_claude_dev implement user authentication system"
@@ -177,11 +177,11 @@ Supporting documents in Markdown format:
 
 ```bash
 # From local directory
-crewx template install ./templates/my-template
+crewx template init ./templates/my-template
 
 # From Git repository
 git clone https://github.com/team/crewx-templates.git
-crewx template install ./crewx-templates/my-template
+crewx template init ./crewx-templates/my-template
 ```
 
 ## Template Best Practices
@@ -257,7 +257,7 @@ CrewX has two different "template" features that serve different purposes:
 
 **Project Scaffolding (`crewx template`):**
 ```bash
-crewx template install wbs-automation
+crewx template init wbs-automation
 ```
 
 **Handlebars Template System (in agent prompts):**
@@ -283,8 +283,8 @@ git clone https://github.com/company/project
 cd project
 
 # Install standard company templates
-crewx template install code-standards
-crewx template install security-review
+crewx template init code-standards
+crewx template init security-review
 
 # Agents now available
 crewx agent ls
@@ -298,12 +298,12 @@ crewx agent ls
 ```bash
 # Project A
 cd project-a
-crewx template install backend-api
+crewx template init backend-api
 crewx x "@api_generator create user endpoints"
 
 # Project B - Same agents, consistent results
 cd ../project-b
-crewx template install backend-api
+crewx template init backend-api
 crewx x "@api_generator create product endpoints"
 ```
 
@@ -311,7 +311,7 @@ crewx x "@api_generator create product endpoints"
 
 ```bash
 # Install WBS automation
-crewx template install wbs-automation
+crewx template init wbs-automation
 
 # Complex architecture → Main developer
 crewx x "@crewx_claude_dev design microservices architecture"

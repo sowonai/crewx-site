@@ -73,7 +73,7 @@ Download and install project templates with pre-configured agents and documents:
 crewx template list
 
 # Install a template
-crewx template install wbs-automation
+crewx template init wbs-automation
 
 # Check installed agents
 crewx agent ls
