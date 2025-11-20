@@ -405,5 +405,25 @@
   "homepage.quickstart.modes.title": {
     "message": "3가지 사용 방법",
     "description": "Deployment modes title"
+  },
+  "homepage.templates.title": {
+    "message": "프로젝트 템플릿",
+    "description": "Templates section title"
+  },
+  "homepage.templates.subtitle": {
+    "message": "사전 구성된 템플릿으로 CrewX 프로젝트를 빠르게 시작하세요",
+    "description": "Templates section subtitle"
+  },
+  "homepage.templates.wbs.description": {
+    "message": "작업 분류 체계(WBS) 기반 프로젝트 자동화",
+    "description": "WBS template description"
+  },
+  "homepage.templates.docusaurus.description": {
+    "message": "AI 기반 자동 번역이 포함된 문서 사이트",
+    "description": "Docusaurus template description"
+  },
+  "homepage.templates.cta": {
+    "message": "모든 템플릿 살펴보기 →",
+    "description": "Templates CTA button"
   }
 }

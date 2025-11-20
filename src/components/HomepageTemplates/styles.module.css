@@ -1,0 +1,66 @@
+.templates {
+  padding: 4rem 0;
+  background: var(--ifm-color-emphasis-100);
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--ifm-color-emphasis-700);
+  margin-bottom: 3rem;
+}
+
+.templateCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.templateCard {
+  background: var(--ifm-background-color);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 8px;
+  padding: 2rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.templateCard:hover {
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+}
+
+.templateCard h3 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.templateCard p {
+  margin-bottom: 1rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.code {
+  background: var(--ifm-color-emphasis-200);
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin: 0;
+}
+
+.code code {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.875rem;
+}
+
+.templatesCta {
+  text-align: center;
+  margin-top: 2rem;
+}

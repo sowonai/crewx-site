@@ -4,6 +4,7 @@ import {translate} from '@docusaurus/Translate';
 import HomepageHeader from '@site/src/components/HomepageHeader';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import HomepageQuickStart from '@site/src/components/HomepageQuickStart';
+import HomepageTemplates from '@site/src/components/HomepageTemplates';
 
 export default function Home(): ReactNode {
   return (
@@ -22,6 +23,7 @@ export default function Home(): ReactNode {
       <main>
         <HomepageFeatures />
         <HomepageQuickStart />
+        <HomepageTemplates />
       </main>
     </Layout>
   );
