@@ -10,6 +10,65 @@ Claude, Gemini, Codex, Copilot을 협업 개발팀으로 변환하세요. 추가
 
 ## CrewX를 선택해야 하는 이유
 
+### **오토파일럿, 코파일럿이 아닙니다** - 당신이 자는 동안 일하는 AI
+
+**CrewX와 Claude Code는 함께 사용할 때 더 강력합니다:**
+
+| **Claude Code** | **CrewX** |
+|---|---|
+| 🧑‍✈️ **코파일럿** - 개발자가 운전, AI가 보조 | 🤖 **오토파일럿** - AI 팀이 자율적으로 작업 |
+| 순차적, 실습 중심 개발 | 여러 작업을 병렬로 실행 |
+| 개인 개발자에 집중 | Slack에서 팀 협업 |
+| 프로토타이핑 & 실험에 완벽 | 확장 & 자동화에 완벽 |
+
+**궁극의 AI 개발 워크플로:**
+```
+1. Claude Code → 아이디어 프로토타입 & 실험
+2. CrewX → 여러 에이전트가 병렬로 기능 개발
+3. Claude Code → 최종 검토 & 품질 마무리
+```
+
+**프로 팁: Claude Code를 개발팀장으로 활용하기**
+
+Claude Code를 개발 매니저처럼 CrewX 팀을 지휘하도록 사용하세요:
+
+```markdown
+# .claude/commands/crewx-dev-lead.md
+당신은 AI 에이전트 팀을 관리하는 CrewX 개발팀장입니다.
+
+## 당신의 역할
+✅ 릴리스 계획 수립 및 작업 우선순위 결정
+✅ 전문 에이전트들에게 작업 위임
+✅ 진행 상황 모니터링 및 조율
+✅ 의사결정 및 상태 보고
+
+❌ 절대 직접 코드 작성 금지 (개발자 에이전트에게 위임)
+❌ 절대 직접 테스트 실행 금지 (QA 에이전트에게 위임)
+❌ 절대 직접 배포 금지 (릴리스 에이전트에게 위임)
+
+## 팀 구성 (crewx.yaml 기반)
+- @crewx_claude_dev - 시니어 개발자 (코딩, 디버깅)
+- @crewx_qa_lead - QA 팀장 (테스트 계획)
+- @crewx_qa_tester - 테스트 실행 전문가
+- @crewx_release_manager - 릴리스 & 배포 전문가
+
+## 워크플로우 예시
+# 1. 버그 수정을 병렬로 진행
+crewx execute "@crewx_claude_dev Fix bug #123" "@crewx_qa_lead Create test plan"
+
+# 2. 수정 후 테스트 실행
+crewx execute "@crewx_qa_lead Test bug #123"
+
+# 3. 준비 완료 시 릴리스
+crewx execute "@crewx_release_manager Create release 1.0.0-rc.0"
+```
+
+**실제 사례**: CrewX 프로젝트 자체가 이 패턴을 사용합니다—Claude Code가 개발팀장 역할을 하며, 구현/테스트/릴리스를 전문 CrewX 에이전트들에게 위임합니다.
+
+Claude Code는 전략적 역할을 유지하고 CrewX 에이전트들이 전술적 실행을 담당합니다—마치 CTO가 엔지니어링 팀을 지휘하는 것처럼요.
+
+CrewX는 당신이 좋아하는 AI 코딩 어시스턴트를 대체하지 않습니다—당신이 창의적인 결정에 집중하는 동안 무거운 작업을 처리하여 **증폭**시킵니다.
+
 ### **Slack 팀 협업** - Slack에서 AI 팀 운영
 AI 에이전트를 팀 워크스페이스에 직접 가져오세요:
 - **팀 전체 AI 접근** - Slack 채널에서 모든 사람이 AI 전문성의 이점을 누립니다
