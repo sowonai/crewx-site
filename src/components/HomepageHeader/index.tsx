@@ -10,12 +10,12 @@ import styles from './index.module.css';
 export default function HomepageHeader(): ReactNode {
   const {siteConfig} = useDocusaurusContext();
   return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
+    <header className={clsx('hero', styles.heroBanner)}>
       <div className="container">
-        <Heading as="h1" className="hero__title">
+        <Heading as="h1" className={styles.heroTitle}>
           {siteConfig.title}
         </Heading>
-        <p className="hero__subtitle">
+        <p className={styles.heroSubtitle}>
           <Translate
             id="homepage.tagline"
             description="The homepage tagline">
@@ -24,7 +24,7 @@ export default function HomepageHeader(): ReactNode {
         </p>
         <div className={styles.buttons}>
           <Link
-            className="button button--secondary button--lg"
+            className="button button--primary button--lg"
             to="/docs/intro">
             <Translate
               id="homepage.getStarted"
