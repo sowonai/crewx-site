@@ -72,8 +72,11 @@ agents:
 # 사용 가능한 템플릿 목록
 crewx template list
 
-# 템플릿 설치
+# WBS 자동화 템플릿 설치
 crewx template init wbs-automation
+
+# Docusaurus i18n 템플릿 설치
+crewx template init docusaurus-i18n
 
 # 설치된 에이전트 확인
 crewx agent ls

@@ -1,0 +1,79 @@
+.templateCard {
+  margin-bottom: 2rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+}
+
+.templateCard:hover {
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.templateMeta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.875rem;
+  color: var(--ifm-color-emphasis-600);
+  margin-top: 0.5rem;
+}
+
+.version {
+  font-weight: 600;
+  color: var(--ifm-color-primary);
+}
+
+.author {
+  color: var(--ifm-color-emphasis-700);
+}
+
+.features {
+  margin-top: 1rem;
+}
+
+.features ul {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.features li {
+  margin-bottom: 0.25rem;
+  font-size: 0.9rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.tag {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background-color: var(--ifm-color-emphasis-200);
+  color: var(--ifm-color-emphasis-800);
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.installCommand {
+  background-color: var(--ifm-color-emphasis-100);
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.installCommand code {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.875rem;
+  color: var(--ifm-code-color);
+}
+
+.requirement {
+  font-size: 0.75rem;
+  color: var(--ifm-color-emphasis-600);
+  text-align: center;
+}

@@ -67,6 +67,19 @@ const config: Config = {
     ],
   ],
 
+  plugins: [
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'templates',
+        path: 'templates',
+        routeBasePath: 'templates',
+        sidebarPath: './sidebarsTemplates.ts',
+        editUrl: 'https://github.com/sowonlabs/crewx-site/tree/main/',
+      },
+    ],
+  ],
+
   themeConfig: {
     image: 'img/crewx_logo_512x512.png',
     colorMode: {
@@ -86,6 +99,13 @@ const config: Config = {
           label: 'Docs',
         },
         {to: '/blog', label: 'Blog', position: 'left'},
+        {
+          type: 'docSidebar',
+          sidebarId: 'templatesSidebar',
+          docsPluginId: 'templates',
+          position: 'left',
+          label: 'Templates',
+        },
         {
           type: 'localeDropdown',
           position: 'right',
@@ -132,6 +152,10 @@ const config: Config = {
             {
               label: 'Blog',
               to: '/blog',
+            },
+            {
+              label: 'Templates',
+              to: '/templates',
             },
           ],
         },

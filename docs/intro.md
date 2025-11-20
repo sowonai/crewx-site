@@ -72,8 +72,11 @@ Download and install project templates with pre-configured agents and documents:
 # List available templates
 crewx template list
 
-# Install a template
+# Install WBS automation template
 crewx template init wbs-automation
+
+# Install Docusaurus i18n template
+crewx template init docusaurus-i18n
 
 # Check installed agents
 crewx agent ls
