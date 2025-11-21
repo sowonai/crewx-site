@@ -49,6 +49,27 @@ A **collection of pre-configured templates** to help you get started with CrewX 
   </div>
 </div>
 
+<div className="row" style={{marginTop: '1rem'}}>
+  <div className="col col--6">
+    <TemplateCard
+      name="crewx-skill"
+      displayName="CrewX Skill"
+      description="Claude Code skill for CrewX CLI framework assistance"
+      version="1.0.0"
+      author="SowonLabs"
+      tags={["claude-code", "skill", "assistant", "documentation"]}
+      features={[
+        "Auto-activating CrewX expert skill",
+        "Complete command reference",
+        "Configuration guidance",
+        "Multi-AI workflow recommendations",
+        "Troubleshooting assistance"
+      ]}
+      crewxVersion=">=0.7.0"
+    />
+  </div>
+</div>
+
 ---
 
 ## 📖 Quick Start

@@ -425,5 +425,9 @@
   "homepage.templates.cta": {
     "message": "모든 템플릿 살펴보기 →",
     "description": "Templates CTA button"
+  },
+  "homepage.templates.crewxskill.description": {
+    "message": "CrewX CLI 프레임워크 지원을 위한 Claude Code 스킬",
+    "description": "CrewX Skill template description"
   }
 }

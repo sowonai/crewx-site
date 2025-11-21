@@ -49,6 +49,27 @@ import TemplateCard from '@site/src/components/TemplateCard';
   </div>
 </div>
 
+<div className="row" style={{marginTop: '1rem'}}>
+  <div className="col col--6">
+    <TemplateCard
+      name="crewx-skill"
+      displayName="CrewX Skill"
+      description="CrewX CLI 프레임워크 지원을 위한 Claude Code 스킬"
+      version="1.0.0"
+      author="SowonLabs"
+      tags={["claude-code", "skill", "assistant", "documentation"]}
+      features={[
+        "자동 활성화되는 CrewX 전문가 스킬",
+        "완전한 명령 참조",
+        "구성 가이드",
+        "멀티 AI 워크플로우 추천",
+        "문제 해결 지원"
+      ]}
+      crewxVersion=">=0.7.0"
+    />
+  </div>
+</div>
+
 ---
 
 ## 📖 빠른 시작

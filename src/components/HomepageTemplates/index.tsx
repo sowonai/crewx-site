@@ -49,6 +49,20 @@ export default function HomepageTemplates() {
               <code>crewx template init docusaurus-i18n</code>
             </pre>
           </div>
+
+          <div className={styles.templateCard}>
+            <h3>🎯 CrewX Skill</h3>
+            <p>
+              {translate({
+                id: 'homepage.templates.crewxskill.description',
+                message: 'Claude Code skill for CrewX CLI framework assistance',
+                description: 'CrewX Skill template description',
+              })}
+            </p>
+            <pre className={styles.code}>
+              <code>crewx template init crewx-skill</code>
+            </pre>
+          </div>
         </div>
 
         <div className={styles.templatesCta}>
