@@ -59,18 +59,58 @@
   line-height: 1.6;
 }
 
+.codeContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .code {
   background: #1e293b;
   padding: 1rem;
   border-radius: 8px;
   margin: 0;
   border: 1px solid #334155;
+  flex: 1;
 }
 
 .code code {
   font-family: var(--ifm-font-family-monospace);
   font-size: 0.9rem;
   color: #e2e8f0;
+}
+
+.copyButton {
+  background: transparent;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  padding: 0.5rem;
+  cursor: pointer;
+  color: #94a3b8;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+}
+
+.copyButton:hover {
+  background: #334155;
+  color: #e2e8f0;
+  border-color: #475569;
+}
+
+.copyButton:active {
+  transform: scale(0.95);
+}
+
+.copiedText {
+  font-size: 0.75rem;
+  color: #10b981;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .templatesCta {
