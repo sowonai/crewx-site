@@ -99,13 +99,7 @@ const config: Config = {
           label: 'Docs',
         },
         {to: '/blog', label: 'Blog', position: 'left'},
-        {
-          type: 'docSidebar',
-          sidebarId: 'templatesSidebar',
-          docsPluginId: 'templates',
-          position: 'left',
-          label: 'Templates',
-        },
+        {to: '/templates', label: 'Templates', position: 'left'},
         {
           type: 'localeDropdown',
           position: 'right',
