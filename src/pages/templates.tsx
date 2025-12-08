@@ -67,6 +67,126 @@ export default function Templates(): JSX.Element {
                 ]}
                 crewxVersion=">=0.7.0"
               />
+              <TemplateCard
+                name="gmail-skill"
+                displayName="Gmail Skill"
+                description="Claude Code skill for Gmail integration and email management"
+                version="1.0.0"
+                author="SowonLabs"
+                tags={["gmail", "email", "skill", "google"]}
+                features={[
+                  "Gmail API integration",
+                  "Email sending and reading",
+                  "Message management",
+                  "Label organization"
+                ]}
+                crewxVersion=">=0.7.0"
+              />
+              <TemplateCard
+                name="google-calendar-skill"
+                displayName="Google Calendar Skill"
+                description="Claude Code skill for Google Calendar integration"
+                version="1.0.0"
+                author="SowonLabs"
+                tags={["calendar", "scheduling", "skill", "google"]}
+                features={[
+                  "Google Calendar API integration",
+                  "Event creation and management",
+                  "Schedule viewing",
+                  "Meeting coordination"
+                ]}
+                crewxVersion=">=0.7.0"
+              />
+              <TemplateCard
+                name="google-drive-skill"
+                displayName="Google Drive Skill"
+                description="Claude Code skill for Google Drive file management"
+                version="1.0.0"
+                author="SowonLabs"
+                tags={["drive", "storage", "skill", "google"]}
+                features={[
+                  "Google Drive API integration",
+                  "File upload and download",
+                  "Folder management",
+                  "Sharing and permissions"
+                ]}
+                crewxVersion=">=0.7.0"
+              />
+              <TemplateCard
+                name="notion-skill"
+                displayName="Notion Skill"
+                description="Claude Code skill for Notion workspace integration"
+                version="1.0.0"
+                author="SowonLabs"
+                tags={["notion", "productivity", "skill", "database"]}
+                features={[
+                  "Notion API integration",
+                  "Page and database management",
+                  "Content synchronization",
+                  "Query and update capabilities"
+                ]}
+                crewxVersion=">=0.7.0"
+              />
+              <TemplateCard
+                name="image-resizer-skill"
+                displayName="Image Resizer Skill"
+                description="Claude Code skill for image resizing and optimization"
+                version="1.0.0"
+                author="SowonLabs"
+                tags={["image", "resize", "skill", "media"]}
+                features={[
+                  "Image resizing",
+                  "Format conversion",
+                  "Batch processing",
+                  "Quality optimization"
+                ]}
+                crewxVersion=">=0.7.0"
+              />
+              <TemplateCard
+                name="ocr-extractor-skill"
+                displayName="OCR Extractor Skill"
+                description="Claude Code skill for text extraction from images"
+                version="1.0.0"
+                author="SowonLabs"
+                tags={["ocr", "text-extraction", "skill", "vision"]}
+                features={[
+                  "OCR text extraction",
+                  "Multiple language support",
+                  "Image preprocessing",
+                  "High accuracy recognition"
+                ]}
+                crewxVersion=">=0.7.0"
+              />
+              <TemplateCard
+                name="md-to-pdf-skill"
+                displayName="Markdown to PDF Skill"
+                description="Claude Code skill for converting Markdown to PDF"
+                version="1.0.0"
+                author="SowonLabs"
+                tags={["markdown", "pdf", "skill", "conversion"]}
+                features={[
+                  "Markdown to PDF conversion",
+                  "Custom styling support",
+                  "Table of contents generation",
+                  "Syntax highlighting"
+                ]}
+                crewxVersion=">=0.7.0"
+              />
+              <TemplateCard
+                name="slack-upload-skill"
+                displayName="Slack Upload Skill"
+                description="Claude Code skill for Slack file uploads and messaging"
+                version="1.0.0"
+                author="SowonLabs"
+                tags={["slack", "upload", "skill", "messaging"]}
+                features={[
+                  "Slack API integration",
+                  "File upload to channels",
+                  "Message posting",
+                  "Channel management"
+                ]}
+                crewxVersion=">=0.7.0"
+              />
             </div>
           </section>
 

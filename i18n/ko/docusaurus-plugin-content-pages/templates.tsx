@@ -67,6 +67,126 @@ export default function Templates(): JSX.Element {
                 ]}
                 crewxVersion=">=0.7.0"
               />
+              <TemplateCard
+                name="gmail-skill"
+                displayName="Gmail Skill"
+                description="Gmail 연동 및 이메일 관리를 위한 Claude Code 스킬"
+                version="1.0.0"
+                author="SowonLabs"
+                tags={["gmail", "email", "skill", "google"]}
+                features={[
+                  "Gmail API 연동",
+                  "이메일 발송 및 읽기",
+                  "메시지 관리",
+                  "라벨 구성"
+                ]}
+                crewxVersion=">=0.7.0"
+              />
+              <TemplateCard
+                name="google-calendar-skill"
+                displayName="Google Calendar Skill"
+                description="Google Calendar 연동을 위한 Claude Code 스킬"
+                version="1.0.0"
+                author="SowonLabs"
+                tags={["calendar", "scheduling", "skill", "google"]}
+                features={[
+                  "Google Calendar API 연동",
+                  "이벤트 생성 및 관리",
+                  "일정 조회",
+                  "회의 조율"
+                ]}
+                crewxVersion=">=0.7.0"
+              />
+              <TemplateCard
+                name="google-drive-skill"
+                displayName="Google Drive Skill"
+                description="Google Drive 파일 관리를 위한 Claude Code 스킬"
+                version="1.0.0"
+                author="SowonLabs"
+                tags={["drive", "storage", "skill", "google"]}
+                features={[
+                  "Google Drive API 연동",
+                  "파일 업로드 및 다운로드",
+                  "폴더 관리",
+                  "공유 및 권한 설정"
+                ]}
+                crewxVersion=">=0.7.0"
+              />
+              <TemplateCard
+                name="notion-skill"
+                displayName="Notion Skill"
+                description="Notion 워크스페이스 연동을 위한 Claude Code 스킬"
+                version="1.0.0"
+                author="SowonLabs"
+                tags={["notion", "productivity", "skill", "database"]}
+                features={[
+                  "Notion API 연동",
+                  "페이지 및 데이터베이스 관리",
+                  "콘텐츠 동기화",
+                  "쿼리 및 업데이트 기능"
+                ]}
+                crewxVersion=">=0.7.0"
+              />
+              <TemplateCard
+                name="image-resizer-skill"
+                displayName="Image Resizer Skill"
+                description="이미지 크기 조정 및 최적화를 위한 Claude Code 스킬"
+                version="1.0.0"
+                author="SowonLabs"
+                tags={["image", "resize", "skill", "media"]}
+                features={[
+                  "이미지 크기 조정",
+                  "포맷 변환",
+                  "일괄 처리",
+                  "품질 최적화"
+                ]}
+                crewxVersion=">=0.7.0"
+              />
+              <TemplateCard
+                name="ocr-extractor-skill"
+                displayName="OCR Extractor Skill"
+                description="이미지에서 텍스트 추출을 위한 Claude Code 스킬"
+                version="1.0.0"
+                author="SowonLabs"
+                tags={["ocr", "text-extraction", "skill", "vision"]}
+                features={[
+                  "OCR 텍스트 추출",
+                  "다국어 지원",
+                  "이미지 전처리",
+                  "높은 정확도 인식"
+                ]}
+                crewxVersion=">=0.7.0"
+              />
+              <TemplateCard
+                name="md-to-pdf-skill"
+                displayName="Markdown to PDF Skill"
+                description="Markdown을 PDF로 변환하는 Claude Code 스킬"
+                version="1.0.0"
+                author="SowonLabs"
+                tags={["markdown", "pdf", "skill", "conversion"]}
+                features={[
+                  "Markdown을 PDF로 변환",
+                  "커스텀 스타일링 지원",
+                  "목차 자동 생성",
+                  "구문 강조"
+                ]}
+                crewxVersion=">=0.7.0"
+              />
+              <TemplateCard
+                name="slack-upload-skill"
+                displayName="Slack Upload Skill"
+                description="Slack 파일 업로드 및 메시징을 위한 Claude Code 스킬"
+                version="1.0.0"
+                author="SowonLabs"
+                tags={["slack", "upload", "skill", "messaging"]}
+                features={[
+                  "Slack API 연동",
+                  "채널에 파일 업로드",
+                  "메시지 게시",
+                  "채널 관리"
+                ]}
+                crewxVersion=">=0.7.0"
+              />
             </div>
           </section>
 
