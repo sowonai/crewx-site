@@ -489,6 +489,114 @@ CrewX는 **첫 번째 일치** 사용 - 경로 순서를 적절히 정렬
 
 최대 호환성을 위해 **읽기 전용 작업**으로 스킬 디자인
 
+## 사용 가능한 스킬 템플릿
+
+CrewX는 [crewx-templates](https://github.com/sowonlabs/crewx-templates) 저장소에서 바로 사용 가능한 스킬 템플릿을 제공합니다. 각 스킬 템플릿은:
+- **독립적인 npm 모듈**로 설치 가능
+- **영어 문서** SKILL.md 포함
+- **.env.example**로 쉬운 설정 가이드 제공
+
+### 생산성 및 통합 스킬
+
+#### gmail-skill
+Gmail API를 통한 이메일 자동화. CrewX 에이전트에서 프로그래밍 방식으로 이메일 전송, 읽기, 관리가 가능합니다.
+
+**설치:**
+```bash
+npm install @crewx/gmail-skill
+```
+
+#### google-calendar-skill
+캘린더 관리 통합. Google Calendar API를 통해 이벤트 생성, 가용성 확인, 일정 관리를 수행합니다.
+
+**설치:**
+```bash
+npm install @crewx/google-calendar-skill
+```
+
+#### google-drive-skill
+클라우드 파일 관리. 에이전트에서 Google Drive의 파일을 업로드, 다운로드, 공유, 정리할 수 있습니다.
+
+**설치:**
+```bash
+npm install @crewx/google-drive-skill
+```
+
+#### notion-skill
+Notion API를 통한 문서 및 데이터베이스 관리. 페이지 생성, 데이터베이스 쿼리, 워크스페이스 콘텐츠 관리가 가능합니다.
+
+**설치:**
+```bash
+npm install @crewx/notion-skill
+```
+
+#### slack-upload-skill
+Slack 봇 파일 업로드 기능. 에이전트가 Slack 채널에 파일과 이미지를 업로드할 수 있도록 합니다.
+
+**설치:**
+```bash
+npm install @crewx/slack-upload-skill
+```
+
+### AI 처리 스킬
+
+#### image-resizer-skill
+AI API 이미지 전처리. 비전 기능이 있는 AI API로 전송하기 전에 이미지를 리사이즈하고 최적화하여 비용을 절감하고 성능을 향상시킵니다.
+
+**설치:**
+```bash
+npm install @crewx/image-resizer-skill
+```
+
+#### ocr-extractor-skill
+문서 OCR 추출. OCR 기술을 사용하여 이미지 및 PDF 문서에서 텍스트를 추출합니다.
+
+**설치:**
+```bash
+npm install @crewx/ocr-extractor-skill
+```
+
+### 변환 스킬
+
+#### md-to-pdf-skill
+Markdown을 PDF로 변환. 마크다운 문서를 전문적으로 서식이 지정된 PDF 파일로 변환합니다.
+
+**설치:**
+```bash
+npm install @crewx/md-to-pdf-skill
+```
+
+### 스킬 템플릿 사용하기
+
+스킬 템플릿을 설치한 후:
+
+1. **문서 확인:**
+```bash
+cat node_modules/@crewx/<skill-name>/SKILL.md
+```
+
+2. **환경 변수 설정:**
+```bash
+cp node_modules/@crewx/<skill-name>/.env.example .env
+# API 키로 .env 파일 편집
+```
+
+3. **에이전트 설정에 추가:**
+```yaml
+agents:
+  - id: "my_agent"
+    provider: "cli/claude"
+    skills:
+      include:
+        - gmail
+        - google-calendar
+    inline:
+      prompt: |
+        이메일을 보내고 캘린더를 관리할 수 있습니다.
+```
+
+**저장소:** [sowonlabs/crewx-templates](https://github.com/sowonlabs/crewx-templates) (커밋: b3b721e)
+
 ## 예제
 
 작동하는 예제 참고:

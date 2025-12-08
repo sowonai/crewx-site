@@ -489,6 +489,114 @@ Some features work differently across providers:
 
 Design skills to work with **read-only operations** for maximum compatibility.
 
+## Available Skill Templates
+
+CrewX provides ready-to-use skill templates in the [crewx-templates](https://github.com/sowonlabs/crewx-templates) repository. Each skill template is:
+- **Independently installable** as an npm module
+- **Fully documented** with SKILL.md in English
+- **Easy to configure** with .env.example setup guide
+
+### Productivity & Integration Skills
+
+#### gmail-skill
+Email automation with Gmail API. Send, read, and manage emails programmatically from your CrewX agents.
+
+**Installation:**
+```bash
+npm install @crewx/gmail-skill
+```
+
+#### google-calendar-skill
+Calendar management integration. Create events, check availability, and manage schedules through Google Calendar API.
+
+**Installation:**
+```bash
+npm install @crewx/google-calendar-skill
+```
+
+#### google-drive-skill
+Cloud file management. Upload, download, share, and organize files in Google Drive from your agents.
+
+**Installation:**
+```bash
+npm install @crewx/google-drive-skill
+```
+
+#### notion-skill
+Document and database management with Notion API. Create pages, query databases, and manage workspace content.
+
+**Installation:**
+```bash
+npm install @crewx/notion-skill
+```
+
+#### slack-upload-skill
+Slack bot file upload capability. Enable your agents to upload files and images to Slack channels.
+
+**Installation:**
+```bash
+npm install @crewx/slack-upload-skill
+```
+
+### AI Processing Skills
+
+#### image-resizer-skill
+AI API image preprocessing. Resize and optimize images before sending them to vision-enabled AI APIs to reduce costs and improve performance.
+
+**Installation:**
+```bash
+npm install @crewx/image-resizer-skill
+```
+
+#### ocr-extractor-skill
+Document OCR extraction. Extract text from images and PDF documents using OCR technology.
+
+**Installation:**
+```bash
+npm install @crewx/ocr-extractor-skill
+```
+
+### Conversion Skills
+
+#### md-to-pdf-skill
+Markdown to PDF conversion. Convert markdown documents to professionally formatted PDF files.
+
+**Installation:**
+```bash
+npm install @crewx/md-to-pdf-skill
+```
+
+### Using Skill Templates
+
+After installing a skill template:
+
+1. **Check the documentation:**
+```bash
+cat node_modules/@crewx/<skill-name>/SKILL.md
+```
+
+2. **Configure environment variables:**
+```bash
+cp node_modules/@crewx/<skill-name>/.env.example .env
+# Edit .env with your API keys
+```
+
+3. **Add to your agent configuration:**
+```yaml
+agents:
+  - id: "my_agent"
+    provider: "cli/claude"
+    skills:
+      include:
+        - gmail
+        - google-calendar
+    inline:
+      prompt: |
+        You can send emails and manage calendars.
+```
+
+**Repository:** [sowonlabs/crewx-templates](https://github.com/sowonlabs/crewx-templates) (commit: b3b721e)
+
 ## Examples
 
 See working examples:
