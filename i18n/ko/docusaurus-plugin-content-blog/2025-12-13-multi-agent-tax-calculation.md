@@ -310,7 +310,7 @@ crewx q "@claude 안녕하세요"
 ```
 
 **더 알아보기:**
-- [GitHub](https://github.com/crewx-dev/crewx) - Star로 응원해주세요!
+- [GitHub](https://github.com/sowonlabs/crewx) - Star로 응원해주세요!
 - [공식 문서](https://crewx.dev) - 상세 가이드
 
 ## Coming Soon: CrewX Cloud

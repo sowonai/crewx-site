@@ -310,7 +310,7 @@ crewx q "@claude Hello"
 ```
 
 **Learn more:**
-- [GitHub](https://github.com/crewx-dev/crewx) - Star us for support!
+- [GitHub](https://github.com/sowonlabs/crewx) - Star us for support!
 - [Official Docs](https://crewx.dev) - Detailed guides
 
 ## Coming Soon: CrewX Cloud
