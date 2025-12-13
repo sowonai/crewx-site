@@ -5,7 +5,7 @@ authors: [doha]
 tags: [crewx, ai, multi-agent, case-study]
 ---
 
-An AI that was answering "10 million won" to the correct answer of 4.25 million won now consistently answers "4.25 million won" after specialization. This article is based on experience building a capital gains tax calculation system using CrewX during the Zero100 AI Builders Hackathon.
+An AI that was answering "10 million won" to the correct answer of 4.25 million won now consistently answers "4.25 million won" after specialization. This article is based on experience building a capital gains tax calculation system using CrewX during the Zero100 AI Builderthon.
 
 <!--truncate-->
 
@@ -16,7 +16,7 @@ An AI that was answering "10 million won" to the correct answer of 4.25 million 
 
 ## Project Background
 
-This project started during the **Zero100 AI Builders Hackathon**.
+This project started during the **Zero100 AI Builderthon**.
 
 I partnered with a **practicing tax accountant** in South Korea. The accountant explained the complex business logic and edge cases of capital gains tax calculation, while I implemented it as a multi-agent system using CrewX.
 
@@ -160,7 +160,7 @@ Day 15+: Server deployment... Docker setup... API endpoints...
 
 ### Full development timeline: Production-level in 3 weeks
 
-This project was completed **in 3 weeks during the Zero100 hackathon**:
+This project was completed **in 3 weeks during the Zero100 AI Builderthon**:
 - Week 1: Idea validation + specialization prototype (3 days) + feedback incorporation
 - Week 2: Skill enhancement + Slack Bot integration + tax accountant testing
 - Week 3: Accuracy tuning + presentation prep
@@ -335,4 +335,4 @@ Starting with CrewX now means you can deploy immediately when Cloud launches.
 
 ---
 
-*This article is based on experience building a capital gains tax calculation system using CrewX during the Zero100 AI Builders Hackathon. By collaborating with an active tax accountant, we achieved calculations accurate to the ten-thousand won level and 99% consistent results.*
+*This article is based on experience building a capital gains tax calculation system using CrewX during the Zero100 AI Builderthon. By collaborating with an active tax accountant, we achieved calculations accurate to the ten-thousand won level and 99% consistent results.*
