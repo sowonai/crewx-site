@@ -1,11 +1,11 @@
 ---
 slug: multi-agent-tax-calculation
-title: "Beyond Single AI Limits: Achieving Tax Calculation Accuracy Through 3-Agent Division of Labor"
+title: "Beyond Single AI Limits: Achieving Tax Calculation Accuracy Through Coordinator-Worker Pattern"
 authors: [doha]
 tags: [crewx, ai, multi-agent, case-study]
 ---
 
-An AI that was answering "10 million won" to the correct answer of 4.25 million won now consistently answers "4.25 million won" after specialization. This article is based on experience building a capital gains tax calculation system using CrewX during the Zero100 AI Builderthon.
+An AI that was answering "10 million won" to the correct answer of 4.25 million won now consistently answers "4.25 million won" after implementing the coordinator-worker pattern. This article is based on experience building a capital gains tax calculation system using CrewX during the Zero100 AI Builderthon.
 
 <!--truncate-->
 
@@ -58,16 +58,16 @@ When we delegated everything to a single AI:
    - Unreliable output
 ```
 
-## Solution: 3-Agent Specialization System
+## Solution: Coordinator-Worker Pattern with 3 Specialized Agents
 
-### Role Division
+### Architecture: Coordinator-Worker Pattern
 
 ```mermaid
 sequenceDiagram
     participant User as User
     participant C as Coordinator
-    participant E as Extractor
-    participant Cal as Calculator
+    participant E as Worker: Extractor
+    participant Cal as Worker: Calculator
 
     User->>C: Calculate capital gains tax
     C->>C: Validate document file count
@@ -80,15 +80,15 @@ sequenceDiagram
     C->>User: Report final result
 ```
 
-### 1. Coordinator (Director)
-- **Role**: Manage overall workflow
-- **Core principle**: Never calculate directly
+### 1. Coordinator
+- **Role**: Orchestrates the entire workflow and delegates tasks to worker agents
+- **Core principle**: Never calculate directly, only coordinate
 - **Responsibilities**:
   - Validate document file count
-  - Designate next agent
-  - Combine final results
+  - Delegate tasks to appropriate worker agents
+  - Combine final results from workers
 
-### 2. Extractor (Observer)
+### 2. Worker Agent: Extractor
 - **Role**: Convert unstructured data → structured JSON
 - **Core principle**: Don't judge (extract only what's visible)
 - **Responsibilities**:
@@ -96,7 +96,7 @@ sequenceDiagram
   - Categorize by item (acquisition price, transfer price, etc.)
   - Output in JSON format
 
-### 3. Calculator (Calculator)
+### 3. Worker Agent: Calculator
 - **Role**: Accurate tax calculation
 - **Core principle**: Exclude LLM hallucinations, calculate via code
 - **Responsibilities**:
@@ -118,7 +118,7 @@ Attempt 3: 10 million won ← Nonsensical answer (occurs 20~30% of the time)
 - 20~30% are completely wrong
 - **Different results each time** → Unreliable
 
-### After (3-Agent Specialization)
+### After (Coordinator-Worker Pattern)
 ```
 Attempt 1: 4.25 million won ← Correct
 Attempt 2: 4.25 million won ← Same
@@ -128,17 +128,17 @@ Attempt 3: 4.27 million won ← Occasionally 20,000 won error
 - Accurate to the ten-thousand won level
 - Nonsensical answers nearly eliminated
 
-**Key insight**: As each agent performs only one role, stability and accuracy improved dramatically.
+**Key insight**: The coordinator-worker pattern with specialized worker agents dramatically improved stability and accuracy.
 
 ## Why We Chose CrewX
 
-### The core point: Production-ready 3-agent prototype in 3 days
+### The core point: Production-ready coordinator-worker prototype in 3 days
 
-**A complete prototype of the 3-agent specialization structure was built in just 3 days.**
+**A complete prototype of the coordinator-worker pattern was built in just 3 days.**
 
 This is the true power of CrewX:
-- Day 1: Start validating the idea "Will accuracy improve with specialization?"
-- Day 2: Separate roles for Coordinator, Extractor, Calculator + connect Skills
+- Day 1: Start validating the idea "Will the coordinator-worker pattern improve accuracy?"
+- Day 2: Set up Coordinator and Worker agents (Extractor, Calculator) + connect Skills
 - Day 3: Test in Slack → **"This actually works!"** Confirmed
 
 **In 3 days, you can know "will it work or not?"** If not, you try another approach. If it does, you iterate on it. This fast experimentation cycle ultimately led to success.
@@ -152,7 +152,7 @@ Day 1: Reading LangChain documentation... Understanding graph theory...
 Day 2: Define Tool schemas... Pydantic errors...
 Day 3: First agent still not working
 Day 4-7: Finally single agent operational
-Day 8-14: Attempting to connect 3 agents... Complex state management...
+Day 8-14: Implementing coordinator-worker pattern... Complex state management...
 Day 15+: Server deployment... Docker setup... API endpoints...
 ```
 
@@ -161,7 +161,7 @@ Day 15+: Server deployment... Docker setup... API endpoints...
 ### Full development timeline: Production-level in 3 weeks
 
 This project was completed **in 3 weeks during the Zero100 AI Builderthon**:
-- Week 1: Idea validation + specialization prototype (3 days) + feedback incorporation
+- Week 1: Idea validation + coordinator-worker prototype (3 days) + feedback incorporation
 - Week 2: Skill enhancement + Slack Bot integration + tax accountant testing
 - Week 3: Accuracy tuning + presentation prep
 
@@ -278,11 +278,11 @@ crewx slack --log
 # Call @coordinator, @extractor, etc. directly from Slack channels
 ```
 
-## Conclusion: Specialization Increases Accuracy
+## Conclusion: Coordinator-Worker Pattern Increases Accuracy
 
 ### Key Lessons
 1. **Single agent limitations**: Delegating everything to one AI causes information confusion and calculation errors
-2. **Power of specialization**: Each agent performing one role improves accuracy and consistency
+2. **Power of coordinator-worker pattern**: Dedicated coordinator with specialized worker agents improves accuracy and consistency
 3. **Importance of tool choice**: LangGraph is powerful but has a steep learning curve and additional costs
 
 ### Why You Should Choose CrewX
