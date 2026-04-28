@@ -429,5 +429,329 @@
   "homepage.templates.crewxskill.description": {
     "message": "CrewX CLI 프레임워크 지원을 위한 Claude Code 스킬",
     "description": "CrewX Skill template description"
+  },
+  "landing.meta.title": {
+    "message": "CrewX — 1명. 1,000 에이전트.",
+    "description": "Browser tab title for the landing page"
+  },
+  "landing.meta.description": {
+    "message": "CrewX는 1명을 1,000 에이전트로 만듭니다 — 다양한 팀, 다양한 관점, 한 명의 운영자.",
+    "description": "Meta description for the landing page"
+  },
+  "landing.meta.ogTitle": {
+    "message": "CrewX — 1명. 1,000 에이전트.",
+    "description": "OpenGraph title"
+  },
+  "landing.meta.ogDescription": {
+    "message": "AI 팀을 만드세요. 쉬워요.",
+    "description": "OpenGraph description"
+  },
+  "landing.nav.docs": {
+    "message": "문서",
+    "description": "Top nav: Docs link"
+  },
+  "landing.nav.blog": {
+    "message": "블로그",
+    "description": "Top nav: Blog link"
+  },
+  "landing.nav.templates": {
+    "message": "템플릿",
+    "description": "Top nav: Templates link"
+  },
+  "landing.nav.getStarted": {
+    "message": "시작하기",
+    "description": "Top nav: primary Get started CTA"
+  },
+  "landing.hero.title.line1": {
+    "message": "1명.",
+    "description": "Hero title line 1"
+  },
+  "landing.hero.title.line2": {
+    "message": "{strong}개의 에이전트.",
+    "description": "Hero title line 2; {strong} wraps the agent count"
+  },
+  "landing.hero.tagline.ready": {
+    "message": "준비된 에이전트.",
+    "description": "Hero subtagline left part"
+  },
+  "landing.hero.tagline.realWork": {
+    "message": "진짜 일.",
+    "description": "Hero subtagline right part"
+  },
+  "landing.hero.headline": {
+    "message": "{bold} 쉬워요.",
+    "description": "Hero headline; {bold} wraps the emphasized phrase"
+  },
+  "landing.hero.headline.bold": {
+    "message": "AI 팀을 만드세요.",
+    "description": "Hero headline emphasized part"
+  },
+  "landing.hero.subheadline": {
+    "message": "기획, 마케팅, 출시, 지원 — 당신의 모든 업무를 기억하고 협업하며 당신만 따르는 전문가들이 처리합니다.",
+    "description": "Hero supporting paragraph"
+  },
+  "landing.hero.cta.getStarted": {
+    "message": "5분 만에 시작",
+    "description": "Hero primary CTA"
+  },
+  "landing.hero.copy.copied": {
+    "message": "복사됨",
+    "description": "Copy button label after copying"
+  },
+  "landing.hero.copy.label": {
+    "message": "복사",
+    "description": "Copy button label"
+  },
+  "landing.hero.install.help": {
+    "message": "Web UI가 자동으로 열립니다 — 로그인·설치 없음",
+    "description": "Help text under the npx install command"
+  },
+  "landing.hero.providers.heading": {
+    "message": "이미 쓰고 있는 코딩 에이전트들 — 이제 한 팀으로",
+    "description": "Section above provider logos"
+  },
+  "landing.features.eyebrow": {
+    "message": "왜 CrewX인가",
+    "description": "Why CrewX section eyebrow"
+  },
+  "landing.features.heading": {
+    "message": "그만 휘둘리고.{br}이제 운영하세요.",
+    "description": "Why CrewX section heading; {br} renders a line break"
+  },
+  "landing.features.subheading": {
+    "message": "AI 도구에서 AI 팀으로.",
+    "description": "Why CrewX subheading"
+  },
+  "landing.features.intro.p1": {
+    "message": "챗봇은 답할 수 있고, 단일 AI 도구는 한 가지 작업을 할 수 있습니다. 하지만 진짜 업무에는 기획, 분배, 실행, 검토, 그리고 기억이 필요합니다.",
+    "description": "Why CrewX intro paragraph 1"
+  },
+  "landing.features.intro.p2": {
+    "message": "CrewX는 당신이 이미 쓰고 있는 AI 도구들을 {bold}으로 만듭니다: 슈퍼바이저가 일을 분배하고, AI 워커가 병렬로 실행하며, 리뷰어가 결과를 검토하고, 모든 결정이 컨텍스트로 남습니다 — 엔지니어링, 디자인, 콘텐츠, 지원, 분석 전반에서.",
+    "description": "Why CrewX intro paragraph 2; {bold} wraps 'role-based team'"
+  },
+  "landing.features.intro.p2.bold": {
+    "message": "역할 기반 팀",
+    "description": "Phrase 'role-based team'"
+  },
+  "landing.features.intro.p3": {
+    "message": "브라우저에서 일을 감독하세요. CrewX가 스레드, 역할, 메모리, 핸드오프를 관리하므로 당신은 프롬프트로 씨름하지 않고 {bold}을 운영하기 시작합니다.",
+    "description": "Why CrewX intro paragraph 3; {bold} wraps 'AI-native team'"
+  },
+  "landing.features.intro.p3.bold": {
+    "message": "AI 네이티브 팀",
+    "description": "Phrase 'AI-native team'"
+  },
+  "landing.features.card.multiProvider.title": {
+    "message": "멀티 프로바이더 오케스트레이션",
+    "description": "Feature card 1 title"
+  },
+  "landing.features.card.multiProvider.desc": {
+    "message": "Claude, Gemini, Codex, Copilot, OpenCode를 하나의 크루로 — Claude는 기획·검토, Codex는 검증, Gemini는 리서치, Copilot은 페르소나, OpenCode는 대량 작업을 담당.",
+    "description": "Feature card 1 description"
+  },
+  "landing.features.card.wi.title": {
+    "message": "작업 지시서 (WI)",
+    "description": "Feature card 2 title"
+  },
+  "landing.features.card.wi.desc": {
+    "message": "PM 에이전트가 구조화된 티켓을 작성하고 워커에게 전달합니다. 스레드 기반, 추적 가능, 재실행 가능 — 모든 변경에 흔적이 남습니다.",
+    "description": "Feature card 2 description"
+  },
+  "landing.features.card.threaded.title": {
+    "message": "스레드 기반 대화",
+    "description": "Feature card 3 title"
+  },
+  "landing.features.card.threaded.desc": {
+    "message": "각 주제는 고유 스레드와 전체 히스토리에 살아있습니다. 에이전트가 며칠에 걸쳐 컨텍스트를 유지 — 스택을 다시 붙여 넣을 필요가 없습니다.",
+    "description": "Feature card 3 description"
+  },
+  "landing.features.card.memory.title": {
+    "message": "장기 메모리",
+    "description": "Feature card 4 title"
+  },
+  "landing.features.card.memory.desc": {
+    "message": "에이전트가 결정, 노하우, 워크로그를 마크다운으로 저장합니다. BM25 인덱싱, 모델이 읽을 수 있고, 저장소와 함께 버전 관리됩니다.",
+    "description": "Feature card 4 description"
+  },
+  "landing.features.card.skills.title": {
+    "message": "스킬 & 빌트인 도구",
+    "description": "Feature card 5 title"
+  },
+  "landing.features.card.skills.desc": {
+    "message": "메모리, 검색, 문서, 코드 리뷰를 위한 드롭인 스킬. 에이전트별로 조합하세요. SKILL.md 한 개로 직접 만들 수도 있습니다.",
+    "description": "Feature card 5 description"
+  },
+  "landing.features.card.hooks.title": {
+    "message": "훅 & 자동화",
+    "description": "Feature card 6 title"
+  },
+  "landing.features.card.hooks.desc": {
+    "message": "Pre/Post 도구 훅, 스케줄 잡, 커스텀 슬래시 명령. 브라우저를 떠나지 않고 CrewX를 기존 워크플로에 연결하세요.",
+    "description": "Feature card 6 description"
+  },
+  "landing.providers.eyebrow": {
+    "message": "프로바이더",
+    "description": "Providers section eyebrow"
+  },
+  "landing.providers.heading": {
+    "message": "역할에 맞는 모델을{br}선택하세요.",
+    "description": "Providers heading; {br} renders a line break"
+  },
+  "landing.providers.subheading": {
+    "message": "각 도구는 개발자들이 실제로 쓰는 방식에 맞는 역할을 얻습니다. 언제든 교체 — 프롬프트 재작성도, 락인도 없습니다.",
+    "description": "Providers subheading"
+  },
+  "landing.providers.roleLabel": {
+    "message": "역할:",
+    "description": "Role label prefix in provider cards"
+  },
+  "landing.providers.role.plannerReviewer": {
+    "message": "기획자 & 리뷰어",
+    "description": "Role: Planner & Reviewer"
+  },
+  "landing.providers.role.researcher": {
+    "message": "리서처",
+    "description": "Role: Researcher"
+  },
+  "landing.providers.role.verifier": {
+    "message": "검증자",
+    "description": "Role: Verifier"
+  },
+  "landing.providers.role.personaSimulator": {
+    "message": "페르소나 시뮬레이터",
+    "description": "Role: Persona simulator"
+  },
+  "landing.providers.opencode.label": {
+    "message": "커뮤니티 프로바이더",
+    "description": "OpenCode card subtitle"
+  },
+  "landing.providers.role.bulkWorker": {
+    "message": "벌크 워커",
+    "description": "Role: Bulk worker"
+  },
+  "landing.providers.role.bulkWorker.note": {
+    "message": "낮은 민감도",
+    "description": "Bulk worker note: low-sensitivity"
+  },
+  "landing.pricing.eyebrow": {
+    "message": "가격",
+    "description": "Pricing section eyebrow"
+  },
+  "landing.pricing.heading": {
+    "message": "래퍼 값만 받습니다.{br}AI 값은 안 받아요.",
+    "description": "Pricing heading; {br} renders a line break"
+  },
+  "landing.pricing.subheading": {
+    "message": "이미 결제 중인 AI 구독을 그대로 — Claude Code, Codex, Gemini CLI, Copilot CLI. 토큰 마크업은 절대 받지 않습니다.",
+    "description": "Pricing subheading"
+  },
+  "landing.pricing.tier.free.name": {
+    "message": "Free",
+    "description": "Free tier name"
+  },
+  "landing.pricing.tier.free.desc": {
+    "message": "써보세요. 첫 에이전트를 만들어보세요.",
+    "description": "Free tier description"
+  },
+  "landing.pricing.tier.free.cta": {
+    "message": "무료로 시작",
+    "description": "Free tier CTA"
+  },
+  "landing.pricing.row.workflows": {
+    "message": "워크플로",
+    "description": "Pricing row: Workflows"
+  },
+  "landing.pricing.row.agentsPerWs": {
+    "message": "에이전트 (WS당)",
+    "description": "Pricing row: Agents (per WS)"
+  },
+  "landing.pricing.row.projects": {
+    "message": "프로젝트",
+    "description": "Pricing row: Projects"
+  },
+  "landing.pricing.row.workspaces": {
+    "message": "워크스페이스",
+    "description": "Pricing row: Workspaces"
+  },
+  "landing.pricing.tier.free.feature1": {
+    "message": "Web UI (설치 없음)",
+    "description": "Free tier feature 1"
+  },
+  "landing.pricing.tier.free.feature2": {
+    "message": "본인 AI 구독 그대로 사용",
+    "description": "Free tier feature 2"
+  },
+  "landing.pricing.tier.basic.name": {
+    "message": "Basic",
+    "description": "Basic tier name"
+  },
+  "landing.pricing.perMonth": {
+    "message": "월",
+    "description": "Per month suffix on price"
+  },
+  "landing.pricing.tier.basic.desc": {
+    "message": "솔로 빌더. 첫 실전 워크플로.",
+    "description": "Basic tier description"
+  },
+  "landing.pricing.tier.basic.cta": {
+    "message": "Basic으로 시작",
+    "description": "Basic tier CTA"
+  },
+  "landing.pricing.tier.basic.feature1": {
+    "message": "커뮤니티 지원",
+    "description": "Basic tier feature 1"
+  },
+  "landing.pricing.tier.pro.badge": {
+    "message": "1,000 에이전트",
+    "description": "Pro tier highlight badge"
+  },
+  "landing.pricing.tier.pro.name": {
+    "message": "Pro",
+    "description": "Pro tier name"
+  },
+  "landing.pricing.tier.pro.desc": {
+    "message": "파워 유저. 워크스페이스 조직당 1,000 에이전트.",
+    "description": "Pro tier description"
+  },
+  "landing.pricing.tier.pro.cta": {
+    "message": "Pro 받기",
+    "description": "Pro tier CTA"
+  },
+  "landing.pricing.tier.pro.totalAgents": {
+    "message": "총 에이전트",
+    "description": "Pro tier: Total agents row label"
+  },
+  "landing.pricing.tier.max.name": {
+    "message": "Max",
+    "description": "Max tier name"
+  },
+  "landing.pricing.tier.max.price": {
+    "message": "맞춤",
+    "description": "Max tier price label (Custom)"
+  },
+  "landing.pricing.tier.max.desc": {
+    "message": "더 큰 규모가 필요하신가요? 이야기해봐요.",
+    "description": "Max tier description"
+  },
+  "landing.pricing.tier.max.cta": {
+    "message": "문의하기",
+    "description": "Max tier CTA"
+  },
+  "landing.pricing.tier.max.feature1": {
+    "message": "Pro의 모든 기능",
+    "description": "Max tier feature 1"
+  },
+  "landing.pricing.tier.max.feature2": {
+    "message": "맞춤 한도 & 지원",
+    "description": "Max tier feature 2"
+  },
+  "landing.pricing.footnote": {
+    "message": "모든 플랜은 이미 결제 중인 AI 구독을 사용합니다 — Claude Code, Codex, Gemini CLI, Copilot CLI. CrewX는 토큰 마크업 0%.",
+    "description": "Pricing section footnote"
+  },
+  "landing.footer.tagline": {
+    "message": "CrewX · 오픈소스 CLI · Apache 2.0",
+    "description": "Footer tagline"
   }
 }
