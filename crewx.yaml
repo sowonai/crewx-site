@@ -96,42 +96,66 @@ documents:
 
 # Remote agents - Import from CrewX project
 providers:
-  - id: crewx_project
+  - id: remote_crewx_pm
     type: remote
-    location: "file:///Users/doha/git/crewx/crewx.yaml"
-    external_agent_id: "crewx_claude_dev"
-    display_name: "CrewX Project (Claude Dev)"
-    description: "CrewX developer agent from main project"
+    location: "file:///Users/doha/git/crewx-ui/crewx.yaml"
+    external_agent_id: "crewx_pm"
     timeout:
       query: 300000
       execute: 600000
-
-  - id: crewx_project_codex
+  - id: remote_cto
     type: remote
-    location: "file:///Users/doha/git/crewx/crewx.yaml"
-    external_agent_id: "crewx_codex_dev"
-    display_name: "CrewX Project (Codex Dev)"
-    description: "CrewX Codex developer agent from main project"
+    location: "file:///Users/doha/git/crewx-sowonlabs/crewx.yaml"
+    external_agent_id: "cto"
     timeout:
-      query: 300000
-      execute: 600000
+      query: 600000
+      execute: 1200000
+  - id: remote_cpo
+    type: remote
+    location: "file:///Users/doha/git/crewx-sowonlabs/crewx.yaml"
+    external_agent_id: "cpo"
+    timeout:
+      query: 600000
+      execute: 1200000
+  - id: remote_cmo
+    type: remote
+    location: "file:///Users/doha/git/crewx-sowonlabs/crewx.yaml"
+    external_agent_id: "cmo"
+    timeout:
+      query: 600000
+      execute: 1200000
 
 # Custom agents powered by CrewX.
 agents:
-  # Remote agents from CrewX project
-  - id: "crewx_claude_dev"
-    name: "CrewX Developer (Claude)"
-    provider: "remote/crewx_project"
-    description: "CrewX 프로젝트 전문 개발 에이전트 (Claude 기반)"
-    role: "developer"
-    team: "Development Team"
+  # Remote agents from crewx-ui project
+  - id: "crewx_pm"
+    name: "CrewX PM"
+    role: "PM"
+    team: "CrewX"
+    provider: "remote/remote_crewx_pm"
+    description: "CrewX 프로젝트 PM - 사용자와 설계 논의, WI 발행, 팀 총괄"
 
-  - id: "crewx_codex_dev"
-    name: "CrewX Developer (Codex)"
-    provider: "remote/crewx_project_codex"
-    description: "CrewX 프로젝트 전문 개발 에이전트 (Codex 기반)"
-    role: "developer"
-    team: "Development Team"
+  # Remote agents from crewx-sowonlabs project
+  - id: "cto"
+    name: "CTO (소원랩스)"
+    role: "CTO"
+    team: "소원랩스 본사"
+    provider: "remote/remote_cto"
+    description: "기술 의사결정, 아키텍처 검토, 기술 방향성"
+
+  - id: "cpo"
+    name: "CPO (소원랩스)"
+    role: "CPO"
+    team: "소원랩스 본사"
+    provider: "remote/remote_cpo"
+    description: "제품 전략, PRD 관리, UX 의사결정"
+
+  - id: "cmo"
+    name: "CMO (소원랩스)"
+    role: "CMO"
+    team: "소원랩스 본사"
+    provider: "remote/remote_cmo"
+    description: "마케팅 전략, 브랜딩, 성장 및 GTM 의사결정"
 
   # Local agents
   - id: template_page_manager

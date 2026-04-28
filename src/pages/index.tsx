@@ -1194,6 +1194,12 @@ export default function LandingPage(): ReactNode {
               <a className="hover:text-slate-300" href="https://github.com/sowonlabs/crewx" target="_blank" rel="noopener noreferrer">
                 GitHub
               </a>
+              <a className="hover:text-slate-300" href="https://x.com/dohapark81" target="_blank" rel="noopener noreferrer">
+                Twitter
+              </a>
+              <a className="hover:text-slate-300" href="https://www.threads.com/@sowonlabs" target="_blank" rel="noopener noreferrer">
+                Threads
+              </a>
               <a className="hover:text-slate-300" href="/docs/intro">
                 <Translate id="landing.nav.docs" description="Top nav: Docs link">Docs</Translate>
               </a>
