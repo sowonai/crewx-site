@@ -2,6 +2,7 @@ import type {ReactNode} from 'react';
 import {useEffect, useState, useCallback, useRef} from 'react';
 import Layout from '@theme/Layout';
 import Head from '@docusaurus/Head';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import {useLocation} from '@docusaurus/router';
 
@@ -190,11 +191,6 @@ const LANDING_CSS = `
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-6px); }
   }
-  .landing-page-wrapper .scroll-cue { animation: bounceY 2s ease-in-out infinite; }
-  @keyframes bounceY {
-    0%, 100% { transform: translateY(0); opacity: 0.6; }
-    50% { transform: translateY(6px); opacity: 1; }
-  }
   .landing-page-wrapper .divider-line {
     background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
   }
@@ -211,12 +207,15 @@ const LANDING_CSS = `
   @keyframes dashFlow { to { stroke-dashoffset: -54; } }
   .landing-page-wrapper .travel-dot { filter: drop-shadow(0 0 4px currentColor); }
   .landing-page-wrapper .progress-pulse {
-    animation: progressPulse 2.4s ease-in-out infinite;
+    animation: progressPulse 6s linear infinite;
     transform-origin: left;
+    will-change: transform, opacity;
   }
   @keyframes progressPulse {
-    0%, 100% { opacity: 0.7; filter: brightness(1); }
-    50% { opacity: 1; filter: brightness(1.4); }
+    0%   { transform: scaleX(0);   opacity: 0.55; }
+    8%   { transform: scaleX(0);   opacity: 1; }
+    88%  { transform: scaleX(1);   opacity: 1; }
+    100% { transform: scaleX(1);   opacity: 0; }
   }
   .landing-page-wrapper details > summary::-webkit-details-marker { display: none; }
   .landing-page-wrapper .grad-text {
@@ -225,6 +224,26 @@ const LANDING_CSS = `
     background-clip: text;
     color: transparent;
   }
+  /* React Flow overrides (scoped to landing page) */
+  .landing-page-wrapper .react-flow__attribution { display: none !important; }
+  .landing-page-wrapper .react-flow__pane { cursor: default !important; }
+  .landing-page-wrapper .react-flow__handle {
+    width: 1px !important;
+    height: 1px !important;
+    min-width: 1px !important;
+    min-height: 1px !important;
+    background: transparent !important;
+    border: 0 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+  .landing-page-wrapper .react-flow__edge-path { stroke-width: 1.5; }
+  .landing-page-wrapper .react-flow__edge.animated path.react-flow__edge-path {
+    stroke-dasharray: 5 4;
+    animation: rfDashFlow 1.4s linear infinite;
+  }
+  @keyframes rfDashFlow { to { stroke-dashoffset: -18; } }
+
   /* Hide Docusaurus navbar on the landing page (rule scoped to this page via mounted style tag) */
   .navbar { display: none !important; }
   .main-wrapper {
@@ -244,19 +263,6 @@ export default function LandingPage(): ReactNode {
     };
   }, []);
 
-  useEffect(() => {
-    const el = document.getElementById('orch-timer');
-    if (!el) return;
-    let t = 4 * 60 + 21;
-    const interval = setInterval(() => {
-      t += 1;
-      const m = String(Math.floor(t / 60)).padStart(2, '0');
-      const s = String(t % 60).padStart(2, '0');
-      el.textContent = `${m}:${s}`;
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
   const handleCopy = useCallback(() => {
     navigator.clipboard.writeText('npx crewx@latest');
     setCopied(true);
@@ -271,7 +277,7 @@ export default function LandingPage(): ReactNode {
     >
       <Head>
         <meta property="og:title" content="CrewX — 1 person. 1,000 agents." />
-        <meta property="og:description" content="Many teams. Many perspectives. One operator." />
+        <meta property="og:description" content="Build your AI team. It's easy." />
         <script src="https://cdn.tailwindcss.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
@@ -330,24 +336,7 @@ export default function LandingPage(): ReactNode {
             <div className="grid items-start gap-10 lg:grid-cols-12">
               {/* Left: copy */}
               <div className="min-w-0 lg:col-span-7">
-                <div className="flex flex-wrap items-center gap-2">
-                  <div className="chip inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs text-slate-300">
-                    <span
-                      className="pulse-dot inline-block h-1.5 w-1.5 rounded-full"
-                      style={{color: '#22c55e', background: '#22c55e'}}
-                    />
-                    <span className="font-medium text-slate-200">Open source CLI</span>
-                    <span className="text-slate-600">·</span>
-                    <span className="text-slate-400">Apache 2.0</span>
-                  </div>
-                  <div className="chip inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs text-slate-300">
-                    <span className="font-medium text-slate-200">Use your AI subscriptions</span>
-                    <span className="text-slate-600">·</span>
-                    <span className="text-emerald-300">0% markup</span>
-                  </div>
-                </div>
-
-                <h1 className="mt-6 font-extrabold leading-[0.98] tracking-tight">
+                <h1 className="font-extrabold leading-[0.98] tracking-tight">
                   <span className="block text-3xl text-slate-100 sm:text-5xl lg:text-[56px]">
                     1 person.
                   </span>
@@ -366,28 +355,12 @@ export default function LandingPage(): ReactNode {
                 </div>
 
                 <p className="mt-8 max-w-2xl text-lg text-slate-300/90 sm:text-xl">
-                  Many teams. Many perspectives.
-                  <span className="font-semibold text-white"> One operator.</span>
+                  <span className="font-semibold text-white">Build your AI team.</span> It&apos;s easy.
                 </p>
                 <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-400">
-                  Run marketing, engineering, and ops from a pool of specialized
-                  agents — orchestrated, audited, and yours.
+                  Plan, market, ship, support — every function of your work, run
+                  by specialists who remember, collaborate, and answer to you alone.
                 </p>
-
-                <ul className="mt-6 flex flex-wrap gap-2 text-xs">
-                  <li className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-slate-300">
-                    Multi-team
-                  </li>
-                  <li className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-slate-300">
-                    Multi-perspective
-                  </li>
-                  <li className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-slate-300">
-                    Multi-provider
-                  </li>
-                  <li className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-slate-300">
-                    Open source CLI
-                  </li>
-                </ul>
 
                 <div className="mt-8 flex flex-wrap items-center gap-3">
                   <a
@@ -398,17 +371,6 @@ export default function LandingPage(): ReactNode {
                       <path d="M8 5v14l11-7z" />
                     </svg>
                     Get started in 5 min
-                  </a>
-                  <a
-                    href="https://github.com/sowonlabs/crewx"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-ghost inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-white"
-                  >
-                    <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
-                      <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2.16c-3.2.7-3.87-1.37-3.87-1.37-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.54-2.55-.29-5.24-1.27-5.24-5.66 0-1.25.45-2.27 1.18-3.07-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.17a10.96 10.96 0 0 1 5.74 0c2.19-1.48 3.15-1.17 3.15-1.17.62 1.58.23 2.75.11 3.04.74.8 1.18 1.82 1.18 3.07 0 4.4-2.69 5.36-5.25 5.65.41.36.78 1.06.78 2.13v3.16c0 .31.21.66.8.55C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5Z" />
-                    </svg>
-                    <span>View on GitHub</span>
                   </a>
                 </div>
 
@@ -466,305 +428,24 @@ export default function LandingPage(): ReactNode {
                 </div>
               </div>
 
-              {/* Right: Orchestra Diagram */}
+              {/* Right: Hero Diagram (orchestrator-workers) */}
               <div className="relative min-w-0 lg:col-span-5">
-                <div
-                  className="card relative min-h-[420px] overflow-hidden rounded-2xl p-6 shadow-2xl shadow-black/40 sm:min-h-[540px]"
-                  style={{aspectRatio: '5 / 6'}}
+                <BrowserOnly
+                  fallback={
+                    <div
+                      className="card relative overflow-hidden rounded-2xl shadow-2xl shadow-black/40"
+                      style={{aspectRatio: '5 / 6', minHeight: 540}}
+                    />
+                  }
                 >
-                  {/* subtle grid backdrop */}
-                  <div
-                    className="pointer-events-none absolute inset-0 opacity-30"
-                    style={{
-                      backgroundImage: 'radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px)',
-                      backgroundSize: '18px 18px',
-                    }}
-                  />
-
-                  {/* header: live indicator + timer */}
-                  <div className="relative flex items-center justify-between text-[11px]">
-                    <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-2.5 py-1 text-emerald-300">
-                      <span
-                        className="pulse-dot inline-block h-1.5 w-1.5 rounded-full"
-                        style={{color: '#22c55e', background: '#22c55e'}}
-                      />
-                      <span className="font-medium">Live</span>
-                      <span className="font-mono text-emerald-200/70">crew · atlas</span>
-                    </div>
-                    <div className="font-mono text-slate-400">
-                      ⏱ <span id="orch-timer">04:21</span> elapsed
-                    </div>
-                  </div>
-
-                  {/* SVG flow lines */}
-                  <svg viewBox="0 0 400 540" className="absolute inset-0 h-full w-full" preserveAspectRatio="none">
-                    <defs>
-                      <linearGradient id="lineGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stopColor="#8b5cf6" stopOpacity=".0" />
-                        <stop offset="50%" stopColor="#ec4899" stopOpacity=".5" />
-                        <stop offset="100%" stopColor="#f97316" stopOpacity=".0" />
-                      </linearGradient>
-                    </defs>
-                    <path d="M200 104 L200 142" className="flow-line" />
-                    <path d="M200 238 C200 262, 112 262, 112 282" className="flow-line" />
-                    <path d="M200 238 C200 262, 288 262, 288 282" className="flow-line" />
-                    <path d="M112 362 C112 386, 200 386, 200 406" className="flow-line" />
-                    <path d="M288 362 C288 386, 200 386, 200 406" className="flow-line" />
-                    <path d="M200 484 L200 510" className="flow-line" />
-
-                    {/* animated traveling dots */}
-                    <circle r="3" fill="#ec4899" className="travel-dot">
-                      <animateMotion
-                        dur="6s"
-                        repeatCount="indefinite"
-                        calcMode="spline"
-                        keyTimes="0;0.23;1"
-                        keyPoints="0;1;1"
-                        keySplines=".42 0 .58 1;0 0 1 1"
-                        path="M200 104 L200 142"
-                      />
-                      <animate
-                        attributeName="opacity"
-                        dur="6s"
-                        repeatCount="indefinite"
-                        keyTimes="0;0.23;0.231;1"
-                        values="1;1;0;0"
-                      />
-                    </circle>
-                    <circle r="2.75" fill="#10b981" className="travel-dot">
-                      <animateMotion
-                        dur="6s"
-                        repeatCount="indefinite"
-                        calcMode="spline"
-                        keyTimes="0;0.24;0.52;1"
-                        keyPoints="0;0;1;1"
-                        keySplines="0 0 1 1;.42 0 .58 1;0 0 1 1"
-                        path="M200 238 C200 262, 112 262, 112 282"
-                      />
-                      <animate
-                        attributeName="opacity"
-                        dur="6s"
-                        repeatCount="indefinite"
-                        keyTimes="0;0.239;0.24;0.52;0.521;1"
-                        values="0;0;1;1;0;0"
-                      />
-                    </circle>
-                    <circle r="2.75" fill="#38bdf8" className="travel-dot">
-                      <animateMotion
-                        dur="6s"
-                        repeatCount="indefinite"
-                        calcMode="spline"
-                        keyTimes="0;0.24;0.52;1"
-                        keyPoints="0;0;1;1"
-                        keySplines="0 0 1 1;.42 0 .58 1;0 0 1 1"
-                        path="M200 238 C200 262, 288 262, 288 282"
-                      />
-                      <animate
-                        attributeName="opacity"
-                        dur="6s"
-                        repeatCount="indefinite"
-                        keyTimes="0;0.239;0.24;0.52;0.521;1"
-                        values="0;0;1;1;0;0"
-                      />
-                    </circle>
-                    <circle r="2.5" fill="#10b981" className="travel-dot">
-                      <animateMotion
-                        dur="6s"
-                        repeatCount="indefinite"
-                        calcMode="spline"
-                        keyTimes="0;0.52;0.76;1"
-                        keyPoints="0;0;1;1"
-                        keySplines="0 0 1 1;.42 0 .58 1;0 0 1 1"
-                        path="M112 362 C112 386, 200 386, 200 406"
-                      />
-                      <animate
-                        attributeName="opacity"
-                        dur="6s"
-                        repeatCount="indefinite"
-                        keyTimes="0;0.519;0.52;0.76;0.761;1"
-                        values="0;0;1;1;0;0"
-                      />
-                    </circle>
-                    <circle r="2.5" fill="#38bdf8" className="travel-dot">
-                      <animateMotion
-                        dur="6s"
-                        repeatCount="indefinite"
-                        calcMode="spline"
-                        keyTimes="0;0.52;0.76;1"
-                        keyPoints="0;0;1;1"
-                        keySplines="0 0 1 1;.42 0 .58 1;0 0 1 1"
-                        path="M288 362 C288 386, 200 386, 200 406"
-                      />
-                      <animate
-                        attributeName="opacity"
-                        dur="6s"
-                        repeatCount="indefinite"
-                        keyTimes="0;0.519;0.52;0.76;0.761;1"
-                        values="0;0;1;1;0;0"
-                      />
-                    </circle>
-                    <circle r="3" fill="#22c55e" className="travel-dot">
-                      <animateMotion
-                        dur="6s"
-                        repeatCount="indefinite"
-                        calcMode="spline"
-                        keyTimes="0;0.76;0.94;1"
-                        keyPoints="0;0;1;1"
-                        keySplines="0 0 1 1;.42 0 .58 1;0 0 1 1"
-                        path="M200 484 L200 510"
-                      />
-                      <animate
-                        attributeName="opacity"
-                        dur="6s"
-                        repeatCount="indefinite"
-                        keyTimes="0;0.759;0.76;0.94;0.941;1"
-                        values="0;0;1;1;0;0"
-                      />
-                    </circle>
-                  </svg>
-
-                  {/* Node: User Prompt */}
-                  <div className="absolute left-1/2 top-[68px] -translate-x-1/2">
-                    <div className="inline-flex max-w-[260px] items-center gap-2 rounded-xl border border-white/10 bg-[#141a3d]/90 px-3 py-2 text-xs shadow-xl backdrop-blur">
-                      <span className="flex h-5 w-5 items-center justify-center rounded-md bg-slate-500/30 text-slate-200">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3 w-3">
-                          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                          <circle cx="12" cy="7" r="4" />
-                        </svg>
-                      </span>
-                      <span className="truncate text-slate-200">
-                        <span className="font-semibold text-pink-300">you</span> "add JWT rotation"
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Node: Planner (Claude Code) */}
-                  <div className="absolute left-1/2 top-[142px] -translate-x-1/2">
-                    <div className="relative">
-                      <div className="absolute inset-0 -m-2 rounded-2xl bg-violet-500/30 blur-xl" />
-                      <div className="relative flex h-[96px] w-[176px] flex-col items-center justify-center gap-1 rounded-2xl border border-violet-400/40 bg-gradient-to-b from-violet-500/20 to-violet-700/10 px-3 py-3 backdrop-blur">
-                        <div className="flex items-center gap-2">
-                          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-violet-300/30 bg-violet-500/20">
-                            <img src="/assets/claude-logo-dark.svg" alt="" className="h-5 w-5 object-contain" />
-                          </span>
-                          <div className="min-w-0 text-left">
-                            <div className="truncate text-xs font-semibold text-white">Planner</div>
-                            <div className="truncate text-[10px] text-violet-200/80">Claude Code</div>
-                          </div>
-                        </div>
-                        <div className="mt-1 w-full text-center text-[10px] text-violet-200/70">
-                          drafting the plan…
-                        </div>
-                        <div className="mt-1 flex w-full gap-0.5">
-                          <span className="h-0.5 flex-1 rounded-full bg-violet-400/70" />
-                          <span className="h-0.5 flex-1 rounded-full bg-violet-400/70" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Developer A: Codex */}
-                  <div className="absolute left-[42px] top-[282px]">
-                    <div className="h-[80px] w-[140px] rounded-xl border border-emerald-400/30 bg-[#0d1330]/85 p-2.5 backdrop-blur">
-                      <div className="flex items-center gap-2">
-                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-emerald-300/30 bg-emerald-400/10">
-                          <img src="/assets/chatgpt-logo-dark.svg" alt="" className="h-6 w-6 object-contain" />
-                        </span>
-                        <div className="min-w-0">
-                          <div className="truncate text-[11px] font-semibold text-white">Developer A</div>
-                          <div className="truncate text-[9px] text-emerald-200/80">Codex</div>
-                        </div>
-                      </div>
-                      <div className="mt-1.5 truncate text-[9px] text-emerald-300">executing auth flow…</div>
-                      <div className="mt-1.5 h-0.5 overflow-hidden rounded-full bg-white/5">
-                        <div className="h-full w-4/5 rounded-full bg-emerald-400/70 progress-pulse" />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Developer B: Gemini CLI */}
-                  <div className="absolute left-[218px] top-[282px]">
-                    <div className="h-[80px] w-[140px] rounded-xl border border-sky-400/30 bg-[#0d1330]/85 p-2.5 backdrop-blur">
-                      <div className="flex items-center gap-2">
-                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-sky-300/30 bg-sky-400/10">
-                          <img src="/assets/gemini-logo.svg" alt="" className="h-[19px] w-[19px] object-contain" />
-                        </span>
-                        <div className="min-w-0">
-                          <div className="truncate text-[11px] font-semibold text-white">Developer B</div>
-                          <div className="truncate text-[9px] text-sky-200/80">Gemini CLI</div>
-                        </div>
-                      </div>
-                      <div className="mt-1.5 truncate text-[9px] text-sky-300">building session UI…</div>
-                      <div className="mt-1.5 h-0.5 overflow-hidden rounded-full bg-white/5">
-                        <div className="h-full w-3/5 rounded-full bg-sky-400/70 progress-pulse" />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Node: Reviewer (Copilot CLI) */}
-                  <div className="absolute left-1/2 top-[406px] -translate-x-1/2">
-                    <div className="relative">
-                      <div className="absolute inset-0 -m-1 rounded-xl bg-pink-500/20 blur-lg" />
-                      <div className="relative flex h-[78px] w-[188px] flex-col justify-center gap-1 rounded-xl border border-pink-400/30 bg-gradient-to-r from-pink-500/15 to-orange-500/10 px-3 py-3 backdrop-blur">
-                        <div className="flex items-center gap-2">
-                          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-pink-300/30 bg-pink-500/20">
-                            <img src="/assets/github-copilot-logo-dark.svg" alt="" className="h-[18px] w-[18px] object-contain" />
-                          </span>
-                          <div className="min-w-0 flex-1 text-left">
-                            <div className="truncate text-xs font-semibold text-white">Reviewer</div>
-                            <div className="truncate text-[10px] text-pink-200/80">Copilot CLI</div>
-                          </div>
-                        </div>
-                        <div className="truncate text-center text-[10px] text-slate-300">reviewing diff…</div>
-                        <div className="flex w-full gap-0.5">
-                          <span className="h-0.5 flex-1 rounded-full bg-pink-400/70" />
-                          <span className="h-0.5 flex-1 rounded-full bg-orange-400/50" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Ship */}
-                  <div className="absolute left-1/2 top-[510px] -translate-x-1/2">
-                    <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/40 bg-emerald-500/15 px-3 py-1 text-[11px] font-semibold text-emerald-300 shadow-lg shadow-emerald-500/10">
-                      <svg viewBox="0 0 20 20" fill="currentColor" className="h-3 w-3">
-                        <path fillRule="evenodd" d="M16.7 5.3a1 1 0 0 1 0 1.4l-7.5 7.5a1 1 0 0 1-1.4 0L3.3 9.7a1 1 0 1 1 1.4-1.4L8.5 12 15.3 5.3a1 1 0 0 1 1.4 0z" clipRule="evenodd" />
-                      </svg>
-                      Shipped
-                    </div>
-                  </div>
-                </div>
-
-                {/* floating side toast: 2 developers */}
-                <div className="float-b absolute -left-4 top-[44%] z-30 hidden rounded-lg border border-white/10 bg-[#141a3d]/95 px-3 py-1.5 text-[11px] shadow-xl backdrop-blur md:block">
-                  <span className="inline-flex items-center gap-2">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3.5 w-3.5 animate-spin text-orange-300">
-                      <path strokeLinecap="round" d="M21 12a9 9 0 1 1-3.5-7.1" />
-                    </svg>
-                    <span className="font-semibold text-white">2</span>
-                    <span className="text-slate-300">developers working in parallel</span>
-                  </span>
-                </div>
-
-                {/* floating side toast: instructions issued */}
-                <div className="float-a absolute -right-4 top-[28%] z-30 hidden rounded-lg border border-white/10 bg-[#141a3d]/95 px-3 py-1.5 text-[11px] shadow-xl backdrop-blur md:block">
-                  <span className="inline-flex items-center gap-2">
-                    <svg viewBox="0 0 20 20" fill="currentColor" className="h-3.5 w-3.5 text-emerald-400">
-                      <path fillRule="evenodd" d="M16.7 5.3a1 1 0 0 1 0 1.4l-7.5 7.5a1 1 0 0 1-1.4 0L3.3 9.7a1 1 0 1 1 1.4-1.4L8.5 12 15.3 5.3a1 1 0 0 1 1.4 0z" clipRule="evenodd" />
-                    </svg>
-                    <span className="text-slate-200">2 dev tracks dispatched</span>
-                  </span>
-                </div>
+                  {() => {
+                    const HeroDiagram = require('../components/HeroDiagram').default;
+                    return <HeroDiagram />;
+                  }}
+                </BrowserOnly>
               </div>
             </div>
 
-            {/* Scroll cue */}
-            <div className="mt-16 flex flex-col items-center text-[10px] uppercase tracking-[0.3em] text-slate-500">
-              <span>Scroll</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="scroll-cue mt-2 h-4 w-4">
-                <path strokeLinecap="round" d="M12 5v14M6 13l6 6 6-6" />
-              </svg>
-            </div>
           </section>
 
           {/* Section divider */}
@@ -775,7 +456,7 @@ export default function LandingPage(): ReactNode {
           {/* ── FEATURES ── */}
           <section id="product" className="mx-auto max-w-7xl px-6 py-24">
             <div className="max-w-3xl">
-              <div className="chip inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs text-slate-300">
+              <div className="chip inline-flex items-center gap-2.5 rounded-full px-4 py-2 text-base text-slate-300">
                 <span className="text-pink-400">✦</span> Why CrewX
               </div>
               <h2 className="mt-4 text-4xl font-extrabold tracking-tight grad-text sm:text-5xl lg:text-6xl">
@@ -816,9 +497,9 @@ export default function LandingPage(): ReactNode {
                 </div>
                 <h3 className="mt-4 text-base font-semibold">Multi-provider orchestration</h3>
                 <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                  Mix Claude, Gemini, Codex, Copilot in a single crew. Pick the
-                  right model per role — Sonnet for code review, Pro for research,
-                  Codex for refactors.
+                  Mix Claude, Gemini, Codex, Copilot, OpenCode in a single crew —
+                  Claude plans &amp; reviews, Codex verifies, Gemini researches,
+                  Copilot runs personas, OpenCode handles bulk.
                 </p>
               </div>
 
@@ -897,94 +578,18 @@ export default function LandingPage(): ReactNode {
             </div>
           </section>
 
-          {/* ── HOW IT WORKS ── */}
-          <section className="relative mx-auto max-w-7xl px-6 py-24">
-            <div className="grid gap-12 lg:grid-cols-12">
-              <div className="lg:col-span-5">
-                <div className="chip inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs text-slate-300">
-                  <span className="text-violet-400">◆</span> How it works
-                </div>
-                <h2 className="mt-4 text-4xl font-extrabold tracking-tight grad-text sm:text-5xl">
-                  From a one-line ask to merged PR.
-                </h2>
-                <p className="mt-5 text-lg text-slate-400">
-                  You talk to the PM. The PM splits work into Work Instructions.
-                  Workers execute in parallel. QA gates the merge. You review.
-                </p>
-                <div className="mt-10 flex flex-wrap gap-3 text-xs">
-                  <span className="chip rounded-full px-3 py-1.5 text-slate-300">PM agent</span>
-                  <span className="chip rounded-full px-3 py-1.5 text-slate-300">Team leads</span>
-                  <span className="chip rounded-full px-3 py-1.5 text-slate-300">Workers</span>
-                  <span className="chip rounded-full px-3 py-1.5 text-slate-300">QA</span>
-                  <span className="chip rounded-full px-3 py-1.5 text-slate-300">Reviewer</span>
-                </div>
-              </div>
-              <div className="lg:col-span-7">
-                <ol className="space-y-4">
-                  <li className="card flex gap-4 rounded-2xl p-5">
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-violet-500/15 font-mono text-sm font-bold text-violet-300">
-                      01
-                    </span>
-                    <div>
-                      <h3 className="text-base font-semibold">You describe the goal</h3>
-                      <p className="mt-1 text-sm text-slate-400">
-                        "Add JWT rotation, refactor the session hook, and add a QA pass." That's it.
-                      </p>
-                    </div>
-                  </li>
-                  <li className="card flex gap-4 rounded-2xl p-5">
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-pink-500/15 font-mono text-sm font-bold text-pink-300">
-                      02
-                    </span>
-                    <div>
-                      <h3 className="text-base font-semibold">PM drafts the spec</h3>
-                      <p className="mt-1 text-sm text-slate-400">
-                        The PM agent reads your repo, drafts a Work Instruction, and
-                        asks clarifying questions before dispatching.
-                      </p>
-                    </div>
-                  </li>
-                  <li className="card flex gap-4 rounded-2xl p-5">
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-500/15 font-mono text-sm font-bold text-emerald-300">
-                      03
-                    </span>
-                    <div>
-                      <h3 className="text-base font-semibold">Workers run in parallel</h3>
-                      <p className="mt-1 text-sm text-slate-400">
-                        Backend (Codex) and Frontend (Gemini) pick up their tickets
-                        simultaneously, each in its own thread.
-                      </p>
-                    </div>
-                  </li>
-                  <li className="card flex gap-4 rounded-2xl p-5">
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-amber-500/15 font-mono text-sm font-bold text-amber-300">
-                      04
-                    </span>
-                    <div>
-                      <h3 className="text-base font-semibold">QA & review gate</h3>
-                      <p className="mt-1 text-sm text-slate-400">
-                        QA (Copilot) writes tests; the Reviewer (Sonnet) reads the
-                        diff and posts a verdict. You merge — or send it back.
-                      </p>
-                    </div>
-                  </li>
-                </ol>
-              </div>
-            </div>
-          </section>
-
           {/* ── PROVIDERS ── */}
           <section className="relative mx-auto max-w-7xl px-6 py-24">
-            <div className="mx-auto max-w-2xl text-center">
-              <div className="chip inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs text-slate-300">
+            <div className="max-w-3xl">
+              <div className="chip inline-flex items-center gap-2.5 rounded-full px-4 py-2 text-base text-slate-300">
                 <span className="text-sky-400">◇</span> Providers
               </div>
               <h2 className="mt-4 text-4xl font-extrabold tracking-tight grad-text sm:text-5xl">
                 Pick the right model<br />per role.
               </h2>
-              <p className="mt-5 text-lg text-slate-400">
-                Each role gets the AI it does best with. Swap any time —
-                no prompt rewrites, no lock-in.
+              <p className="mt-5 max-w-2xl text-lg text-slate-400">
+                Each tool earns its role from how developers actually use it.
+                Swap any time — no prompt rewrites, no lock-in.
               </p>
             </div>
 
@@ -1001,8 +606,8 @@ export default function LandingPage(): ReactNode {
                 </div>
                 <ul className="mt-4 space-y-1.5 text-xs text-slate-400">
                   <li>· Opus 4.7 / Sonnet 4.6</li>
-                  <li>· 1M context window</li>
-                  <li>· Best for review & PM</li>
+                  <li>· Plan Mode · 1M context</li>
+                  <li className="text-slate-300">· Role: <span className="text-orange-300">Planner & Reviewer</span></li>
                 </ul>
               </div>
 
@@ -1017,9 +622,9 @@ export default function LandingPage(): ReactNode {
                   </div>
                 </div>
                 <ul className="mt-4 space-y-1.5 text-xs text-slate-400">
-                  <li>· Pro / Flash</li>
-                  <li>· Native multimodal</li>
-                  <li>· Best for frontend & design</li>
+                  <li>· 3 Pro / Flash</li>
+                  <li>· Live web grounding</li>
+                  <li className="text-slate-300">· Role: <span className="text-sky-300">Researcher</span></li>
                 </ul>
               </div>
 
@@ -1034,9 +639,9 @@ export default function LandingPage(): ReactNode {
                   </div>
                 </div>
                 <ul className="mt-4 space-y-1.5 text-xs text-slate-400">
-                  <li>· o4 / GPT-5</li>
-                  <li>· Strong reasoning</li>
-                  <li>· Best for backend logic</li>
+                  <li>· GPT-5.1-Codex</li>
+                  <li>· Adversarial review · race conditions</li>
+                  <li className="text-slate-300">· Role: <span className="text-emerald-300">Verifier</span></li>
                 </ul>
               </div>
 
@@ -1051,9 +656,9 @@ export default function LandingPage(): ReactNode {
                   </div>
                 </div>
                 <ul className="mt-4 space-y-1.5 text-xs text-slate-400">
-                  <li>· Subscription-friendly</li>
-                  <li>· IDE-native context</li>
-                  <li>· Best for QA & small ops</li>
+                  <li>· GPT / Claude / Gemini / o3</li>
+                  <li>· Pick model per task</li>
+                  <li className="text-slate-300">· Role: <span className="text-pink-300">Persona simulator</span></li>
                 </ul>
               </div>
 
@@ -1068,9 +673,9 @@ export default function LandingPage(): ReactNode {
                   </div>
                 </div>
                 <ul className="mt-4 space-y-1.5 text-xs text-slate-400">
-                  <li>· GLM-5.1 / Qwen / DeepSeek</li>
-                  <li>· Local LLMs via Ollama / LM Studio</li>
-                  <li>· Best for fail-over & cost control</li>
+                  <li>· GLM / Qwen / DeepSeek / Kimi</li>
+                  <li>· Local via Ollama / LM Studio</li>
+                  <li className="text-slate-300">· Role: <span className="text-violet-300">Bulk worker</span> <span className="text-slate-500">· low-sensitivity</span></li>
                 </ul>
               </div>
             </div>
@@ -1078,14 +683,14 @@ export default function LandingPage(): ReactNode {
 
           {/* ── PRICING ── */}
           <section id="pricing" className="relative mx-auto max-w-7xl px-6 py-24">
-            <div className="mx-auto max-w-2xl text-center">
-              <div className="chip inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs text-slate-300">
+            <div className="max-w-3xl">
+              <div className="chip inline-flex items-center gap-2.5 rounded-full px-4 py-2 text-base text-slate-300">
                 <span className="text-orange-400">$</span> Pricing
               </div>
               <h2 className="mt-4 text-4xl font-extrabold tracking-tight grad-text sm:text-5xl">
                 Pay for the wrapper.<br />Not the AI.
               </h2>
-              <p className="mt-5 text-lg text-slate-400">
+              <p className="mt-5 max-w-2xl text-lg text-slate-400">
                 Use the AI subscriptions you already pay for — Claude Code, Codex,
                 Gemini CLI, Copilot CLI. We never charge a token markup.
               </p>
@@ -1098,7 +703,7 @@ export default function LandingPage(): ReactNode {
                 <div className="mt-3 flex items-baseline gap-1">
                   <span className="text-5xl font-extrabold">$0</span>
                 </div>
-                <p className="mt-3 text-sm text-slate-400">Try it. Build your first chatbot.</p>
+                <p className="mt-3 text-sm text-slate-400">Try it. Create your first agent.</p>
                 <a
                   href="#get-started"
                   className="btn-ghost mt-6 inline-flex w-full items-center justify-center rounded-full px-4 py-2.5 text-sm font-semibold text-white"
@@ -1107,13 +712,11 @@ export default function LandingPage(): ReactNode {
                 </a>
                 <ul className="mt-6 space-y-2.5 text-sm text-slate-300">
                   <li className="flex justify-between gap-2"><span className="text-slate-400">Workflows</span><span className="font-mono">10</span></li>
-                  <li className="flex justify-between gap-2"><span className="text-slate-400">AI providers</span><span className="font-mono">3</span></li>
                   <li className="flex justify-between gap-2"><span className="text-slate-400">Agents (per WS)</span><span className="font-mono">10</span></li>
                   <li className="flex justify-between gap-2"><span className="text-slate-400">Projects</span><span className="font-mono">10</span></li>
                   <li className="flex justify-between gap-2"><span className="text-slate-400">Workspaces</span><span className="font-mono">3</span></li>
-                  <li className="mt-3 flex gap-2 border-t border-white/5 pt-3"><span className="text-emerald-400">✓</span> Local-first desktop app</li>
+                  <li className="mt-3 flex gap-2 border-t border-white/5 pt-3"><span className="text-emerald-400">✓</span> Web UI (no install)</li>
                   <li className="flex gap-2"><span className="text-emerald-400">✓</span> Bring your own AI subscriptions</li>
-                  <li className="flex gap-2"><span className="text-emerald-400">✓</span> Community support</li>
                 </ul>
               </div>
 
@@ -1133,12 +736,10 @@ export default function LandingPage(): ReactNode {
                 </a>
                 <ul className="mt-6 space-y-2.5 text-sm text-slate-300">
                   <li className="flex justify-between gap-2"><span className="text-slate-400">Workflows</span><span className="font-mono">20</span></li>
-                  <li className="flex justify-between gap-2"><span className="text-slate-400">AI providers</span><span className="font-mono">10</span></li>
                   <li className="flex justify-between gap-2"><span className="text-slate-400">Agents (per WS)</span><span className="font-mono">20</span></li>
                   <li className="flex justify-between gap-2"><span className="text-slate-400">Projects</span><span className="font-mono">20</span></li>
                   <li className="flex justify-between gap-2"><span className="text-slate-400">Workspaces</span><span className="font-mono">10</span></li>
-                  <li className="mt-3 flex gap-2 border-t border-white/5 pt-3"><span className="text-emerald-400">✓</span> Everything in Free</li>
-                  <li className="flex gap-2"><span className="text-emerald-400">✓</span> Email support</li>
+                  <li className="mt-3 flex gap-2 border-t border-white/5 pt-3"><span className="text-emerald-400">✓</span> Community support</li>
                 </ul>
               </div>
 
@@ -1161,15 +762,10 @@ export default function LandingPage(): ReactNode {
                 </a>
                 <ul className="mt-6 space-y-2.5 text-sm text-slate-300">
                   <li className="flex justify-between gap-2"><span className="text-slate-400">Workflows</span><span className="font-mono">100</span></li>
-                  <li className="flex justify-between gap-2"><span className="text-slate-400">AI providers</span><span className="font-mono">20</span></li>
                   <li className="flex justify-between gap-2"><span className="text-slate-400">Agents (per WS)</span><span className="font-mono text-pink-200">100</span></li>
                   <li className="flex justify-between gap-2"><span className="text-slate-400">Projects</span><span className="font-mono">40</span></li>
                   <li className="flex justify-between gap-2"><span className="text-slate-400">Workspaces</span><span className="font-mono">10</span></li>
                   <li className="flex justify-between gap-2 border-t border-pink-400/20 pt-3"><span className="font-semibold text-pink-200">Total agents</span><span className="font-mono font-semibold text-pink-200">1,000 ✦</span></li>
-                  <li className="mt-3 flex gap-2 border-t border-white/5 pt-3"><span className="text-emerald-400">✓</span> Everything in Basic</li>
-                  <li className="flex gap-2"><span className="text-emerald-400">✓</span> Scheduled agents (cron)</li>
-                  <li className="flex gap-2"><span className="text-emerald-400">✓</span> Soft limits (no hard cap)</li>
-                  <li className="flex gap-2"><span className="text-emerald-400">✓</span> Priority support</li>
                 </ul>
               </div>
 
@@ -1177,26 +773,18 @@ export default function LandingPage(): ReactNode {
               <div className="card relative rounded-2xl p-7">
                 <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-300">Max</h3>
                 <div className="mt-3 flex items-baseline gap-1">
-                  <span className="text-5xl font-extrabold">$100</span>
-                  <span className="text-sm text-slate-500">/ month</span>
+                  <span className="text-5xl font-extrabold">Custom</span>
                 </div>
-                <p className="mt-3 text-sm text-slate-400">Multiple businesses. Marketplace. No limits.</p>
+                <p className="mt-3 text-sm text-slate-400">Bigger needs? Let&apos;s talk.</p>
                 <a
-                  href="#"
+                  href="mailto:contact@sowonlabs.com?subject=CrewX%20Max%20inquiry"
                   className="btn-ghost mt-6 inline-flex w-full items-center justify-center rounded-full px-4 py-2.5 text-sm font-semibold text-white"
                 >
-                  Talk to sales
+                  Contact us
                 </a>
                 <ul className="mt-6 space-y-2.5 text-sm text-slate-300">
-                  <li className="flex justify-between gap-2"><span className="text-slate-400">Workflows</span><span className="font-mono text-emerald-300">∞</span></li>
-                  <li className="flex justify-between gap-2"><span className="text-slate-400">AI providers</span><span className="font-mono text-emerald-300">∞</span></li>
-                  <li className="flex justify-between gap-2"><span className="text-slate-400">Agents (per WS)</span><span className="font-mono text-emerald-300">∞</span></li>
-                  <li className="flex justify-between gap-2"><span className="text-slate-400">Projects</span><span className="font-mono text-emerald-300">∞</span></li>
-                  <li className="flex justify-between gap-2"><span className="text-slate-400">Workspaces</span><span className="font-mono text-emerald-300">∞</span></li>
-                  <li className="mt-3 flex gap-2 border-t border-white/5 pt-3"><span className="text-emerald-400">✓</span> Everything in Pro</li>
-                  <li className="flex gap-2"><span className="text-emerald-400">✓</span> Marketplace skills</li>
-                  <li className="flex gap-2"><span className="text-emerald-400">✓</span> SSO (SAML / OIDC)</li>
-                  <li className="flex gap-2"><span className="text-emerald-400">✓</span> Audit log & analytics</li>
+                  <li className="flex gap-2"><span className="text-emerald-400">✓</span> Everything in Pro</li>
+                  <li className="flex gap-2"><span className="text-emerald-400">✓</span> Custom limits & support</li>
                 </ul>
               </div>
             </div>
@@ -1207,42 +795,6 @@ export default function LandingPage(): ReactNode {
             </p>
           </section>
 
-          {/* ── FINAL CTA ── */}
-          <section id="get-started" className="relative mx-auto max-w-5xl px-6 py-24">
-            <div className="card relative overflow-hidden rounded-3xl px-8 py-16 text-center">
-              <div className="pointer-events-none absolute inset-0 glow-bg opacity-80" />
-              <div className="relative">
-                <h2 className="text-4xl font-extrabold tracking-tight grad-text sm:text-5xl">
-                  Ship like a team of five.<br />
-                  <span className="x-x">By yourself.</span>
-                </h2>
-                <p className="mx-auto mt-5 max-w-xl text-lg text-slate-400">
-                  Five minutes from <span className="font-mono text-pink-300">npx</span> to your first PR.
-                  No credit card. No vendor lock-in.
-                </p>
-                <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-                  <a
-                    href="#"
-                    className="btn-primary inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white"
-                  >
-                    Get started in 5 min
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
-                      <path d="M5 12h14M13 5l7 7-7 7" />
-                    </svg>
-                  </a>
-                  <a
-                    href="/docs/intro"
-                    className="btn-ghost inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white"
-                  >
-                    Read the docs
-                  </a>
-                </div>
-                <div className="mt-7 font-mono text-xs text-slate-500">
-                  $ npx <span className="text-pink-300">crewx@latest</span>
-                </div>
-              </div>
-            </div>
-          </section>
         </main>
 
         {/* Footer */}
@@ -1257,8 +809,6 @@ export default function LandingPage(): ReactNode {
                 GitHub
               </a>
               <a className="hover:text-slate-300" href="/docs/intro">Docs</a>
-              <a className="hover:text-slate-300" href="/blog">Changelog</a>
-              <a className="hover:text-slate-300" href="#">Privacy</a>
             </div>
           </div>
         </footer>
