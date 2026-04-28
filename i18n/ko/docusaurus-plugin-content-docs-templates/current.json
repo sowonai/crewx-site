@@ -1,0 +1,18 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.templatesSidebar.category.Available Templates": {
+    "message": "Available Templates",
+    "description": "The label for category 'Available Templates' in sidebar 'templatesSidebar'"
+  },
+  "sidebar.templatesSidebar.doc.Introduction": {
+    "message": "Introduction",
+    "description": "The label for the doc item 'Introduction' in sidebar 'templatesSidebar', linking to the doc intro"
+  },
+  "sidebar.templatesSidebar.doc.Creating Custom Templates": {
+    "message": "Creating Custom Templates",
+    "description": "The label for the doc item 'Creating Custom Templates' in sidebar 'templatesSidebar', linking to the doc creating-custom"
+  }
+}

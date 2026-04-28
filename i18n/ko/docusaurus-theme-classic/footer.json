@@ -30,5 +30,17 @@
   "copyright": {
     "message": "Copyright © 2025 SowonLabs. Built with Docusaurus.",
     "description": "The footer copyright"
+  },
+  "link.item.label.Twitter": {
+    "message": "Twitter",
+    "description": "The label of footer link with label=Twitter linking to https://x.com/dohapark81"
+  },
+  "link.item.label.Threads": {
+    "message": "Threads",
+    "description": "The label of footer link with label=Threads linking to https://www.threads.com/@sowonlabs"
+  },
+  "link.item.label.Templates": {
+    "message": "Templates",
+    "description": "The label of footer link with label=Templates linking to /templates"
   }
 }
