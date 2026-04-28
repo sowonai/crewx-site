@@ -321,7 +321,7 @@ export default function LandingPage(): ReactNode {
                 GitHub
               </a>
               <a
-                href="#get-started"
+                href="/docs/intro"
                 className="btn-primary rounded-full px-4 py-2 text-sm font-semibold text-white"
               >
                 Get started
@@ -364,7 +364,7 @@ export default function LandingPage(): ReactNode {
 
                 <div className="mt-8 flex flex-wrap items-center gap-3">
                   <a
-                    href="#get-started"
+                    href="/docs/intro"
                     className="btn-primary inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-white"
                   >
                     <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
@@ -705,7 +705,7 @@ export default function LandingPage(): ReactNode {
                 </div>
                 <p className="mt-3 text-sm text-slate-400">Try it. Create your first agent.</p>
                 <a
-                  href="#get-started"
+                  href="/docs/intro"
                   className="btn-ghost mt-6 inline-flex w-full items-center justify-center rounded-full px-4 py-2.5 text-sm font-semibold text-white"
                 >
                   Start Free
@@ -777,7 +777,7 @@ export default function LandingPage(): ReactNode {
                 </div>
                 <p className="mt-3 text-sm text-slate-400">Bigger needs? Let&apos;s talk.</p>
                 <a
-                  href="mailto:contact@sowonlabs.com?subject=CrewX%20Max%20inquiry"
+                  href="mailto:crewx@sowonlabs.com?subject=CrewX%20Max%20inquiry"
                   className="btn-ghost mt-6 inline-flex w-full items-center justify-center rounded-full px-4 py-2.5 text-sm font-semibold text-white"
                 >
                   Contact us
