@@ -3,6 +3,7 @@ import {useEffect, useState, useCallback, useRef} from 'react';
 import Layout from '@theme/Layout';
 import Head from '@docusaurus/Head';
 import BrowserOnly from '@docusaurus/BrowserOnly';
+import Translate, {translate} from '@docusaurus/Translate';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import {useLocation} from '@docusaurus/router';
 
@@ -272,12 +273,28 @@ export default function LandingPage(): ReactNode {
   return (
     <Layout
       noFooter
-      title="CrewX — 1 person. 1,000 agents."
-      description="CrewX turns 1 person into 1,000 agents: many teams, many perspectives, one operator."
+      title={translate({
+        id: 'landing.meta.title',
+        message: 'CrewX — 1 person. 1,000 agents.',
+        description: 'Browser tab title for the landing page',
+      })}
+      description={translate({
+        id: 'landing.meta.description',
+        message: 'CrewX turns 1 person into 1,000 agents: many teams, many perspectives, one operator.',
+        description: 'Meta description for the landing page',
+      })}
     >
       <Head>
-        <meta property="og:title" content="CrewX — 1 person. 1,000 agents." />
-        <meta property="og:description" content="Build your AI team. It's easy." />
+        <meta property="og:title" content={translate({
+          id: 'landing.meta.ogTitle',
+          message: 'CrewX — 1 person. 1,000 agents.',
+          description: 'OpenGraph title',
+        })} />
+        <meta property="og:description" content={translate({
+          id: 'landing.meta.ogDescription',
+          message: "Build your AI team. It's easy.",
+          description: 'OpenGraph description',
+        })} />
         <script src="https://cdn.tailwindcss.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
@@ -302,9 +319,15 @@ export default function LandingPage(): ReactNode {
             </a>
 
             <nav className="hidden items-center gap-8 text-sm text-slate-300 md:flex">
-              <a className="hover:text-white" href="/docs/intro">Docs</a>
-              <a className="hover:text-white" href="/blog">Blog</a>
-              <a className="hover:text-white" href="/templates">Templates</a>
+              <a className="hover:text-white" href="/docs/intro">
+                <Translate id="landing.nav.docs" description="Top nav: Docs link">Docs</Translate>
+              </a>
+              <a className="hover:text-white" href="/blog">
+                <Translate id="landing.nav.blog" description="Top nav: Blog link">Blog</Translate>
+              </a>
+              <a className="hover:text-white" href="/templates">
+                <Translate id="landing.nav.templates" description="Top nav: Templates link">Templates</Translate>
+              </a>
             </nav>
 
             <div className="flex items-center gap-3">
@@ -324,7 +347,9 @@ export default function LandingPage(): ReactNode {
                 href="/docs/intro"
                 className="btn-primary rounded-full px-4 py-2 text-sm font-semibold text-white"
               >
-                Get started
+                <Translate id="landing.nav.getStarted" description="Top nav: primary Get started CTA">
+                  Get started
+                </Translate>
               </a>
             </div>
           </div>
@@ -338,28 +363,59 @@ export default function LandingPage(): ReactNode {
               <div className="min-w-0 lg:col-span-7">
                 <h1 className="font-extrabold leading-[0.98] tracking-tight">
                   <span className="block text-3xl text-slate-100 sm:text-5xl lg:text-[56px]">
-                    1 person.
+                    <Translate id="landing.hero.title.line1" description="Hero title line 1">
+                      1 person.
+                    </Translate>
                   </span>
                   <span className="grad-text mt-1 block pb-2 text-[40px] font-black leading-[1.25] sm:text-7xl lg:text-[88px]">
-                    <span className="font-black">1,000</span> agents.
+                    <Translate
+                      id="landing.hero.title.line2"
+                      description="Hero title line 2; {strong} wraps the agent count"
+                      values={{strong: <span className="font-black">1,000</span>}}
+                    >
+                      {'{strong} agents.'}
+                    </Translate>
                   </span>
                 </h1>
 
                 <div className="mt-5 flex items-center gap-3 text-sm text-slate-400">
                   <img src="/assets/crewx-logo.png" alt="" className="h-5 w-5" />
                   <span className="font-semibold tracking-wide">
-                    <span className="text-white">Ready Agents.</span>
+                    <span className="text-white">
+                      <Translate id="landing.hero.tagline.ready" description="Hero subtagline left part">
+                        Ready Agents.
+                      </Translate>
+                    </span>
                     <span className="text-slate-500">·</span>
-                    <span className="x-x">Real Work.</span>
+                    <span className="x-x">
+                      <Translate id="landing.hero.tagline.realWork" description="Hero subtagline right part">
+                        Real Work.
+                      </Translate>
+                    </span>
                   </span>
                 </div>
 
                 <p className="mt-8 max-w-2xl text-lg text-slate-300/90 sm:text-xl">
-                  <span className="font-semibold text-white">Build your AI team.</span> It&apos;s easy.
+                  <Translate
+                    id="landing.hero.headline"
+                    description="Hero headline; {bold} wraps the emphasized phrase"
+                    values={{
+                      bold: (
+                        <span className="font-semibold text-white">
+                          <Translate id="landing.hero.headline.bold" description="Hero headline emphasized part">
+                            Build your AI team.
+                          </Translate>
+                        </span>
+                      ),
+                    }}
+                  >
+                    {"{bold} It's easy."}
+                  </Translate>
                 </p>
                 <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-400">
-                  Plan, market, ship, support — every function of your work, run
-                  by specialists who remember, collaborate, and answer to you alone.
+                  <Translate id="landing.hero.subheadline" description="Hero supporting paragraph">
+                    Plan, market, ship, support — every function of your work, run by specialists who remember, collaborate, and answer to you alone.
+                  </Translate>
                 </p>
 
                 <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -370,7 +426,9 @@ export default function LandingPage(): ReactNode {
                     <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
                       <path d="M8 5v14l11-7z" />
                     </svg>
-                    Get started in 5 min
+                    <Translate id="landing.hero.cta.getStarted" description="Hero primary CTA">
+                      Get started in 5 min
+                    </Translate>
                   </a>
                 </div>
 
@@ -384,20 +442,36 @@ export default function LandingPage(): ReactNode {
                       onClick={handleCopy}
                       className="inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-white/5 px-2.5 py-1 text-xs text-slate-300 hover:bg-white/10"
                     >
-                      <span>{copied ? 'Copied' : 'Copy'}</span>
+                      <span>
+                        {copied ? (
+                          <Translate id="landing.hero.copy.copied" description="Copy button label after copying">
+                            Copied
+                          </Translate>
+                        ) : (
+                          <Translate id="landing.hero.copy.label" description="Copy button label">
+                            Copy
+                          </Translate>
+                        )}
+                      </span>
                     </button>
                   </div>
                   <div className="mt-2 flex items-center gap-1.5 px-1 text-[11px] text-slate-500">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3 w-3">
                       <path d="M9 12l2 2 4-4M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" />
                     </svg>
-                    <span>Web UI opens automatically — no login, no install</span>
+                    <span>
+                      <Translate id="landing.hero.install.help" description="Help text under the npx install command">
+                        Web UI opens automatically — no login, no install
+                      </Translate>
+                    </span>
                   </div>
                 </div>
 
                 <div className="mt-12">
                   <div className="text-xs uppercase tracking-wider text-slate-500">
-                    The coding agents you already use — now as one team
+                    <Translate id="landing.hero.providers.heading" description="Section above provider logos">
+                      The coding agents you already use — now as one team
+                    </Translate>
                   </div>
                   <div className="mt-4 flex flex-wrap items-center gap-x-7 gap-y-3 text-slate-400">
                     <span className="inline-flex items-center gap-2">
@@ -457,28 +531,63 @@ export default function LandingPage(): ReactNode {
           <section id="product" className="mx-auto max-w-7xl px-6 py-24">
             <div className="max-w-3xl">
               <div className="chip inline-flex items-center gap-2.5 rounded-full px-4 py-2 text-base text-slate-300">
-                <span className="text-pink-400">✦</span> Why CrewX
+                <span className="text-pink-400">✦</span>{' '}
+                <Translate id="landing.features.eyebrow" description="Why CrewX section eyebrow">
+                  Why CrewX
+                </Translate>
               </div>
               <h2 className="mt-4 text-4xl font-extrabold tracking-tight grad-text sm:text-5xl lg:text-6xl">
-                Stop juggling.<br />Start operating.
+                <Translate
+                  id="landing.features.heading"
+                  description="Why CrewX section heading; {br} renders a line break"
+                  values={{br: <br />}}
+                >
+                  {'Stop juggling.{br}Start operating.'}
+                </Translate>
               </h2>
-              <p className="mt-3 text-base text-slate-400">From AI tools to an AI team.</p>
+              <p className="mt-3 text-base text-slate-400">
+                <Translate id="landing.features.subheading" description="Why CrewX subheading">
+                  From AI tools to an AI team.
+                </Translate>
+              </p>
               <p className="mt-7 max-w-2xl text-lg leading-relaxed text-slate-400">
-                A chatbot can answer. A single AI tool can do one task. But real
-                work needs planning, splitting, execution, review, and memory.
+                <Translate id="landing.features.intro.p1" description="Why CrewX intro paragraph 1">
+                  A chatbot can answer. A single AI tool can do one task. But real work needs planning, splitting, execution, review, and memory.
+                </Translate>
               </p>
               <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-400">
-                CrewX turns the AI tools you already use into a{' '}
-                <span className="font-semibold text-white">role-based team</span>:
-                a supervisor assigns the work, AI workers execute in parallel,
-                reviewers check the result, and every decision stays in context —
-                across engineering, design, content, support, and analytics.
+                <Translate
+                  id="landing.features.intro.p2"
+                  description="Why CrewX intro paragraph 2; {bold} wraps 'role-based team'"
+                  values={{
+                    bold: (
+                      <span className="font-semibold text-white">
+                        <Translate id="landing.features.intro.p2.bold" description="Phrase 'role-based team'">
+                          role-based team
+                        </Translate>
+                      </span>
+                    ),
+                  }}
+                >
+                  {'CrewX turns the AI tools you already use into a {bold}: a supervisor assigns the work, AI workers execute in parallel, reviewers check the result, and every decision stays in context — across engineering, design, content, support, and analytics.'}
+                </Translate>
               </p>
               <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-300">
-                You supervise the work from the browser. CrewX handles threads,
-                roles, memory, and handoffs so you stop juggling prompts and start
-                operating an{' '}
-                <span className="font-semibold text-white">AI-native team</span>.
+                <Translate
+                  id="landing.features.intro.p3"
+                  description="Why CrewX intro paragraph 3; {bold} wraps 'AI-native team'"
+                  values={{
+                    bold: (
+                      <span className="font-semibold text-white">
+                        <Translate id="landing.features.intro.p3.bold" description="Phrase 'AI-native team'">
+                          AI-native team
+                        </Translate>
+                      </span>
+                    ),
+                  }}
+                >
+                  {'You supervise the work from the browser. CrewX handles threads, roles, memory, and handoffs so you stop juggling prompts and start operating an {bold}.'}
+                </Translate>
               </p>
             </div>
 
@@ -495,11 +604,15 @@ export default function LandingPage(): ReactNode {
                     <path d="M9.5 9.5L7 7M14.5 9.5L17 7M9.5 14.5L7 17M14.5 14.5L17 17" />
                   </svg>
                 </div>
-                <h3 className="mt-4 text-base font-semibold">Multi-provider orchestration</h3>
+                <h3 className="mt-4 text-base font-semibold">
+                  <Translate id="landing.features.card.multiProvider.title" description="Feature card 1 title">
+                    Multi-provider orchestration
+                  </Translate>
+                </h3>
                 <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                  Mix Claude, Gemini, Codex, Copilot, OpenCode in a single crew —
-                  Claude plans &amp; reviews, Codex verifies, Gemini researches,
-                  Copilot runs personas, OpenCode handles bulk.
+                  <Translate id="landing.features.card.multiProvider.desc" description="Feature card 1 description">
+                    Mix Claude, Gemini, Codex, Copilot, OpenCode in a single crew — Claude plans & reviews, Codex verifies, Gemini researches, Copilot runs personas, OpenCode handles bulk.
+                  </Translate>
                 </p>
               </div>
 
@@ -511,11 +624,15 @@ export default function LandingPage(): ReactNode {
                     <circle cx="20" cy="12" r="2" fill="currentColor" />
                   </svg>
                 </div>
-                <h3 className="mt-4 text-base font-semibold">Work Instructions (WI)</h3>
+                <h3 className="mt-4 text-base font-semibold">
+                  <Translate id="landing.features.card.wi.title" description="Feature card 2 title">
+                    Work Instructions (WI)
+                  </Translate>
+                </h3>
                 <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                  The PM agent writes structured tickets, then dispatches them to
-                  workers. Threaded, traceable, replayable — every change has a
-                  paper trail.
+                  <Translate id="landing.features.card.wi.desc" description="Feature card 2 description">
+                    The PM agent writes structured tickets, then dispatches them to workers. Threaded, traceable, replayable — every change has a paper trail.
+                  </Translate>
                 </p>
               </div>
 
@@ -526,10 +643,15 @@ export default function LandingPage(): ReactNode {
                     <path d="M21 12c0 4.97-4.03 9-9 9-1.5 0-2.91-.37-4.15-1.02L3 21l1.02-4.85A8.96 8.96 0 0 1 3 12c0-4.97 4.03-9 9-9s9 4.03 9 9z" />
                   </svg>
                 </div>
-                <h3 className="mt-4 text-base font-semibold">Threaded conversations</h3>
+                <h3 className="mt-4 text-base font-semibold">
+                  <Translate id="landing.features.card.threaded.title" description="Feature card 3 title">
+                    Threaded conversations
+                  </Translate>
+                </h3>
                 <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                  Each topic lives in its own thread with full history. Agents keep
-                  context across days — no more re-pasting your stack.
+                  <Translate id="landing.features.card.threaded.desc" description="Feature card 3 description">
+                    Each topic lives in its own thread with full history. Agents keep context across days — no more re-pasting your stack.
+                  </Translate>
                 </p>
               </div>
 
@@ -540,10 +662,15 @@ export default function LandingPage(): ReactNode {
                     <path d="M12 3v18M3 12h18M5.5 5.5l13 13M18.5 5.5l-13 13" />
                   </svg>
                 </div>
-                <h3 className="mt-4 text-base font-semibold">Long-term memory</h3>
+                <h3 className="mt-4 text-base font-semibold">
+                  <Translate id="landing.features.card.memory.title" description="Feature card 4 title">
+                    Long-term memory
+                  </Translate>
+                </h3>
                 <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                  Agents save decisions, knowhow, and worklogs as Markdown.
-                  BM25-indexed, model-readable, version-controlled with your repo.
+                  <Translate id="landing.features.card.memory.desc" description="Feature card 4 description">
+                    Agents save decisions, knowhow, and worklogs as Markdown. BM25-indexed, model-readable, version-controlled with your repo.
+                  </Translate>
                 </p>
               </div>
 
@@ -555,10 +682,15 @@ export default function LandingPage(): ReactNode {
                     <circle cx="12" cy="12" r="3" />
                   </svg>
                 </div>
-                <h3 className="mt-4 text-base font-semibold">Skills & built-in tools</h3>
+                <h3 className="mt-4 text-base font-semibold">
+                  <Translate id="landing.features.card.skills.title" description="Feature card 5 title">
+                    Skills & built-in tools
+                  </Translate>
+                </h3>
                 <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                  Drop-in skills for memory, search, docs, code review. Compose them
-                  per agent. Build your own with a single SKILL.md.
+                  <Translate id="landing.features.card.skills.desc" description="Feature card 5 description">
+                    Drop-in skills for memory, search, docs, code review. Compose them per agent. Build your own with a single SKILL.md.
+                  </Translate>
                 </p>
               </div>
 
@@ -569,10 +701,15 @@ export default function LandingPage(): ReactNode {
                     <path d="M5 3v4M3 5h4M6 17v4M4 19h4M13 3l3 7 7 3-7 3-3 7-3-7-7-3 7-3z" />
                   </svg>
                 </div>
-                <h3 className="mt-4 text-base font-semibold">Hooks & automations</h3>
+                <h3 className="mt-4 text-base font-semibold">
+                  <Translate id="landing.features.card.hooks.title" description="Feature card 6 title">
+                    Hooks & automations
+                  </Translate>
+                </h3>
                 <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                  Pre/post-tool hooks, scheduled jobs, custom slash commands. Wire
-                  CrewX into your existing workflow without leaving the browser.
+                  <Translate id="landing.features.card.hooks.desc" description="Feature card 6 description">
+                    Pre/post-tool hooks, scheduled jobs, custom slash commands. Wire CrewX into your existing workflow without leaving the browser.
+                  </Translate>
                 </p>
               </div>
             </div>
@@ -582,14 +719,24 @@ export default function LandingPage(): ReactNode {
           <section className="relative mx-auto max-w-7xl px-6 py-24">
             <div className="max-w-3xl">
               <div className="chip inline-flex items-center gap-2.5 rounded-full px-4 py-2 text-base text-slate-300">
-                <span className="text-sky-400">◇</span> Providers
+                <span className="text-sky-400">◇</span>{' '}
+                <Translate id="landing.providers.eyebrow" description="Providers section eyebrow">
+                  Providers
+                </Translate>
               </div>
               <h2 className="mt-4 text-4xl font-extrabold tracking-tight grad-text sm:text-5xl">
-                Pick the right model<br />per role.
+                <Translate
+                  id="landing.providers.heading"
+                  description="Providers heading; {br} renders a line break"
+                  values={{br: <br />}}
+                >
+                  {'Pick the right model{br}per role.'}
+                </Translate>
               </h2>
               <p className="mt-5 max-w-2xl text-lg text-slate-400">
-                Each tool earns its role from how developers actually use it.
-                Swap any time — no prompt rewrites, no lock-in.
+                <Translate id="landing.providers.subheading" description="Providers subheading">
+                  Each tool earns its role from how developers actually use it. Swap any time — no prompt rewrites, no lock-in.
+                </Translate>
               </p>
             </div>
 
@@ -607,7 +754,17 @@ export default function LandingPage(): ReactNode {
                 <ul className="mt-4 space-y-1.5 text-xs text-slate-400">
                   <li>· Opus 4.7 / Sonnet 4.6</li>
                   <li>· Plan Mode · 1M context</li>
-                  <li className="text-slate-300">· Role: <span className="text-orange-300">Planner & Reviewer</span></li>
+                  <li className="text-slate-300">
+                    ·{' '}
+                    <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">
+                      Role:
+                    </Translate>{' '}
+                    <span className="text-orange-300">
+                      <Translate id="landing.providers.role.plannerReviewer" description="Role: Planner & Reviewer">
+                        Planner & Reviewer
+                      </Translate>
+                    </span>
+                  </li>
                 </ul>
               </div>
 
@@ -624,7 +781,17 @@ export default function LandingPage(): ReactNode {
                 <ul className="mt-4 space-y-1.5 text-xs text-slate-400">
                   <li>· 3 Pro / Flash</li>
                   <li>· Live web grounding</li>
-                  <li className="text-slate-300">· Role: <span className="text-sky-300">Researcher</span></li>
+                  <li className="text-slate-300">
+                    ·{' '}
+                    <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">
+                      Role:
+                    </Translate>{' '}
+                    <span className="text-sky-300">
+                      <Translate id="landing.providers.role.researcher" description="Role: Researcher">
+                        Researcher
+                      </Translate>
+                    </span>
+                  </li>
                 </ul>
               </div>
 
@@ -641,7 +808,17 @@ export default function LandingPage(): ReactNode {
                 <ul className="mt-4 space-y-1.5 text-xs text-slate-400">
                   <li>· GPT-5.1-Codex</li>
                   <li>· Adversarial review · race conditions</li>
-                  <li className="text-slate-300">· Role: <span className="text-emerald-300">Verifier</span></li>
+                  <li className="text-slate-300">
+                    ·{' '}
+                    <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">
+                      Role:
+                    </Translate>{' '}
+                    <span className="text-emerald-300">
+                      <Translate id="landing.providers.role.verifier" description="Role: Verifier">
+                        Verifier
+                      </Translate>
+                    </span>
+                  </li>
                 </ul>
               </div>
 
@@ -658,7 +835,17 @@ export default function LandingPage(): ReactNode {
                 <ul className="mt-4 space-y-1.5 text-xs text-slate-400">
                   <li>· GPT / Claude / Gemini / o3</li>
                   <li>· Pick model per task</li>
-                  <li className="text-slate-300">· Role: <span className="text-pink-300">Persona simulator</span></li>
+                  <li className="text-slate-300">
+                    ·{' '}
+                    <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">
+                      Role:
+                    </Translate>{' '}
+                    <span className="text-pink-300">
+                      <Translate id="landing.providers.role.personaSimulator" description="Role: Persona simulator">
+                        Persona simulator
+                      </Translate>
+                    </span>
+                  </li>
                 </ul>
               </div>
 
@@ -669,13 +856,33 @@ export default function LandingPage(): ReactNode {
                   </span>
                   <div>
                     <div className="text-sm font-semibold">OpenCode</div>
-                    <div className="text-xs text-slate-500">Community provider</div>
+                    <div className="text-xs text-slate-500">
+                      <Translate id="landing.providers.opencode.label" description="OpenCode card subtitle">
+                        Community provider
+                      </Translate>
+                    </div>
                   </div>
                 </div>
                 <ul className="mt-4 space-y-1.5 text-xs text-slate-400">
                   <li>· GLM / Qwen / DeepSeek / Kimi</li>
                   <li>· Local via Ollama / LM Studio</li>
-                  <li className="text-slate-300">· Role: <span className="text-violet-300">Bulk worker</span> <span className="text-slate-500">· low-sensitivity</span></li>
+                  <li className="text-slate-300">
+                    ·{' '}
+                    <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">
+                      Role:
+                    </Translate>{' '}
+                    <span className="text-violet-300">
+                      <Translate id="landing.providers.role.bulkWorker" description="Role: Bulk worker">
+                        Bulk worker
+                      </Translate>
+                    </span>{' '}
+                    <span className="text-slate-500">
+                      ·{' '}
+                      <Translate id="landing.providers.role.bulkWorker.note" description="Bulk worker note: low-sensitivity">
+                        low-sensitivity
+                      </Translate>
+                    </span>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -685,113 +892,288 @@ export default function LandingPage(): ReactNode {
           <section id="pricing" className="relative mx-auto max-w-7xl px-6 py-24">
             <div className="max-w-3xl">
               <div className="chip inline-flex items-center gap-2.5 rounded-full px-4 py-2 text-base text-slate-300">
-                <span className="text-orange-400">$</span> Pricing
+                <span className="text-orange-400">$</span>{' '}
+                <Translate id="landing.pricing.eyebrow" description="Pricing section eyebrow">
+                  Pricing
+                </Translate>
               </div>
               <h2 className="mt-4 text-4xl font-extrabold tracking-tight grad-text sm:text-5xl">
-                Pay for the wrapper.<br />Not the AI.
+                <Translate
+                  id="landing.pricing.heading"
+                  description="Pricing heading; {br} renders a line break"
+                  values={{br: <br />}}
+                >
+                  {'Pay for the wrapper.{br}Not the AI.'}
+                </Translate>
               </h2>
               <p className="mt-5 max-w-2xl text-lg text-slate-400">
-                Use the AI subscriptions you already pay for — Claude Code, Codex,
-                Gemini CLI, Copilot CLI. We never charge a token markup.
+                <Translate id="landing.pricing.subheading" description="Pricing subheading">
+                  Use the AI subscriptions you already pay for — Claude Code, Codex, Gemini CLI, Copilot CLI. We never charge a token markup.
+                </Translate>
               </p>
             </div>
 
             <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {/* Free */}
               <div className="card relative rounded-2xl p-7">
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-300">Free</h3>
+                <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-300">
+                  <Translate id="landing.pricing.tier.free.name" description="Free tier name">Free</Translate>
+                </h3>
                 <div className="mt-3 flex items-baseline gap-1">
                   <span className="text-5xl font-extrabold">$0</span>
                 </div>
-                <p className="mt-3 text-sm text-slate-400">Try it. Create your first agent.</p>
+                <p className="mt-3 text-sm text-slate-400">
+                  <Translate id="landing.pricing.tier.free.desc" description="Free tier description">
+                    Try it. Create your first agent.
+                  </Translate>
+                </p>
                 <a
                   href="/docs/intro"
                   className="btn-ghost mt-6 inline-flex w-full items-center justify-center rounded-full px-4 py-2.5 text-sm font-semibold text-white"
                 >
-                  Start Free
+                  <Translate id="landing.pricing.tier.free.cta" description="Free tier CTA">
+                    Start Free
+                  </Translate>
                 </a>
                 <ul className="mt-6 space-y-2.5 text-sm text-slate-300">
-                  <li className="flex justify-between gap-2"><span className="text-slate-400">Workflows</span><span className="font-mono">10</span></li>
-                  <li className="flex justify-between gap-2"><span className="text-slate-400">Agents (per WS)</span><span className="font-mono">10</span></li>
-                  <li className="flex justify-between gap-2"><span className="text-slate-400">Projects</span><span className="font-mono">10</span></li>
-                  <li className="flex justify-between gap-2"><span className="text-slate-400">Workspaces</span><span className="font-mono">3</span></li>
-                  <li className="mt-3 flex gap-2 border-t border-white/5 pt-3"><span className="text-emerald-400">✓</span> Web UI (no install)</li>
-                  <li className="flex gap-2"><span className="text-emerald-400">✓</span> Bring your own AI subscriptions</li>
+                  <li className="flex justify-between gap-2">
+                    <span className="text-slate-400">
+                      <Translate id="landing.pricing.row.workflows" description="Pricing row: Workflows">
+                        Workflows
+                      </Translate>
+                    </span>
+                    <span className="font-mono">10</span>
+                  </li>
+                  <li className="flex justify-between gap-2">
+                    <span className="text-slate-400">
+                      <Translate id="landing.pricing.row.agentsPerWs" description="Pricing row: Agents (per WS)">
+                        Agents (per WS)
+                      </Translate>
+                    </span>
+                    <span className="font-mono">10</span>
+                  </li>
+                  <li className="flex justify-between gap-2">
+                    <span className="text-slate-400">
+                      <Translate id="landing.pricing.row.projects" description="Pricing row: Projects">
+                        Projects
+                      </Translate>
+                    </span>
+                    <span className="font-mono">10</span>
+                  </li>
+                  <li className="flex justify-between gap-2">
+                    <span className="text-slate-400">
+                      <Translate id="landing.pricing.row.workspaces" description="Pricing row: Workspaces">
+                        Workspaces
+                      </Translate>
+                    </span>
+                    <span className="font-mono">3</span>
+                  </li>
+                  <li className="mt-3 flex gap-2 border-t border-white/5 pt-3">
+                    <span className="text-emerald-400">✓</span>{' '}
+                    <Translate id="landing.pricing.tier.free.feature1" description="Free tier feature 1">
+                      Web UI (no install)
+                    </Translate>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-emerald-400">✓</span>{' '}
+                    <Translate id="landing.pricing.tier.free.feature2" description="Free tier feature 2">
+                      Bring your own AI subscriptions
+                    </Translate>
+                  </li>
                 </ul>
               </div>
 
               {/* Basic */}
               <div className="card relative rounded-2xl p-7">
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-300">Basic</h3>
+                <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-300">
+                  <Translate id="landing.pricing.tier.basic.name" description="Basic tier name">Basic</Translate>
+                </h3>
                 <div className="mt-3 flex items-baseline gap-1">
                   <span className="text-5xl font-extrabold">$10</span>
-                  <span className="text-sm text-slate-500">/ month</span>
+                  <span className="text-sm text-slate-500">
+                    /{' '}
+                    <Translate id="landing.pricing.perMonth" description="Per month suffix on price">
+                      month
+                    </Translate>
+                  </span>
                 </div>
-                <p className="mt-3 text-sm text-slate-400">Solo builders. First real workflows.</p>
+                <p className="mt-3 text-sm text-slate-400">
+                  <Translate id="landing.pricing.tier.basic.desc" description="Basic tier description">
+                    Solo builders. First real workflows.
+                  </Translate>
+                </p>
                 <a
                   href="#"
                   className="btn-ghost mt-6 inline-flex w-full items-center justify-center rounded-full px-4 py-2.5 text-sm font-semibold text-white"
                 >
-                  Start with Basic
+                  <Translate id="landing.pricing.tier.basic.cta" description="Basic tier CTA">
+                    Start with Basic
+                  </Translate>
                 </a>
                 <ul className="mt-6 space-y-2.5 text-sm text-slate-300">
-                  <li className="flex justify-between gap-2"><span className="text-slate-400">Workflows</span><span className="font-mono">20</span></li>
-                  <li className="flex justify-between gap-2"><span className="text-slate-400">Agents (per WS)</span><span className="font-mono">20</span></li>
-                  <li className="flex justify-between gap-2"><span className="text-slate-400">Projects</span><span className="font-mono">20</span></li>
-                  <li className="flex justify-between gap-2"><span className="text-slate-400">Workspaces</span><span className="font-mono">10</span></li>
-                  <li className="mt-3 flex gap-2 border-t border-white/5 pt-3"><span className="text-emerald-400">✓</span> Community support</li>
+                  <li className="flex justify-between gap-2">
+                    <span className="text-slate-400">
+                      <Translate id="landing.pricing.row.workflows" description="Pricing row: Workflows">
+                        Workflows
+                      </Translate>
+                    </span>
+                    <span className="font-mono">20</span>
+                  </li>
+                  <li className="flex justify-between gap-2">
+                    <span className="text-slate-400">
+                      <Translate id="landing.pricing.row.agentsPerWs" description="Pricing row: Agents (per WS)">
+                        Agents (per WS)
+                      </Translate>
+                    </span>
+                    <span className="font-mono">20</span>
+                  </li>
+                  <li className="flex justify-between gap-2">
+                    <span className="text-slate-400">
+                      <Translate id="landing.pricing.row.projects" description="Pricing row: Projects">
+                        Projects
+                      </Translate>
+                    </span>
+                    <span className="font-mono">20</span>
+                  </li>
+                  <li className="flex justify-between gap-2">
+                    <span className="text-slate-400">
+                      <Translate id="landing.pricing.row.workspaces" description="Pricing row: Workspaces">
+                        Workspaces
+                      </Translate>
+                    </span>
+                    <span className="font-mono">10</span>
+                  </li>
+                  <li className="mt-3 flex gap-2 border-t border-white/5 pt-3">
+                    <span className="text-emerald-400">✓</span>{' '}
+                    <Translate id="landing.pricing.tier.basic.feature1" description="Basic tier feature 1">
+                      Community support
+                    </Translate>
+                  </li>
                 </ul>
               </div>
 
               {/* Pro (highlighted) */}
               <div className="relative rounded-2xl border border-pink-400/30 bg-gradient-to-b from-pink-500/[0.08] to-transparent p-7 shadow-2xl shadow-pink-500/10">
                 <span className="absolute -top-3 left-7 rounded-full bg-gradient-to-r from-pink-500 to-orange-500 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
-                  1,000 agents
+                  <Translate id="landing.pricing.tier.pro.badge" description="Pro tier highlight badge">
+                    1,000 agents
+                  </Translate>
                 </span>
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-pink-300">Pro</h3>
+                <h3 className="text-sm font-semibold uppercase tracking-wider text-pink-300">
+                  <Translate id="landing.pricing.tier.pro.name" description="Pro tier name">Pro</Translate>
+                </h3>
                 <div className="mt-3 flex items-baseline gap-1">
                   <span className="text-5xl font-extrabold">$20</span>
-                  <span className="text-sm text-slate-500">/ month</span>
+                  <span className="text-sm text-slate-500">
+                    /{' '}
+                    <Translate id="landing.pricing.perMonth" description="Per month suffix on price">
+                      month
+                    </Translate>
+                  </span>
                 </div>
-                <p className="mt-3 text-sm text-slate-400">Power users. 1,000 agents in one workspace org.</p>
+                <p className="mt-3 text-sm text-slate-400">
+                  <Translate id="landing.pricing.tier.pro.desc" description="Pro tier description">
+                    Power users. 1,000 agents in one workspace org.
+                  </Translate>
+                </p>
                 <a
                   href="#"
                   className="btn-primary mt-6 inline-flex w-full items-center justify-center rounded-full px-4 py-2.5 text-sm font-semibold text-white"
                 >
-                  Get Pro
+                  <Translate id="landing.pricing.tier.pro.cta" description="Pro tier CTA">
+                    Get Pro
+                  </Translate>
                 </a>
                 <ul className="mt-6 space-y-2.5 text-sm text-slate-300">
-                  <li className="flex justify-between gap-2"><span className="text-slate-400">Workflows</span><span className="font-mono">100</span></li>
-                  <li className="flex justify-between gap-2"><span className="text-slate-400">Agents (per WS)</span><span className="font-mono text-pink-200">100</span></li>
-                  <li className="flex justify-between gap-2"><span className="text-slate-400">Projects</span><span className="font-mono">40</span></li>
-                  <li className="flex justify-between gap-2"><span className="text-slate-400">Workspaces</span><span className="font-mono">10</span></li>
-                  <li className="flex justify-between gap-2 border-t border-pink-400/20 pt-3"><span className="font-semibold text-pink-200">Total agents</span><span className="font-mono font-semibold text-pink-200">1,000 ✦</span></li>
+                  <li className="flex justify-between gap-2">
+                    <span className="text-slate-400">
+                      <Translate id="landing.pricing.row.workflows" description="Pricing row: Workflows">
+                        Workflows
+                      </Translate>
+                    </span>
+                    <span className="font-mono">100</span>
+                  </li>
+                  <li className="flex justify-between gap-2">
+                    <span className="text-slate-400">
+                      <Translate id="landing.pricing.row.agentsPerWs" description="Pricing row: Agents (per WS)">
+                        Agents (per WS)
+                      </Translate>
+                    </span>
+                    <span className="font-mono text-pink-200">100</span>
+                  </li>
+                  <li className="flex justify-between gap-2">
+                    <span className="text-slate-400">
+                      <Translate id="landing.pricing.row.projects" description="Pricing row: Projects">
+                        Projects
+                      </Translate>
+                    </span>
+                    <span className="font-mono">40</span>
+                  </li>
+                  <li className="flex justify-between gap-2">
+                    <span className="text-slate-400">
+                      <Translate id="landing.pricing.row.workspaces" description="Pricing row: Workspaces">
+                        Workspaces
+                      </Translate>
+                    </span>
+                    <span className="font-mono">10</span>
+                  </li>
+                  <li className="flex justify-between gap-2 border-t border-pink-400/20 pt-3">
+                    <span className="font-semibold text-pink-200">
+                      <Translate id="landing.pricing.tier.pro.totalAgents" description="Pro tier: Total agents row label">
+                        Total agents
+                      </Translate>
+                    </span>
+                    <span className="font-mono font-semibold text-pink-200">1,000 ✦</span>
+                  </li>
                 </ul>
               </div>
 
               {/* Max */}
               <div className="card relative rounded-2xl p-7">
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-300">Max</h3>
+                <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-300">
+                  <Translate id="landing.pricing.tier.max.name" description="Max tier name">Max</Translate>
+                </h3>
                 <div className="mt-3 flex items-baseline gap-1">
-                  <span className="text-5xl font-extrabold">Custom</span>
+                  <span className="text-5xl font-extrabold">
+                    <Translate id="landing.pricing.tier.max.price" description="Max tier price label (Custom)">
+                      Custom
+                    </Translate>
+                  </span>
                 </div>
-                <p className="mt-3 text-sm text-slate-400">Bigger needs? Let&apos;s talk.</p>
+                <p className="mt-3 text-sm text-slate-400">
+                  <Translate id="landing.pricing.tier.max.desc" description="Max tier description">
+                    Bigger needs? Let's talk.
+                  </Translate>
+                </p>
                 <a
                   href="mailto:crewx@sowonlabs.com?subject=CrewX%20Max%20inquiry"
                   className="btn-ghost mt-6 inline-flex w-full items-center justify-center rounded-full px-4 py-2.5 text-sm font-semibold text-white"
                 >
-                  Contact us
+                  <Translate id="landing.pricing.tier.max.cta" description="Max tier CTA">
+                    Contact us
+                  </Translate>
                 </a>
                 <ul className="mt-6 space-y-2.5 text-sm text-slate-300">
-                  <li className="flex gap-2"><span className="text-emerald-400">✓</span> Everything in Pro</li>
-                  <li className="flex gap-2"><span className="text-emerald-400">✓</span> Custom limits & support</li>
+                  <li className="flex gap-2">
+                    <span className="text-emerald-400">✓</span>{' '}
+                    <Translate id="landing.pricing.tier.max.feature1" description="Max tier feature 1">
+                      Everything in Pro
+                    </Translate>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-emerald-400">✓</span>{' '}
+                    <Translate id="landing.pricing.tier.max.feature2" description="Max tier feature 2">
+                      Custom limits & support
+                    </Translate>
+                  </li>
                 </ul>
               </div>
             </div>
 
             <p className="mx-auto mt-10 max-w-2xl text-center text-xs text-slate-500">
-              All plans use the AI subscriptions you already pay for — Claude Code,
-              Codex, Gemini CLI, Copilot CLI. CrewX charges 0% token markup.
+              <Translate id="landing.pricing.footnote" description="Pricing section footnote">
+                All plans use the AI subscriptions you already pay for — Claude Code, Codex, Gemini CLI, Copilot CLI. CrewX charges 0% token markup.
+              </Translate>
             </p>
           </section>
 
@@ -802,13 +1184,19 @@ export default function LandingPage(): ReactNode {
           <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-6 py-6 text-xs text-slate-500 sm:flex-row">
             <div className="flex items-center gap-2">
               <img src="/assets/crewx-logo.png" alt="" className="h-4 w-4" />
-              <span>CrewX · Open source CLI · Apache 2.0</span>
+              <span>
+                <Translate id="landing.footer.tagline" description="Footer tagline">
+                  CrewX · Open source CLI · Apache 2.0
+                </Translate>
+              </span>
             </div>
             <div className="flex items-center gap-5">
               <a className="hover:text-slate-300" href="https://github.com/sowonlabs/crewx" target="_blank" rel="noopener noreferrer">
                 GitHub
               </a>
-              <a className="hover:text-slate-300" href="/docs/intro">Docs</a>
+              <a className="hover:text-slate-300" href="/docs/intro">
+                <Translate id="landing.nav.docs" description="Top nav: Docs link">Docs</Translate>
+              </a>
             </div>
           </div>
         </footer>
