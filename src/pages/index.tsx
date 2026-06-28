@@ -884,8 +884,8 @@ export default function LandingPage(): ReactNode {
                   </div>
                 </div>
                 <ul className="mt-4 space-y-1.5 text-xs text-slate-400">
-                  <li>· GLM-5.1 / 5.2 · Qwen / DeepSeek / Kimi</li>
-                  <li>· Local via Ollama / LM Studio</li>
+                  <li>· GLM / Qwen / DeepSeek</li>
+                  <li>· Run Chinese models · Local via Ollama</li>
                   <li className="text-slate-300">
                     ·{' '}
                     <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">
@@ -917,8 +917,8 @@ export default function LandingPage(): ReactNode {
                   </div>
                 </div>
                 <ul className="mt-4 space-y-1.5 text-xs text-slate-400">
-                  <li>· Gemini 3.1 Pro / 3.5 Flash</li>
-                  <li>· Live web grounding</li>
+                  <li>· Gemini 3.5 Flash / 3.1 Pro</li>
+                  <li>· Claude · GPT-OSS · web grounding</li>
                   <li className="text-slate-300">
                     ·{' '}
                     <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">
@@ -944,7 +944,7 @@ export default function LandingPage(): ReactNode {
                   </div>
                 </div>
                 <ul className="mt-4 space-y-1.5 text-xs text-slate-400">
-                  <li>· GPT / Claude / Gemini / o3</li>
+                  <li>· GPT / Claude / Gemini</li>
                   <li>· Pick model per task</li>
                   <li className="text-slate-300">
                     ·{' '}
