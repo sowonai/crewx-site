@@ -819,7 +819,7 @@ export default function LandingPage(): ReactNode {
             </div>
 
             <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-              <div className="card rounded-2xl p-5">
+              <div className="card flex flex-col rounded-2xl p-5">
                 <div className="flex items-center gap-3">
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-emerald-500/15 p-1.5">
                     <img src="/assets/chatgpt-logo-dark.svg" alt="Codex" className="h-full w-full object-contain" />
@@ -829,10 +829,10 @@ export default function LandingPage(): ReactNode {
                     <div className="text-xs text-slate-500">OpenAI</div>
                   </div>
                 </div>
-                <ul className="mt-4 space-y-1.5 text-xs text-slate-400">
+                <ul className="mt-4 flex flex-1 flex-col space-y-1.5 text-xs text-slate-400">
                   <li>· GPT-5.5-Codex</li>
-                  <li>· Adversarial review · race conditions</li>
-                  <li className="text-slate-300">
+                  <li>· Adversarial review</li>
+                  <li className="mt-auto pt-1.5 text-slate-300">
                     ·{' '}
                     <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">
                       Role:
@@ -846,7 +846,7 @@ export default function LandingPage(): ReactNode {
                 </ul>
               </div>
 
-              <div className="card rounded-2xl p-5">
+              <div className="card flex flex-col rounded-2xl p-5">
                 <div className="flex items-center gap-3">
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-orange-500/15 p-1.5">
                     <img src="/assets/claude-logo-dark.svg" alt="Claude" className="h-full w-full object-contain" />
@@ -856,10 +856,10 @@ export default function LandingPage(): ReactNode {
                     <div className="text-xs text-slate-500">Anthropic</div>
                   </div>
                 </div>
-                <ul className="mt-4 space-y-1.5 text-xs text-slate-400">
+                <ul className="mt-4 flex flex-1 flex-col space-y-1.5 text-xs text-slate-400">
                   <li>· Opus 4.8 / Sonnet 4.6</li>
                   <li>· Plan Mode · 1M context</li>
-                  <li className="text-slate-300">
+                  <li className="mt-auto pt-1.5 text-slate-300">
                     ·{' '}
                     <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">
                       Role:
@@ -873,7 +873,7 @@ export default function LandingPage(): ReactNode {
                 </ul>
               </div>
 
-              <div className="card rounded-2xl p-5">
+              <div className="card flex flex-col rounded-2xl p-5">
                 <div className="flex items-center gap-3">
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-violet-500/15 p-1.5">
                     <img src="/assets/opencode-logo.svg" alt="OpenCode" className="h-full w-full object-contain" />
@@ -887,10 +887,10 @@ export default function LandingPage(): ReactNode {
                     </div>
                   </div>
                 </div>
-                <ul className="mt-4 space-y-1.5 text-xs text-slate-400">
+                <ul className="mt-4 flex flex-1 flex-col space-y-1.5 text-xs text-slate-400">
                   <li>· GLM / Qwen / DeepSeek</li>
-                  <li>· Run Chinese models · Local via Ollama</li>
-                  <li className="text-slate-300">
+                  <li>· Run Chinese models</li>
+                  <li className="mt-auto pt-1.5 text-slate-300">
                     ·{' '}
                     <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">
                       Role:
@@ -910,7 +910,7 @@ export default function LandingPage(): ReactNode {
                 </ul>
               </div>
 
-              <div className="card rounded-2xl p-5">
+              <div className="card flex flex-col rounded-2xl p-5">
                 <div className="flex items-center gap-3">
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-sky-500/15 p-1.5">
                     <img src="/assets/gemini-logo.svg" alt="Antigravity" className="h-full w-full object-contain" />
@@ -920,10 +920,10 @@ export default function LandingPage(): ReactNode {
                     <div className="text-xs text-slate-500">Google</div>
                   </div>
                 </div>
-                <ul className="mt-4 space-y-1.5 text-xs text-slate-400">
+                <ul className="mt-4 flex flex-1 flex-col space-y-1.5 text-xs text-slate-400">
                   <li>· Gemini 3.5 Flash / 3.1 Pro</li>
-                  <li>· Claude · GPT-OSS · web grounding</li>
-                  <li className="text-slate-300">
+                  <li>· Claude · GPT-OSS</li>
+                  <li className="mt-auto pt-1.5 text-slate-300">
                     ·{' '}
                     <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">
                       Role:
@@ -937,7 +937,7 @@ export default function LandingPage(): ReactNode {
                 </ul>
               </div>
 
-              <div className="card rounded-2xl p-5">
+              <div className="card flex flex-col rounded-2xl p-5">
                 <div className="flex items-center gap-3">
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-slate-500/20 p-1.5">
                     <img src="/assets/github-copilot-logo-dark.svg" alt="GitHub Copilot" className="h-full w-full object-contain" />
@@ -947,10 +947,10 @@ export default function LandingPage(): ReactNode {
                     <div className="text-xs text-slate-500">GitHub</div>
                   </div>
                 </div>
-                <ul className="mt-4 space-y-1.5 text-xs text-slate-400">
+                <ul className="mt-4 flex flex-1 flex-col space-y-1.5 text-xs text-slate-400">
                   <li>· GPT / Claude / Gemini</li>
                   <li>· Pick model per task</li>
-                  <li className="text-slate-300">
+                  <li className="mt-auto pt-1.5 text-slate-300">
                     ·{' '}
                     <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">
                       Role:
