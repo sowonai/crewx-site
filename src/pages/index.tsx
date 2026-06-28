@@ -325,24 +325,24 @@ export default function LandingPage(): ReactNode {
       noFooter
       title={translate({
         id: 'landing.meta.title',
-        message: 'CrewX — Install AI Apps. Work with CrewX.',
+        message: 'CrewX — 1 person. 1,000 agents.',
         description: 'Browser tab title for the landing page',
       })}
       description={translate({
         id: 'landing.meta.description',
-        message: 'Install AI apps from CrewX Marketplace, connect them to messenger apps, your website, email, or internal tools, and start using AI in real work.',
+        message: 'CrewX turns 1 person into 1,000 agents: many teams, many perspectives, one operator.',
         description: 'Meta description for the landing page',
       })}
     >
       <Head>
         <meta property="og:title" content={translate({
           id: 'landing.meta.ogTitle',
-          message: 'CrewX — Install AI Apps. Work with CrewX.',
+          message: 'CrewX — 1 person. 1,000 agents.',
           description: 'OpenGraph title',
         })} />
         <meta property="og:description" content={translate({
           id: 'landing.meta.ogDescription',
-          message: 'Pick a verified AI app, connect it to your business channels, and start running real work with CrewX.',
+          message: "Build your AI team. It's easy.",
           description: 'OpenGraph description',
         })} />
         <script src="https://cdn.tailwindcss.com" />
@@ -415,7 +415,7 @@ export default function LandingPage(): ReactNode {
                   <span className="hero-eyebrow-dot" />
                   <span>
                     <Translate id="landing.hero.eyebrow" description="Hero eyebrow above title">
-                      CrewX Marketplace · Channel-ready AI Apps
+                      AI Agent Orchestration
                     </Translate>
                   </span>
                 </div>
@@ -423,12 +423,16 @@ export default function LandingPage(): ReactNode {
                 <h1 className="mt-6 font-bold leading-[1.05]">
                   <span className="grad-text block text-5xl sm:text-7xl lg:text-[96px]">
                     <Translate id="landing.hero.title.line1" description="Hero title line 1">
-                      Install AI Apps.
+                      1 person.
                     </Translate>
                   </span>
                   <span className="intel-text mt-3 block pb-2 text-3xl font-extrabold leading-[1.1] sm:text-5xl lg:text-[56px]">
-                    <Translate id="landing.hero.title.line2" description="Hero title line 2">
-                      Work with CrewX.
+                    <Translate
+                      id="landing.hero.title.line2"
+                      description="Hero title line 2; {strong} wraps the agent count"
+                      values={{strong: <span className="font-black">1,000</span>}}
+                    >
+                      {'{strong} agents.'}
                     </Translate>
                   </span>
                 </h1>
@@ -438,13 +442,13 @@ export default function LandingPage(): ReactNode {
                   <span className="label-caps text-slate-300">
                     <span className="text-white">
                       <Translate id="landing.hero.tagline.ready" description="Hero subtagline left part">
-                        Marketplace Apps.
+                        Ready Agents.
                       </Translate>
                     </span>
                     <span className="mx-2 text-slate-600">/</span>
                     <span className="x-x">
                       <Translate id="landing.hero.tagline.realWork" description="Hero subtagline right part">
-                        Channel-ready.
+                        Real Work.
                       </Translate>
                     </span>
                   </span>
@@ -458,18 +462,18 @@ export default function LandingPage(): ReactNode {
                       bold: (
                         <span className="font-semibold text-white">
                           <Translate id="landing.hero.headline.bold" description="Hero headline emphasized part">
-                            Connect AI apps to the channels your business already uses.
+                            Build your AI team.
                           </Translate>
                         </span>
                       ),
                     }}
                   >
-                    {'{bold}'}
+                    {"{bold} It's easy."}
                   </Translate>
                 </p>
                 <p className="mt-3 max-w-2xl text-sm leading-[1.6] text-slate-400">
                   <Translate id="landing.hero.subheadline" description="Hero supporting paragraph">
-                    Pick a verified AI app from CrewX Marketplace, connect it to messenger apps, your website, email, or internal tools, and start using AI in real work.
+                    Plan, market, ship, support — every function of your work, run by specialists who remember, collaborate, and answer to you alone.
                   </Translate>
                 </p>
 
@@ -482,7 +486,7 @@ export default function LandingPage(): ReactNode {
                       <path d="M8 5v14l11-7z" />
                     </svg>
                     <Translate id="landing.hero.cta.getStarted" description="Hero primary CTA">
-                      Start with free CrewX
+                      Get started in 5 min
                     </Translate>
                   </a>
                   <a

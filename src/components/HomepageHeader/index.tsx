@@ -13,13 +13,13 @@ export default function HomepageHeader(): ReactNode {
     <header className={clsx('hero', styles.heroBanner)}>
       <div className="container">
         <Heading as="h1" className={styles.heroTitle}>
-          {siteConfig.title}
+          1 person. 1,000 agents.
         </Heading>
         <p className={styles.heroSubtitle}>
           <Translate
             id="homepage.tagline"
             description="The homepage tagline">
-            Bring Your Own AI(BYOA) team in Slack/IDE with your existing subscriptions
+            CrewX turns 1 person into 1,000 agents: many teams, many perspectives, one operator.
           </Translate>
         </p>
         <div className={styles.buttons}>
@@ -29,7 +29,7 @@ export default function HomepageHeader(): ReactNode {
             <Translate
               id="homepage.getStarted"
               description="Get Started button text">
-              Get Started - 5min ⏱️
+              Get started in 5 min
             </Translate>
           </Link>
           <Link

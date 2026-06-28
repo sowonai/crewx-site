@@ -351,7 +351,7 @@
     "description": "Description for Plugin Provider System feature"
   },
   "homepage.getStarted": {
-    "message": "시작하기 - 5분 ⏱️",
+    "message": "5분 만에 시작",
     "description": "Get Started button text"
   },
   "homepage.viewOnGitHub": {
@@ -363,7 +363,7 @@
     "description": "The homepage meta description"
   },
   "homepage.tagline": {
-    "message": "기존 AI 구독으로 Slack/IDE에서 나만의 AI 팀 구축",
+    "message": "CrewX는 1명을 1,000 에이전트로 만듭니다 — 다양한 팀, 다양한 관점, 한 명의 운영자.",
     "description": "The homepage tagline"
   },
   "homepage.title": {
@@ -461,6 +461,10 @@
   "landing.nav.getStarted": {
     "message": "시작하기",
     "description": "Top nav: primary Get started CTA"
+  },
+  "landing.hero.eyebrow": {
+    "message": "AI 에이전트 오케스트레이션",
+    "description": "Hero eyebrow above title"
   },
   "landing.hero.title.line1": {
     "message": "1명.",
