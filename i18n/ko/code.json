@@ -639,11 +639,11 @@
     "description": "Pricing section eyebrow"
   },
   "landing.pricing.heading": {
-    "message": "래퍼 값만 받습니다.{br}AI 값은 안 받아요.",
+    "message": "Just FREE.",
     "description": "Pricing heading; {br} renders a line break"
   },
   "landing.pricing.subheading": {
-    "message": "이미 결제 중인 AI 구독을 그대로 — Claude Code, Codex, Gemini CLI, Copilot CLI. 토큰 마크업은 절대 받지 않습니다.",
+    "message": "CrewX는 무료입니다. 이미 쓰는 AI 구독을 그대로 가져오세요.",
     "description": "Pricing subheading"
   },
   "landing.pricing.tier.free.name": {
@@ -651,28 +651,24 @@
     "description": "Free tier name"
   },
   "landing.pricing.tier.free.desc": {
-    "message": "써보세요. 첫 에이전트를 만들어보세요.",
+    "message": "이미 쓰는 AI 계정으로 CrewX를 사용하세요. 좌석 요금 없음. 토큰 마크업 없음.",
     "description": "Free tier description"
   },
   "landing.pricing.tier.free.cta": {
     "message": "무료로 시작",
     "description": "Free tier CTA"
   },
-  "landing.pricing.row.workflows": {
-    "message": "워크플로",
-    "description": "Pricing row: Workflows"
+  "landing.pricing.row.workspaces": {
+    "message": "워크스페이스",
+    "description": "Pricing row: Workspaces"
   },
   "landing.pricing.row.agentsPerWs": {
     "message": "에이전트 (WS당)",
     "description": "Pricing row: Agents (per WS)"
   },
-  "landing.pricing.row.projects": {
-    "message": "프로젝트",
-    "description": "Pricing row: Projects"
-  },
-  "landing.pricing.row.workspaces": {
-    "message": "워크스페이스",
-    "description": "Pricing row: Workspaces"
+  "landing.pricing.row.apiTokens": {
+    "message": "API 토큰",
+    "description": "Pricing row: API tokens"
   },
   "landing.pricing.tier.free.feature1": {
     "message": "Web UI (설치 없음)",
@@ -682,72 +678,32 @@
     "message": "본인 AI 구독 그대로 사용",
     "description": "Free tier feature 2"
   },
-  "landing.pricing.tier.basic.name": {
-    "message": "Basic",
-    "description": "Basic tier name"
+  "landing.pricing.tier.enterprise.name": {
+    "message": "Enterprise",
+    "description": "Enterprise tier name"
   },
-  "landing.pricing.perMonth": {
-    "message": "월",
-    "description": "Per month suffix on price"
+  "landing.pricing.tier.enterprise.price": {
+    "message": "Custom",
+    "description": "Enterprise tier price label (Custom)"
   },
-  "landing.pricing.tier.basic.desc": {
-    "message": "솔로 빌더. 첫 실전 워크플로.",
-    "description": "Basic tier description"
+  "landing.pricing.tier.enterprise.desc": {
+    "message": "더 높은 한도나 전담 지원이 필요하신가요? 문의 주세요.",
+    "description": "Enterprise tier description"
   },
-  "landing.pricing.tier.basic.cta": {
-    "message": "Basic으로 시작",
-    "description": "Basic tier CTA"
-  },
-  "landing.pricing.tier.basic.feature1": {
-    "message": "커뮤니티 지원",
-    "description": "Basic tier feature 1"
-  },
-  "landing.pricing.tier.pro.badge": {
-    "message": "1,000 에이전트",
-    "description": "Pro tier highlight badge"
-  },
-  "landing.pricing.tier.pro.name": {
-    "message": "Pro",
-    "description": "Pro tier name"
-  },
-  "landing.pricing.tier.pro.desc": {
-    "message": "파워 유저. 워크스페이스 조직당 1,000 에이전트.",
-    "description": "Pro tier description"
-  },
-  "landing.pricing.tier.pro.cta": {
-    "message": "Pro 받기",
-    "description": "Pro tier CTA"
-  },
-  "landing.pricing.tier.pro.totalAgents": {
-    "message": "총 에이전트",
-    "description": "Pro tier: Total agents row label"
-  },
-  "landing.pricing.tier.max.name": {
-    "message": "Max",
-    "description": "Max tier name"
-  },
-  "landing.pricing.tier.max.price": {
-    "message": "맞춤",
-    "description": "Max tier price label (Custom)"
-  },
-  "landing.pricing.tier.max.desc": {
-    "message": "더 큰 규모가 필요하신가요? 이야기해봐요.",
-    "description": "Max tier description"
-  },
-  "landing.pricing.tier.max.cta": {
+  "landing.pricing.tier.enterprise.cta": {
     "message": "문의하기",
-    "description": "Max tier CTA"
+    "description": "Enterprise tier CTA"
   },
-  "landing.pricing.tier.max.feature1": {
-    "message": "Pro의 모든 기능",
-    "description": "Max tier feature 1"
+  "landing.pricing.tier.enterprise.feature1": {
+    "message": "Free의 모든 기능",
+    "description": "Enterprise tier feature 1"
   },
-  "landing.pricing.tier.max.feature2": {
-    "message": "맞춤 한도 & 지원",
-    "description": "Max tier feature 2"
+  "landing.pricing.tier.enterprise.feature2": {
+    "message": "한도 상향 & 전담 지원",
+    "description": "Enterprise tier feature 2"
   },
   "landing.pricing.footnote": {
-    "message": "모든 플랜은 이미 결제 중인 AI 구독을 사용합니다 — Claude Code, Codex, Gemini CLI, Copilot CLI. CrewX는 토큰 마크업 0%.",
+    "message": "AI 제공자 결제는 본인 계정에서 처리됩니다. 마켓 앱은 앱별 조건이 다를 수 있습니다.",
     "description": "Pricing section footnote"
   },
   "landing.footer.tagline": {

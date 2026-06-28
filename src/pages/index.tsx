@@ -100,65 +100,91 @@ function LocaleDropdown(): ReactNode {
 
 const LANDING_CSS = `
   .landing-page-wrapper {
-    --bg: #0a0e27;
-    --bg-2: #0d1330;
-    --line: rgba(255, 255, 255, 0.08);
-    --muted: #9aa3c7;
-    --pink: #ec4899;
-    --orange: #f97316;
-    --violet: #8b5cf6;
+    --bg: #10131a;
+    --bg-2: #191b23;
+    --surface-1: #1d2027;
+    --surface-2: #272a31;
+    --line: rgba(255, 255, 255, 0.05);
+    --line-strong: #424754;
+    --muted: #c2c6d6;
+    --on-surface: #e1e2ec;
+    --primary: #adc6ff;
+    --primary-strong: #4d8eff;
+    --on-primary: #002e6a;
+    --secondary: #d0bcff;
+    --tertiary: #ffb786;
     background: var(--bg);
-    color: #e8ebf5;
+    color: var(--on-surface);
     font-family: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
-    font-feature-settings: "cv02", "cv11";
+    font-feature-settings: "cv02", "cv11", "ss01";
     min-height: 100vh;
     overflow-x: hidden;
   }
   .landing-page-wrapper .font-mono {
-    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-family: "Space Grotesk", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-feature-settings: "tnum", "zero";
+  }
+  .landing-page-wrapper .label-caps {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
   .landing-page-wrapper .glow-bg {
     background-image:
-      radial-gradient(900px 600px at 12% 18%, rgba(139,92,246,0.18), transparent 60%),
-      radial-gradient(900px 700px at 92% 10%, rgba(236,72,153,0.16), transparent 60%),
-      radial-gradient(700px 500px at 70% 80%, rgba(249,115,22,0.12), transparent 60%),
-      radial-gradient(500px 400px at 30% 75%, rgba(56,189,248,0.1), transparent 60%);
+      radial-gradient(800px 520px at 12% 14%, rgba(139,92,246,0.14), transparent 60%),
+      radial-gradient(900px 600px at 92% 8%, rgba(255,183,134,0.10), transparent 60%),
+      radial-gradient(720px 520px at 70% 78%, rgba(173,198,255,0.08), transparent 60%);
   }
   .landing-page-wrapper .grid-bg {
     background-image:
-      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-    background-size: 56px 56px;
-    mask-image: radial-gradient(ellipse at 50% 30%, rgba(0,0,0,0.9), transparent 70%);
+      linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(ellipse at 50% 28%, rgba(0,0,0,0.95), transparent 75%);
   }
   .landing-page-wrapper .btn-primary {
-    background: linear-gradient(135deg, #ec4899 0%, #f43f5e 50%, #f97316 100%);
-    box-shadow: 0 12px 40px -12px rgba(236,72,153,0.6), inset 0 1px 0 rgba(255,255,255,0.25);
+    background: var(--primary-strong);
+    color: #ffffff;
+    border: 1px solid rgba(173,198,255,0.4);
+    box-shadow:
+      0 0 0 1px rgba(173,198,255,0.15),
+      0 8px 32px -12px rgba(77,142,255,0.55),
+      inset 0 1px 0 rgba(255,255,255,0.15);
+    transition: filter 120ms ease, box-shadow 120ms ease;
   }
   .landing-page-wrapper .btn-primary:hover {
     filter: brightness(1.08);
+    box-shadow:
+      0 0 0 1px rgba(173,198,255,0.3),
+      0 12px 40px -10px rgba(77,142,255,0.7),
+      inset 0 1px 0 rgba(255,255,255,0.2);
   }
   .landing-page-wrapper .btn-ghost {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--line-strong);
+    transition: border-color 120ms ease, background 120ms ease;
   }
   .landing-page-wrapper .btn-ghost:hover {
-    background: rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(173,198,255,0.4);
   }
   .landing-page-wrapper .card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid var(--line);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.005));
+    border: 1px solid var(--line-strong);
     backdrop-filter: blur(8px);
   }
   .landing-page-wrapper .chip {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid var(--line);
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--line-strong);
   }
   .landing-page-wrapper .x-r { color: #ef4444; }
   .landing-page-wrapper .x-g { color: #22c55e; }
-  .landing-page-wrapper .x-b { color: #3b82f6; }
+  .landing-page-wrapper .x-b { color: var(--primary); }
   .landing-page-wrapper .x-x {
-    background: linear-gradient(135deg, #ec4899, #f97316);
+    background: linear-gradient(135deg, #d0bcff 0%, #c4abff 35%, #ffb786 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -220,10 +246,34 @@ const LANDING_CSS = `
   }
   .landing-page-wrapper details > summary::-webkit-details-marker { display: none; }
   .landing-page-wrapper .grad-text {
-    background: linear-gradient(135deg, #fff 0%, #c8c9ff 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #e1e2ec 60%, #adc6ff 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+  }
+  .landing-page-wrapper .intel-text {
+    background: linear-gradient(135deg, #d0bcff 0%, #c4abff 40%, #ffb786 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 32px rgba(208,188,255,0.18));
+  }
+  .landing-page-wrapper .hero-eyebrow-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--primary);
+    box-shadow: 0 0 12px rgba(173,198,255,0.8), 0 0 24px rgba(173,198,255,0.4);
+  }
+  .landing-page-wrapper .install-card {
+    background: #0b0e15;
+    border: 1px solid var(--line-strong);
+    transition: border-color 120ms ease, box-shadow 120ms ease;
+  }
+  .landing-page-wrapper .install-card:focus-within,
+  .landing-page-wrapper .install-card:hover {
+    border-color: rgba(173,198,255,0.5);
+    box-shadow: 0 0 0 1px rgba(173,198,255,0.15), 0 0 32px -8px rgba(77,142,255,0.25);
   }
   /* React Flow overrides (scoped to landing page) */
   .landing-page-wrapper .react-flow__attribution { display: none !important; }
@@ -275,31 +325,31 @@ export default function LandingPage(): ReactNode {
       noFooter
       title={translate({
         id: 'landing.meta.title',
-        message: 'CrewX — 1 person. 1,000 agents.',
+        message: 'CrewX — Install AI Apps. Work with CrewX.',
         description: 'Browser tab title for the landing page',
       })}
       description={translate({
         id: 'landing.meta.description',
-        message: 'CrewX turns 1 person into 1,000 agents: many teams, many perspectives, one operator.',
+        message: 'Install AI apps from CrewX Marketplace, connect them to messenger apps, your website, email, or internal tools, and start using AI in real work.',
         description: 'Meta description for the landing page',
       })}
     >
       <Head>
         <meta property="og:title" content={translate({
           id: 'landing.meta.ogTitle',
-          message: 'CrewX — 1 person. 1,000 agents.',
+          message: 'CrewX — Install AI Apps. Work with CrewX.',
           description: 'OpenGraph title',
         })} />
         <meta property="og:description" content={translate({
           id: 'landing.meta.ogDescription',
-          message: "Build your AI team. It's easy.",
+          message: 'Pick a verified AI app, connect it to your business channels, and start running real work with CrewX.',
           description: 'OpenGraph description',
         })} />
         <script src="https://cdn.tailwindcss.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
           rel="stylesheet"
         />
       </Head>
@@ -345,7 +395,7 @@ export default function LandingPage(): ReactNode {
               </a>
               <a
                 href="/docs/intro"
-                className="btn-primary rounded-full px-4 py-2 text-sm font-semibold text-white"
+                className="btn-primary rounded-md px-4 py-2 text-sm font-semibold text-white"
               >
                 <Translate id="landing.nav.getStarted" description="Top nav: primary Get started CTA">
                   Get started
@@ -361,41 +411,46 @@ export default function LandingPage(): ReactNode {
             <div className="grid items-start gap-10 lg:grid-cols-12">
               {/* Left: copy */}
               <div className="min-w-0 lg:col-span-7">
-                <h1 className="font-extrabold leading-[0.98] tracking-tight">
-                  <span className="block text-3xl text-slate-100 sm:text-5xl lg:text-[56px]">
-                    <Translate id="landing.hero.title.line1" description="Hero title line 1">
-                      1 person.
+                <div className="chip label-caps inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-slate-300">
+                  <span className="hero-eyebrow-dot" />
+                  <span>
+                    <Translate id="landing.hero.eyebrow" description="Hero eyebrow above title">
+                      CrewX Marketplace · Channel-ready AI Apps
                     </Translate>
                   </span>
-                  <span className="grad-text mt-1 block pb-2 text-[40px] font-black leading-[1.25] sm:text-7xl lg:text-[88px]">
-                    <Translate
-                      id="landing.hero.title.line2"
-                      description="Hero title line 2; {strong} wraps the agent count"
-                      values={{strong: <span className="font-black">1,000</span>}}
-                    >
-                      {'{strong} agents.'}
+                </div>
+
+                <h1 className="mt-6 font-bold leading-[1.05]">
+                  <span className="grad-text block text-5xl sm:text-7xl lg:text-[96px]">
+                    <Translate id="landing.hero.title.line1" description="Hero title line 1">
+                      Install AI Apps.
+                    </Translate>
+                  </span>
+                  <span className="intel-text mt-3 block pb-2 text-3xl font-extrabold leading-[1.1] sm:text-5xl lg:text-[56px]">
+                    <Translate id="landing.hero.title.line2" description="Hero title line 2">
+                      Work with CrewX.
                     </Translate>
                   </span>
                 </h1>
 
-                <div className="mt-5 flex items-center gap-3 text-sm text-slate-400">
+                <div className="mt-6 flex items-center gap-3 text-sm">
                   <img src="/assets/crewx-logo.png" alt="" className="h-5 w-5" />
-                  <span className="font-semibold tracking-wide">
+                  <span className="label-caps text-slate-300">
                     <span className="text-white">
                       <Translate id="landing.hero.tagline.ready" description="Hero subtagline left part">
-                        Ready Agents.
+                        Marketplace Apps.
                       </Translate>
                     </span>
-                    <span className="text-slate-500">·</span>
+                    <span className="mx-2 text-slate-600">/</span>
                     <span className="x-x">
                       <Translate id="landing.hero.tagline.realWork" description="Hero subtagline right part">
-                        Real Work.
+                        Channel-ready.
                       </Translate>
                     </span>
                   </span>
                 </div>
 
-                <p className="mt-8 max-w-2xl text-lg text-slate-300/90 sm:text-xl">
+                <p className="mt-8 max-w-2xl text-lg leading-[1.6] text-slate-300/95 sm:text-xl">
                   <Translate
                     id="landing.hero.headline"
                     description="Hero headline; {bold} wraps the emphasized phrase"
@@ -403,44 +458,57 @@ export default function LandingPage(): ReactNode {
                       bold: (
                         <span className="font-semibold text-white">
                           <Translate id="landing.hero.headline.bold" description="Hero headline emphasized part">
-                            Build your AI team.
+                            Connect AI apps to the channels your business already uses.
                           </Translate>
                         </span>
                       ),
                     }}
                   >
-                    {"{bold} It's easy."}
+                    {'{bold}'}
                   </Translate>
                 </p>
-                <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-400">
+                <p className="mt-3 max-w-2xl text-sm leading-[1.6] text-slate-400">
                   <Translate id="landing.hero.subheadline" description="Hero supporting paragraph">
-                    Plan, market, ship, support — every function of your work, run by specialists who remember, collaborate, and answer to you alone.
+                    Pick a verified AI app from CrewX Marketplace, connect it to messenger apps, your website, email, or internal tools, and start using AI in real work.
                   </Translate>
                 </p>
 
                 <div className="mt-8 flex flex-wrap items-center gap-3">
                   <a
                     href="/docs/intro"
-                    className="btn-primary inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-white"
+                    className="btn-primary inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-semibold text-white"
                   >
                     <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
                       <path d="M8 5v14l11-7z" />
                     </svg>
                     <Translate id="landing.hero.cta.getStarted" description="Hero primary CTA">
-                      Get started in 5 min
+                      Start with free CrewX
+                    </Translate>
+                  </a>
+                  <a
+                    href="https://github.com/sowonlabs/crewx"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-ghost inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-semibold text-slate-200"
+                  >
+                    <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
+                      <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2.16c-3.2.7-3.87-1.37-3.87-1.37-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.54-2.55-.29-5.24-1.27-5.24-5.66 0-1.25.45-2.27 1.18-3.07-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.17a10.96 10.96 0 0 1 5.74 0c2.19-1.48 3.15-1.17 3.15-1.17.62 1.58.23 2.75.11 3.04.74.8 1.18 1.82 1.18 3.07 0 4.4-2.69 5.36-5.25 5.65.41.36.78 1.06.78 2.13v3.16c0 .31.21.66.8.55C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5Z" />
+                    </svg>
+                    <Translate id="landing.hero.cta.github" description="Hero secondary CTA">
+                      View on GitHub
                     </Translate>
                   </a>
                 </div>
 
                 <div className="mt-8 max-w-md">
-                  <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-black/30 px-4 py-3 font-mono text-sm">
-                    <span className="text-emerald-400">$</span>
+                  <div className="install-card flex items-center gap-3 rounded-md px-4 py-3 font-mono text-sm">
+                    <span className="text-[var(--primary)]">$</span>
                     <span className="flex-1 text-slate-200">
-                      npx <span className="text-pink-400">crewx@latest</span>
+                      npx <span className="text-[var(--primary)]">crewx@latest</span>
                     </span>
                     <button
                       onClick={handleCopy}
-                      className="inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-white/5 px-2.5 py-1 text-xs text-slate-300 hover:bg-white/10"
+                      className="inline-flex items-center gap-1.5 rounded border border-[var(--line-strong)] bg-white/[0.02] px-2.5 py-1 text-xs text-slate-300 transition-colors hover:border-[rgba(173,198,255,0.4)] hover:text-white"
                     >
                       <span>
                         {copied ? (
@@ -456,30 +524,24 @@ export default function LandingPage(): ReactNode {
                     </button>
                   </div>
                   <div className="mt-2 flex items-center gap-1.5 px-1 text-[11px] text-slate-500">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3 w-3">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-3 w-3">
                       <path d="M9 12l2 2 4-4M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" />
                     </svg>
                     <span>
                       <Translate id="landing.hero.install.help" description="Help text under the npx install command">
-                        Web UI opens automatically — no login, no install
+                        Open-source CrewX runs locally. Bring your own AI subscriptions.
                       </Translate>
                     </span>
                   </div>
                 </div>
 
                 <div className="mt-12">
-                  <div className="text-xs uppercase tracking-wider text-slate-500">
+                  <div className="label-caps text-slate-500">
                     <Translate id="landing.hero.providers.heading" description="Section above provider logos">
-                      The coding agents you already use — now as one team
+                      Bring the AI subscriptions you already use — CrewX adds workflows, memory, and templates
                     </Translate>
                   </div>
                   <div className="mt-4 flex flex-wrap items-center gap-x-7 gap-y-3 text-slate-400">
-                    <span className="inline-flex items-center gap-2">
-                      <span className="flex h-6 w-6 items-center justify-center rounded-md bg-orange-500/15">
-                        <img src="/assets/claude-logo-dark.svg" alt="" className="h-4 w-4 object-contain" />
-                      </span>
-                      Claude Code
-                    </span>
                     <span className="inline-flex items-center gap-2">
                       <span className="flex h-6 w-6 items-center justify-center rounded-md bg-emerald-500/15">
                         <img src="/assets/chatgpt-logo-dark.svg" alt="" className="h-[22px] w-[22px] object-contain" />
@@ -487,10 +549,22 @@ export default function LandingPage(): ReactNode {
                       Codex
                     </span>
                     <span className="inline-flex items-center gap-2">
+                      <span className="flex h-6 w-6 items-center justify-center rounded-md bg-orange-500/15">
+                        <img src="/assets/claude-logo-dark.svg" alt="" className="h-4 w-4 object-contain" />
+                      </span>
+                      Claude Code
+                    </span>
+                    <span className="inline-flex items-center gap-2">
+                      <span className="flex h-6 w-6 items-center justify-center rounded-md bg-violet-500/15">
+                        <img src="/assets/opencode-logo.svg" alt="" className="h-4 w-4 object-contain" />
+                      </span>
+                      OpenCode
+                    </span>
+                    <span className="inline-flex items-center gap-2">
                       <span className="flex h-6 w-6 items-center justify-center rounded-md bg-sky-500/15">
                         <img src="/assets/gemini-logo.svg" alt="" className="h-4 w-4 object-contain" />
                       </span>
-                      Gemini CLI
+                      Antigravity CLI
                     </span>
                     <span className="inline-flex items-center gap-2">
                       <span className="flex h-6 w-6 items-center justify-center rounded-md bg-slate-500/20">
@@ -743,60 +817,6 @@ export default function LandingPage(): ReactNode {
             <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
               <div className="card rounded-2xl p-5">
                 <div className="flex items-center gap-3">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-orange-500/15 p-1.5">
-                    <img src="/assets/claude-logo-dark.svg" alt="Claude" className="h-full w-full object-contain" />
-                  </span>
-                  <div>
-                    <div className="text-sm font-semibold">Claude</div>
-                    <div className="text-xs text-slate-500">Anthropic</div>
-                  </div>
-                </div>
-                <ul className="mt-4 space-y-1.5 text-xs text-slate-400">
-                  <li>· Opus 4.7 / Sonnet 4.6</li>
-                  <li>· Plan Mode · 1M context</li>
-                  <li className="text-slate-300">
-                    ·{' '}
-                    <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">
-                      Role:
-                    </Translate>{' '}
-                    <span className="text-orange-300">
-                      <Translate id="landing.providers.role.plannerReviewer" description="Role: Planner & Reviewer">
-                        Planner & Reviewer
-                      </Translate>
-                    </span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="card rounded-2xl p-5">
-                <div className="flex items-center gap-3">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-sky-500/15 p-1.5">
-                    <img src="/assets/gemini-logo.svg" alt="Gemini" className="h-full w-full object-contain" />
-                  </span>
-                  <div>
-                    <div className="text-sm font-semibold">Gemini</div>
-                    <div className="text-xs text-slate-500">Google</div>
-                  </div>
-                </div>
-                <ul className="mt-4 space-y-1.5 text-xs text-slate-400">
-                  <li>· 3 Pro / Flash</li>
-                  <li>· Live web grounding</li>
-                  <li className="text-slate-300">
-                    ·{' '}
-                    <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">
-                      Role:
-                    </Translate>{' '}
-                    <span className="text-sky-300">
-                      <Translate id="landing.providers.role.researcher" description="Role: Researcher">
-                        Researcher
-                      </Translate>
-                    </span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="card rounded-2xl p-5">
-                <div className="flex items-center gap-3">
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-emerald-500/15 p-1.5">
                     <img src="/assets/chatgpt-logo-dark.svg" alt="Codex" className="h-full w-full object-contain" />
                   </span>
@@ -824,25 +844,25 @@ export default function LandingPage(): ReactNode {
 
               <div className="card rounded-2xl p-5">
                 <div className="flex items-center gap-3">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-slate-500/20 p-1.5">
-                    <img src="/assets/github-copilot-logo-dark.svg" alt="GitHub Copilot" className="h-full w-full object-contain" />
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-orange-500/15 p-1.5">
+                    <img src="/assets/claude-logo-dark.svg" alt="Claude" className="h-full w-full object-contain" />
                   </span>
                   <div>
-                    <div className="text-sm font-semibold">Copilot</div>
-                    <div className="text-xs text-slate-500">GitHub</div>
+                    <div className="text-sm font-semibold">Claude</div>
+                    <div className="text-xs text-slate-500">Anthropic</div>
                   </div>
                 </div>
                 <ul className="mt-4 space-y-1.5 text-xs text-slate-400">
-                  <li>· GPT / Claude / Gemini / o3</li>
-                  <li>· Pick model per task</li>
+                  <li>· Opus 4.7 / Sonnet 4.6</li>
+                  <li>· Plan Mode · 1M context</li>
                   <li className="text-slate-300">
                     ·{' '}
                     <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">
                       Role:
                     </Translate>{' '}
-                    <span className="text-pink-300">
-                      <Translate id="landing.providers.role.personaSimulator" description="Role: Persona simulator">
-                        Persona simulator
+                    <span className="text-orange-300">
+                      <Translate id="landing.providers.role.plannerReviewer" description="Role: Planner & Reviewer">
+                        Planner & Reviewer
                       </Translate>
                     </span>
                   </li>
@@ -885,6 +905,60 @@ export default function LandingPage(): ReactNode {
                   </li>
                 </ul>
               </div>
+
+              <div className="card rounded-2xl p-5">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-sky-500/15 p-1.5">
+                    <img src="/assets/gemini-logo.svg" alt="Antigravity" className="h-full w-full object-contain" />
+                  </span>
+                  <div>
+                    <div className="text-sm font-semibold">Antigravity</div>
+                    <div className="text-xs text-slate-500">Google</div>
+                  </div>
+                </div>
+                <ul className="mt-4 space-y-1.5 text-xs text-slate-400">
+                  <li>· 3 Pro / Flash</li>
+                  <li>· Live web grounding</li>
+                  <li className="text-slate-300">
+                    ·{' '}
+                    <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">
+                      Role:
+                    </Translate>{' '}
+                    <span className="text-sky-300">
+                      <Translate id="landing.providers.role.researcher" description="Role: Researcher">
+                        Researcher
+                      </Translate>
+                    </span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="card rounded-2xl p-5">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-slate-500/20 p-1.5">
+                    <img src="/assets/github-copilot-logo-dark.svg" alt="GitHub Copilot" className="h-full w-full object-contain" />
+                  </span>
+                  <div>
+                    <div className="text-sm font-semibold">Copilot</div>
+                    <div className="text-xs text-slate-500">GitHub</div>
+                  </div>
+                </div>
+                <ul className="mt-4 space-y-1.5 text-xs text-slate-400">
+                  <li>· GPT / Claude / Gemini / o3</li>
+                  <li>· Pick model per task</li>
+                  <li className="text-slate-300">
+                    ·{' '}
+                    <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">
+                      Role:
+                    </Translate>{' '}
+                    <span className="text-pink-300">
+                      <Translate id="landing.providers.role.personaSimulator" description="Role: Persona simulator">
+                        Persona simulator
+                      </Translate>
+                    </span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </section>
 
@@ -903,17 +977,17 @@ export default function LandingPage(): ReactNode {
                   description="Pricing heading; {br} renders a line break"
                   values={{br: <br />}}
                 >
-                  {'Pay for the wrapper.{br}Not the AI.'}
+                  {'Just FREE.'}
                 </Translate>
               </h2>
               <p className="mt-5 max-w-2xl text-lg text-slate-400">
                 <Translate id="landing.pricing.subheading" description="Pricing subheading">
-                  Use the AI subscriptions you already pay for — Claude Code, Codex, Gemini CLI, Copilot CLI. We never charge a token markup.
+                  CrewX is free. Bring your own AI subscription.
                 </Translate>
               </p>
             </div>
 
-            <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-2">
               {/* Free */}
               <div className="card relative rounded-2xl p-7">
                 <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-300">
@@ -924,25 +998,25 @@ export default function LandingPage(): ReactNode {
                 </div>
                 <p className="mt-3 text-sm text-slate-400">
                   <Translate id="landing.pricing.tier.free.desc" description="Free tier description">
-                    Try it. Create your first agent.
+                    Use CrewX with the AI accounts you already have. No seat fees. No token markup.
                   </Translate>
                 </p>
                 <a
                   href="/docs/intro"
-                  className="btn-ghost mt-6 inline-flex w-full items-center justify-center rounded-full px-4 py-2.5 text-sm font-semibold text-white"
+                  className="btn-primary mt-6 inline-flex w-full items-center justify-center rounded-full px-4 py-2.5 text-sm font-semibold text-white"
                 >
                   <Translate id="landing.pricing.tier.free.cta" description="Free tier CTA">
-                    Start Free
+                    Start for free
                   </Translate>
                 </a>
                 <ul className="mt-6 space-y-2.5 text-sm text-slate-300">
                   <li className="flex justify-between gap-2">
                     <span className="text-slate-400">
-                      <Translate id="landing.pricing.row.workflows" description="Pricing row: Workflows">
-                        Workflows
+                      <Translate id="landing.pricing.row.workspaces" description="Pricing row: Workspaces">
+                        Workspaces
                       </Translate>
                     </span>
-                    <span className="font-mono">10</span>
+                    <span className="font-mono">20</span>
                   </li>
                   <li className="flex justify-between gap-2">
                     <span className="text-slate-400">
@@ -950,23 +1024,15 @@ export default function LandingPage(): ReactNode {
                         Agents (per WS)
                       </Translate>
                     </span>
-                    <span className="font-mono">10</span>
+                    <span className="font-mono">100</span>
                   </li>
                   <li className="flex justify-between gap-2">
                     <span className="text-slate-400">
-                      <Translate id="landing.pricing.row.projects" description="Pricing row: Projects">
-                        Projects
+                      <Translate id="landing.pricing.row.apiTokens" description="Pricing row: API tokens">
+                        API tokens
                       </Translate>
                     </span>
-                    <span className="font-mono">10</span>
-                  </li>
-                  <li className="flex justify-between gap-2">
-                    <span className="text-slate-400">
-                      <Translate id="landing.pricing.row.workspaces" description="Pricing row: Workspaces">
-                        Workspaces
-                      </Translate>
-                    </span>
-                    <span className="font-mono">3</span>
+                    <span className="font-mono">20</span>
                   </li>
                   <li className="mt-3 flex gap-2 border-t border-white/5 pt-3">
                     <span className="text-emerald-400">✓</span>{' '}
@@ -983,187 +1049,42 @@ export default function LandingPage(): ReactNode {
                 </ul>
               </div>
 
-              {/* Basic */}
+              {/* Enterprise */}
               <div className="card relative rounded-2xl p-7">
                 <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-300">
-                  <Translate id="landing.pricing.tier.basic.name" description="Basic tier name">Basic</Translate>
-                </h3>
-                <div className="mt-3 flex items-baseline gap-1">
-                  <span className="text-5xl font-extrabold">$10</span>
-                  <span className="text-sm text-slate-500">
-                    /{' '}
-                    <Translate id="landing.pricing.perMonth" description="Per month suffix on price">
-                      month
-                    </Translate>
-                  </span>
-                </div>
-                <p className="mt-3 text-sm text-slate-400">
-                  <Translate id="landing.pricing.tier.basic.desc" description="Basic tier description">
-                    Solo builders. First real workflows.
-                  </Translate>
-                </p>
-                <a
-                  href="#"
-                  className="btn-ghost mt-6 inline-flex w-full items-center justify-center rounded-full px-4 py-2.5 text-sm font-semibold text-white"
-                >
-                  <Translate id="landing.pricing.tier.basic.cta" description="Basic tier CTA">
-                    Start with Basic
-                  </Translate>
-                </a>
-                <ul className="mt-6 space-y-2.5 text-sm text-slate-300">
-                  <li className="flex justify-between gap-2">
-                    <span className="text-slate-400">
-                      <Translate id="landing.pricing.row.workflows" description="Pricing row: Workflows">
-                        Workflows
-                      </Translate>
-                    </span>
-                    <span className="font-mono">20</span>
-                  </li>
-                  <li className="flex justify-between gap-2">
-                    <span className="text-slate-400">
-                      <Translate id="landing.pricing.row.agentsPerWs" description="Pricing row: Agents (per WS)">
-                        Agents (per WS)
-                      </Translate>
-                    </span>
-                    <span className="font-mono">20</span>
-                  </li>
-                  <li className="flex justify-between gap-2">
-                    <span className="text-slate-400">
-                      <Translate id="landing.pricing.row.projects" description="Pricing row: Projects">
-                        Projects
-                      </Translate>
-                    </span>
-                    <span className="font-mono">20</span>
-                  </li>
-                  <li className="flex justify-between gap-2">
-                    <span className="text-slate-400">
-                      <Translate id="landing.pricing.row.workspaces" description="Pricing row: Workspaces">
-                        Workspaces
-                      </Translate>
-                    </span>
-                    <span className="font-mono">10</span>
-                  </li>
-                  <li className="mt-3 flex gap-2 border-t border-white/5 pt-3">
-                    <span className="text-emerald-400">✓</span>{' '}
-                    <Translate id="landing.pricing.tier.basic.feature1" description="Basic tier feature 1">
-                      Community support
-                    </Translate>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Pro (highlighted) */}
-              <div className="relative rounded-2xl border border-pink-400/30 bg-gradient-to-b from-pink-500/[0.08] to-transparent p-7 shadow-2xl shadow-pink-500/10">
-                <span className="absolute -top-3 left-7 rounded-full bg-gradient-to-r from-pink-500 to-orange-500 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
-                  <Translate id="landing.pricing.tier.pro.badge" description="Pro tier highlight badge">
-                    1,000 agents
-                  </Translate>
-                </span>
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-pink-300">
-                  <Translate id="landing.pricing.tier.pro.name" description="Pro tier name">Pro</Translate>
-                </h3>
-                <div className="mt-3 flex items-baseline gap-1">
-                  <span className="text-5xl font-extrabold">$20</span>
-                  <span className="text-sm text-slate-500">
-                    /{' '}
-                    <Translate id="landing.pricing.perMonth" description="Per month suffix on price">
-                      month
-                    </Translate>
-                  </span>
-                </div>
-                <p className="mt-3 text-sm text-slate-400">
-                  <Translate id="landing.pricing.tier.pro.desc" description="Pro tier description">
-                    Power users. 1,000 agents in one workspace org.
-                  </Translate>
-                </p>
-                <a
-                  href="#"
-                  className="btn-primary mt-6 inline-flex w-full items-center justify-center rounded-full px-4 py-2.5 text-sm font-semibold text-white"
-                >
-                  <Translate id="landing.pricing.tier.pro.cta" description="Pro tier CTA">
-                    Get Pro
-                  </Translate>
-                </a>
-                <ul className="mt-6 space-y-2.5 text-sm text-slate-300">
-                  <li className="flex justify-between gap-2">
-                    <span className="text-slate-400">
-                      <Translate id="landing.pricing.row.workflows" description="Pricing row: Workflows">
-                        Workflows
-                      </Translate>
-                    </span>
-                    <span className="font-mono">100</span>
-                  </li>
-                  <li className="flex justify-between gap-2">
-                    <span className="text-slate-400">
-                      <Translate id="landing.pricing.row.agentsPerWs" description="Pricing row: Agents (per WS)">
-                        Agents (per WS)
-                      </Translate>
-                    </span>
-                    <span className="font-mono text-pink-200">100</span>
-                  </li>
-                  <li className="flex justify-between gap-2">
-                    <span className="text-slate-400">
-                      <Translate id="landing.pricing.row.projects" description="Pricing row: Projects">
-                        Projects
-                      </Translate>
-                    </span>
-                    <span className="font-mono">40</span>
-                  </li>
-                  <li className="flex justify-between gap-2">
-                    <span className="text-slate-400">
-                      <Translate id="landing.pricing.row.workspaces" description="Pricing row: Workspaces">
-                        Workspaces
-                      </Translate>
-                    </span>
-                    <span className="font-mono">10</span>
-                  </li>
-                  <li className="flex justify-between gap-2 border-t border-pink-400/20 pt-3">
-                    <span className="font-semibold text-pink-200">
-                      <Translate id="landing.pricing.tier.pro.totalAgents" description="Pro tier: Total agents row label">
-                        Total agents
-                      </Translate>
-                    </span>
-                    <span className="font-mono font-semibold text-pink-200">1,000 ✦</span>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Max */}
-              <div className="card relative rounded-2xl p-7">
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-300">
-                  <Translate id="landing.pricing.tier.max.name" description="Max tier name">Max</Translate>
+                  <Translate id="landing.pricing.tier.enterprise.name" description="Enterprise tier name">Enterprise</Translate>
                 </h3>
                 <div className="mt-3 flex items-baseline gap-1">
                   <span className="text-5xl font-extrabold">
-                    <Translate id="landing.pricing.tier.max.price" description="Max tier price label (Custom)">
+                    <Translate id="landing.pricing.tier.enterprise.price" description="Enterprise tier price label (Custom)">
                       Custom
                     </Translate>
                   </span>
                 </div>
                 <p className="mt-3 text-sm text-slate-400">
-                  <Translate id="landing.pricing.tier.max.desc" description="Max tier description">
-                    Bigger needs? Let's talk.
+                  <Translate id="landing.pricing.tier.enterprise.desc" description="Enterprise tier description">
+                    Need higher limits or dedicated support? Let's talk.
                   </Translate>
                 </p>
                 <a
-                  href="mailto:crewx@sowonlabs.com?subject=CrewX%20Max%20inquiry"
+                  href="mailto:crewx@sowonlabs.com?subject=CrewX%20Enterprise%20inquiry"
                   className="btn-ghost mt-6 inline-flex w-full items-center justify-center rounded-full px-4 py-2.5 text-sm font-semibold text-white"
                 >
-                  <Translate id="landing.pricing.tier.max.cta" description="Max tier CTA">
+                  <Translate id="landing.pricing.tier.enterprise.cta" description="Enterprise tier CTA">
                     Contact us
                   </Translate>
                 </a>
                 <ul className="mt-6 space-y-2.5 text-sm text-slate-300">
                   <li className="flex gap-2">
                     <span className="text-emerald-400">✓</span>{' '}
-                    <Translate id="landing.pricing.tier.max.feature1" description="Max tier feature 1">
-                      Everything in Pro
+                    <Translate id="landing.pricing.tier.enterprise.feature1" description="Enterprise tier feature 1">
+                      Everything in Free
                     </Translate>
                   </li>
                   <li className="flex gap-2">
                     <span className="text-emerald-400">✓</span>{' '}
-                    <Translate id="landing.pricing.tier.max.feature2" description="Max tier feature 2">
-                      Custom limits & support
+                    <Translate id="landing.pricing.tier.enterprise.feature2" description="Enterprise tier feature 2">
+                      Higher limits & dedicated support
                     </Translate>
                   </li>
                 </ul>
@@ -1172,7 +1093,7 @@ export default function LandingPage(): ReactNode {
 
             <p className="mx-auto mt-10 max-w-2xl text-center text-xs text-slate-500">
               <Translate id="landing.pricing.footnote" description="Pricing section footnote">
-                All plans use the AI subscriptions you already pay for — Claude Code, Codex, Gemini CLI, Copilot CLI. CrewX charges 0% token markup.
+                AI provider billing is handled by your own account. Marketplace apps may have their own terms.
               </Translate>
             </p>
           </section>
