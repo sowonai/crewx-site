@@ -826,7 +826,7 @@ export default function LandingPage(): ReactNode {
                   </div>
                 </div>
                 <ul className="mt-4 space-y-1.5 text-xs text-slate-400">
-                  <li>· GPT-5.1-Codex</li>
+                  <li>· GPT-5.5-Codex</li>
                   <li>· Adversarial review · race conditions</li>
                   <li className="text-slate-300">
                     ·{' '}
@@ -853,7 +853,7 @@ export default function LandingPage(): ReactNode {
                   </div>
                 </div>
                 <ul className="mt-4 space-y-1.5 text-xs text-slate-400">
-                  <li>· Opus 4.7 / Sonnet 4.6</li>
+                  <li>· Opus 4.8 / Sonnet 4.6</li>
                   <li>· Plan Mode · 1M context</li>
                   <li className="text-slate-300">
                     ·{' '}
@@ -884,7 +884,7 @@ export default function LandingPage(): ReactNode {
                   </div>
                 </div>
                 <ul className="mt-4 space-y-1.5 text-xs text-slate-400">
-                  <li>· GLM / Qwen / DeepSeek / Kimi</li>
+                  <li>· GLM-5.1 / 5.2 · Qwen / DeepSeek / Kimi</li>
                   <li>· Local via Ollama / LM Studio</li>
                   <li className="text-slate-300">
                     ·{' '}
@@ -917,7 +917,7 @@ export default function LandingPage(): ReactNode {
                   </div>
                 </div>
                 <ul className="mt-4 space-y-1.5 text-xs text-slate-400">
-                  <li>· 3 Pro / Flash</li>
+                  <li>· Gemini 3.1 Pro / 3.5 Flash</li>
                   <li>· Live web grounding</li>
                   <li className="text-slate-300">
                     ·{' '}
