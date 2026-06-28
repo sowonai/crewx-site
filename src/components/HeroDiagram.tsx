@@ -26,6 +26,7 @@ const TONES: Record<string, Tone> = {
   'claude code': {ring: 'border-violet-300/40', bg: 'bg-violet-500/15', dot: '#8b5cf6', sub: 'text-violet-200'},
   codex: {ring: 'border-emerald-300/40', bg: 'bg-emerald-500/15', dot: '#10b981', sub: 'text-emerald-200'},
   gemini: {ring: 'border-sky-300/40', bg: 'bg-sky-500/15', dot: '#38bdf8', sub: 'text-sky-200'},
+  antigravity: {ring: 'border-sky-300/40', bg: 'bg-sky-500/15', dot: '#38bdf8', sub: 'text-sky-200'},
   copilot: {ring: 'border-pink-300/40', bg: 'bg-pink-500/15', dot: '#ec4899', sub: 'text-pink-200'},
 };
 const toneFor = (p?: string): Tone => TONES[(p ?? '').toLowerCase()] ?? TONES.claude;
@@ -35,6 +36,7 @@ const PROVIDER_LOGOS: Record<string, string> = {
   'claude code': '/assets/claude-logo-dark.svg',
   codex: '/assets/chatgpt-logo-dark.svg',
   gemini: '/assets/gemini-logo.svg',
+  antigravity: '/assets/gemini-logo.svg',
   copilot: '/assets/github-copilot-logo-dark.svg',
 };
 const logoFor = (p?: string): string | undefined => PROVIDER_LOGOS[(p ?? '').toLowerCase()];
@@ -227,7 +229,7 @@ const initialNodes: Node[] = [
   {id: 'prompt',   type: 'prompt', position: {x: 110, y: 0},   data: {text: 'build the login page'}},
   {id: 'planner',  type: 'agent',  position: {x: 130, y: 60},  data: {role: 'Planner',  provider: 'Claude Code', progress: 1.0}},
   {id: 'dev-a',    type: 'agent',  position: {x: 22,  y: 160}, data: {role: 'Dev A',    provider: 'Codex',       progress: 0.82, stackMax: 4, stackDelay: 0}},
-  {id: 'dev-b',    type: 'agent',  position: {x: 240, y: 160}, data: {role: 'Dev B',    provider: 'Gemini',      progress: 0.61, stackMax: 4, stackDelay: 750}},
+  {id: 'dev-b',    type: 'agent',  position: {x: 240, y: 160}, data: {role: 'Dev B',    provider: 'Antigravity', progress: 0.61, stackMax: 4, stackDelay: 750}},
   {id: 'reviewer', type: 'agent',  position: {x: 130, y: 260}, data: {role: 'Reviewer', provider: 'Copilot',     progress: 0.34}},
   {id: 'ship',     type: 'ship',   position: {x: 162, y: 330}, data: {label: 'Shipped'}},
 ];
