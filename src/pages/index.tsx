@@ -689,7 +689,7 @@ export default function LandingPage(): ReactNode {
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-slate-400">
                   <Translate id="landing.features.card.multiProvider.desc" description="Feature card 1 description">
-                    Mix Claude, Gemini, Codex, Copilot, OpenCode in a single crew — Claude plans & reviews, Codex verifies, Gemini researches, Copilot runs personas, OpenCode handles bulk.
+                    Mix GPT, Claude, Antigravity, Copilot, and OpenCode in a single crew — GPT handles broad reasoning, Claude plans and writes, Antigravity researches, Copilot assists task by task, and OpenCode keeps high-volume work cost-efficient.
                   </Translate>
                 </p>
               </div>
@@ -813,13 +813,19 @@ export default function LandingPage(): ReactNode {
               </h2>
               <p className="mt-5 max-w-2xl text-lg text-slate-400">
                 <Translate id="landing.providers.subheading" description="Providers subheading">
-                  Each tool earns its role from how developers actually use it. Swap any time — no prompt rewrites, no lock-in.
+                  Each provider has a clear job: broad reasoning, long-context planning, cost-efficient work, web research, or task-by-task assist. Swap any time — no prompt rewrites, no lock-in.
                 </Translate>
               </p>
             </div>
 
             <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-              <div className="card flex flex-col rounded-2xl p-5">
+              <div className="card relative flex !overflow-visible flex-col rounded-2xl p-5">
+                <div className="pointer-events-none absolute right-3 top-2 z-30 inline-flex items-center rounded-full border border-emerald-300/45 bg-slate-950/95 px-2.5 py-1 text-[10px] font-extrabold uppercase leading-none tracking-[0.12em] text-emerald-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_18px_rgba(52,211,153,0.14)] backdrop-blur-sm">
+                  <span className="mr-1 text-emerald-200">✓</span>
+                  <Translate id="landing.providers.badge.recommended" description="Recommended provider badge">
+                    Top pick
+                  </Translate>
+                </div>
                 <div className="flex items-center gap-3">
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-emerald-500/15 p-1.5">
                     <img src="/assets/chatgpt-logo-dark.svg" alt="Codex" className="h-full w-full object-contain" />
@@ -830,23 +836,29 @@ export default function LandingPage(): ReactNode {
                   </div>
                 </div>
                 <ul className="mt-4 flex flex-1 flex-col space-y-1.5 text-xs text-slate-400">
-                  <li>· GPT-5.5-Codex</li>
-                  <li>· Adversarial review</li>
+                  <li>· GPT-5.5</li>
+                  <li>· General reasoning</li>
                   <li className="mt-auto pt-1.5 text-slate-300">
                     ·{' '}
                     <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">
                       Role:
                     </Translate>{' '}
                     <span className="text-emerald-300">
-                      <Translate id="landing.providers.role.verifier" description="Role: Verifier">
-                        Verifier
+                      <Translate id="landing.providers.role.generalist" description="Role: Generalist">
+                        Generalist
                       </Translate>
                     </span>
                   </li>
                 </ul>
               </div>
 
-              <div className="card flex flex-col rounded-2xl p-5">
+              <div className="card relative flex !overflow-visible flex-col rounded-2xl p-5">
+                <div className="pointer-events-none absolute right-3 top-2 z-30 inline-flex items-center rounded-full border border-orange-300/45 bg-slate-950/95 px-2.5 py-1 text-[10px] font-extrabold uppercase leading-none tracking-[0.12em] text-orange-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_18px_rgba(251,146,60,0.14)] backdrop-blur-sm">
+                  <span className="mr-1 text-orange-200">✓</span>
+                  <Translate id="landing.providers.badge.recommended" description="Recommended provider badge">
+                    Top pick
+                  </Translate>
+                </div>
                 <div className="flex items-center gap-3">
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-orange-500/15 p-1.5">
                     <img src="/assets/claude-logo-dark.svg" alt="Claude" className="h-full w-full object-contain" />
@@ -858,15 +870,15 @@ export default function LandingPage(): ReactNode {
                 </div>
                 <ul className="mt-4 flex flex-1 flex-col space-y-1.5 text-xs text-slate-400">
                   <li>· Opus 4.8 / Sonnet 4.6</li>
-                  <li>· Plan Mode · 1M context</li>
+                  <li>· Long-context planning</li>
                   <li className="mt-auto pt-1.5 text-slate-300">
                     ·{' '}
                     <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">
                       Role:
                     </Translate>{' '}
                     <span className="text-orange-300">
-                      <Translate id="landing.providers.role.plannerReviewer" description="Role: Planner & Reviewer">
-                        Planner & Reviewer
+                      <Translate id="landing.providers.role.plannerWriter" description="Role: Planner & Writer">
+                        Planner & Writer
                       </Translate>
                     </span>
                   </li>
@@ -889,21 +901,15 @@ export default function LandingPage(): ReactNode {
                 </div>
                 <ul className="mt-4 flex flex-1 flex-col space-y-1.5 text-xs text-slate-400">
                   <li>· GLM / Qwen / DeepSeek</li>
-                  <li>· Run Chinese models</li>
+                  <li>· Low-cost models</li>
                   <li className="mt-auto pt-1.5 text-slate-300">
                     ·{' '}
                     <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">
                       Role:
                     </Translate>{' '}
                     <span className="text-violet-300">
-                      <Translate id="landing.providers.role.bulkWorker" description="Role: Bulk worker">
-                        Bulk worker
-                      </Translate>
-                    </span>{' '}
-                    <span className="text-slate-500">
-                      ·{' '}
-                      <Translate id="landing.providers.role.bulkWorker.note" description="Bulk worker note: low-sensitivity">
-                        low-sensitivity
+                      <Translate id="landing.providers.role.costSaver" description="Role: Cost saver">
+                        Cost saver
                       </Translate>
                     </span>
                   </li>
@@ -921,8 +927,8 @@ export default function LandingPage(): ReactNode {
                   </div>
                 </div>
                 <ul className="mt-4 flex flex-1 flex-col space-y-1.5 text-xs text-slate-400">
-                  <li>· Gemini 3.5 Flash / 3.1 Pro</li>
-                  <li>· Claude · GPT-OSS</li>
+                  <li>· Gemini / Claude / GPT-OSS</li>
+                  <li>· Web-grounded research</li>
                   <li className="mt-auto pt-1.5 text-slate-300">
                     ·{' '}
                     <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">
@@ -986,7 +992,7 @@ export default function LandingPage(): ReactNode {
               </h2>
               <p className="mt-5 max-w-2xl text-lg text-slate-400">
                 <Translate id="landing.pricing.subheading" description="Pricing subheading">
-                  CrewX is free. Bring your own AI subscription.
+                  CrewX is free. Bring your own AI subscriptions.
                 </Translate>
               </p>
             </div>
