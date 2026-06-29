@@ -819,7 +819,12 @@ export default function LandingPage(): ReactNode {
             </div>
 
             <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-              <div className="card flex flex-col rounded-2xl p-5">
+              <div className="card relative flex flex-col overflow-hidden rounded-2xl p-5">
+                <div className="absolute right-3 top-3 -rotate-6 rounded-full border border-emerald-300/35 bg-emerald-400/12 px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.24em] text-emerald-200 shadow-[0_0_18px_rgba(52,211,153,0.16)]">
+                  <Translate id="landing.providers.badge.recommended" description="Recommended provider badge">
+                    Recommended
+                  </Translate>
+                </div>
                 <div className="flex items-center gap-3">
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-emerald-500/15 p-1.5">
                     <img src="/assets/chatgpt-logo-dark.svg" alt="Codex" className="h-full w-full object-contain" />
@@ -846,7 +851,12 @@ export default function LandingPage(): ReactNode {
                 </ul>
               </div>
 
-              <div className="card flex flex-col rounded-2xl p-5">
+              <div className="card relative flex flex-col overflow-hidden rounded-2xl p-5">
+                <div className="absolute right-3 top-3 rotate-6 rounded-full border border-orange-300/35 bg-orange-400/12 px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.24em] text-orange-200 shadow-[0_0_18px_rgba(251,146,60,0.16)]">
+                  <Translate id="landing.providers.badge.recommended" description="Recommended provider badge">
+                    Recommended
+                  </Translate>
+                </div>
                 <div className="flex items-center gap-3">
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-orange-500/15 p-1.5">
                     <img src="/assets/claude-logo-dark.svg" alt="Claude" className="h-full w-full object-contain" />

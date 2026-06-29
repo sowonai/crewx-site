@@ -606,6 +606,10 @@
     "message": "각 프로바이더는 분명한 역할이 있습니다. 범용 추론, 장문 기획, 가성비 작업, 웹 리서치, 작업별 보조까지. 언제든 교체 — 프롬프트 재작성도, 락인도 없습니다.",
     "description": "Providers subheading"
   },
+  "landing.providers.badge.recommended": {
+    "message": "추천",
+    "description": "Recommended provider badge"
+  },
   "landing.providers.roleLabel": {
     "message": "역할:",
     "description": "Role label prefix in provider cards"
