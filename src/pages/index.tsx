@@ -689,7 +689,7 @@ export default function LandingPage(): ReactNode {
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-slate-400">
                   <Translate id="landing.features.card.multiProvider.desc" description="Feature card 1 description">
-                    Mix Claude, Gemini, Codex, Copilot, OpenCode in a single crew — Claude plans & reviews, Codex verifies, Gemini researches, Copilot runs personas, OpenCode handles bulk.
+                    Mix GPT, Claude, Antigravity, Copilot, and OpenCode in a single crew — GPT handles broad reasoning, Claude plans and writes, Antigravity researches, Copilot assists task by task, and OpenCode keeps high-volume work cost-efficient.
                   </Translate>
                 </p>
               </div>
@@ -813,7 +813,7 @@ export default function LandingPage(): ReactNode {
               </h2>
               <p className="mt-5 max-w-2xl text-lg text-slate-400">
                 <Translate id="landing.providers.subheading" description="Providers subheading">
-                  Each tool earns its role from how developers actually use it. Swap any time — no prompt rewrites, no lock-in.
+                  Each provider has a clear job: broad reasoning, long-context planning, cost-efficient work, web research, or task-by-task assist. Swap any time — no prompt rewrites, no lock-in.
                 </Translate>
               </p>
             </div>
@@ -896,8 +896,8 @@ export default function LandingPage(): ReactNode {
                       Role:
                     </Translate>{' '}
                     <span className="text-violet-300">
-                      <Translate id="landing.providers.role.budgetWorker" description="Role: Budget worker">
-                        Budget worker
+                      <Translate id="landing.providers.role.costSaver" description="Role: Cost saver">
+                        Cost saver
                       </Translate>
                     </span>
                   </li>
@@ -980,7 +980,7 @@ export default function LandingPage(): ReactNode {
               </h2>
               <p className="mt-5 max-w-2xl text-lg text-slate-400">
                 <Translate id="landing.pricing.subheading" description="Pricing subheading">
-                  CrewX is free. Bring your own AI subscription.
+                  CrewX is free. Bring your own AI subscriptions.
                 </Translate>
               </p>
             </div>

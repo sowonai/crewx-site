@@ -551,7 +551,7 @@
     "description": "Feature card 1 title"
   },
   "landing.features.card.multiProvider.desc": {
-    "message": "Claude, Gemini, Codex, Copilot, OpenCode를 하나의 크루로 — Claude는 기획·검토, Codex는 검증, Gemini는 리서치, Copilot은 페르소나, OpenCode는 대량 작업을 담당.",
+    "message": "GPT, Claude, Antigravity, Copilot, OpenCode를 하나의 크루로 조합하세요 — GPT는 범용 추론, Claude는 기획과 작성, Antigravity는 리서치, Copilot은 작업별 보조, OpenCode는 대량 작업을 가성비 있게 처리합니다.",
     "description": "Feature card 1 description"
   },
   "landing.features.card.wi.title": {
@@ -603,7 +603,7 @@
     "description": "Providers heading; {br} renders a line break"
   },
   "landing.providers.subheading": {
-    "message": "각 도구는 개발자들이 실제로 쓰는 방식에 맞는 역할을 얻습니다. 언제든 교체 — 프롬프트 재작성도, 락인도 없습니다.",
+    "message": "각 프로바이더는 분명한 역할이 있습니다. 범용 추론, 장문 기획, 가성비 작업, 웹 리서치, 작업별 보조까지. 언제든 교체 — 프롬프트 재작성도, 락인도 없습니다.",
     "description": "Providers subheading"
   },
   "landing.providers.roleLabel": {
@@ -630,9 +630,9 @@
     "message": "커뮤니티 프로바이더",
     "description": "OpenCode card subtitle"
   },
-  "landing.providers.role.budgetWorker": {
-    "message": "가성비 워커",
-    "description": "Role: Budget worker"
+  "landing.providers.role.costSaver": {
+    "message": "가성비 담당",
+    "description": "Role: Cost saver"
   },
   "landing.pricing.eyebrow": {
     "message": "가격",
@@ -643,7 +643,7 @@
     "description": "Pricing heading; {br} renders a line break"
   },
   "landing.pricing.subheading": {
-    "message": "CrewX는 무료입니다. 이미 쓰는 AI 구독을 그대로 가져오세요.",
+    "message": "CrewX는 무료입니다. 이미 쓰는 AI 구독들을 그대로 가져오세요.",
     "description": "Pricing subheading"
   },
   "landing.pricing.tier.free.name": {
