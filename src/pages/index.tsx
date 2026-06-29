@@ -819,22 +819,20 @@ export default function LandingPage(): ReactNode {
             </div>
 
             <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-              <div className="card flex flex-col rounded-2xl p-5">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex min-w-0 items-center gap-3">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-emerald-500/15 p-1.5">
-                      <img src="/assets/chatgpt-logo-dark.svg" alt="Codex" className="h-full w-full object-contain" />
-                    </span>
-                    <div className="min-w-0">
-                      <div className="text-sm font-semibold">Codex</div>
-                      <div className="text-xs text-slate-500">OpenAI</div>
-                    </div>
-                  </div>
-                  <div className="shrink-0 rounded-full border border-emerald-300/45 bg-emerald-400/15 px-2.5 py-1 text-[10px] font-extrabold uppercase leading-none tracking-[0.12em] text-emerald-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_18px_rgba(52,211,153,0.14)]">
-                    <span className="mr-1 text-emerald-200">✓</span>
-                    <Translate id="landing.providers.badge.recommended" description="Recommended provider badge">
-                      Recommended
-                    </Translate>
+              <div className="card relative flex flex-col rounded-2xl p-5 pt-14">
+                <div className="absolute left-5 top-5 inline-flex items-center rounded-full border border-emerald-300/45 bg-emerald-400/15 px-2.5 py-1 text-[10px] font-extrabold uppercase leading-none tracking-[0.12em] text-emerald-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_18px_rgba(52,211,153,0.14)]">
+                  <span className="mr-1 text-emerald-200">✓</span>
+                  <Translate id="landing.providers.badge.recommended" description="Recommended provider badge">
+                    Top pick
+                  </Translate>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-emerald-500/15 p-1.5">
+                    <img src="/assets/chatgpt-logo-dark.svg" alt="Codex" className="h-full w-full object-contain" />
+                  </span>
+                  <div>
+                    <div className="text-sm font-semibold">Codex</div>
+                    <div className="text-xs text-slate-500">OpenAI</div>
                   </div>
                 </div>
                 <ul className="mt-4 flex flex-1 flex-col space-y-1.5 text-xs text-slate-400">
@@ -854,22 +852,20 @@ export default function LandingPage(): ReactNode {
                 </ul>
               </div>
 
-              <div className="card flex flex-col rounded-2xl p-5">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex min-w-0 items-center gap-3">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-orange-500/15 p-1.5">
-                      <img src="/assets/claude-logo-dark.svg" alt="Claude" className="h-full w-full object-contain" />
-                    </span>
-                    <div className="min-w-0">
-                      <div className="text-sm font-semibold">Claude</div>
-                      <div className="text-xs text-slate-500">Anthropic</div>
-                    </div>
-                  </div>
-                  <div className="shrink-0 rounded-full border border-orange-300/45 bg-orange-400/15 px-2.5 py-1 text-[10px] font-extrabold uppercase leading-none tracking-[0.12em] text-orange-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_18px_rgba(251,146,60,0.14)]">
-                    <span className="mr-1 text-orange-200">✓</span>
-                    <Translate id="landing.providers.badge.recommended" description="Recommended provider badge">
-                      Recommended
-                    </Translate>
+              <div className="card relative flex flex-col rounded-2xl p-5 pt-14">
+                <div className="absolute left-5 top-5 inline-flex items-center rounded-full border border-orange-300/45 bg-orange-400/15 px-2.5 py-1 text-[10px] font-extrabold uppercase leading-none tracking-[0.12em] text-orange-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_18px_rgba(251,146,60,0.14)]">
+                  <span className="mr-1 text-orange-200">✓</span>
+                  <Translate id="landing.providers.badge.recommended" description="Recommended provider badge">
+                    Top pick
+                  </Translate>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-orange-500/15 p-1.5">
+                    <img src="/assets/claude-logo-dark.svg" alt="Claude" className="h-full w-full object-contain" />
+                  </span>
+                  <div>
+                    <div className="text-sm font-semibold">Claude</div>
+                    <div className="text-xs text-slate-500">Anthropic</div>
                   </div>
                 </div>
                 <ul className="mt-4 flex flex-1 flex-col space-y-1.5 text-xs text-slate-400">
