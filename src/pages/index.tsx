@@ -830,16 +830,16 @@ export default function LandingPage(): ReactNode {
                   </div>
                 </div>
                 <ul className="mt-4 flex flex-1 flex-col space-y-1.5 text-xs text-slate-400">
-                  <li>· GPT-5.5-Codex</li>
-                  <li>· Adversarial review</li>
+                  <li>· GPT-5.5</li>
+                  <li>· General reasoning</li>
                   <li className="mt-auto pt-1.5 text-slate-300">
                     ·{' '}
                     <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">
                       Role:
                     </Translate>{' '}
                     <span className="text-emerald-300">
-                      <Translate id="landing.providers.role.verifier" description="Role: Verifier">
-                        Verifier
+                      <Translate id="landing.providers.role.generalist" description="Role: Generalist">
+                        Generalist
                       </Translate>
                     </span>
                   </li>
@@ -858,15 +858,15 @@ export default function LandingPage(): ReactNode {
                 </div>
                 <ul className="mt-4 flex flex-1 flex-col space-y-1.5 text-xs text-slate-400">
                   <li>· Opus 4.8 / Sonnet 4.6</li>
-                  <li>· Plan Mode · 1M context</li>
+                  <li>· Long-context planning</li>
                   <li className="mt-auto pt-1.5 text-slate-300">
                     ·{' '}
                     <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">
                       Role:
                     </Translate>{' '}
                     <span className="text-orange-300">
-                      <Translate id="landing.providers.role.plannerReviewer" description="Role: Planner & Reviewer">
-                        Planner & Reviewer
+                      <Translate id="landing.providers.role.plannerWriter" description="Role: Planner & Writer">
+                        Planner & Writer
                       </Translate>
                     </span>
                   </li>
@@ -889,21 +889,15 @@ export default function LandingPage(): ReactNode {
                 </div>
                 <ul className="mt-4 flex flex-1 flex-col space-y-1.5 text-xs text-slate-400">
                   <li>· GLM / Qwen / DeepSeek</li>
-                  <li>· Run Chinese models</li>
+                  <li>· Low-cost models</li>
                   <li className="mt-auto pt-1.5 text-slate-300">
                     ·{' '}
                     <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">
                       Role:
                     </Translate>{' '}
                     <span className="text-violet-300">
-                      <Translate id="landing.providers.role.bulkWorker" description="Role: Bulk worker">
-                        Bulk worker
-                      </Translate>
-                    </span>{' '}
-                    <span className="text-slate-500">
-                      ·{' '}
-                      <Translate id="landing.providers.role.bulkWorker.note" description="Bulk worker note: low-sensitivity">
-                        low-sensitivity
+                      <Translate id="landing.providers.role.budgetWorker" description="Role: Budget worker">
+                        Budget worker
                       </Translate>
                     </span>
                   </li>
@@ -921,8 +915,8 @@ export default function LandingPage(): ReactNode {
                   </div>
                 </div>
                 <ul className="mt-4 flex flex-1 flex-col space-y-1.5 text-xs text-slate-400">
-                  <li>· Gemini 3.5 Flash / 3.1 Pro</li>
-                  <li>· Claude · GPT-OSS</li>
+                  <li>· Gemini / Claude / GPT-OSS</li>
+                  <li>· Web-grounded research</li>
                   <li className="mt-auto pt-1.5 text-slate-300">
                     ·{' '}
                     <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">

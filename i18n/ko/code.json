@@ -610,17 +610,17 @@
     "message": "역할:",
     "description": "Role label prefix in provider cards"
   },
-  "landing.providers.role.plannerReviewer": {
-    "message": "기획자 & 리뷰어",
-    "description": "Role: Planner & Reviewer"
+  "landing.providers.role.plannerWriter": {
+    "message": "기획자 & 라이터",
+    "description": "Role: Planner & Writer"
   },
   "landing.providers.role.researcher": {
     "message": "리서처",
     "description": "Role: Researcher"
   },
-  "landing.providers.role.verifier": {
-    "message": "검증자",
-    "description": "Role: Verifier"
+  "landing.providers.role.generalist": {
+    "message": "범용 모델",
+    "description": "Role: Generalist"
   },
   "landing.providers.role.personaSimulator": {
     "message": "페르소나 시뮬레이터",
@@ -630,13 +630,9 @@
     "message": "커뮤니티 프로바이더",
     "description": "OpenCode card subtitle"
   },
-  "landing.providers.role.bulkWorker": {
-    "message": "벌크 워커",
-    "description": "Role: Bulk worker"
-  },
-  "landing.providers.role.bulkWorker.note": {
-    "message": "낮은 민감도",
-    "description": "Bulk worker note: low-sensitivity"
+  "landing.providers.role.budgetWorker": {
+    "message": "가성비 워커",
+    "description": "Role: Budget worker"
   },
   "landing.pricing.eyebrow": {
     "message": "가격",
