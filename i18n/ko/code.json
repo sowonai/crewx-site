@@ -713,5 +713,21 @@
   "landing.footer.tagline": {
     "message": "CrewX · 오픈소스 CLI · Apache 2.0",
     "description": "Footer tagline"
+  },
+  "landing.demo.eyebrow": {
+    "message": "라이브 데모",
+    "description": "Live demo section eyebrow"
+  },
+  "landing.demo.heading": {
+    "message": "코덱스와 클로드가 한 팀으로",
+    "description": "Live demo section heading"
+  },
+  "landing.demo.subheading": {
+    "message": "요청 하나에 서로 다른 AI가 붙습니다 — 코덱스와 클로드가 각자 역할을 맡아 한 워크스페이스에서 동시에 일합니다.",
+    "description": "Live demo section subheading"
+  },
+  "landing.demo.video.alt": {
+    "message": "CrewX가 코덱스와 클로드 에이전트를 한 워크스페이스에서 동시에 함께 실행하는 데모 영상",
+    "description": "Accessibility label for the landing demo video"
   }
 }

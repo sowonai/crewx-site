@@ -600,6 +600,53 @@ export default function LandingPage(): ReactNode {
 
           </section>
 
+          {/* ── LIVE DEMO SHOWCASE ── */}
+          <section id="demo" className="mx-auto max-w-7xl px-6 pb-24 pt-4">
+            <div className="mx-auto max-w-3xl text-center">
+              <div className="chip label-caps inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-slate-300">
+                <span className="hero-eyebrow-dot" />
+                <span>
+                  <Translate id="landing.demo.eyebrow" description="Live demo section eyebrow">
+                    Live demo
+                  </Translate>
+                </span>
+              </div>
+              <h2 className="mt-5 text-3xl font-extrabold tracking-tight grad-text sm:text-4xl lg:text-5xl">
+                <Translate id="landing.demo.heading" description="Live demo section heading">
+                  Codex and Claude, working together
+                </Translate>
+              </h2>
+              <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-400 sm:text-lg">
+                <Translate id="landing.demo.subheading" description="Live demo section subheading">
+                  One request, different AI providers on the job — Codex and Claude each take a role and run in parallel, in a single workspace.
+                </Translate>
+              </p>
+            </div>
+
+            <div className="relative mx-auto mt-10 max-w-5xl">
+              <div className="pointer-events-none absolute -inset-x-8 -inset-y-6 -z-10 rounded-[32px] bg-[radial-gradient(620px_320px_at_50%_0%,rgba(77,142,255,0.20),transparent_70%)]" />
+              <div className="card overflow-hidden rounded-2xl border border-[var(--line-strong)] shadow-2xl shadow-black/50">
+                <video
+                  className="block w-full"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="metadata"
+                  poster="/video/multiagent-demo-poster.jpg"
+                  aria-label={translate({
+                    id: 'landing.demo.video.alt',
+                    message: 'CrewX running Codex and Claude agents together in one workspace, in parallel',
+                    description: 'Accessibility label for the landing demo video',
+                  })}
+                >
+                  <source src="/video/multiagent-demo.webm" type="video/webm" />
+                  <source src="/video/multiagent-demo.mp4" type="video/mp4" />
+                </video>
+              </div>
+            </div>
+          </section>
+
           {/* Section divider */}
           <div className="mx-auto max-w-7xl px-6">
             <div className="divider-line h-px" />
