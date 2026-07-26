@@ -1,0 +1,6 @@
+/**
+ * Tailwind utilities for the landing page. Generated at build time from the
+ * `content` globs in tailwind.config.js — no runtime CDN, no unstyled first paint.
+ */
+@tailwind components;
+@tailwind utilities;

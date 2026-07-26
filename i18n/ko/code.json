@@ -733,5 +733,185 @@
   "landing.demo.video.alt": {
     "message": "CrewX가 코덱스와 클로드 에이전트를 한 워크스페이스에서 동시에 함께 실행하는 데모 영상",
     "description": "Accessibility label for the landing demo video"
+  },
+  "landing.highlights.eyebrow": {
+    "message": "기능 하이라이트",
+    "description": "Feature highlights section eyebrow"
+  },
+  "landing.highlights.heading": {
+    "message": "우리 일을 기억하고,{br}과정을 남기고,{br}되돌릴 수 있습니다.",
+    "description": "Feature highlights section heading; {br} renders a line break"
+  },
+  "landing.highlights.subheading": {
+    "message": "하루 일하는 방식을 실제로 바꾸는 부분입니다 — 데모에서 그럴듯해 보이는 기능이 아니라요.",
+    "description": "Feature highlights section subheading"
+  },
+  "landing.highlights.tierA.memory.title": {
+    "message": "AI의 기억 창고",
+    "description": "Tier A highlight 1 title"
+  },
+  "landing.highlights.tierA.memory.desc": {
+    "message": "우리 일과 결정을 기억해서, 같은 걸 두 번 설명 안 해도 됩니다.",
+    "description": "Tier A highlight 1 description"
+  },
+  "landing.highlights.tierA.memory.imageAlt": {
+    "message": "저장된 프로젝트 결정과 맥락을 보여주는 CrewX 기억 창고 화면",
+    "description": "Alt text for the memory vault screenshot"
+  },
+  "landing.highlights.tierA.workTrace.title": {
+    "message": "작업 과정 기록",
+    "description": "Tier A highlight 2 title"
+  },
+  "landing.highlights.tierA.workTrace.desc": {
+    "message": "AI가 한 일을 나중에 추적할 수 있습니다.",
+    "description": "Tier A highlight 2 description"
+  },
+  "landing.highlights.tierA.workTrace.imageAlt": {
+    "message": "AI 작업 타임라인을 보여주는 CrewX 작업 기록 화면",
+    "description": "Alt text for the work trace screenshot"
+  },
+  "landing.highlights.tierA.undo.title": {
+    "message": "되돌리기",
+    "description": "Tier A highlight 3 title"
+  },
+  "landing.highlights.tierA.undo.desc": {
+    "message": "AI가 바꾼 걸 보고, 마음에 안 들면 되돌립니다.",
+    "description": "Tier A highlight 3 description"
+  },
+  "landing.highlights.tierA.undo.imageAlt": {
+    "message": "되돌릴 변경 사항을 보여주는 CrewX 되돌리기 화면",
+    "description": "Alt text for the undo screenshot"
+  },
+  "landing.highlights.tierA.localFirst.title": {
+    "message": "내 컴퓨터에서 실행",
+    "description": "Tier A highlight 4 title"
+  },
+  "landing.highlights.tierA.localFirst.desc": {
+    "message": "워크스페이스, 작업 기록, 오케스트레이션은 사용자의 컴퓨터에서 실행됩니다. 어떤 모델 제공자에게 무엇을 보낼지는 사용자가 요청마다 직접 선택합니다.",
+    "description": "Tier A highlight 4 description"
+  },
+  "landing.highlights.tierA.localFirst.diagram.yourMachine.label": {
+    "message": "사용자 컴퓨터",
+    "description": "Local-first diagram: 'Your machine' box label"
+  },
+  "landing.highlights.tierA.localFirst.diagram.yourMachine.workspace": {
+    "message": "워크스페이스",
+    "description": "Local-first diagram: workspace item"
+  },
+  "landing.highlights.tierA.localFirst.diagram.yourMachine.history": {
+    "message": "작업 기록",
+    "description": "Local-first diagram: task history item"
+  },
+  "landing.highlights.tierA.localFirst.diagram.yourMachine.orchestration": {
+    "message": "오케스트레이션",
+    "description": "Local-first diagram: orchestration item"
+  },
+  "landing.highlights.tierA.localFirst.diagram.caption": {
+    "message": "요청마다 사용자가 선택",
+    "description": "Local-first diagram caption"
+  },
+  "landing.highlights.tierA.localFirst.diagram.providers.label": {
+    "message": "사용자가 선택한 모델 제공자",
+    "description": "Local-first diagram: 'Model providers you choose' box label"
+  },
+  "landing.highlights.tierB.label": {
+    "message": "조용히 도움되는 것들",
+    "description": "Tier B section label"
+  },
+  "landing.highlights.tierB.search.title": {
+    "message": "통합 검색",
+    "description": "Tier B card 1 title"
+  },
+  "landing.highlights.tierB.search.desc": {
+    "message": "예전에 AI랑 했던 일을 검색 한 번으로 찾습니다.",
+    "description": "Tier B card 1 description"
+  },
+  "landing.highlights.tierB.continuity.title": {
+    "message": "이어 하기 엔진",
+    "description": "Tier B card 2 title"
+  },
+  "landing.highlights.tierB.continuity.desc": {
+    "message": "긴 작업도 맥락을 잃지 않고 이어갑니다.",
+    "description": "Tier B card 2 description"
+  },
+  "landing.highlights.tierB.midTaskInstruction.title": {
+    "message": "작업 중 추가 지시",
+    "description": "Tier B card 3 title"
+  },
+  "landing.highlights.tierB.midTaskInstruction.desc": {
+    "message": "AI가 일하는 중에도 다시 말할 수 있습니다.",
+    "description": "Tier B card 3 description"
+  },
+  "landing.highlights.tierB.checkpoint.title": {
+    "message": "작업물 저장점",
+    "description": "Tier B card 4 title"
+  },
+  "landing.highlights.tierB.checkpoint.desc": {
+    "message": "저장점을 찍어두고 잘못되면 그때로 돌아갑니다.",
+    "description": "Tier B card 4 description"
+  },
+  "landing.highlights.tierB.projectRoom.title": {
+    "message": "프로젝트 업무 방",
+    "description": "Tier B card 5 title"
+  },
+  "landing.highlights.tierB.projectRoom.desc": {
+    "message": "일감 하나에 필요한 문서와 AI를 한 방에 모읍니다.",
+    "description": "Tier B card 5 description"
+  },
+  "landing.highlights.tierB.instructionLoop.title": {
+    "message": "작업 지시 루프",
+    "description": "Tier B card 6 title"
+  },
+  "landing.highlights.tierB.instructionLoop.desc": {
+    "message": "대화가 업무 프로세스로 바뀝니다.",
+    "description": "Tier B card 6 description"
+  },
+  "landing.highlights.tierB.scheduledRun.title": {
+    "message": "예약 실행",
+    "description": "Tier B card 7 title"
+  },
+  "landing.highlights.tierB.scheduledRun.desc": {
+    "message": "정해진 시간에 AI가 알아서 일합니다.",
+    "description": "Tier B card 7 description"
+  },
+  "landing.highlights.tierC.label": {
+    "message": "그 외 도구들",
+    "description": "Tier C section label"
+  },
+  "landing.highlights.tierC.progress": {
+    "message": "진행 과정",
+    "description": "Tier C item: progress view"
+  },
+  "landing.highlights.tierC.promptPreview": {
+    "message": "뭐라고 시키는지 미리보기",
+    "description": "Tier C item: prompt preview"
+  },
+  "landing.highlights.tierC.globalHotkey": {
+    "message": "어디서든 부르기",
+    "description": "Tier C item: global hotkey"
+  },
+  "landing.highlights.tierC.stallDetection": {
+    "message": "멈춘 AI 알아채기",
+    "description": "Tier C item: stall detection"
+  },
+  "landing.highlights.tierC.notifications": {
+    "message": "알림",
+    "description": "Tier C item: notifications"
+  },
+  "landing.highlights.tierC.highlightMarkup": {
+    "message": "형광펜 표시",
+    "description": "Tier C item: highlight markup"
+  },
+  "landing.highlights.tierC.dailyBoard": {
+    "message": "오늘 할 일판",
+    "description": "Tier C item: daily task board"
+  },
+  "landing.highlights.tierC.photoQuery": {
+    "message": "사진으로 물어보기",
+    "description": "Tier C item: ask with a photo"
+  },
+  "landing.highlights.tierC.workspaceSwitch": {
+    "message": "작업 공간 갈아타기",
+    "description": "Tier C item: workspace switching"
   }
 }

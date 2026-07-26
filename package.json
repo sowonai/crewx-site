@@ -13,7 +13,7 @@
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
-    "typecheck": "tsc",
+    "typecheck": "tsc --noEmit",
     "translate:check": "node scripts/translate-blog.mjs check",
     "translate:ko-to-en": "node scripts/translate-blog.mjs translate"
   },
@@ -37,10 +37,13 @@
     "@docusaurus/theme-mermaid": "3.9.2",
     "@mdx-js/react": "^3.0.0",
     "@xyflow/react": "^12.10.2",
+    "autoprefixer": "^10.4.20",
     "clsx": "^2.0.0",
+    "postcss": "^8.4.49",
     "prism-react-renderer": "^2.3.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^3.4.17"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.9.2",

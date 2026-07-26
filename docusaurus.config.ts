@@ -1,6 +1,45 @@
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import tailwindcss from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
+
+/**
+ * Tailwind's preflight is a global reset: it drops heading sizes, list bullets
+ * and button chrome. The landing page is written against it; the docs and blog
+ * are styled by Infima and would visibly break under it.
+ *
+ * So we let Tailwind emit preflight into its own entry file
+ * (src/css/tailwind-preflight.css) and rewrite every selector here to sit under
+ * `.landing-page-wrapper`. The scope goes inside `:where()`, which contributes
+ * zero specificity — so each rule keeps exactly the specificity preflight was
+ * designed around, and any utility class still wins over it.
+ */
+const LANDING_SCOPE = '.landing-page-wrapper';
+
+function scopeToLanding(selector: string): string {
+  const sel = selector.trim();
+  // Preflight's root rules describe "the page"; here the page is the wrapper.
+  if (sel === 'html' || sel === ':host' || sel === 'body') {
+    return `:where(${LANDING_SCOPE})`;
+  }
+  // The universal rule must also hit the wrapper element itself.
+  if (sel === '*') {
+    return `:where(${LANDING_SCOPE}), :where(${LANDING_SCOPE}) *`;
+  }
+  return `:where(${LANDING_SCOPE}) ${sel}`;
+}
+
+const scopePreflightPlugin = {
+  postcssPlugin: 'crewx-scope-preflight',
+  Once(root: any) {
+    // Only the preflight entry file — never the utilities, never Infima.
+    if (!root.source?.input?.file?.endsWith('tailwind-preflight.css')) return;
+    root.walkRules((rule: any) => {
+      rule.selectors = rule.selectors.map(scopeToLanding);
+    });
+  },
+};
 
 const config: Config = {
   title: 'SowonAI CrewX',
@@ -73,6 +112,15 @@ const config: Config = {
   ],
 
   plugins: [
+    function crewxTailwindPlugin() {
+      return {
+        name: 'crewx-tailwind',
+        configurePostCss(postcssOptions: any) {
+          postcssOptions.plugins.push(tailwindcss, scopePreflightPlugin, autoprefixer);
+          return postcssOptions;
+        },
+      };
+    },
     [
       '@docusaurus/plugin-content-docs',
       {
