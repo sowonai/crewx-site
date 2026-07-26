@@ -306,6 +306,9 @@ const LANDING_CSS = `
 
 export default function LandingPage(): ReactNode {
   const [copied, setCopied] = useState(false);
+  const {i18n} = useDocusaurusContext();
+  // sowonlabs.com is Korean-only, so the cross-link only shows on the ko landing.
+  const showSowonLabsLink = i18n.currentLocale === 'ko';
 
   useEffect(() => {
     document.body.classList.add('landing-page-active');
@@ -1169,6 +1172,13 @@ export default function LandingPage(): ReactNode {
               </span>
             </div>
             <div className="flex items-center gap-5">
+              {showSowonLabsLink && (
+                <a className="hover:text-slate-300" href="https://sowonlabs.com" target="_blank" rel="noopener noreferrer">
+                  <Translate id="landing.footer.sowonlabs" description="Footer link to the SowonLabs company site">
+                    SowonLabs
+                  </Translate>
+                </a>
+              )}
               <a className="hover:text-slate-300" href="https://github.com/sowonlabs/crewx" target="_blank" rel="noopener noreferrer">
                 GitHub
               </a>
