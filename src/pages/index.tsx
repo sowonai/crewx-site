@@ -538,13 +538,13 @@ export default function LandingPage(): ReactNode {
                       </span>
                     </button>
                   </div>
-                  <div className="mt-2 flex items-center gap-1.5 px-1 text-[11px] text-slate-500">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-3 w-3">
+                  <div className="mt-2 flex items-start gap-1.5 px-1 text-[11px] text-slate-500">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="mt-[3px] h-3 w-3 shrink-0">
                       <path d="M9 12l2 2 4-4M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" />
                     </svg>
                     <span>
                       <Translate id="landing.hero.install.help" description="Help text under the npx install command">
-                        Open-source CrewX runs locally. Bring your own AI subscriptions.
+                        Open-source and runs locally on the Claude Code or Codex CLI you already use — nothing new to subscribe to.
                       </Translate>
                     </span>
                   </div>
@@ -553,19 +553,19 @@ export default function LandingPage(): ReactNode {
                 <div className="mt-12">
                   <div className="label-caps text-slate-500">
                     <Translate id="landing.hero.providers.heading" description="Section above provider logos">
-                      Bring the AI subscriptions you already use — CrewX adds workflows, memory, and templates
+                      Runs on the coding agents you already pay for — CrewX adds roles, workflows, memory, and templates
                     </Translate>
                   </div>
-                  <div className="mt-4 flex flex-wrap items-center gap-x-7 gap-y-3 text-slate-400">
+                  <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-3 text-slate-400">
                     <span className="inline-flex items-center gap-2">
                       <span className="flex h-6 w-6 items-center justify-center rounded-md bg-emerald-500/15">
                         <img src="/assets/chatgpt-logo-dark.svg" alt="" className="h-[22px] w-[22px] object-contain" />
                       </span>
-                      Codex
+                      Codex CLI
                     </span>
                     <span className="inline-flex items-center gap-2">
                       <span className="flex h-6 w-6 items-center justify-center rounded-md bg-orange-500/15">
-                        <img src="/assets/claude-logo-dark.svg" alt="" className="h-4 w-4 object-contain" />
+                        <img src="/assets/claude-icon.svg" alt="" className="h-4 w-4 object-contain" />
                       </span>
                       Claude Code
                     </span>
@@ -624,12 +624,12 @@ export default function LandingPage(): ReactNode {
               </div>
               <h2 className="mt-5 text-3xl font-extrabold tracking-tight grad-text sm:text-4xl lg:text-5xl">
                 <Translate id="landing.demo.heading" description="Live demo section heading">
-                  Codex and Claude, working together
+                  Codex and Claude Code, working together
                 </Translate>
               </h2>
               <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-400 sm:text-lg">
                 <Translate id="landing.demo.subheading" description="Live demo section subheading">
-                  One request, different AI providers on the job — Codex and Claude each take a role and run in parallel, in a single workspace.
+                  One request, two coding agents on the job — Codex and Claude Code each take a role and run in parallel, in a single workspace.
                 </Translate>
               </p>
             </div>
@@ -647,7 +647,7 @@ export default function LandingPage(): ReactNode {
                   poster="/video/multiagent-demo-poster.jpg"
                   aria-label={translate({
                     id: 'landing.demo.video.alt',
-                    message: 'CrewX running Codex and Claude agents together in one workspace, in parallel',
+                    message: 'CrewX running Codex and Claude Code agents together in one workspace, in parallel',
                     description: 'Accessibility label for the landing demo video',
                   })}
                 >
@@ -742,12 +742,12 @@ export default function LandingPage(): ReactNode {
                 </div>
                 <h3 className="mt-4 text-base font-semibold">
                   <Translate id="landing.features.card.multiProvider.title" description="Feature card 1 title">
-                    Multi-provider orchestration
+                    Multi-agent orchestration
                   </Translate>
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-slate-400">
                   <Translate id="landing.features.card.multiProvider.desc" description="Feature card 1 description">
-                    Mix GPT, Claude, Antigravity, Copilot, and OpenCode in a single crew — GPT handles broad reasoning, Claude plans and writes, Antigravity researches, Copilot assists task by task, and OpenCode keeps high-volume work cost-efficient.
+                    Mix Codex, Claude Code, Antigravity, Copilot, and OpenCode in a single crew — Codex handles broad reasoning, Claude Code plans and writes, Antigravity researches, Copilot assists task by task, and OpenCode keeps high-volume work cost-efficient.
                   </Translate>
                 </p>
               </div>
@@ -1252,7 +1252,7 @@ export default function LandingPage(): ReactNode {
               <div className="chip inline-flex items-center gap-2.5 rounded-full px-4 py-2 text-base text-slate-300">
                 <span className="text-sky-400">◇</span>{' '}
                 <Translate id="landing.providers.eyebrow" description="Providers section eyebrow">
-                  Providers
+                  Coding agents
                 </Translate>
               </div>
               <h2 className="mt-4 text-4xl font-extrabold tracking-tight grad-text sm:text-5xl">
@@ -1261,19 +1261,19 @@ export default function LandingPage(): ReactNode {
                   description="Providers heading; {br} renders a line break"
                   values={{br: <br />}}
                 >
-                  {'Pick the right model{br}per role.'}
+                  {'Claude Code. Codex.{br}One AI team.'}
                 </Translate>
               </h2>
               <p className="mt-5 max-w-2xl text-lg text-slate-400">
                 <Translate id="landing.providers.subheading" description="Providers subheading">
-                  Each provider has a clear job: broad reasoning, long-context planning, cost-efficient work, web research, or task-by-task assist. Swap any time — no prompt rewrites, no lock-in.
+                  Assign the right coding agent to every role — planning, implementation, review, research. CrewX launches the CLI you are already logged into, so the work runs on the plan you already pay for. Swap any time — no prompt rewrites, no lock-in.
                 </Translate>
               </p>
             </div>
 
             <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
               <div className="card relative flex !overflow-visible flex-col rounded-2xl p-5">
-                <div className="pointer-events-none absolute right-3 top-2 z-30 inline-flex items-center rounded-full border border-emerald-300/45 bg-slate-950/95 px-2.5 py-1 text-[10px] font-extrabold uppercase leading-none tracking-[0.12em] text-emerald-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_18px_rgba(52,211,153,0.14)] backdrop-blur-sm">
+                <div className="pointer-events-none absolute right-3 -top-2.5 z-30 inline-flex items-center rounded-full border border-emerald-300/45 bg-slate-950/95 px-2.5 py-1 text-[10px] font-extrabold uppercase leading-none tracking-[0.12em] text-emerald-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_18px_rgba(52,211,153,0.14)] backdrop-blur-sm">
                   <span className="mr-1 text-emerald-200">✓</span>
                   <Translate id="landing.providers.badge.recommended" description="Recommended provider badge">
                     Top pick
@@ -1284,7 +1284,7 @@ export default function LandingPage(): ReactNode {
                     <img src="/assets/chatgpt-logo-dark.svg" alt="Codex" className="h-full w-full object-contain" />
                   </span>
                   <div>
-                    <div className="text-sm font-semibold">Codex</div>
+                    <div className="text-sm font-semibold">Codex CLI</div>
                     <div className="text-xs text-slate-500">OpenAI</div>
                   </div>
                 </div>
@@ -1306,7 +1306,7 @@ export default function LandingPage(): ReactNode {
               </div>
 
               <div className="card relative flex !overflow-visible flex-col rounded-2xl p-5">
-                <div className="pointer-events-none absolute right-3 top-2 z-30 inline-flex items-center rounded-full border border-orange-300/45 bg-slate-950/95 px-2.5 py-1 text-[10px] font-extrabold uppercase leading-none tracking-[0.12em] text-orange-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_18px_rgba(251,146,60,0.14)] backdrop-blur-sm">
+                <div className="pointer-events-none absolute right-3 -top-2.5 z-30 inline-flex items-center rounded-full border border-orange-300/45 bg-slate-950/95 px-2.5 py-1 text-[10px] font-extrabold uppercase leading-none tracking-[0.12em] text-orange-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_18px_rgba(251,146,60,0.14)] backdrop-blur-sm">
                   <span className="mr-1 text-orange-200">✓</span>
                   <Translate id="landing.providers.badge.recommended" description="Recommended provider badge">
                     Top pick
@@ -1314,10 +1314,10 @@ export default function LandingPage(): ReactNode {
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-orange-500/15 p-1.5">
-                    <img src="/assets/claude-logo-dark.svg" alt="Claude" className="h-full w-full object-contain" />
+                    <img src="/assets/claude-icon.svg" alt="Claude Code" className="h-full w-full object-contain" />
                   </span>
                   <div>
-                    <div className="text-sm font-semibold">Claude</div>
+                    <div className="text-sm font-semibold">Claude Code</div>
                     <div className="text-xs text-slate-500">Anthropic</div>
                   </div>
                 </div>
@@ -1347,7 +1347,7 @@ export default function LandingPage(): ReactNode {
                     <div className="text-sm font-semibold">OpenCode</div>
                     <div className="text-xs text-slate-500">
                       <Translate id="landing.providers.opencode.label" description="OpenCode card subtitle">
-                        Community provider
+                        Community agent
                       </Translate>
                     </div>
                   </div>
@@ -1375,7 +1375,7 @@ export default function LandingPage(): ReactNode {
                     <img src="/assets/gemini-logo.svg" alt="Antigravity" className="h-full w-full object-contain" />
                   </span>
                   <div>
-                    <div className="text-sm font-semibold">Antigravity</div>
+                    <div className="text-sm font-semibold">Antigravity CLI</div>
                     <div className="text-xs text-slate-500">Google</div>
                   </div>
                 </div>
@@ -1402,7 +1402,7 @@ export default function LandingPage(): ReactNode {
                     <img src="/assets/github-copilot-logo-dark.svg" alt="GitHub Copilot" className="h-full w-full object-contain" />
                   </span>
                   <div>
-                    <div className="text-sm font-semibold">Copilot</div>
+                    <div className="text-sm font-semibold">Copilot CLI</div>
                     <div className="text-xs text-slate-500">GitHub</div>
                   </div>
                 </div>
@@ -1422,6 +1422,17 @@ export default function LandingPage(): ReactNode {
                   </li>
                 </ul>
               </div>
+            </div>
+
+            <div className="card mt-6 flex flex-col gap-3 rounded-2xl p-5 sm:flex-row sm:items-center sm:justify-between">
+              <p className="text-sm leading-relaxed text-slate-300">
+                <Translate id="landing.providers.byoaNote" description="Note under the coding agent cards explaining that CrewX uses the user's existing CLI login">
+                  Already have Claude Code or Codex installed? CrewX drives the CLI you are logged into — same account, same quota, no separate CrewX bill.
+                </Translate>
+              </p>
+              <code className="shrink-0 rounded-lg border border-[var(--line-strong)] bg-black/30 px-3 py-2 font-mono text-xs text-slate-300">
+                npx crewx@latest
+              </code>
             </div>
           </section>
 
