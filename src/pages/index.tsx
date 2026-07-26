@@ -1289,7 +1289,7 @@ export default function LandingPage(): ReactNode {
                   </div>
                 </div>
                 <ul className="mt-4 flex flex-1 flex-col space-y-1.5 text-xs text-slate-400">
-                  <li>· GPT-5.5</li>
+                  <li>· GPT-5.6</li>
                   <li>· General reasoning</li>
                   <li className="mt-auto pt-1.5 text-slate-300">
                     ·{' '}
@@ -1322,7 +1322,7 @@ export default function LandingPage(): ReactNode {
                   </div>
                 </div>
                 <ul className="mt-4 flex flex-1 flex-col space-y-1.5 text-xs text-slate-400">
-                  <li>· Opus 4.8 / Sonnet 4.6</li>
+                  <li>· Opus 5 / Sonnet 5</li>
                   <li>· Long-context planning</li>
                   <li className="mt-auto pt-1.5 text-slate-300">
                     ·{' '}
