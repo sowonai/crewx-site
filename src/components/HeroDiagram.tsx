@@ -32,8 +32,8 @@ const TONES: Record<string, Tone> = {
 const toneFor = (p?: string): Tone => TONES[(p ?? '').toLowerCase()] ?? TONES.claude;
 
 const PROVIDER_LOGOS: Record<string, string> = {
-  claude: '/assets/claude-logo-dark.svg',
-  'claude code': '/assets/claude-logo-dark.svg',
+  claude: '/assets/claude-icon.svg',
+  'claude code': '/assets/claude-icon.svg',
   codex: '/assets/chatgpt-logo-dark.svg',
   gemini: '/assets/gemini-logo.svg',
   antigravity: '/assets/gemini-logo.svg',
@@ -139,7 +139,7 @@ function AgentNode({data}: NodeProps<Node<AgentData, 'agent'>>) {
           tone.ring,
           compact ? 'px-2 py-1' : 'px-2.5 py-1.5',
         ].join(' ')}
-        style={{width: compact ? 96 : 112}}
+        style={{width: compact ? 108 : 126}}
       >
         <span
           className={[

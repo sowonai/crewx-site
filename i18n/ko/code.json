@@ -507,11 +507,11 @@
     "description": "Copy button label"
   },
   "landing.hero.install.help": {
-    "message": "Web UI가 자동으로 열립니다 — 로그인·설치 없음",
+    "message": "오픈소스이고 내 PC에서 돌아갑니다. 이미 쓰는 클로드 코드나 코덱스 CLI를 그대로 씁니다 — 새로 결제할 게 없습니다.",
     "description": "Help text under the npx install command"
   },
   "landing.hero.providers.heading": {
-    "message": "이미 쓰고 있는 코딩 에이전트들 — 이제 한 팀으로",
+    "message": "이미 결제하고 있는 코딩 에이전트로 돌아갑니다 — CrewX는 역할·워크플로·기억·템플릿을 얹습니다",
     "description": "Section above provider logos"
   },
   "landing.features.eyebrow": {
@@ -547,11 +547,11 @@
     "description": "Phrase 'AI-native team'"
   },
   "landing.features.card.multiProvider.title": {
-    "message": "멀티 프로바이더 오케스트레이션",
+    "message": "멀티 에이전트 오케스트레이션",
     "description": "Feature card 1 title"
   },
   "landing.features.card.multiProvider.desc": {
-    "message": "GPT, Claude, Antigravity, Copilot, OpenCode를 하나의 크루로 조합하세요 — GPT는 범용 추론, Claude는 기획과 작성, Antigravity는 리서치, Copilot은 작업별 보조, OpenCode는 대량 작업을 가성비 있게 처리합니다.",
+    "message": "코덱스, 클로드 코드, Antigravity, Copilot, OpenCode를 하나의 크루로 조합하세요 — 코덱스는 범용 추론, 클로드 코드는 기획과 작성, Antigravity는 리서치, Copilot은 작업별 보조, OpenCode는 대량 작업을 가성비 있게 처리합니다.",
     "description": "Feature card 1 description"
   },
   "landing.features.card.wi.title": {
@@ -595,15 +595,15 @@
     "description": "Feature card 6 description"
   },
   "landing.providers.eyebrow": {
-    "message": "프로바이더",
+    "message": "코딩 에이전트",
     "description": "Providers section eyebrow"
   },
   "landing.providers.heading": {
-    "message": "역할에 맞는 모델을{br}선택하세요.",
+    "message": "클로드 코드와 코덱스를,{br}하나의 AI 팀으로.",
     "description": "Providers heading; {br} renders a line break"
   },
   "landing.providers.subheading": {
-    "message": "각 프로바이더는 분명한 역할이 있습니다. 범용 추론, 장문 기획, 가성비 작업, 웹 리서치, 작업별 보조까지. 언제든 교체 — 프롬프트 재작성도, 락인도 없습니다.",
+    "message": "기획·구현·리뷰·리서치마다 가장 잘 맞는 코딩 에이전트를 배치하세요. CrewX는 이미 로그인해 둔 CLI를 그대로 실행하기 때문에, 지금 쓰는 요금제 안에서 일이 돌아갑니다. 언제든 교체 — 프롬프트 재작성도, 락인도 없습니다.",
     "description": "Providers subheading"
   },
   "landing.providers.badge.recommended": {
@@ -623,7 +623,7 @@
     "description": "Role: Researcher"
   },
   "landing.providers.role.generalist": {
-    "message": "범용 모델",
+    "message": "범용 담당",
     "description": "Role: Generalist"
   },
   "landing.providers.role.personaSimulator": {
@@ -631,7 +631,7 @@
     "description": "Role: Persona simulator"
   },
   "landing.providers.opencode.label": {
-    "message": "커뮤니티 프로바이더",
+    "message": "커뮤니티 에이전트",
     "description": "OpenCode card subtitle"
   },
   "landing.providers.role.costSaver": {
@@ -723,15 +723,15 @@
     "description": "Live demo section eyebrow"
   },
   "landing.demo.heading": {
-    "message": "코덱스와 클로드가 한 팀으로",
+    "message": "코덱스와 클로드 코드가 한 팀으로",
     "description": "Live demo section heading"
   },
   "landing.demo.subheading": {
-    "message": "요청 하나에 서로 다른 AI가 붙습니다 — 코덱스와 클로드가 각자 역할을 맡아 한 워크스페이스에서 동시에 일합니다.",
+    "message": "요청 하나에 두 개의 코딩 에이전트가 붙습니다 — 코덱스와 클로드 코드가 각자 역할을 맡아 한 워크스페이스에서 동시에 일합니다.",
     "description": "Live demo section subheading"
   },
   "landing.demo.video.alt": {
-    "message": "CrewX가 코덱스와 클로드 에이전트를 한 워크스페이스에서 동시에 함께 실행하는 데모 영상",
+    "message": "CrewX가 코덱스와 클로드 코드 에이전트를 한 워크스페이스에서 동시에 함께 실행하는 데모 영상",
     "description": "Accessibility label for the landing demo video"
   },
   "landing.highlights.eyebrow": {
@@ -913,5 +913,9 @@
   "landing.highlights.tierC.workspaceSwitch": {
     "message": "작업 공간 갈아타기",
     "description": "Tier C item: workspace switching"
+  },
+  "landing.providers.byoaNote": {
+    "message": "클로드 코드나 코덱스가 이미 깔려 있나요? CrewX는 로그인해 둔 CLI를 그대로 실행합니다 — 같은 계정, 같은 사용량, CrewX 별도 과금 없음.",
+    "description": "Note under the coding agent cards explaining that CrewX uses the user's existing CLI login"
   }
 }
