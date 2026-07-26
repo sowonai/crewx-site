@@ -5,7 +5,16 @@ import Head from '@docusaurus/Head';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import Translate, {translate} from '@docusaurus/Translate';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import {useLocation} from '@docusaurus/router';
+
+// Tailwind, built at build time and code-split onto this route. Order matters:
+// preflight (scoped to .landing-page-wrapper in docusaurus.config.ts) first,
+// utilities second. This replaced the Play CDN <script>, which Docusaurus
+// injected after hydration — late enough that the CDN's initial build could
+// miss the page entirely and a visitor got unstyled markup.
+import '../css/tailwind-preflight.css';
+import '../css/tailwind-utilities.css';
 
 function LocaleDropdown(): ReactNode {
   const {i18n} = useDocusaurusContext();
@@ -345,7 +354,6 @@ export default function LandingPage(): ReactNode {
           message: "Build your AI team. It's easy.",
           description: 'OpenGraph description',
         })} />
-        <script src="https://cdn.tailwindcss.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
@@ -836,6 +844,401 @@ export default function LandingPage(): ReactNode {
                     Pre/post-tool hooks, scheduled jobs, custom slash commands. Wire CrewX into your existing workflow without leaving the browser.
                   </Translate>
                 </p>
+              </div>
+            </div>
+          </section>
+
+          {/* Section divider */}
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="divider-line h-px" />
+          </div>
+
+          {/* ── FEATURE HIGHLIGHTS ── */}
+          <section id="features" className="mx-auto max-w-7xl px-6 py-24">
+            <div className="max-w-3xl">
+              <div className="chip inline-flex items-center gap-2.5 rounded-full px-4 py-2 text-base text-slate-300">
+                <span className="text-emerald-400">◆</span>{' '}
+                <Translate id="landing.highlights.eyebrow" description="Feature highlights section eyebrow">
+                  Feature highlights
+                </Translate>
+              </div>
+              <h2 className="mt-4 text-4xl font-extrabold tracking-tight grad-text sm:text-5xl lg:text-6xl">
+                <Translate
+                  id="landing.highlights.heading"
+                  description="Feature highlights section heading; {br} renders a line break"
+                  values={{br: <br />}}
+                >
+                  {'It remembers your work,{br}keeps the process, and lets you undo it.'}
+                </Translate>
+              </h2>
+              <p className="mt-5 max-w-2xl text-lg text-slate-400">
+                <Translate id="landing.highlights.subheading" description="Feature highlights section subheading">
+                  The parts of CrewX that change how a day of work actually goes — not the ones that look impressive in a demo.
+                </Translate>
+              </p>
+            </div>
+
+            {/* Tier A: big blocks.
+                The screenshots run the full container width, with the copy above them,
+                rather than sitting in a half-width column beside the copy. These are real
+                product captures at 1440x900; in a half-width column they get downscaled
+                2.4x and every label inside the app becomes unreadable (~6px), which
+                defeats the point of showing a screenshot at all. Full width puts them at
+                roughly 1.1x — the UI text stays legible. */}
+            <div className="mt-16 space-y-24">
+              {/* Highlight: Memory vault */}
+              <div>
+                <div className="max-w-2xl">
+                  <h3 className="text-2xl font-bold sm:text-3xl">
+                    <Translate id="landing.highlights.tierA.memory.title" description="Tier A highlight 1 title">
+                      A memory vault for your work
+                    </Translate>
+                  </h3>
+                  <p className="mt-4 text-base leading-relaxed text-slate-400 sm:text-lg">
+                    <Translate id="landing.highlights.tierA.memory.desc" description="Tier A highlight 1 description">
+                      CrewX remembers your work and decisions, so you don't explain the same thing twice.
+                    </Translate>
+                  </p>
+                </div>
+                <div className="card mt-8 overflow-hidden rounded-2xl border border-[var(--line-strong)] shadow-2xl shadow-black/40">
+                  <img
+                    src={useBaseUrl('/img/screenshots/f20-memory-vault.png')}
+                    alt={translate({
+                      id: 'landing.highlights.tierA.memory.imageAlt',
+                      message: "Screenshot of CrewX's memory vault showing saved project decisions and context",
+                      description: 'Alt text for the memory vault screenshot',
+                    })}
+                    width={1440}
+                    height={900}
+                    loading="lazy"
+                    className="block aspect-[1440/900] w-full object-cover"
+                  />
+                </div>
+              </div>
+
+              {/* Highlight: Work trace */}
+              <div>
+                <div className="max-w-2xl">
+                  <h3 className="text-2xl font-bold sm:text-3xl">
+                    <Translate id="landing.highlights.tierA.workTrace.title" description="Tier A highlight 2 title">
+                      A trace of every step
+                    </Translate>
+                  </h3>
+                  <p className="mt-4 text-base leading-relaxed text-slate-400 sm:text-lg">
+                    <Translate id="landing.highlights.tierA.workTrace.desc" description="Tier A highlight 2 description">
+                      Every action the AI takes is logged, so you can trace back what happened and why.
+                    </Translate>
+                  </p>
+                </div>
+                <div className="card mt-8 overflow-hidden rounded-2xl border border-[var(--line-strong)] shadow-2xl shadow-black/40">
+                  <img
+                    src={useBaseUrl('/img/screenshots/f02-work-trace.png')}
+                    alt={translate({
+                      id: 'landing.highlights.tierA.workTrace.imageAlt',
+                      message: "Screenshot of CrewX's work trace log showing a timeline of AI actions",
+                      description: 'Alt text for the work trace screenshot',
+                    })}
+                    width={1440}
+                    height={900}
+                    loading="lazy"
+                    className="block aspect-[1440/900] w-full object-cover"
+                  />
+                </div>
+              </div>
+
+              {/* Highlight: Undo */}
+              <div>
+                <div className="max-w-2xl">
+                  <h3 className="text-2xl font-bold sm:text-3xl">
+                    <Translate id="landing.highlights.tierA.undo.title" description="Tier A highlight 3 title">
+                      Undo, whenever you need to
+                    </Translate>
+                  </h3>
+                  <p className="mt-4 text-base leading-relaxed text-slate-400 sm:text-lg">
+                    <Translate id="landing.highlights.tierA.undo.desc" description="Tier A highlight 3 description">
+                      See exactly what the AI changed, and roll it back if it's not what you wanted.
+                    </Translate>
+                  </p>
+                </div>
+                <div className="card mt-8 overflow-hidden rounded-2xl border border-[var(--line-strong)] shadow-2xl shadow-black/40">
+                  <img
+                    src={useBaseUrl('/img/screenshots/f15-undo.png')}
+                    alt={translate({
+                      id: 'landing.highlights.tierA.undo.imageAlt',
+                      message: "Screenshot of CrewX's undo panel showing a change ready to be reverted",
+                      description: 'Alt text for the undo screenshot',
+                    })}
+                    width={1440}
+                    height={900}
+                    loading="lazy"
+                    className="block aspect-[1440/900] w-full object-cover"
+                  />
+                </div>
+              </div>
+
+              {/* Highlight: Runs on your machine (diagram, no screenshot) */}
+              <div className="grid items-center gap-10 lg:grid-cols-2">
+                <div className="lg:order-2">
+                  <div className="card flex flex-col items-center justify-center gap-5 rounded-2xl border border-[var(--line-strong)] p-8 sm:p-10">
+                    <div className="w-full max-w-xs rounded-xl border border-[var(--line-strong)] bg-white/[0.03] p-5">
+                      <div className="label-caps text-slate-300">
+                        <Translate id="landing.highlights.tierA.localFirst.diagram.yourMachine.label" description="Local-first diagram: 'Your machine' box label">
+                          Your machine
+                        </Translate>
+                      </div>
+                      <ul className="mt-3 space-y-1.5 text-sm text-slate-400">
+                        <li>
+                          ·{' '}
+                          <Translate id="landing.highlights.tierA.localFirst.diagram.yourMachine.workspace" description="Local-first diagram: workspace item">
+                            Workspace
+                          </Translate>
+                        </li>
+                        <li>
+                          ·{' '}
+                          <Translate id="landing.highlights.tierA.localFirst.diagram.yourMachine.history" description="Local-first diagram: task history item">
+                            Task history
+                          </Translate>
+                        </li>
+                        <li>
+                          ·{' '}
+                          <Translate id="landing.highlights.tierA.localFirst.diagram.yourMachine.orchestration" description="Local-first diagram: orchestration item">
+                            Orchestration
+                          </Translate>
+                        </li>
+                      </ul>
+                    </div>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6 text-slate-500">
+                      <path d="M12 4v14M6 12l6 6 6-6" />
+                    </svg>
+                    <div className="w-full max-w-xs rounded-xl border border-dashed border-[var(--line-strong)] bg-white/[0.02] p-5 text-center">
+                      <div className="label-caps text-slate-400">
+                        <Translate id="landing.highlights.tierA.localFirst.diagram.providers.label" description="Local-first diagram: 'Model providers you choose' box label">
+                          Model providers you choose
+                        </Translate>
+                      </div>
+                    </div>
+                    <p className="text-center text-xs text-slate-500">
+                      <Translate id="landing.highlights.tierA.localFirst.diagram.caption" description="Local-first diagram caption">
+                        You choose, request by request
+                      </Translate>
+                    </p>
+                  </div>
+                </div>
+                <div className="lg:order-1">
+                  <h3 className="text-2xl font-bold sm:text-3xl">
+                    <Translate id="landing.highlights.tierA.localFirst.title" description="Tier A highlight 4 title">
+                      Runs on your machine
+                    </Translate>
+                  </h3>
+                  <p className="mt-4 text-base leading-relaxed text-slate-400 sm:text-lg">
+                    <Translate id="landing.highlights.tierA.localFirst.desc" description="Tier A highlight 4 description">
+                      Your workspace, task history, and orchestration run locally on your machine. You choose which model provider sees what, request by request.
+                    </Translate>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Tier B: compact cards */}
+            <div className="mt-24">
+              <h3 className="label-caps text-slate-400">
+                <Translate id="landing.highlights.tierB.label" description="Tier B section label">
+                  More that quietly help
+                </Translate>
+              </h3>
+              <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {/* B: Unified search */}
+                <div className="card rounded-2xl p-5">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-sky-500/15 text-sky-300">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
+                      <circle cx="10" cy="10" r="7" />
+                      <path d="M21 21l-5-5" />
+                    </svg>
+                  </div>
+                  <h4 className="mt-3 text-sm font-semibold">
+                    <Translate id="landing.highlights.tierB.search.title" description="Tier B card 1 title">
+                      Unified search
+                    </Translate>
+                  </h4>
+                  <p className="mt-1.5 text-xs leading-relaxed text-slate-400">
+                    <Translate id="landing.highlights.tierB.search.desc" description="Tier B card 1 description">
+                      Search everything you've ever asked AI, in one query.
+                    </Translate>
+                  </p>
+                </div>
+
+                {/* B: Continuity engine */}
+                <div className="card rounded-2xl p-5">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-violet-500/15 text-violet-300">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
+                      <path d="M21 12a9 9 0 1 1-3-6.7" />
+                      <path d="M21 3v6h-6" />
+                    </svg>
+                  </div>
+                  <h4 className="mt-3 text-sm font-semibold">
+                    <Translate id="landing.highlights.tierB.continuity.title" description="Tier B card 2 title">
+                      Continuity engine
+                    </Translate>
+                  </h4>
+                  <p className="mt-1.5 text-xs leading-relaxed text-slate-400">
+                    <Translate id="landing.highlights.tierB.continuity.desc" description="Tier B card 2 description">
+                      Long tasks keep their context, all the way through.
+                    </Translate>
+                  </p>
+                </div>
+
+                {/* B: Mid-task instructions */}
+                <div className="card rounded-2xl p-5">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-pink-500/15 text-pink-300">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
+                      <path d="M21 12c0 4.97-4.03 9-9 9-1.5 0-2.91-.37-4.15-1.02L3 21l1.02-4.85A8.96 8.96 0 0 1 3 12c0-4.97 4.03-9 9-9s9 4.03 9 9z" />
+                      <circle cx="18" cy="6" r="2" fill="currentColor" stroke="none" />
+                    </svg>
+                  </div>
+                  <h4 className="mt-3 text-sm font-semibold">
+                    <Translate id="landing.highlights.tierB.midTaskInstruction.title" description="Tier B card 3 title">
+                      Redirect mid-task
+                    </Translate>
+                  </h4>
+                  <p className="mt-1.5 text-xs leading-relaxed text-slate-400">
+                    <Translate id="landing.highlights.tierB.midTaskInstruction.desc" description="Tier B card 3 description">
+                      Talk to the AI again while it's still working.
+                    </Translate>
+                  </p>
+                </div>
+
+                {/* B: Checkpoints */}
+                <div className="card rounded-2xl p-5">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-500/15 text-emerald-300">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
+                      <path d="M5 3v18M5 4h11l-2 3 2 3H5" />
+                    </svg>
+                  </div>
+                  <h4 className="mt-3 text-sm font-semibold">
+                    <Translate id="landing.highlights.tierB.checkpoint.title" description="Tier B card 4 title">
+                      Checkpoints
+                    </Translate>
+                  </h4>
+                  <p className="mt-1.5 text-xs leading-relaxed text-slate-400">
+                    <Translate id="landing.highlights.tierB.checkpoint.desc" description="Tier B card 4 description">
+                      Mark a checkpoint, and roll back to it if something goes wrong.
+                    </Translate>
+                  </p>
+                </div>
+
+                {/* B: Project rooms */}
+                <div className="card rounded-2xl p-5">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-500/15 text-amber-300">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
+                      <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z" />
+                    </svg>
+                  </div>
+                  <h4 className="mt-3 text-sm font-semibold">
+                    <Translate id="landing.highlights.tierB.projectRoom.title" description="Tier B card 5 title">
+                      Project rooms
+                    </Translate>
+                  </h4>
+                  <p className="mt-1.5 text-xs leading-relaxed text-slate-400">
+                    <Translate id="landing.highlights.tierB.projectRoom.desc" description="Tier B card 5 description">
+                      Docs and AI for one job, all in one room.
+                    </Translate>
+                  </p>
+                </div>
+
+                {/* B: Instruction loop */}
+                <div className="card rounded-2xl p-5">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-rose-500/15 text-rose-300">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
+                      <path d="M17 2l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 22l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3" />
+                    </svg>
+                  </div>
+                  <h4 className="mt-3 text-sm font-semibold">
+                    <Translate id="landing.highlights.tierB.instructionLoop.title" description="Tier B card 6 title">
+                      Instruction loop
+                    </Translate>
+                  </h4>
+                  <p className="mt-1.5 text-xs leading-relaxed text-slate-400">
+                    <Translate id="landing.highlights.tierB.instructionLoop.desc" description="Tier B card 6 description">
+                      Conversations turn into repeatable work processes.
+                    </Translate>
+                  </p>
+                </div>
+
+                {/* B: Scheduled runs */}
+                <div className="card rounded-2xl p-5">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-indigo-500/15 text-indigo-300">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
+                      <circle cx="12" cy="12" r="9" />
+                      <path d="M12 7v5l3 3" />
+                    </svg>
+                  </div>
+                  <h4 className="mt-3 text-sm font-semibold">
+                    <Translate id="landing.highlights.tierB.scheduledRun.title" description="Tier B card 7 title">
+                      Scheduled runs
+                    </Translate>
+                  </h4>
+                  <p className="mt-1.5 text-xs leading-relaxed text-slate-400">
+                    <Translate id="landing.highlights.tierB.scheduledRun.desc" description="Tier B card 7 description">
+                      AI works on its own, right on schedule.
+                    </Translate>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Tier C: one-line text grid */}
+            <div className="mt-16">
+              <h3 className="label-caps text-slate-400">
+                <Translate id="landing.highlights.tierC.label" description="Tier C section label">
+                  And more, in the toolkit
+                </Translate>
+              </h3>
+              <div className="mt-5 grid gap-x-6 gap-y-3 text-sm text-slate-400 sm:grid-cols-3">
+                <div className="chip rounded-lg px-4 py-3">
+                  <Translate id="landing.highlights.tierC.progress" description="Tier C item: progress view">
+                    Progress you can expand
+                  </Translate>
+                </div>
+                <div className="chip rounded-lg px-4 py-3">
+                  <Translate id="landing.highlights.tierC.promptPreview" description="Tier C item: prompt preview">
+                    Preview the prompt before it's sent
+                  </Translate>
+                </div>
+                <div className="chip rounded-lg px-4 py-3">
+                  <Translate id="landing.highlights.tierC.globalHotkey" description="Tier C item: global hotkey">
+                    Call it up from anywhere
+                  </Translate>
+                </div>
+                <div className="chip rounded-lg px-4 py-3">
+                  <Translate id="landing.highlights.tierC.stallDetection" description="Tier C item: stall detection">
+                    Notices when AI stalls
+                  </Translate>
+                </div>
+                <div className="chip rounded-lg px-4 py-3">
+                  <Translate id="landing.highlights.tierC.notifications" description="Tier C item: notifications">
+                    Notifications
+                  </Translate>
+                </div>
+                <div className="chip rounded-lg px-4 py-3">
+                  <Translate id="landing.highlights.tierC.highlightMarkup" description="Tier C item: highlight markup">
+                    Highlight to flag it
+                  </Translate>
+                </div>
+                <div className="chip rounded-lg px-4 py-3">
+                  <Translate id="landing.highlights.tierC.dailyBoard" description="Tier C item: daily task board">
+                    A daily task board
+                  </Translate>
+                </div>
+                <div className="chip rounded-lg px-4 py-3">
+                  <Translate id="landing.highlights.tierC.photoQuery" description="Tier C item: ask with a photo">
+                    Ask with a photo
+                  </Translate>
+                </div>
+                <div className="chip rounded-lg px-4 py-3">
+                  <Translate id="landing.highlights.tierC.workspaceSwitch" description="Tier C item: workspace switching">
+                    Switch workspaces instantly
+                  </Translate>
+                </div>
               </div>
             </div>
           </section>

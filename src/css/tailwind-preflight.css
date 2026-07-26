@@ -1,0 +1,13 @@
+/**
+ * Tailwind's base layer (preflight) — the global reset.
+ *
+ * This is deliberately in its own file. Preflight strips heading sizes, list
+ * bullets and button chrome, which is exactly right for the landing page and
+ * exactly wrong for the docs/blog pages that Infima styles. The PostCSS plugin
+ * in docusaurus.config.ts recognises this file by name and rewrites every
+ * selector to be scoped under `.landing-page-wrapper`, using `:where()` so the
+ * rules keep zero specificity and any utility class still wins.
+ *
+ * Import order matters: this must come before tailwind-utilities.css.
+ */
+@tailwind base;
