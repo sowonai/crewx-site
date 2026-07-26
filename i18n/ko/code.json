@@ -714,6 +714,10 @@
     "message": "CrewX · 오픈소스 CLI · Apache 2.0",
     "description": "Footer tagline"
   },
+  "landing.footer.sowonlabs": {
+    "message": "소원랩스",
+    "description": "Footer link to the SowonLabs company site"
+  },
   "landing.demo.eyebrow": {
     "message": "라이브 데모",
     "description": "Live demo section eyebrow"
