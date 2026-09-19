@@ -458,9 +458,9 @@
     "message": "템플릿",
     "description": "Top nav: Templates link"
   },
-  "landing.nav.getStarted": {
-    "message": "시작하기",
-    "description": "Top nav: primary Get started CTA"
+  "landing.cta.downloadWindows": {
+    "message": "Windows용 다운로드",
+    "description": "Shared label for primary CTAs linking to the Windows download page"
   },
   "landing.hero.eyebrow": {
     "message": "AI 에이전트 오케스트레이션",
@@ -497,10 +497,6 @@
   "landing.hero.cta.getStarted": {
     "message": "5분 만에 시작",
     "description": "Hero secondary CTA"
-  },
-  "landing.hero.cta.download": {
-    "message": "Windows용 다운로드",
-    "description": "Hero primary CTA linking to the Windows download page"
   },
   "landing.hero.cliAlternative.summary": {
     "message": "개발자용 CLI 대안",
@@ -669,10 +665,6 @@
   "landing.pricing.tier.free.desc": {
     "message": "이미 쓰는 AI 계정으로 CrewX를 사용하세요. 좌석 요금 없음. 토큰 마크업 없음.",
     "description": "Free tier description"
-  },
-  "landing.pricing.tier.free.cta": {
-    "message": "무료로 시작",
-    "description": "Free tier CTA"
   },
   "landing.pricing.row.workspaces": {
     "message": "워크스페이스",

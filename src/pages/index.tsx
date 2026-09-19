@@ -405,14 +405,14 @@ export default function LandingPage(): ReactNode {
                 </svg>
                 GitHub
               </a>
-              <a
-                href="/docs/intro"
+              <Link
+                to="/download"
                 className="btn-primary rounded-md px-4 py-2 text-sm font-semibold text-white"
               >
-                <Translate id="landing.nav.getStarted" description="Top nav: primary Get started CTA">
-                  Get started
+                <Translate id="landing.cta.downloadWindows" description="Shared label for primary CTAs linking to the Windows download page">
+                  Download for Windows
                 </Translate>
-              </a>
+              </Link>
             </div>
           </div>
         </header>
@@ -497,7 +497,7 @@ export default function LandingPage(): ReactNode {
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
                       <path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
-                    <Translate id="landing.hero.cta.download" description="Hero primary CTA linking to the Windows download page">
+                    <Translate id="landing.cta.downloadWindows" description="Shared label for primary CTAs linking to the Windows download page">
                       Download for Windows
                     </Translate>
                   </Link>
@@ -1502,14 +1502,14 @@ export default function LandingPage(): ReactNode {
                     Use CrewX with the AI accounts you already have. No seat fees. No token markup.
                   </Translate>
                 </p>
-                <a
-                  href="/docs/intro"
+                <Link
+                  to="/download"
                   className="btn-primary mt-6 inline-flex w-full items-center justify-center rounded-full px-4 py-2.5 text-sm font-semibold text-white"
                 >
-                  <Translate id="landing.pricing.tier.free.cta" description="Free tier CTA">
-                    Start for free
+                  <Translate id="landing.cta.downloadWindows" description="Shared label for primary CTAs linking to the Windows download page">
+                    Download for Windows
                   </Translate>
-                </a>
+                </Link>
                 <ul className="mt-6 space-y-2.5 text-sm text-slate-300">
                   <li className="flex justify-between gap-2">
                     <span className="text-slate-400">

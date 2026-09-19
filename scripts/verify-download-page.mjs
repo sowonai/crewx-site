@@ -33,19 +33,37 @@ test('Korean navbar/footer translate the Download label', () => {
   assert.equal(footer['link.item.label.Download']?.message, '다운로드');
 });
 
-test('the homepage hero makes the locale-aware Windows download the primary path and keeps CLI as a collapsed alternative', () => {
+test('all homepage primary CTAs use the locale-aware Windows download and share its copy', () => {
   const home = read('src/pages/index.tsx');
+  const headerStart = home.indexOf('{/* Top Nav */}');
+  const headerEnd = home.indexOf('{/* Hero */}', headerStart);
+  const header = home.slice(headerStart, headerEnd);
   const heroStart = home.indexOf('<div className="mt-8 flex flex-wrap items-center gap-3">');
   const heroEnd = home.indexOf('<div className="mt-12">', heroStart);
   const hero = home.slice(heroStart, heroEnd);
+  const freeTierStart = home.indexOf('{/* Free */}');
+  const freeTierEnd = home.indexOf('<ul className="mt-6 space-y-2.5 text-sm text-slate-300">', freeTierStart);
+  const freeTier = home.slice(freeTierStart, freeTierEnd);
 
   // A raw <a href="/download"> would resolve to the English page even when rendered
   // on /ko — the R1 review flagged this. @docusaurus/Link resolves per current locale.
+  for (const primaryCta of [header, hero, freeTier]) {
+    assert.match(primaryCta, /<Link\s+to="\/download"/);
+    assert.match(primaryCta, /to="\/download"\s+className="btn-primary/);
+    assert.match(primaryCta, /id="landing\.cta\.downloadWindows"/);
+  }
   assert.match(hero, /<Link\s+to="\/download"/);
   assert.doesNotMatch(home, /<a\s+href="\/download"/);
-  assert.match(hero, /to="\/download"\s+className="btn-primary/);
   assert.match(hero, /<Link\s+to="\/docs\/intro"\s+className="btn-ghost/);
   assert.ok(hero.indexOf('to="/download"') < hero.indexOf('to="/docs/intro"'));
+
+  assert.equal(
+    [...home.matchAll(/id="landing\.cta\.downloadWindows"/g)].length,
+    3,
+    'header, hero, and free-tier primary CTAs must share the Windows download copy',
+  );
+  assert.doesNotMatch(header, /href="\/docs\/intro"\s+className="btn-primary/);
+  assert.doesNotMatch(freeTier, /href="\/docs\/intro"\s+className="btn-primary/);
 
   const cliStart = hero.indexOf('<details');
   const cli = hero.slice(cliStart, hero.indexOf('</details>', cliStart) + '</details>'.length);
@@ -55,6 +73,7 @@ test('the homepage hero makes the locale-aware Windows download the primary path
   assert.match(cli, /to="\/docs\/cli\/commands"/);
 
   const ko = JSON.parse(read('i18n/ko/code.json'));
+  assert.equal(ko['landing.cta.downloadWindows']?.message, 'Windows용 다운로드');
   assert.equal(ko['landing.hero.cliAlternative.summary']?.message, '개발자용 CLI 대안');
   assert.equal(ko['landing.hero.cliAlternative.docs']?.message, 'CLI 가이드 보기');
 });
