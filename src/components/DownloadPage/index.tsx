@@ -44,6 +44,8 @@ const STRINGS: Record<Locale, Record<string, string>> = {
     previewCta: 'Download preview (RC) for Windows',
     previewOnlyNote:
       "There's no stable release yet — this is a preview (release candidate) build for people willing to try it early. Expect rough edges.",
+    alsoPreviewNote: 'A preview (RC) build is also available for early testers:',
+    alsoPreviewCta: 'Download preview (RC)',
     notReadyTitle: 'Windows installer not published yet',
     notReadyBody:
       "We haven't published a Desktop Setup.exe yet, so there's nothing real to link to here. Check the GitHub Releases page for the current status, or use the CrewX CLI in the meantime.",
@@ -58,7 +60,7 @@ const STRINGS: Record<Locale, Record<string, string>> = {
     installStep1Body: 'Download Setup.exe above and run it. No Node.js or npm required — the Desktop app is self-contained.',
     installStep2Title: 'First launch',
     installStep2Body:
-      "CrewX starts a local server on first launch; give it a few seconds. If it doesn't come up, the app shows a retry/diagnose option instead of a blank screen.",
+      "The first launch can take a few seconds while the app finishes starting up. If it doesn't come up, you'll see a retry/diagnose option instead of a blank screen.",
     installStep3Title: 'Connect an AI provider',
     installStep3Body:
       "The app runs without Node/npm, but it still needs an AI provider account connected (Claude, GPT, etc.) before it can answer anything — connecting an AI account is a separate step from installing the app.",
@@ -73,6 +75,8 @@ const STRINGS: Record<Locale, Record<string, string>> = {
     stableCta: 'Windows용 다운로드',
     previewCta: 'Windows용 체험판(RC) 다운로드',
     previewOnlyNote: '아직 정식 버전은 없습니다 — 먼저 써보고 싶은 분들을 위한 체험판(RC)입니다. 미흡한 부분이 있을 수 있습니다.',
+    alsoPreviewNote: '먼저 써보고 싶은 분들을 위한 체험판(RC) 빌드도 있습니다:',
+    alsoPreviewCta: '체험판(RC) 다운로드',
     notReadyTitle: 'Windows 설치본이 아직 공개되지 않았습니다',
     notReadyBody:
       '아직 Desktop용 Setup.exe를 배포하지 않아 여기에 실제로 연결할 다운로드가 없습니다. 현재 상태는 GitHub Releases 페이지에서 확인하시거나, 그동안 CrewX CLI를 이용해 주세요.',
@@ -86,7 +90,7 @@ const STRINGS: Record<Locale, Record<string, string>> = {
     installStep1Title: '설치 파일 실행',
     installStep1Body: '위에서 Setup.exe를 내려받아 실행하세요. Node.js나 npm 설치가 필요하지 않습니다 — Desktop 앱은 그 자체로 완결되어 있습니다.',
     installStep2Title: '첫 실행',
-    installStep2Body: '첫 실행 시 CrewX가 로컬 서버를 띄웁니다. 몇 초 정도 기다려 주세요. 서버가 뜨지 않으면 빈 화면 대신 재시도·진단 안내가 표시됩니다.',
+    installStep2Body: '첫 실행 시 앱이 준비되기까지 몇 초 정도 걸릴 수 있습니다. 뜨지 않으면 빈 화면 대신 재시도·진단 안내가 표시됩니다.',
     installStep3Title: 'AI provider 연결',
     installStep3Body: '앱 실행 자체에는 Node/npm이 필요 없지만, 실제로 응답을 받으려면 별도로 AI provider 계정(Claude, GPT 등)을 연결해야 합니다 — 앱 설치와 AI 계정 연결은 서로 다른 단계입니다.',
     reportHeading: '문제가 있나요?',
@@ -98,6 +102,8 @@ export default function DownloadPage({locale}: {locale: Locale}): React.ReactEle
   const t = STRINGS[locale];
   const m = manifest as Manifest;
   const primary = m.stable ?? m.preview;
+  const changelogHref = primary?.htmlUrl ?? RELEASES_URL;
+  const showSeparatePreviewLink = Boolean(m.stable && m.preview);
 
   return (
     <>
@@ -127,6 +133,12 @@ export default function DownloadPage({locale}: {locale: Locale}): React.ReactEle
                   <span>{t.sizeLabel}: <strong>{formatSize(primary.windows.sizeBytes)}</strong></span>
                   <span><strong>{t.trialLabel}</strong></span>
                 </div>
+                {showSeparatePreviewLink && m.preview && (
+                  <p className={styles.previewNote}>
+                    {t.alsoPreviewNote}{' '}
+                    <a href={m.preview.windows.url}>{t.alsoPreviewCta} ({m.preview.version})</a>
+                  </p>
+                )}
               </>
             ) : (
               <div className={styles.notReadyBox}>
@@ -136,7 +148,7 @@ export default function DownloadPage({locale}: {locale: Locale}): React.ReactEle
             )}
 
             <div className={styles.secondaryLinks}>
-              <a href={RELEASES_URL} target="_blank" rel="noopener noreferrer">{t.changelogLink}</a>
+              <a href={changelogHref} target="_blank" rel="noopener noreferrer">{t.changelogLink}</a>
               <a href={ISSUES_URL} target="_blank" rel="noopener noreferrer">{t.reportLink}</a>
             </div>
 

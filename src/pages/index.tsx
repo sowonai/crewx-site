@@ -6,6 +6,7 @@ import BrowserOnly from '@docusaurus/BrowserOnly';
 import Translate, {translate} from '@docusaurus/Translate';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import Link from '@docusaurus/Link';
 import {useLocation} from '@docusaurus/router';
 
 // Tailwind, built at build time and code-split onto this route. Order matters:
@@ -513,8 +514,8 @@ export default function LandingPage(): ReactNode {
                       View on GitHub
                     </Translate>
                   </a>
-                  <a
-                    href="/download"
+                  <Link
+                    to="/download"
                     className="btn-ghost inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-semibold text-slate-200"
                   >
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
@@ -523,7 +524,7 @@ export default function LandingPage(): ReactNode {
                     <Translate id="landing.hero.cta.download" description="Hero tertiary CTA linking to the Windows download page">
                       Download for Windows
                     </Translate>
-                  </a>
+                  </Link>
                 </div>
 
                 <div className="mt-8 max-w-md">

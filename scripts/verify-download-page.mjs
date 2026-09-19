@@ -33,10 +33,31 @@ test('Korean navbar/footer translate the Download label', () => {
   assert.equal(footer['link.item.label.Download']?.message, '다운로드');
 });
 
-test('the homepage hero links to /download without touching the npx install command', () => {
+test('the homepage hero links to /download via Link (locale-aware) without touching the npx install command', () => {
   const home = read('src/pages/index.tsx');
-  assert.match(home, /href="\/download"/);
+  // A raw <a href="/download"> would resolve to the English page even when rendered
+  // on /ko — the R1 review flagged this. @docusaurus/Link resolves per current locale.
+  assert.match(home, /<Link\s+to="\/download"/);
+  assert.doesNotMatch(home, /<a\s+href="\/download"/);
   assert.match(home, /npx crewx@latest/); // still there — download page is additive, not a replacement
+});
+
+test('the changelog link uses the verified release htmlUrl instead of a hardcoded Releases URL', () => {
+  const component = read('src/components/DownloadPage/index.tsx');
+  assert.match(component, /changelogHref\s*=\s*primary\?\.htmlUrl\s*\?\?\s*RELEASES_URL/);
+  assert.match(component, /href=\{changelogHref\}/);
+});
+
+test('a separate preview download link is offered when both stable and preview are available', () => {
+  const component = read('src/components/DownloadPage/index.tsx');
+  assert.match(component, /m\.stable\s*&&\s*m\.preview/);
+  assert.match(component, /m\.preview\.windows\.url/);
+});
+
+test('the first-run copy does not use the "local server" implementation term', () => {
+  const component = read('src/components/DownloadPage/index.tsx');
+  assert.doesNotMatch(component, /local server/i);
+  assert.doesNotMatch(component, /로컬\s*서버/);
 });
 
 test('both locale page files render the shared DownloadPage component', () => {
