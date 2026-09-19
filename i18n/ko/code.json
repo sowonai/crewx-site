@@ -496,11 +496,19 @@
   },
   "landing.hero.cta.getStarted": {
     "message": "5분 만에 시작",
-    "description": "Hero primary CTA"
+    "description": "Hero secondary CTA"
   },
   "landing.hero.cta.download": {
     "message": "Windows용 다운로드",
-    "description": "Hero tertiary CTA linking to the Windows download page"
+    "description": "Hero primary CTA linking to the Windows download page"
+  },
+  "landing.hero.cliAlternative.summary": {
+    "message": "개발자용 CLI 대안",
+    "description": "Collapsed developer CLI alternative summary"
+  },
+  "landing.hero.cliAlternative.docs": {
+    "message": "CLI 가이드 보기",
+    "description": "Link to the CLI guide from the developer alternative"
   },
   "landing.hero.copy.copied": {
     "message": "복사됨",

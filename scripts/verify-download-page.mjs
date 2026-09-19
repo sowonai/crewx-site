@@ -33,13 +33,30 @@ test('Korean navbar/footer translate the Download label', () => {
   assert.equal(footer['link.item.label.Download']?.message, '다운로드');
 });
 
-test('the homepage hero links to /download via Link (locale-aware) without touching the npx install command', () => {
+test('the homepage hero makes the locale-aware Windows download the primary path and keeps CLI as a collapsed alternative', () => {
   const home = read('src/pages/index.tsx');
+  const heroStart = home.indexOf('<div className="mt-8 flex flex-wrap items-center gap-3">');
+  const heroEnd = home.indexOf('<div className="mt-12">', heroStart);
+  const hero = home.slice(heroStart, heroEnd);
+
   // A raw <a href="/download"> would resolve to the English page even when rendered
   // on /ko — the R1 review flagged this. @docusaurus/Link resolves per current locale.
-  assert.match(home, /<Link\s+to="\/download"/);
+  assert.match(hero, /<Link\s+to="\/download"/);
   assert.doesNotMatch(home, /<a\s+href="\/download"/);
-  assert.match(home, /npx crewx@latest/); // still there — download page is additive, not a replacement
+  assert.match(hero, /to="\/download"\s+className="btn-primary/);
+  assert.match(hero, /<Link\s+to="\/docs\/intro"\s+className="btn-ghost/);
+  assert.ok(hero.indexOf('to="/download"') < hero.indexOf('to="/docs/intro"'));
+
+  const cliStart = hero.indexOf('<details');
+  const cli = hero.slice(cliStart, hero.indexOf('</details>', cliStart) + '</details>'.length);
+  assert.match(cli, /Developer CLI alternative/);
+  assert.match(cli, /npx\s+<span[^>]*>crewx@latest/);
+  assert.match(cli, /onClick=\{handleCopy\}/);
+  assert.match(cli, /to="\/docs\/cli\/commands"/);
+
+  const ko = JSON.parse(read('i18n/ko/code.json'));
+  assert.equal(ko['landing.hero.cliAlternative.summary']?.message, '개발자용 CLI 대안');
+  assert.equal(ko['landing.hero.cliAlternative.docs']?.message, 'CLI 가이드 보기');
 });
 
 test('the changelog link uses the verified release htmlUrl instead of a hardcoded Releases URL', () => {

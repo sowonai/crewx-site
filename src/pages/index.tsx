@@ -490,17 +490,28 @@ export default function LandingPage(): ReactNode {
                 </p>
 
                 <div className="mt-8 flex flex-wrap items-center gap-3">
-                  <a
-                    href="/docs/intro"
+                  <Link
+                    to="/download"
                     className="btn-primary inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-semibold text-white"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
+                      <path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    <Translate id="landing.hero.cta.download" description="Hero primary CTA linking to the Windows download page">
+                      Download for Windows
+                    </Translate>
+                  </Link>
+                  <Link
+                    to="/docs/intro"
+                    className="btn-ghost inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-semibold text-slate-200"
                   >
                     <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
                       <path d="M8 5v14l11-7z" />
                     </svg>
-                    <Translate id="landing.hero.cta.getStarted" description="Hero primary CTA">
+                    <Translate id="landing.hero.cta.getStarted" description="Hero secondary CTA">
                       Get started in 5 min
                     </Translate>
-                  </a>
+                  </Link>
                   <a
                     href="https://github.com/sowonlabs/crewx"
                     target="_blank"
@@ -514,53 +525,57 @@ export default function LandingPage(): ReactNode {
                       View on GitHub
                     </Translate>
                   </a>
-                  <Link
-                    to="/download"
-                    className="btn-ghost inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-semibold text-slate-200"
-                  >
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
-                      <path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                    <Translate id="landing.hero.cta.download" description="Hero tertiary CTA linking to the Windows download page">
-                      Download for Windows
-                    </Translate>
-                  </Link>
                 </div>
 
-                <div className="mt-8 max-w-md">
-                  <div className="install-card flex items-center gap-3 rounded-md px-4 py-3 font-mono text-sm">
-                    <span className="text-[var(--primary)]">$</span>
-                    <span className="flex-1 text-slate-200">
-                      npx <span className="text-[var(--primary)]">crewx@latest</span>
-                    </span>
-                    <button
-                      onClick={handleCopy}
-                      className="inline-flex items-center gap-1.5 rounded border border-[var(--line-strong)] bg-white/[0.02] px-2.5 py-1 text-xs text-slate-300 transition-colors hover:border-[rgba(173,198,255,0.4)] hover:text-white"
-                    >
-                      <span>
-                        {copied ? (
-                          <Translate id="landing.hero.copy.copied" description="Copy button label after copying">
-                            Copied
-                          </Translate>
-                        ) : (
-                          <Translate id="landing.hero.copy.label" description="Copy button label">
-                            Copy
-                          </Translate>
-                        )}
+                <details className="mt-8 max-w-md">
+                  <summary className="cursor-pointer text-sm font-semibold text-slate-300 hover:text-white">
+                    <Translate id="landing.hero.cliAlternative.summary" description="Collapsed developer CLI alternative summary">
+                      Developer CLI alternative
+                    </Translate>
+                  </summary>
+                  <div className="mt-3">
+                    <div className="install-card flex items-center gap-3 rounded-md px-4 py-3 font-mono text-sm">
+                      <span className="text-[var(--primary)]">$</span>
+                      <span className="flex-1 text-slate-200">
+                        npx <span className="text-[var(--primary)]">crewx@latest</span>
                       </span>
-                    </button>
-                  </div>
-                  <div className="mt-2 flex items-start gap-1.5 px-1 text-[11px] text-slate-500">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="mt-[3px] h-3 w-3 shrink-0">
-                      <path d="M9 12l2 2 4-4M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" />
-                    </svg>
-                    <span>
-                      <Translate id="landing.hero.install.help" description="Help text under the npx install command">
-                        Open-source and runs locally on the Claude Code or Codex CLI you already use — nothing new to subscribe to.
+                      <button
+                        onClick={handleCopy}
+                        className="inline-flex items-center gap-1.5 rounded border border-[var(--line-strong)] bg-white/[0.02] px-2.5 py-1 text-xs text-slate-300 transition-colors hover:border-[rgba(173,198,255,0.4)] hover:text-white"
+                      >
+                        <span>
+                          {copied ? (
+                            <Translate id="landing.hero.copy.copied" description="Copy button label after copying">
+                              Copied
+                            </Translate>
+                          ) : (
+                            <Translate id="landing.hero.copy.label" description="Copy button label">
+                              Copy
+                            </Translate>
+                          )}
+                        </span>
+                      </button>
+                    </div>
+                    <div className="mt-2 flex items-start gap-1.5 px-1 text-[11px] text-slate-500">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="mt-[3px] h-3 w-3 shrink-0">
+                        <path d="M9 12l2 2 4-4M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" />
+                      </svg>
+                      <span>
+                        <Translate id="landing.hero.install.help" description="Help text under the npx install command">
+                          Open-source and runs locally on the Claude Code or Codex CLI you already use — nothing new to subscribe to.
+                        </Translate>
+                      </span>
+                    </div>
+                    <Link
+                      to="/docs/cli/commands"
+                      className="mt-3 inline-flex text-xs font-semibold text-[var(--primary)] hover:text-white"
+                    >
+                      <Translate id="landing.hero.cliAlternative.docs" description="Link to the CLI guide from the developer alternative">
+                        Read the CLI guide
                       </Translate>
-                    </span>
+                    </Link>
                   </div>
-                </div>
+                </details>
 
                 <div className="mt-12">
                   <div className="label-caps text-slate-500">
