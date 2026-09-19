@@ -513,6 +513,17 @@ export default function LandingPage(): ReactNode {
                       View on GitHub
                     </Translate>
                   </a>
+                  <a
+                    href="/download"
+                    className="btn-ghost inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-semibold text-slate-200"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
+                      <path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    <Translate id="landing.hero.cta.download" description="Hero tertiary CTA linking to the Windows download page">
+                      Download for Windows
+                    </Translate>
+                  </a>
                 </div>
 
                 <div className="mt-8 max-w-md">

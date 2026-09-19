@@ -498,6 +498,10 @@
     "message": "5분 만에 시작",
     "description": "Hero primary CTA"
   },
+  "landing.hero.cta.download": {
+    "message": "Windows용 다운로드",
+    "description": "Hero tertiary CTA linking to the Windows download page"
+  },
   "landing.hero.copy.copied": {
     "message": "복사됨",
     "description": "Copy button label after copying"

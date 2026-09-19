@@ -22,5 +22,9 @@
   "item.label.Templates": {
     "message": "Templates",
     "description": "Navbar item with label Templates"
+  },
+  "item.label.Download": {
+    "message": "다운로드",
+    "description": "Navbar item with label Download"
   }
 }

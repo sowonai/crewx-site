@@ -153,6 +153,7 @@ const config: Config = {
         },
         {to: '/blog', label: 'Blog', position: 'left'},
         {to: '/templates', label: 'Templates', position: 'left'},
+        {to: '/download', label: 'Download', position: 'right', className: 'navbar-download'},
         {
           type: 'localeDropdown',
           position: 'right',
@@ -196,6 +197,10 @@ const config: Config = {
         {
           title: 'More',
           items: [
+            {
+              label: 'Download',
+              to: '/download',
+            },
             {
               label: 'Blog',
               to: '/blog',
