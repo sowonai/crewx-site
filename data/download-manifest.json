@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-09-23T14:09:17.964Z",
+  "generatedAt": "2026-09-24T11:25:08.287Z",
   "repo": "sowonlabs/crewx",
   "stable": null,
   "preview": {
-    "tag": "v0.9.0-rc.118",
-    "version": "0.9.0-rc.118",
-    "name": "CrewX Desktop 0.9.0-rc.118 — Windows preview",
+    "tag": "v0.9.0-rc.120",
+    "version": "0.9.0-rc.120",
+    "name": "CrewX Desktop 0.9.0-rc.120 — Windows preview",
     "prerelease": true,
-    "publishedAt": "2026-09-23T14:07:54Z",
-    "htmlUrl": "https://github.com/sowonlabs/crewx/releases/tag/v0.9.0-rc.118",
+    "publishedAt": "2026-09-24T11:24:30Z",
+    "htmlUrl": "https://github.com/sowonlabs/crewx/releases/tag/v0.9.0-rc.120",
     "windows": {
-      "assetName": "CrewX-Setup-0.9.0-rc.118-x64.exe",
-      "url": "https://github.com/sowonlabs/crewx/releases/download/v0.9.0-rc.118/CrewX-Setup-0.9.0-rc.118-x64.exe",
-      "sizeBytes": 442592701
+      "assetName": "CrewX-Setup-0.9.0-rc.120-x64.exe",
+      "url": "https://github.com/sowonlabs/crewx/releases/download/v0.9.0-rc.120/CrewX-Setup-0.9.0-rc.120-x64.exe",
+      "sizeBytes": 222065108
     }
   }
 }
