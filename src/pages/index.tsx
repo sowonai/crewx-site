@@ -1,25 +1,22 @@
-import type {ReactNode} from 'react';
-import {useEffect, useState, useCallback, useRef} from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Layout from '@theme/Layout';
 import Head from '@docusaurus/Head';
-import BrowserOnly from '@docusaurus/BrowserOnly';
-import Translate, {translate} from '@docusaurus/Translate';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import useBaseUrl from '@docusaurus/useBaseUrl';
 import Link from '@docusaurus/Link';
-import {useLocation} from '@docusaurus/router';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import { useLocation } from '@docusaurus/router';
 
-// Tailwind, built at build time and code-split onto this route. Order matters:
-// preflight (scoped to .landing-page-wrapper in docusaurus.config.ts) first,
-// utilities second. This replaced the Play CDN <script>, which Docusaurus
-// injected after hydration — late enough that the CDN's initial build could
-// miss the page entirely and a visitor got unstyled markup.
-import '../css/tailwind-preflight.css';
-import '../css/tailwind-utilities.css';
+import HeroDemo from '@site/src/components/Landing/HeroDemo';
+import ExampleShowcase from '@site/src/components/Landing/ExampleShowcase';
+import StorySection from '@site/src/components/Landing/StorySection';
+import GettingStarted from '@site/src/components/Landing/GettingStarted';
+import PricingSection from '@site/src/components/Landing/PricingSection';
+import FinalCta from '@site/src/components/Landing/FinalCta';
 
-function LocaleDropdown(): ReactNode {
-  const {i18n} = useDocusaurusContext();
-  const {pathname, search, hash} = useLocation();
+import '../css/landing-v03.css';
+
+function LocaleDropdown(): React.ReactNode {
+  const { i18n } = useDocusaurusContext();
+  const { pathname, search, hash } = useLocation();
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -39,7 +36,7 @@ function LocaleDropdown(): ReactNode {
     };
   }, [open]);
 
-  const {currentLocale, defaultLocale, locales, localeConfigs} = i18n;
+  const { currentLocale, defaultLocale, locales, localeConfigs } = i18n;
 
   const stripLocale = (p: string) => {
     if (currentLocale === defaultLocale) return p;
@@ -58,27 +55,40 @@ function LocaleDropdown(): ReactNode {
   const currentLabel = localeConfigs[currentLocale]?.label ?? currentLocale;
 
   return (
-    <div ref={containerRef} className="relative">
+    <div ref={containerRef} style={{ position: 'relative' }}>
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-slate-200 hover:bg-white/10 sm:inline-flex"
+        className="btn"
+        style={{ height: 38, fontSize: 13, padding: '0 12px' }}
       >
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4 text-slate-300">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 14, height: 14 }}>
           <circle cx="12" cy="12" r="9" />
           <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
         </svg>
         <span>{currentLabel}</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3 w-3 text-slate-400">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 12, height: 12 }}>
           <path d="M6 9l6 6 6-6" />
         </svg>
       </button>
       {open && (
         <ul
           role="listbox"
-          className="absolute right-0 z-30 mt-2 min-w-[140px] overflow-hidden rounded-xl border border-white/10 bg-[#0d1330]/95 p-1 shadow-2xl shadow-black/40 backdrop-blur"
+          style={{
+            position: 'absolute',
+            right: 0,
+            marginTop: 6,
+            minWidth: 120,
+            background: '#fff',
+            border: '1px solid var(--line)',
+            borderRadius: 10,
+            boxShadow: 'var(--shadow)',
+            padding: 4,
+            listStyle: 'none',
+            zIndex: 50,
+          }}
         >
           {locales.map((loc) => {
             const isActive = loc === currentLocale;
@@ -87,17 +97,20 @@ function LocaleDropdown(): ReactNode {
                 <a
                   href={buildHref(loc)}
                   hrefLang={localeConfigs[loc]?.htmlLang}
-                  aria-current={isActive ? 'true' : undefined}
-                  className={`flex items-center justify-between rounded-lg px-3 py-2 text-xs font-medium ${
-                    isActive ? 'bg-white/10 text-white' : 'text-slate-300 hover:bg-white/5 hover:text-white'
-                  }`}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '8px 12px',
+                    fontSize: 13,
+                    borderRadius: 6,
+                    fontWeight: isActive ? 700 : 500,
+                    background: isActive ? '#f1f5f9' : 'transparent',
+                    color: 'var(--ink)',
+                  }}
                 >
                   <span>{localeConfigs[loc]?.label ?? loc}</span>
-                  {isActive && (
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="h-3.5 w-3.5 text-emerald-400">
-                      <path d="M5 13l4 4L19 7" />
-                    </svg>
-                  )}
+                  {isActive && <span>✓</span>}
                 </a>
               </li>
             );
@@ -108,216 +121,8 @@ function LocaleDropdown(): ReactNode {
   );
 }
 
-const LANDING_CSS = `
-  .landing-page-wrapper {
-    --bg: #10131a;
-    --bg-2: #191b23;
-    --surface-1: #1d2027;
-    --surface-2: #272a31;
-    --line: rgba(255, 255, 255, 0.05);
-    --line-strong: #424754;
-    --muted: #c2c6d6;
-    --on-surface: #e1e2ec;
-    --primary: #adc6ff;
-    --primary-strong: #4d8eff;
-    --on-primary: #002e6a;
-    --secondary: #d0bcff;
-    --tertiary: #ffb786;
-    background: var(--bg);
-    color: var(--on-surface);
-    font-family: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
-    font-feature-settings: "cv02", "cv11", "ss01";
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-  .landing-page-wrapper .font-mono {
-    font-family: "Space Grotesk", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-feature-settings: "tnum", "zero";
-  }
-  .landing-page-wrapper .label-caps {
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 1;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-  .landing-page-wrapper .glow-bg {
-    background-image:
-      radial-gradient(800px 520px at 12% 14%, rgba(139,92,246,0.14), transparent 60%),
-      radial-gradient(900px 600px at 92% 8%, rgba(255,183,134,0.10), transparent 60%),
-      radial-gradient(720px 520px at 70% 78%, rgba(173,198,255,0.08), transparent 60%);
-  }
-  .landing-page-wrapper .grid-bg {
-    background-image:
-      linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-    background-size: 40px 40px;
-    mask-image: radial-gradient(ellipse at 50% 28%, rgba(0,0,0,0.95), transparent 75%);
-  }
-  .landing-page-wrapper .btn-primary {
-    background: var(--primary-strong);
-    color: #ffffff;
-    border: 1px solid rgba(173,198,255,0.4);
-    box-shadow:
-      0 0 0 1px rgba(173,198,255,0.15),
-      0 8px 32px -12px rgba(77,142,255,0.55),
-      inset 0 1px 0 rgba(255,255,255,0.15);
-    transition: filter 120ms ease, box-shadow 120ms ease;
-  }
-  .landing-page-wrapper .btn-primary:hover {
-    filter: brightness(1.08);
-    box-shadow:
-      0 0 0 1px rgba(173,198,255,0.3),
-      0 12px 40px -10px rgba(77,142,255,0.7),
-      inset 0 1px 0 rgba(255,255,255,0.2);
-  }
-  .landing-page-wrapper .btn-ghost {
-    background: rgba(255,255,255,0.02);
-    border: 1px solid var(--line-strong);
-    transition: border-color 120ms ease, background 120ms ease;
-  }
-  .landing-page-wrapper .btn-ghost:hover {
-    background: rgba(255,255,255,0.05);
-    border-color: rgba(173,198,255,0.4);
-  }
-  .landing-page-wrapper .card {
-    background:
-      linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.005));
-    border: 1px solid var(--line-strong);
-    backdrop-filter: blur(8px);
-  }
-  .landing-page-wrapper .chip {
-    background: rgba(255,255,255,0.02);
-    border: 1px solid var(--line-strong);
-  }
-  .landing-page-wrapper .x-r { color: #ef4444; }
-  .landing-page-wrapper .x-g { color: #22c55e; }
-  .landing-page-wrapper .x-b { color: var(--primary); }
-  .landing-page-wrapper .x-x {
-    background: linear-gradient(135deg, #d0bcff 0%, #c4abff 35%, #ffb786 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-  .landing-page-wrapper .agent-pm { background: linear-gradient(135deg, #8b5cf6, #6366f1); }
-  .landing-page-wrapper .agent-ui { background: linear-gradient(135deg, #38bdf8, #0ea5e9); }
-  .landing-page-wrapper .agent-be { background: linear-gradient(135deg, #10b981, #059669); }
-  .landing-page-wrapper .agent-fe { background: linear-gradient(135deg, #f59e0b, #ef4444); }
-  .landing-page-wrapper .agent-qa { background: linear-gradient(135deg, #ec4899, #d946ef); }
-  .landing-page-wrapper .pulse-dot { position: relative; }
-  .landing-page-wrapper .pulse-dot::after {
-    content: "";
-    position: absolute;
-    inset: -3px;
-    border-radius: 999px;
-    background: currentColor;
-    opacity: 0.35;
-    animation: pulse 1.8s ease-out infinite;
-  }
-  @keyframes pulse {
-    0% { transform: scale(0.6); opacity: 0.6; }
-    100% { transform: scale(2); opacity: 0; }
-  }
-  .landing-page-wrapper .float-a { animation: floatA 6s ease-in-out infinite; }
-  .landing-page-wrapper .float-b { animation: floatB 7s ease-in-out infinite; }
-  @keyframes floatA {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-  }
-  @keyframes floatB {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
-  }
-  .landing-page-wrapper .divider-line {
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-  }
-  .landing-page-wrapper .logo-glow {
-    filter: drop-shadow(0 4px 14px rgba(236,72,153,0.35)) drop-shadow(0 0 20px rgba(139,92,246,0.25));
-  }
-  .landing-page-wrapper .flow-line {
-    stroke: rgba(255,255,255,0.16);
-    stroke-width: 1.5;
-    stroke-dasharray: 5 4;
-    fill: none;
-    animation: dashFlow 6s linear infinite;
-  }
-  @keyframes dashFlow { to { stroke-dashoffset: -54; } }
-  .landing-page-wrapper .travel-dot { filter: drop-shadow(0 0 4px currentColor); }
-  .landing-page-wrapper .progress-pulse {
-    animation: progressPulse 6s linear infinite;
-    transform-origin: left;
-    will-change: transform, opacity;
-  }
-  @keyframes progressPulse {
-    0%   { transform: scaleX(0);   opacity: 0.55; }
-    8%   { transform: scaleX(0);   opacity: 1; }
-    88%  { transform: scaleX(1);   opacity: 1; }
-    100% { transform: scaleX(1);   opacity: 0; }
-  }
-  .landing-page-wrapper details > summary::-webkit-details-marker { display: none; }
-  .landing-page-wrapper .grad-text {
-    background: linear-gradient(135deg, #ffffff 0%, #e1e2ec 60%, #adc6ff 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-  .landing-page-wrapper .intel-text {
-    background: linear-gradient(135deg, #d0bcff 0%, #c4abff 40%, #ffb786 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    filter: drop-shadow(0 0 32px rgba(208,188,255,0.18));
-  }
-  .landing-page-wrapper .hero-eyebrow-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 999px;
-    background: var(--primary);
-    box-shadow: 0 0 12px rgba(173,198,255,0.8), 0 0 24px rgba(173,198,255,0.4);
-  }
-  .landing-page-wrapper .install-card {
-    background: #0b0e15;
-    border: 1px solid var(--line-strong);
-    transition: border-color 120ms ease, box-shadow 120ms ease;
-  }
-  .landing-page-wrapper .install-card:focus-within,
-  .landing-page-wrapper .install-card:hover {
-    border-color: rgba(173,198,255,0.5);
-    box-shadow: 0 0 0 1px rgba(173,198,255,0.15), 0 0 32px -8px rgba(77,142,255,0.25);
-  }
-  /* React Flow overrides (scoped to landing page) */
-  .landing-page-wrapper .react-flow__attribution { display: none !important; }
-  .landing-page-wrapper .react-flow__pane { cursor: default !important; }
-  .landing-page-wrapper .react-flow__handle {
-    width: 1px !important;
-    height: 1px !important;
-    min-width: 1px !important;
-    min-height: 1px !important;
-    background: transparent !important;
-    border: 0 !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-  }
-  .landing-page-wrapper .react-flow__edge-path { stroke-width: 1.5; }
-  .landing-page-wrapper .react-flow__edge.animated path.react-flow__edge-path {
-    stroke-dasharray: 5 4;
-    animation: rfDashFlow 1.4s linear infinite;
-  }
-  @keyframes rfDashFlow { to { stroke-dashoffset: -18; } }
-
-  /* Hide Docusaurus navbar on the landing page (rule scoped to this page via mounted style tag) */
-  .navbar { display: none !important; }
-  .main-wrapper {
-    max-width: 100% !important;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-`;
-
-export default function LandingPage(): ReactNode {
-  const [copied, setCopied] = useState(false);
-  const {i18n} = useDocusaurusContext();
-  // sowonlabs.com is Korean-only, so the cross-link only shows on the ko landing.
+export default function LandingPage(): React.ReactNode {
+  const { i18n } = useDocusaurusContext();
   const showSowonLabsLink = i18n.currentLocale === 'ko';
 
   useEffect(() => {
@@ -327,1312 +132,159 @@ export default function LandingPage(): ReactNode {
     };
   }, []);
 
-  const handleCopy = useCallback(() => {
-    navigator.clipboard.writeText('npx crewx@latest');
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
-  }, []);
-
   return (
     <Layout
-      noFooter
-      title={translate({
-        id: 'landing.meta.title',
-        message: 'CrewX — 1 person. 1,000 agents.',
-        description: 'Browser tab title for the landing page',
-      })}
-      description={translate({
-        id: 'landing.meta.description',
-        message: 'CrewX turns 1 person into 1,000 agents: many teams, many perspectives, one operator.',
-        description: 'Meta description for the landing page',
-      })}
+      title="CrewX — Build an app with your AI. Share it with your friends."
+      description="Work in your app by hand or with your AI. Set your priorities, ask for a change, and see it in the same app. Share it with a friend. They use it with their own AI."
     >
       <Head>
-        <meta property="og:title" content={translate({
-          id: 'landing.meta.ogTitle',
-          message: 'CrewX — 1 person. 1,000 agents.',
-          description: 'OpenGraph title',
-        })} />
-        <meta property="og:description" content={translate({
-          id: 'landing.meta.ogDescription',
-          message: "Build your AI team. It's easy.",
-          description: 'OpenGraph description',
-        })} />
+        <meta property="og:title" content="CrewX — Build an app with your AI. Share it with your friends." />
+        <meta
+          property="og:description"
+          content="Work in your app by hand or with your AI. Set your priorities, ask for a change, and see it in the same app. Share it with a friend. They use it with their own AI."
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
           rel="stylesheet"
         />
       </Head>
-      <style dangerouslySetInnerHTML={{__html: LANDING_CSS}} />
 
-      <div className="landing-page-wrapper min-h-screen antialiased">
-        {/* Background atmospherics */}
-        <div className="pointer-events-none fixed inset-0 grid-bg" />
-        <div className="pointer-events-none fixed inset-0 glow-bg" />
-
+      <div className="landing-page-wrapper">
         {/* Top Nav */}
-        <header className="relative z-20">
-          <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-            <a href="/" className="flex items-center gap-2.5">
-              <img src="/assets/crewx-logo.png" alt="CrewX" className="logo-glow h-8 w-8" />
-              <span className="text-lg font-bold tracking-tight">CrewX</span>
-            </a>
-
-            <nav className="hidden items-center gap-8 text-sm text-slate-300 md:flex">
-              <a className="hover:text-white" href="/docs/intro">
-                <Translate id="landing.nav.docs" description="Top nav: Docs link">Docs</Translate>
-              </a>
-              <a className="hover:text-white" href="/blog">
-                <Translate id="landing.nav.blog" description="Top nav: Blog link">Blog</Translate>
-              </a>
-              <a className="hover:text-white" href="/templates">
-                <Translate id="landing.nav.templates" description="Top nav: Templates link">Templates</Translate>
-              </a>
-            </nav>
-
-            <div className="flex items-center gap-3">
-              <LocaleDropdown />
-              <a
-                href="https://github.com/sowonlabs/crewx"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-slate-200 hover:bg-white/10 sm:inline-flex"
-              >
-                <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 text-slate-300">
-                  <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2.16c-3.2.7-3.87-1.37-3.87-1.37-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.54-2.55-.29-5.24-1.27-5.24-5.66 0-1.25.45-2.27 1.18-3.07-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.17a10.96 10.96 0 0 1 5.74 0c2.19-1.48 3.15-1.17 3.15-1.17.62 1.58.23 2.75.11 3.04.74.8 1.18 1.82 1.18 3.07 0 4.4-2.69 5.36-5.25 5.65.41.36.78 1.06.78 2.13v3.16c0 .31.21.66.8.55C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5Z" />
-                </svg>
-                GitHub
-              </a>
-              <Link
-                to="/download"
-                className="btn-primary rounded-md px-4 py-2 text-sm font-semibold text-white"
-              >
-                <Translate id="landing.cta.downloadWindows" description="Shared label for primary CTAs linking to the Windows download page">
-                  Download for Windows
-                </Translate>
-              </Link>
+        <nav className="top">
+          <div className="wrap">
+            <Link className="logo" to="/">
+              <span className="logo-mark" />
+              CrewX
+            </Link>
+            <div className="links">
+              <a href="#demo">How it works</a>
+              <a href="#apps">Apps</a>
+              <a href="#pricing">Pricing</a>
+              <a href="#your-ai">Getting started</a>
             </div>
+            <div className="spacer" />
+            <LocaleDropdown />
+            <Link className="btn primary" to="/download">
+              Download
+            </Link>
+          </div>
+        </nav>
+
+        {/* ===================== HERO ===================== */}
+        <header className="hero">
+          <div className="wrap">
+            <div className="copy">
+              <h1>
+                <span className="key k-build">
+                  <span className="badge" aria-hidden="true">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.4"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <rect x="3" y="3" width="7.5" height="7.5" rx="1.8" />
+                      <rect x="13.5" y="3" width="7.5" height="7.5" rx="1.8" />
+                      <rect x="3" y="13.5" width="7.5" height="7.5" rx="1.8" />
+                      <path d="M17.25 13.5v7.5M13.5 17.25h7.5" />
+                    </svg>
+                  </span>
+                  Build an app
+                </span>{' '}
+                <span className="rest">with your AI.</span>
+                <br />
+                <span className="key k-share">
+                  <span className="badge" aria-hidden="true">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.4"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M12 3v12M7.5 7.5 12 3l4.5 4.5" />
+                      <path d="M8 11H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-2" />
+                    </svg>
+                  </span>
+                  Share it
+                </span>{' '}
+                <span className="rest">with your friends.</span>
+              </h1>
+              <p className="ask">
+                An app for you. <b>And your AI.</b>
+              </p>
+              <p className="lede">
+                Work in your app by hand or with your AI. Set your priorities, ask for a change, and see it in the same
+                app.
+                <br />
+                Share it with a friend. They use it with their own AI.
+              </p>
+              <div className="ctas">
+                <Link className="btn primary" to="/download">
+                  ⬇&nbsp; Download for Mac
+                </Link>
+                <Link className="btn" to="/download">
+                  Download for Windows
+                </Link>
+              </div>
+              <div className="fine">
+                <span>Free</span>
+                <span>Works with your ChatGPT or Claude plan</span>
+                <span>Your files stay on your computer</span>
+              </div>
+            </div>
+
+            <HeroDemo />
           </div>
         </header>
 
-        {/* Hero */}
-        <main className="relative z-10">
-          <section className="mx-auto max-w-7xl px-6 pb-24 pt-12 lg:pt-20">
-            <div className="grid items-start gap-10 lg:grid-cols-12">
-              {/* Left: copy */}
-              <div className="min-w-0 lg:col-span-7">
-                <div className="chip label-caps inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-slate-300">
-                  <span className="hero-eyebrow-dot" />
-                  <span>
-                    <Translate id="landing.hero.eyebrow" description="Hero eyebrow above title">
-                      AI Agent Orchestration
-                    </Translate>
-                  </span>
-                </div>
-
-                <h1 className="mt-6 font-bold leading-[1.05]">
-                  <span className="grad-text block text-5xl sm:text-7xl lg:text-[96px]">
-                    <Translate id="landing.hero.title.line1" description="Hero title line 1">
-                      1 person.
-                    </Translate>
-                  </span>
-                  <span className="intel-text mt-3 block pb-2 text-3xl font-extrabold leading-[1.1] sm:text-5xl lg:text-[56px]">
-                    <Translate
-                      id="landing.hero.title.line2"
-                      description="Hero title line 2; {strong} wraps the agent count"
-                      values={{strong: <span className="font-black">1,000</span>}}
-                    >
-                      {'{strong} agents.'}
-                    </Translate>
-                  </span>
-                </h1>
-
-                <div className="mt-6 flex items-center gap-3 text-sm">
-                  <img src="/assets/crewx-logo.png" alt="" className="h-5 w-5" />
-                  <span className="label-caps text-slate-300">
-                    <span className="text-white">
-                      <Translate id="landing.hero.tagline.ready" description="Hero subtagline left part">
-                        Ready Agents.
-                      </Translate>
-                    </span>
-                    <span className="mx-2 text-slate-600">/</span>
-                    <span className="x-x">
-                      <Translate id="landing.hero.tagline.realWork" description="Hero subtagline right part">
-                        Real Work.
-                      </Translate>
-                    </span>
-                  </span>
-                </div>
-
-                <p className="mt-8 max-w-2xl text-lg leading-[1.6] text-slate-300/95 sm:text-xl">
-                  <Translate
-                    id="landing.hero.headline"
-                    description="Hero headline; {bold} wraps the emphasized phrase"
-                    values={{
-                      bold: (
-                        <span className="font-semibold text-white">
-                          <Translate id="landing.hero.headline.bold" description="Hero headline emphasized part">
-                            Build your AI team.
-                          </Translate>
-                        </span>
-                      ),
-                    }}
-                  >
-                    {"{bold} It's easy."}
-                  </Translate>
-                </p>
-                <p className="mt-3 max-w-2xl text-sm leading-[1.6] text-slate-400">
-                  <Translate id="landing.hero.subheadline" description="Hero supporting paragraph">
-                    Plan, market, ship, support — every function of your work, run by specialists who remember, collaborate, and answer to you alone.
-                  </Translate>
-                </p>
-
-                <div className="mt-8 flex flex-wrap items-center gap-3">
-                  <Link
-                    to="/download"
-                    className="btn-primary inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-semibold text-white"
-                  >
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
-                      <path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                    <Translate id="landing.cta.downloadWindows" description="Shared label for primary CTAs linking to the Windows download page">
-                      Download for Windows
-                    </Translate>
-                  </Link>
-                  <Link
-                    to="/docs/intro"
-                    className="btn-ghost inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-semibold text-slate-200"
-                  >
-                    <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
-                    <Translate id="landing.hero.cta.getStarted" description="Hero secondary CTA">
-                      Get started in 5 min
-                    </Translate>
-                  </Link>
-                  <a
-                    href="https://github.com/sowonlabs/crewx"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-ghost inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-semibold text-slate-200"
-                  >
-                    <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
-                      <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2.16c-3.2.7-3.87-1.37-3.87-1.37-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.54-2.55-.29-5.24-1.27-5.24-5.66 0-1.25.45-2.27 1.18-3.07-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.17a10.96 10.96 0 0 1 5.74 0c2.19-1.48 3.15-1.17 3.15-1.17.62 1.58.23 2.75.11 3.04.74.8 1.18 1.82 1.18 3.07 0 4.4-2.69 5.36-5.25 5.65.41.36.78 1.06.78 2.13v3.16c0 .31.21.66.8.55C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5Z" />
-                    </svg>
-                    <Translate id="landing.hero.cta.github" description="Hero secondary CTA">
-                      View on GitHub
-                    </Translate>
-                  </a>
-                </div>
-
-                <details className="mt-8 max-w-md">
-                  <summary className="cursor-pointer text-sm font-semibold text-slate-300 hover:text-white">
-                    <Translate id="landing.hero.cliAlternative.summary" description="Collapsed developer CLI alternative summary">
-                      Developer CLI alternative
-                    </Translate>
-                  </summary>
-                  <div className="mt-3">
-                    <div className="install-card flex items-center gap-3 rounded-md px-4 py-3 font-mono text-sm">
-                      <span className="text-[var(--primary)]">$</span>
-                      <span className="flex-1 text-slate-200">
-                        npx <span className="text-[var(--primary)]">crewx@latest</span>
-                      </span>
-                      <button
-                        onClick={handleCopy}
-                        className="inline-flex items-center gap-1.5 rounded border border-[var(--line-strong)] bg-white/[0.02] px-2.5 py-1 text-xs text-slate-300 transition-colors hover:border-[rgba(173,198,255,0.4)] hover:text-white"
-                      >
-                        <span>
-                          {copied ? (
-                            <Translate id="landing.hero.copy.copied" description="Copy button label after copying">
-                              Copied
-                            </Translate>
-                          ) : (
-                            <Translate id="landing.hero.copy.label" description="Copy button label">
-                              Copy
-                            </Translate>
-                          )}
-                        </span>
-                      </button>
-                    </div>
-                    <div className="mt-2 flex items-start gap-1.5 px-1 text-[11px] text-slate-500">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="mt-[3px] h-3 w-3 shrink-0">
-                        <path d="M9 12l2 2 4-4M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" />
-                      </svg>
-                      <span>
-                        <Translate id="landing.hero.install.help" description="Help text under the npx install command">
-                          Open-source and runs locally on the Claude Code or Codex CLI you already use — nothing new to subscribe to.
-                        </Translate>
-                      </span>
-                    </div>
-                    <Link
-                      to="/docs/cli/commands"
-                      className="mt-3 inline-flex text-xs font-semibold text-[var(--primary)] hover:text-white"
-                    >
-                      <Translate id="landing.hero.cliAlternative.docs" description="Link to the CLI guide from the developer alternative">
-                        Read the CLI guide
-                      </Translate>
-                    </Link>
-                  </div>
-                </details>
-
-                <div className="mt-12">
-                  <div className="label-caps text-slate-500">
-                    <Translate id="landing.hero.providers.heading" description="Section above provider logos">
-                      Runs on the coding agents you already pay for — CrewX adds roles, workflows, memory, and templates
-                    </Translate>
-                  </div>
-                  <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-3 text-slate-400">
-                    <span className="inline-flex items-center gap-2">
-                      <span className="flex h-6 w-6 items-center justify-center rounded-md bg-emerald-500/15">
-                        <img src="/assets/chatgpt-logo-dark.svg" alt="" className="h-[22px] w-[22px] object-contain" />
-                      </span>
-                      Codex CLI
-                    </span>
-                    <span className="inline-flex items-center gap-2">
-                      <span className="flex h-6 w-6 items-center justify-center rounded-md bg-orange-500/15">
-                        <img src="/assets/claude-icon.svg" alt="" className="h-4 w-4 object-contain" />
-                      </span>
-                      Claude Code
-                    </span>
-                    <span className="inline-flex items-center gap-2">
-                      <span className="flex h-6 w-6 items-center justify-center rounded-md bg-violet-500/15">
-                        <img src="/assets/opencode-logo.svg" alt="" className="h-4 w-4 object-contain" />
-                      </span>
-                      OpenCode
-                    </span>
-                    <span className="inline-flex items-center gap-2">
-                      <span className="flex h-6 w-6 items-center justify-center rounded-md bg-sky-500/15">
-                        <img src="/assets/gemini-logo.svg" alt="" className="h-4 w-4 object-contain" />
-                      </span>
-                      Antigravity CLI
-                    </span>
-                    <span className="inline-flex items-center gap-2">
-                      <span className="flex h-6 w-6 items-center justify-center rounded-md bg-slate-500/20">
-                        <img src="/assets/github-copilot-logo-dark.svg" alt="" className="h-4 w-4 object-contain" />
-                      </span>
-                      Copilot CLI
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right: Hero Diagram (orchestrator-workers) */}
-              <div className="relative min-w-0 lg:col-span-5">
-                <BrowserOnly
-                  fallback={
-                    <div
-                      className="card relative overflow-hidden rounded-2xl shadow-2xl shadow-black/40"
-                      style={{aspectRatio: '5 / 6', minHeight: 540}}
-                    />
-                  }
-                >
-                  {() => {
-                    const HeroDiagram = require('../components/HeroDiagram').default;
-                    return <HeroDiagram />;
-                  }}
-                </BrowserOnly>
-              </div>
-            </div>
-
-          </section>
-
-          {/* ── LIVE DEMO SHOWCASE ── */}
-          <section id="demo" className="mx-auto max-w-7xl px-6 pb-24 pt-4">
-            <div className="mx-auto max-w-3xl text-center">
-              <div className="chip label-caps inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-slate-300">
-                <span className="hero-eyebrow-dot" />
-                <span>
-                  <Translate id="landing.demo.eyebrow" description="Live demo section eyebrow">
-                    Live demo
-                  </Translate>
-                </span>
-              </div>
-              <h2 className="mt-5 text-3xl font-extrabold tracking-tight grad-text sm:text-4xl lg:text-5xl">
-                <Translate id="landing.demo.heading" description="Live demo section heading">
-                  Codex and Claude Code, working together
-                </Translate>
-              </h2>
-              <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-400 sm:text-lg">
-                <Translate id="landing.demo.subheading" description="Live demo section subheading">
-                  One request, two coding agents on the job — Codex and Claude Code each take a role and run in parallel, in a single workspace.
-                </Translate>
-              </p>
-            </div>
-
-            <div className="relative mx-auto mt-10 max-w-5xl">
-              <div className="pointer-events-none absolute -inset-x-8 -inset-y-6 -z-10 rounded-[32px] bg-[radial-gradient(620px_320px_at_50%_0%,rgba(77,142,255,0.20),transparent_70%)]" />
-              <div className="card overflow-hidden rounded-2xl border border-[var(--line-strong)] shadow-2xl shadow-black/50">
-                <video
-                  className="block w-full"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  preload="metadata"
-                  poster="/video/multiagent-demo-poster.jpg"
-                  aria-label={translate({
-                    id: 'landing.demo.video.alt',
-                    message: 'CrewX running Codex and Claude Code agents together in one workspace, in parallel',
-                    description: 'Accessibility label for the landing demo video',
-                  })}
-                >
-                  <source src="/video/multiagent-demo.webm" type="video/webm" />
-                  <source src="/video/multiagent-demo.mp4" type="video/mp4" />
-                </video>
-              </div>
-            </div>
-          </section>
-
-          {/* Section divider */}
-          <div className="mx-auto max-w-7xl px-6">
-            <div className="divider-line h-px" />
-          </div>
-
-          {/* ── FEATURES ── */}
-          <section id="product" className="mx-auto max-w-7xl px-6 py-24">
-            <div className="max-w-3xl">
-              <div className="chip inline-flex items-center gap-2.5 rounded-full px-4 py-2 text-base text-slate-300">
-                <span className="text-pink-400">✦</span>{' '}
-                <Translate id="landing.features.eyebrow" description="Why CrewX section eyebrow">
-                  Why CrewX
-                </Translate>
-              </div>
-              <h2 className="mt-4 text-4xl font-extrabold tracking-tight grad-text sm:text-5xl lg:text-6xl">
-                <Translate
-                  id="landing.features.heading"
-                  description="Why CrewX section heading; {br} renders a line break"
-                  values={{br: <br />}}
-                >
-                  {'Stop juggling.{br}Start operating.'}
-                </Translate>
-              </h2>
-              <p className="mt-3 text-base text-slate-400">
-                <Translate id="landing.features.subheading" description="Why CrewX subheading">
-                  From AI tools to an AI team.
-                </Translate>
-              </p>
-              <p className="mt-7 max-w-2xl text-lg leading-relaxed text-slate-400">
-                <Translate id="landing.features.intro.p1" description="Why CrewX intro paragraph 1">
-                  A chatbot can answer. A single AI tool can do one task. But real work needs planning, splitting, execution, review, and memory.
-                </Translate>
-              </p>
-              <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-400">
-                <Translate
-                  id="landing.features.intro.p2"
-                  description="Why CrewX intro paragraph 2; {bold} wraps 'role-based team'"
-                  values={{
-                    bold: (
-                      <span className="font-semibold text-white">
-                        <Translate id="landing.features.intro.p2.bold" description="Phrase 'role-based team'">
-                          role-based team
-                        </Translate>
-                      </span>
-                    ),
-                  }}
-                >
-                  {'CrewX turns the AI tools you already use into a {bold}: a supervisor assigns the work, AI workers execute in parallel, reviewers check the result, and every decision stays in context — across engineering, design, content, support, and analytics.'}
-                </Translate>
-              </p>
-              <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-300">
-                <Translate
-                  id="landing.features.intro.p3"
-                  description="Why CrewX intro paragraph 3; {bold} wraps 'AI-native team'"
-                  values={{
-                    bold: (
-                      <span className="font-semibold text-white">
-                        <Translate id="landing.features.intro.p3.bold" description="Phrase 'AI-native team'">
-                          AI-native team
-                        </Translate>
-                      </span>
-                    ),
-                  }}
-                >
-                  {'You supervise the work from the browser. CrewX handles threads, roles, memory, and handoffs so you stop juggling prompts and start operating an {bold}.'}
-                </Translate>
-              </p>
-            </div>
-
-            <div className="mt-16 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {/* Feature: Multi-provider */}
-              <div className="card group rounded-2xl p-6 hover:bg-white/5">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/15 text-violet-300">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5">
-                    <circle cx="12" cy="12" r="3" />
-                    <circle cx="5" cy="5" r="2" />
-                    <circle cx="19" cy="5" r="2" />
-                    <circle cx="5" cy="19" r="2" />
-                    <circle cx="19" cy="19" r="2" />
-                    <path d="M9.5 9.5L7 7M14.5 9.5L17 7M9.5 14.5L7 17M14.5 14.5L17 17" />
-                  </svg>
-                </div>
-                <h3 className="mt-4 text-base font-semibold">
-                  <Translate id="landing.features.card.multiProvider.title" description="Feature card 1 title">
-                    Multi-agent orchestration
-                  </Translate>
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                  <Translate id="landing.features.card.multiProvider.desc" description="Feature card 1 description">
-                    Mix Codex, Claude Code, Antigravity, Copilot, and OpenCode in a single crew — Codex handles broad reasoning, Claude Code plans and writes, Antigravity researches, Copilot assists task by task, and OpenCode keeps high-volume work cost-efficient.
-                  </Translate>
-                </p>
-              </div>
-
-              {/* Feature: WI */}
-              <div className="card group rounded-2xl p-6 hover:bg-white/5">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-pink-500/15 text-pink-300">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5">
-                    <path d="M3 5h18M3 12h12M3 19h18" />
-                    <circle cx="20" cy="12" r="2" fill="currentColor" />
-                  </svg>
-                </div>
-                <h3 className="mt-4 text-base font-semibold">
-                  <Translate id="landing.features.card.wi.title" description="Feature card 2 title">
-                    Work Instructions (WI)
-                  </Translate>
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                  <Translate id="landing.features.card.wi.desc" description="Feature card 2 description">
-                    The PM agent writes structured tickets, then dispatches them to workers. Threaded, traceable, replayable — every change has a paper trail.
-                  </Translate>
-                </p>
-              </div>
-
-              {/* Feature: Threaded */}
-              <div className="card group rounded-2xl p-6 hover:bg-white/5">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-sky-500/15 text-sky-300">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5">
-                    <path d="M21 12c0 4.97-4.03 9-9 9-1.5 0-2.91-.37-4.15-1.02L3 21l1.02-4.85A8.96 8.96 0 0 1 3 12c0-4.97 4.03-9 9-9s9 4.03 9 9z" />
-                  </svg>
-                </div>
-                <h3 className="mt-4 text-base font-semibold">
-                  <Translate id="landing.features.card.threaded.title" description="Feature card 3 title">
-                    Threaded conversations
-                  </Translate>
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                  <Translate id="landing.features.card.threaded.desc" description="Feature card 3 description">
-                    Each topic lives in its own thread with full history. Agents keep context across days — no more re-pasting your stack.
-                  </Translate>
-                </p>
-              </div>
-
-              {/* Feature: Memory */}
-              <div className="card group rounded-2xl p-6 hover:bg-white/5">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500/15 text-emerald-300">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5">
-                    <path d="M12 3v18M3 12h18M5.5 5.5l13 13M18.5 5.5l-13 13" />
-                  </svg>
-                </div>
-                <h3 className="mt-4 text-base font-semibold">
-                  <Translate id="landing.features.card.memory.title" description="Feature card 4 title">
-                    Long-term memory
-                  </Translate>
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                  <Translate id="landing.features.card.memory.desc" description="Feature card 4 description">
-                    Agents save decisions, knowhow, and worklogs as Markdown. BM25-indexed, model-readable, version-controlled with your repo.
-                  </Translate>
-                </p>
-              </div>
-
-              {/* Feature: Skills */}
-              <div className="card group rounded-2xl p-6 hover:bg-white/5">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-500/15 text-amber-300">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5">
-                    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
-                    <circle cx="12" cy="12" r="3" />
-                  </svg>
-                </div>
-                <h3 className="mt-4 text-base font-semibold">
-                  <Translate id="landing.features.card.skills.title" description="Feature card 5 title">
-                    Skills & built-in tools
-                  </Translate>
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                  <Translate id="landing.features.card.skills.desc" description="Feature card 5 description">
-                    Drop-in skills for memory, search, docs, code review. Compose them per agent. Build your own with a single SKILL.md.
-                  </Translate>
-                </p>
-              </div>
-
-              {/* Feature: Hooks */}
-              <div className="card group rounded-2xl p-6 hover:bg-white/5">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-rose-500/15 text-rose-300">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5">
-                    <path d="M5 3v4M3 5h4M6 17v4M4 19h4M13 3l3 7 7 3-7 3-3 7-3-7-7-3 7-3z" />
-                  </svg>
-                </div>
-                <h3 className="mt-4 text-base font-semibold">
-                  <Translate id="landing.features.card.hooks.title" description="Feature card 6 title">
-                    Hooks & automations
-                  </Translate>
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                  <Translate id="landing.features.card.hooks.desc" description="Feature card 6 description">
-                    Pre/post-tool hooks, scheduled jobs, custom slash commands. Wire CrewX into your existing workflow without leaving the browser.
-                  </Translate>
-                </p>
-              </div>
-            </div>
-          </section>
-
-          {/* Section divider */}
-          <div className="mx-auto max-w-7xl px-6">
-            <div className="divider-line h-px" />
-          </div>
-
-          {/* ── FEATURE HIGHLIGHTS ── */}
-          <section id="features" className="mx-auto max-w-7xl px-6 py-24">
-            <div className="max-w-3xl">
-              <div className="chip inline-flex items-center gap-2.5 rounded-full px-4 py-2 text-base text-slate-300">
-                <span className="text-emerald-400">◆</span>{' '}
-                <Translate id="landing.highlights.eyebrow" description="Feature highlights section eyebrow">
-                  Feature highlights
-                </Translate>
-              </div>
-              <h2 className="mt-4 text-4xl font-extrabold tracking-tight grad-text sm:text-5xl lg:text-6xl">
-                <Translate
-                  id="landing.highlights.heading"
-                  description="Feature highlights section heading; {br} renders a line break"
-                  values={{br: <br />}}
-                >
-                  {'It remembers your work,{br}keeps the process, and lets you undo it.'}
-                </Translate>
-              </h2>
-              <p className="mt-5 max-w-2xl text-lg text-slate-400">
-                <Translate id="landing.highlights.subheading" description="Feature highlights section subheading">
-                  The parts of CrewX that change how a day of work actually goes — not the ones that look impressive in a demo.
-                </Translate>
-              </p>
-            </div>
-
-            {/* Tier A: big blocks.
-                The screenshots run the full container width, with the copy above them,
-                rather than sitting in a half-width column beside the copy. These are real
-                product captures at 1440x900; in a half-width column they get downscaled
-                2.4x and every label inside the app becomes unreadable (~6px), which
-                defeats the point of showing a screenshot at all. Full width puts them at
-                roughly 1.1x — the UI text stays legible. */}
-            <div className="mt-16 space-y-24">
-              {/* Highlight: Memory vault */}
-              <div>
-                <div className="max-w-2xl">
-                  <h3 className="text-2xl font-bold sm:text-3xl">
-                    <Translate id="landing.highlights.tierA.memory.title" description="Tier A highlight 1 title">
-                      A memory vault for your work
-                    </Translate>
-                  </h3>
-                  <p className="mt-4 text-base leading-relaxed text-slate-400 sm:text-lg">
-                    <Translate id="landing.highlights.tierA.memory.desc" description="Tier A highlight 1 description">
-                      CrewX remembers your work and decisions, so you don't explain the same thing twice.
-                    </Translate>
-                  </p>
-                </div>
-                <div className="card mt-8 overflow-hidden rounded-2xl border border-[var(--line-strong)] shadow-2xl shadow-black/40">
-                  <img
-                    src={useBaseUrl('/img/screenshots/f20-memory-vault.png')}
-                    alt={translate({
-                      id: 'landing.highlights.tierA.memory.imageAlt',
-                      message: "Screenshot of CrewX's memory vault showing saved project decisions and context",
-                      description: 'Alt text for the memory vault screenshot',
-                    })}
-                    width={1440}
-                    height={900}
-                    loading="lazy"
-                    className="block aspect-[1440/900] w-full object-cover"
-                  />
-                </div>
-              </div>
-
-              {/* Highlight: Work trace */}
-              <div>
-                <div className="max-w-2xl">
-                  <h3 className="text-2xl font-bold sm:text-3xl">
-                    <Translate id="landing.highlights.tierA.workTrace.title" description="Tier A highlight 2 title">
-                      A trace of every step
-                    </Translate>
-                  </h3>
-                  <p className="mt-4 text-base leading-relaxed text-slate-400 sm:text-lg">
-                    <Translate id="landing.highlights.tierA.workTrace.desc" description="Tier A highlight 2 description">
-                      Every action the AI takes is logged, so you can trace back what happened and why.
-                    </Translate>
-                  </p>
-                </div>
-                <div className="card mt-8 overflow-hidden rounded-2xl border border-[var(--line-strong)] shadow-2xl shadow-black/40">
-                  <img
-                    src={useBaseUrl('/img/screenshots/f02-work-trace.png')}
-                    alt={translate({
-                      id: 'landing.highlights.tierA.workTrace.imageAlt',
-                      message: "Screenshot of CrewX's work trace log showing a timeline of AI actions",
-                      description: 'Alt text for the work trace screenshot',
-                    })}
-                    width={1440}
-                    height={900}
-                    loading="lazy"
-                    className="block aspect-[1440/900] w-full object-cover"
-                  />
-                </div>
-              </div>
-
-              {/* Highlight: Undo */}
-              <div>
-                <div className="max-w-2xl">
-                  <h3 className="text-2xl font-bold sm:text-3xl">
-                    <Translate id="landing.highlights.tierA.undo.title" description="Tier A highlight 3 title">
-                      Undo, whenever you need to
-                    </Translate>
-                  </h3>
-                  <p className="mt-4 text-base leading-relaxed text-slate-400 sm:text-lg">
-                    <Translate id="landing.highlights.tierA.undo.desc" description="Tier A highlight 3 description">
-                      See exactly what the AI changed, and roll it back if it's not what you wanted.
-                    </Translate>
-                  </p>
-                </div>
-                <div className="card mt-8 overflow-hidden rounded-2xl border border-[var(--line-strong)] shadow-2xl shadow-black/40">
-                  <img
-                    src={useBaseUrl('/img/screenshots/f15-undo.png')}
-                    alt={translate({
-                      id: 'landing.highlights.tierA.undo.imageAlt',
-                      message: "Screenshot of CrewX's undo panel showing a change ready to be reverted",
-                      description: 'Alt text for the undo screenshot',
-                    })}
-                    width={1440}
-                    height={900}
-                    loading="lazy"
-                    className="block aspect-[1440/900] w-full object-cover"
-                  />
-                </div>
-              </div>
-
-              {/* Highlight: Runs on your machine (diagram, no screenshot) */}
-              <div className="grid items-center gap-10 lg:grid-cols-2">
-                <div className="lg:order-2">
-                  <div className="card flex flex-col items-center justify-center gap-5 rounded-2xl border border-[var(--line-strong)] p-8 sm:p-10">
-                    <div className="w-full max-w-xs rounded-xl border border-[var(--line-strong)] bg-white/[0.03] p-5">
-                      <div className="label-caps text-slate-300">
-                        <Translate id="landing.highlights.tierA.localFirst.diagram.yourMachine.label" description="Local-first diagram: 'Your machine' box label">
-                          Your machine
-                        </Translate>
-                      </div>
-                      <ul className="mt-3 space-y-1.5 text-sm text-slate-400">
-                        <li>
-                          ·{' '}
-                          <Translate id="landing.highlights.tierA.localFirst.diagram.yourMachine.workspace" description="Local-first diagram: workspace item">
-                            Workspace
-                          </Translate>
-                        </li>
-                        <li>
-                          ·{' '}
-                          <Translate id="landing.highlights.tierA.localFirst.diagram.yourMachine.history" description="Local-first diagram: task history item">
-                            Task history
-                          </Translate>
-                        </li>
-                        <li>
-                          ·{' '}
-                          <Translate id="landing.highlights.tierA.localFirst.diagram.yourMachine.orchestration" description="Local-first diagram: orchestration item">
-                            Orchestration
-                          </Translate>
-                        </li>
-                      </ul>
-                    </div>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6 text-slate-500">
-                      <path d="M12 4v14M6 12l6 6 6-6" />
-                    </svg>
-                    <div className="w-full max-w-xs rounded-xl border border-dashed border-[var(--line-strong)] bg-white/[0.02] p-5 text-center">
-                      <div className="label-caps text-slate-400">
-                        <Translate id="landing.highlights.tierA.localFirst.diagram.providers.label" description="Local-first diagram: 'Model providers you choose' box label">
-                          Model providers you choose
-                        </Translate>
-                      </div>
-                    </div>
-                    <p className="text-center text-xs text-slate-500">
-                      <Translate id="landing.highlights.tierA.localFirst.diagram.caption" description="Local-first diagram caption">
-                        You choose, request by request
-                      </Translate>
-                    </p>
-                  </div>
-                </div>
-                <div className="lg:order-1">
-                  <h3 className="text-2xl font-bold sm:text-3xl">
-                    <Translate id="landing.highlights.tierA.localFirst.title" description="Tier A highlight 4 title">
-                      Runs on your machine
-                    </Translate>
-                  </h3>
-                  <p className="mt-4 text-base leading-relaxed text-slate-400 sm:text-lg">
-                    <Translate id="landing.highlights.tierA.localFirst.desc" description="Tier A highlight 4 description">
-                      Your workspace, task history, and orchestration run locally on your machine. You choose which model provider sees what, request by request.
-                    </Translate>
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Tier B: compact cards */}
-            <div className="mt-24">
-              <h3 className="label-caps text-slate-400">
-                <Translate id="landing.highlights.tierB.label" description="Tier B section label">
-                  More that quietly help
-                </Translate>
-              </h3>
-              <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                {/* B: Unified search */}
-                <div className="card rounded-2xl p-5">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-sky-500/15 text-sky-300">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
-                      <circle cx="10" cy="10" r="7" />
-                      <path d="M21 21l-5-5" />
-                    </svg>
-                  </div>
-                  <h4 className="mt-3 text-sm font-semibold">
-                    <Translate id="landing.highlights.tierB.search.title" description="Tier B card 1 title">
-                      Unified search
-                    </Translate>
-                  </h4>
-                  <p className="mt-1.5 text-xs leading-relaxed text-slate-400">
-                    <Translate id="landing.highlights.tierB.search.desc" description="Tier B card 1 description">
-                      Search everything you've ever asked AI, in one query.
-                    </Translate>
-                  </p>
-                </div>
-
-                {/* B: Continuity engine */}
-                <div className="card rounded-2xl p-5">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-violet-500/15 text-violet-300">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
-                      <path d="M21 12a9 9 0 1 1-3-6.7" />
-                      <path d="M21 3v6h-6" />
-                    </svg>
-                  </div>
-                  <h4 className="mt-3 text-sm font-semibold">
-                    <Translate id="landing.highlights.tierB.continuity.title" description="Tier B card 2 title">
-                      Continuity engine
-                    </Translate>
-                  </h4>
-                  <p className="mt-1.5 text-xs leading-relaxed text-slate-400">
-                    <Translate id="landing.highlights.tierB.continuity.desc" description="Tier B card 2 description">
-                      Long tasks keep their context, all the way through.
-                    </Translate>
-                  </p>
-                </div>
-
-                {/* B: Mid-task instructions */}
-                <div className="card rounded-2xl p-5">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-pink-500/15 text-pink-300">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
-                      <path d="M21 12c0 4.97-4.03 9-9 9-1.5 0-2.91-.37-4.15-1.02L3 21l1.02-4.85A8.96 8.96 0 0 1 3 12c0-4.97 4.03-9 9-9s9 4.03 9 9z" />
-                      <circle cx="18" cy="6" r="2" fill="currentColor" stroke="none" />
-                    </svg>
-                  </div>
-                  <h4 className="mt-3 text-sm font-semibold">
-                    <Translate id="landing.highlights.tierB.midTaskInstruction.title" description="Tier B card 3 title">
-                      Redirect mid-task
-                    </Translate>
-                  </h4>
-                  <p className="mt-1.5 text-xs leading-relaxed text-slate-400">
-                    <Translate id="landing.highlights.tierB.midTaskInstruction.desc" description="Tier B card 3 description">
-                      Talk to the AI again while it's still working.
-                    </Translate>
-                  </p>
-                </div>
-
-                {/* B: Checkpoints */}
-                <div className="card rounded-2xl p-5">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-500/15 text-emerald-300">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
-                      <path d="M5 3v18M5 4h11l-2 3 2 3H5" />
-                    </svg>
-                  </div>
-                  <h4 className="mt-3 text-sm font-semibold">
-                    <Translate id="landing.highlights.tierB.checkpoint.title" description="Tier B card 4 title">
-                      Checkpoints
-                    </Translate>
-                  </h4>
-                  <p className="mt-1.5 text-xs leading-relaxed text-slate-400">
-                    <Translate id="landing.highlights.tierB.checkpoint.desc" description="Tier B card 4 description">
-                      Mark a checkpoint, and roll back to it if something goes wrong.
-                    </Translate>
-                  </p>
-                </div>
-
-                {/* B: Project rooms */}
-                <div className="card rounded-2xl p-5">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-500/15 text-amber-300">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
-                      <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z" />
-                    </svg>
-                  </div>
-                  <h4 className="mt-3 text-sm font-semibold">
-                    <Translate id="landing.highlights.tierB.projectRoom.title" description="Tier B card 5 title">
-                      Project rooms
-                    </Translate>
-                  </h4>
-                  <p className="mt-1.5 text-xs leading-relaxed text-slate-400">
-                    <Translate id="landing.highlights.tierB.projectRoom.desc" description="Tier B card 5 description">
-                      Docs and AI for one job, all in one room.
-                    </Translate>
-                  </p>
-                </div>
-
-                {/* B: Instruction loop */}
-                <div className="card rounded-2xl p-5">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-rose-500/15 text-rose-300">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
-                      <path d="M17 2l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 22l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3" />
-                    </svg>
-                  </div>
-                  <h4 className="mt-3 text-sm font-semibold">
-                    <Translate id="landing.highlights.tierB.instructionLoop.title" description="Tier B card 6 title">
-                      Instruction loop
-                    </Translate>
-                  </h4>
-                  <p className="mt-1.5 text-xs leading-relaxed text-slate-400">
-                    <Translate id="landing.highlights.tierB.instructionLoop.desc" description="Tier B card 6 description">
-                      Conversations turn into repeatable work processes.
-                    </Translate>
-                  </p>
-                </div>
-
-                {/* B: Scheduled runs */}
-                <div className="card rounded-2xl p-5">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-indigo-500/15 text-indigo-300">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
-                      <circle cx="12" cy="12" r="9" />
-                      <path d="M12 7v5l3 3" />
-                    </svg>
-                  </div>
-                  <h4 className="mt-3 text-sm font-semibold">
-                    <Translate id="landing.highlights.tierB.scheduledRun.title" description="Tier B card 7 title">
-                      Scheduled runs
-                    </Translate>
-                  </h4>
-                  <p className="mt-1.5 text-xs leading-relaxed text-slate-400">
-                    <Translate id="landing.highlights.tierB.scheduledRun.desc" description="Tier B card 7 description">
-                      AI works on its own, right on schedule.
-                    </Translate>
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Tier C: one-line text grid */}
-            <div className="mt-16">
-              <h3 className="label-caps text-slate-400">
-                <Translate id="landing.highlights.tierC.label" description="Tier C section label">
-                  And more, in the toolkit
-                </Translate>
-              </h3>
-              <div className="mt-5 grid gap-x-6 gap-y-3 text-sm text-slate-400 sm:grid-cols-3">
-                <div className="chip rounded-lg px-4 py-3">
-                  <Translate id="landing.highlights.tierC.progress" description="Tier C item: progress view">
-                    Progress you can expand
-                  </Translate>
-                </div>
-                <div className="chip rounded-lg px-4 py-3">
-                  <Translate id="landing.highlights.tierC.promptPreview" description="Tier C item: prompt preview">
-                    Preview the prompt before it's sent
-                  </Translate>
-                </div>
-                <div className="chip rounded-lg px-4 py-3">
-                  <Translate id="landing.highlights.tierC.globalHotkey" description="Tier C item: global hotkey">
-                    Call it up from anywhere
-                  </Translate>
-                </div>
-                <div className="chip rounded-lg px-4 py-3">
-                  <Translate id="landing.highlights.tierC.stallDetection" description="Tier C item: stall detection">
-                    Notices when AI stalls
-                  </Translate>
-                </div>
-                <div className="chip rounded-lg px-4 py-3">
-                  <Translate id="landing.highlights.tierC.notifications" description="Tier C item: notifications">
-                    Notifications
-                  </Translate>
-                </div>
-                <div className="chip rounded-lg px-4 py-3">
-                  <Translate id="landing.highlights.tierC.highlightMarkup" description="Tier C item: highlight markup">
-                    Highlight to flag it
-                  </Translate>
-                </div>
-                <div className="chip rounded-lg px-4 py-3">
-                  <Translate id="landing.highlights.tierC.dailyBoard" description="Tier C item: daily task board">
-                    A daily task board
-                  </Translate>
-                </div>
-                <div className="chip rounded-lg px-4 py-3">
-                  <Translate id="landing.highlights.tierC.photoQuery" description="Tier C item: ask with a photo">
-                    Ask with a photo
-                  </Translate>
-                </div>
-                <div className="chip rounded-lg px-4 py-3">
-                  <Translate id="landing.highlights.tierC.workspaceSwitch" description="Tier C item: workspace switching">
-                    Switch workspaces instantly
-                  </Translate>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* ── PROVIDERS ── */}
-          <section className="relative mx-auto max-w-7xl px-6 py-24">
-            <div className="max-w-3xl">
-              <div className="chip inline-flex items-center gap-2.5 rounded-full px-4 py-2 text-base text-slate-300">
-                <span className="text-sky-400">◇</span>{' '}
-                <Translate id="landing.providers.eyebrow" description="Providers section eyebrow">
-                  Coding agents
-                </Translate>
-              </div>
-              <h2 className="mt-4 text-4xl font-extrabold tracking-tight grad-text sm:text-5xl">
-                <Translate
-                  id="landing.providers.heading"
-                  description="Providers heading; {br} renders a line break"
-                  values={{br: <br />}}
-                >
-                  {'Claude Code. Codex.{br}One AI team.'}
-                </Translate>
-              </h2>
-              <p className="mt-5 max-w-2xl text-lg text-slate-400">
-                <Translate id="landing.providers.subheading" description="Providers subheading">
-                  Assign the right coding agent to every role — planning, implementation, review, research. CrewX launches the CLI you are already logged into, so the work runs on the plan you already pay for. Swap any time — no prompt rewrites, no lock-in.
-                </Translate>
-              </p>
-            </div>
-
-            <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-              <div className="card relative flex !overflow-visible flex-col rounded-2xl p-5">
-                <div className="pointer-events-none absolute right-3 -top-2.5 z-30 inline-flex items-center rounded-full border border-emerald-300/45 bg-slate-950/95 px-2.5 py-1 text-[10px] font-extrabold uppercase leading-none tracking-[0.12em] text-emerald-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_18px_rgba(52,211,153,0.14)] backdrop-blur-sm">
-                  <span className="mr-1 text-emerald-200">✓</span>
-                  <Translate id="landing.providers.badge.recommended" description="Recommended provider badge">
-                    Top pick
-                  </Translate>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-emerald-500/15 p-1.5">
-                    <img src="/assets/chatgpt-logo-dark.svg" alt="Codex" className="h-full w-full object-contain" />
-                  </span>
-                  <div>
-                    <div className="text-sm font-semibold">Codex CLI</div>
-                    <div className="text-xs text-slate-500">OpenAI</div>
-                  </div>
-                </div>
-                <ul className="mt-4 flex flex-1 flex-col space-y-1.5 text-xs text-slate-400">
-                  <li>· GPT-5.6</li>
-                  <li>· General reasoning</li>
-                  <li className="mt-auto pt-1.5 text-slate-300">
-                    ·{' '}
-                    <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">
-                      Role:
-                    </Translate>{' '}
-                    <span className="text-emerald-300">
-                      <Translate id="landing.providers.role.generalist" description="Role: Generalist">
-                        Generalist
-                      </Translate>
-                    </span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="card relative flex !overflow-visible flex-col rounded-2xl p-5">
-                <div className="pointer-events-none absolute right-3 -top-2.5 z-30 inline-flex items-center rounded-full border border-orange-300/45 bg-slate-950/95 px-2.5 py-1 text-[10px] font-extrabold uppercase leading-none tracking-[0.12em] text-orange-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_18px_rgba(251,146,60,0.14)] backdrop-blur-sm">
-                  <span className="mr-1 text-orange-200">✓</span>
-                  <Translate id="landing.providers.badge.recommended" description="Recommended provider badge">
-                    Top pick
-                  </Translate>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-orange-500/15 p-1.5">
-                    <img src="/assets/claude-icon.svg" alt="Claude Code" className="h-full w-full object-contain" />
-                  </span>
-                  <div>
-                    <div className="text-sm font-semibold">Claude Code</div>
-                    <div className="text-xs text-slate-500">Anthropic</div>
-                  </div>
-                </div>
-                <ul className="mt-4 flex flex-1 flex-col space-y-1.5 text-xs text-slate-400">
-                  <li>· Opus 5 / Sonnet 5</li>
-                  <li>· Long-context planning</li>
-                  <li className="mt-auto pt-1.5 text-slate-300">
-                    ·{' '}
-                    <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">
-                      Role:
-                    </Translate>{' '}
-                    <span className="text-orange-300">
-                      <Translate id="landing.providers.role.plannerWriter" description="Role: Planner & Writer">
-                        Planner & Writer
-                      </Translate>
-                    </span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="card flex flex-col rounded-2xl p-5">
-                <div className="flex items-center gap-3">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-violet-500/15 p-1.5">
-                    <img src="/assets/opencode-logo.svg" alt="OpenCode" className="h-full w-full object-contain" />
-                  </span>
-                  <div>
-                    <div className="text-sm font-semibold">OpenCode</div>
-                    <div className="text-xs text-slate-500">
-                      <Translate id="landing.providers.opencode.label" description="OpenCode card subtitle">
-                        Community agent
-                      </Translate>
-                    </div>
-                  </div>
-                </div>
-                <ul className="mt-4 flex flex-1 flex-col space-y-1.5 text-xs text-slate-400">
-                  <li>· GLM / Qwen / DeepSeek</li>
-                  <li>· Low-cost models</li>
-                  <li className="mt-auto pt-1.5 text-slate-300">
-                    ·{' '}
-                    <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">
-                      Role:
-                    </Translate>{' '}
-                    <span className="text-violet-300">
-                      <Translate id="landing.providers.role.costSaver" description="Role: Cost saver">
-                        Cost saver
-                      </Translate>
-                    </span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="card flex flex-col rounded-2xl p-5">
-                <div className="flex items-center gap-3">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-sky-500/15 p-1.5">
-                    <img src="/assets/gemini-logo.svg" alt="Antigravity" className="h-full w-full object-contain" />
-                  </span>
-                  <div>
-                    <div className="text-sm font-semibold">Antigravity CLI</div>
-                    <div className="text-xs text-slate-500">Google</div>
-                  </div>
-                </div>
-                <ul className="mt-4 flex flex-1 flex-col space-y-1.5 text-xs text-slate-400">
-                  <li>· Gemini / Claude / GPT-OSS</li>
-                  <li>· Web-grounded research</li>
-                  <li className="mt-auto pt-1.5 text-slate-300">
-                    ·{' '}
-                    <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">
-                      Role:
-                    </Translate>{' '}
-                    <span className="text-sky-300">
-                      <Translate id="landing.providers.role.researcher" description="Role: Researcher">
-                        Researcher
-                      </Translate>
-                    </span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="card flex flex-col rounded-2xl p-5">
-                <div className="flex items-center gap-3">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-slate-500/20 p-1.5">
-                    <img src="/assets/github-copilot-logo-dark.svg" alt="GitHub Copilot" className="h-full w-full object-contain" />
-                  </span>
-                  <div>
-                    <div className="text-sm font-semibold">Copilot CLI</div>
-                    <div className="text-xs text-slate-500">GitHub</div>
-                  </div>
-                </div>
-                <ul className="mt-4 flex flex-1 flex-col space-y-1.5 text-xs text-slate-400">
-                  <li>· GPT / Claude / Gemini</li>
-                  <li>· Pick model per task</li>
-                  <li className="mt-auto pt-1.5 text-slate-300">
-                    ·{' '}
-                    <Translate id="landing.providers.roleLabel" description="Role label prefix in provider cards">
-                      Role:
-                    </Translate>{' '}
-                    <span className="text-pink-300">
-                      <Translate id="landing.providers.role.personaSimulator" description="Role: Persona simulator">
-                        Persona simulator
-                      </Translate>
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="card mt-6 flex flex-col gap-3 rounded-2xl p-5 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-sm leading-relaxed text-slate-300">
-                <Translate id="landing.providers.byoaNote" description="Note under the coding agent cards explaining that CrewX uses the user's existing CLI login">
-                  Already have Claude Code or Codex installed? CrewX drives the CLI you are logged into — same account, same quota, no separate CrewX bill.
-                </Translate>
-              </p>
-              <code className="shrink-0 rounded-lg border border-[var(--line-strong)] bg-black/30 px-3 py-2 font-mono text-xs text-slate-300">
-                npx crewx@latest
-              </code>
-            </div>
-          </section>
-
-          {/* ── PRICING ── */}
-          <section id="pricing" className="relative mx-auto max-w-7xl px-6 py-24">
-            <div className="max-w-3xl">
-              <div className="chip inline-flex items-center gap-2.5 rounded-full px-4 py-2 text-base text-slate-300">
-                <span className="text-orange-400">$</span>{' '}
-                <Translate id="landing.pricing.eyebrow" description="Pricing section eyebrow">
-                  Pricing
-                </Translate>
-              </div>
-              <h2 className="mt-4 text-4xl font-extrabold tracking-tight grad-text sm:text-5xl">
-                <Translate
-                  id="landing.pricing.heading"
-                  description="Pricing heading; {br} renders a line break"
-                  values={{br: <br />}}
-                >
-                  {'Just FREE.'}
-                </Translate>
-              </h2>
-              <p className="mt-5 max-w-2xl text-lg text-slate-400">
-                <Translate id="landing.pricing.subheading" description="Pricing subheading">
-                  CrewX is free. Bring your own AI subscriptions.
-                </Translate>
-              </p>
-            </div>
-
-            <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-2">
-              {/* Free */}
-              <div className="card relative rounded-2xl p-7">
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-300">
-                  <Translate id="landing.pricing.tier.free.name" description="Free tier name">Free</Translate>
-                </h3>
-                <div className="mt-3 flex items-baseline gap-1">
-                  <span className="text-5xl font-extrabold">$0</span>
-                </div>
-                <p className="mt-3 text-sm text-slate-400">
-                  <Translate id="landing.pricing.tier.free.desc" description="Free tier description">
-                    Use CrewX with the AI accounts you already have. No seat fees. No token markup.
-                  </Translate>
-                </p>
-                <Link
-                  to="/download"
-                  className="btn-primary mt-6 inline-flex w-full items-center justify-center rounded-full px-4 py-2.5 text-sm font-semibold text-white"
-                >
-                  <Translate id="landing.cta.downloadWindows" description="Shared label for primary CTAs linking to the Windows download page">
-                    Download for Windows
-                  </Translate>
-                </Link>
-                <ul className="mt-6 space-y-2.5 text-sm text-slate-300">
-                  <li className="flex justify-between gap-2">
-                    <span className="text-slate-400">
-                      <Translate id="landing.pricing.row.workspaces" description="Pricing row: Workspaces">
-                        Workspaces
-                      </Translate>
-                    </span>
-                    <span className="font-mono">20</span>
-                  </li>
-                  <li className="flex justify-between gap-2">
-                    <span className="text-slate-400">
-                      <Translate id="landing.pricing.row.agentsPerWs" description="Pricing row: Agents (per WS)">
-                        Agents (per WS)
-                      </Translate>
-                    </span>
-                    <span className="font-mono">100</span>
-                  </li>
-                  <li className="flex justify-between gap-2">
-                    <span className="text-slate-400">
-                      <Translate id="landing.pricing.row.apiTokens" description="Pricing row: API tokens">
-                        API tokens
-                      </Translate>
-                    </span>
-                    <span className="font-mono">20</span>
-                  </li>
-                  <li className="mt-3 flex gap-2 border-t border-white/5 pt-3">
-                    <span className="text-emerald-400">✓</span>{' '}
-                    <Translate id="landing.pricing.tier.free.feature1" description="Free tier feature 1">
-                      Web UI (no install)
-                    </Translate>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-emerald-400">✓</span>{' '}
-                    <Translate id="landing.pricing.tier.free.feature2" description="Free tier feature 2">
-                      Bring your own AI subscriptions
-                    </Translate>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Enterprise */}
-              <div className="card relative rounded-2xl p-7">
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-300">
-                  <Translate id="landing.pricing.tier.enterprise.name" description="Enterprise tier name">Enterprise</Translate>
-                </h3>
-                <div className="mt-3 flex items-baseline gap-1">
-                  <span className="text-5xl font-extrabold">
-                    <Translate id="landing.pricing.tier.enterprise.price" description="Enterprise tier price label (Custom)">
-                      Custom
-                    </Translate>
-                  </span>
-                </div>
-                <p className="mt-3 text-sm text-slate-400">
-                  <Translate id="landing.pricing.tier.enterprise.desc" description="Enterprise tier description">
-                    Need higher limits or dedicated support? Let's talk.
-                  </Translate>
-                </p>
-                <a
-                  href="mailto:crewx@sowonlabs.com?subject=CrewX%20Enterprise%20inquiry"
-                  className="btn-ghost mt-6 inline-flex w-full items-center justify-center rounded-full px-4 py-2.5 text-sm font-semibold text-white"
-                >
-                  <Translate id="landing.pricing.tier.enterprise.cta" description="Enterprise tier CTA">
-                    Contact us
-                  </Translate>
-                </a>
-                <ul className="mt-6 space-y-2.5 text-sm text-slate-300">
-                  <li className="flex gap-2">
-                    <span className="text-emerald-400">✓</span>{' '}
-                    <Translate id="landing.pricing.tier.enterprise.feature1" description="Enterprise tier feature 1">
-                      Everything in Free
-                    </Translate>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-emerald-400">✓</span>{' '}
-                    <Translate id="landing.pricing.tier.enterprise.feature2" description="Enterprise tier feature 2">
-                      Higher limits & dedicated support
-                    </Translate>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="mx-auto mt-10 max-w-2xl text-center text-xs text-slate-500">
-              <Translate id="landing.pricing.footnote" description="Pricing section footnote">
-                AI provider billing is handled by your own account. Marketplace apps may have their own terms.
-              </Translate>
+        {/* ===================== DISCOVERY / APPS ===================== */}
+        <section id="apps" className="discover center">
+          <div className="wrap">
+            <span className="eyebrow">
+              <span className="dot" />
+              Your life. Your way.
+            </span>
+            <h2 style={{ marginTop: 14 }}>A little more like you.</h2>
+            <p className="gallery-lede">
+              Make a small app for something you already do. Then use it yourself, or ask your AI to help in the same
+              app.
             </p>
-          </section>
+            <ExampleShowcase />
+          </div>
+        </section>
 
-        </main>
+        {/* Story, Getting Started, Pricing, Final CTA */}
+        <StorySection />
+        <GettingStarted />
+        <PricingSection />
+        <FinalCta />
 
         {/* Footer */}
-        <footer className="relative z-10 border-t border-white/5">
-          <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-6 py-6 text-xs text-slate-500 sm:flex-row">
-            <div className="flex items-center gap-2">
-              <img src="/assets/crewx-logo.png" alt="" className="h-4 w-4" />
-              <span>
-                <Translate id="landing.footer.tagline" description="Footer tagline">
-                  CrewX · Open source CLI · Apache 2.0
-                </Translate>
-              </span>
-            </div>
-            <div className="flex items-center gap-5">
-              {showSowonLabsLink && (
-                <a className="hover:text-slate-300" href="https://sowonlabs.com" target="_blank" rel="noopener noreferrer">
-                  <Translate id="landing.footer.sowonlabs" description="Footer link to the SowonLabs company site">
-                    SowonLabs
-                  </Translate>
-                </a>
-              )}
-              <a className="hover:text-slate-300" href="https://github.com/sowonlabs/crewx" target="_blank" rel="noopener noreferrer">
-                GitHub
+        <footer>
+          <div className="wrap">
+            <span className="logo" style={{ fontSize: 15 }}>
+              <span className="logo-mark" style={{ width: 20, height: 20 }} />
+              CrewX
+            </span>
+            <Link to="/docs/intro">Docs</Link>
+            <Link to="/blog">Blog</Link>
+            <Link to="/templates">Templates</Link>
+            <a href="https://github.com/sowonlabs/crewx" target="_blank" rel="noopener noreferrer">
+              GitHub
+            </a>
+            {showSowonLabsLink && (
+              <a href="https://sowonlabs.com" target="_blank" rel="noopener noreferrer">
+                SowonLabs
               </a>
-              <a className="hover:text-slate-300" href="https://x.com/dohapark81" target="_blank" rel="noopener noreferrer">
-                Twitter
-              </a>
-              <a className="hover:text-slate-300" href="https://www.threads.com/@sowonlabs" target="_blank" rel="noopener noreferrer">
-                Threads
-              </a>
-              <a className="hover:text-slate-300" href="/docs/intro">
-                <Translate id="landing.nav.docs" description="Top nav: Docs link">Docs</Translate>
-              </a>
-            </div>
+            )}
+            <span>© 2026 SowonLabs</span>
           </div>
         </footer>
       </div>
