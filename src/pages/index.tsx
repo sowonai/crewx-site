@@ -81,7 +81,7 @@ function LocaleDropdown(): React.ReactNode {
             right: 0,
             marginTop: 6,
             minWidth: 120,
-            background: '#fff',
+            background: 'var(--card)',
             border: '1px solid var(--line)',
             borderRadius: 10,
             boxShadow: 'var(--shadow)',
@@ -105,8 +105,8 @@ function LocaleDropdown(): React.ReactNode {
                     fontSize: 13,
                     borderRadius: 6,
                     fontWeight: isActive ? 700 : 500,
-                    background: isActive ? '#f1f5f9' : 'transparent',
-                    color: 'var(--ink)',
+                    background: isActive ? 'var(--blue-soft)' : 'transparent',
+                    color: isActive ? 'var(--blue)' : 'var(--ink)',
                   }}
                 >
                   <span>{localeConfigs[loc]?.label ?? loc}</span>
@@ -134,10 +134,16 @@ export default function LandingPage(): React.ReactNode {
 
   return (
     <Layout
+      noFooter
       title="CrewX — Build an app with your AI. Share it with your friends."
       description="Work in your app by hand or with your AI. Set your priorities, ask for a change, and see it in the same app. Share it with a friend. They use it with their own AI."
     >
       <Head>
+        <style>{`
+          .navbar { display: none !important; }
+          footer.footer { display: none !important; }
+          .main-wrapper { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+        `}</style>
         <meta property="og:title" content="CrewX — Build an app with your AI. Share it with your friends." />
         <meta
           property="og:description"

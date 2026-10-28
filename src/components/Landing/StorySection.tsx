@@ -4,14 +4,14 @@ export default function StorySection(): React.ReactNode {
   return (
     <section className="story center" aria-label="A little app, a little closer">
       <div className="wrap">
-        <span className="eyebrow" style={{ color: '#916843' }}>
-          <span className="dot" style={{ background: '#916843' }} />
+        <span className="eyebrow" style={{ color: 'var(--orange)' }}>
+          <span className="dot" style={{ background: 'var(--orange)' }} />
           The moment
         </span>
         <h2 style={{ marginTop: 14 }}>
           A little app.
           <br />
-          <span className="warm">A little closer.</span>
+          <span className="warm" style={{ color: 'var(--orange)' }}>A little closer.</span>
         </h2>
         <div className="frames">
           <figure className="frame">
