@@ -12,20 +12,27 @@ export default function ExampleShowcase(): React.ReactNode {
   const [idea, setIdea] = useState('');
   const [detail, setDetail] = useState('');
   const [promptResult, setPromptResult] = useState<string | null>(null);
-  const [copyStatus, setCopyStatus] = useState<string>('Generate a prompt you can copy and paste straight into CrewX.');
+  const [copyStatus, setCopyStatus] = useState<string>(
+    'Generate a prompt you can copy and paste straight into CrewX.'
+  );
 
   const handleSelectExample = (app: AppExample) => {
     setCurrent(app);
     setAfter(false);
-    const demoEl = document.getElementById('ex-demo');
+    setPriority('quiet');
+    const demoEl = document.getElementById('ex-demo-intro');
     if (demoEl) {
-      demoEl.scrollIntoView({ behavior: 'smooth' });
+      demoEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
   const handlePromptSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!idea.trim()) return;
+    if (!idea.trim()) {
+      setCopyStatus('Add a few words about the app you want to make.');
+      setPromptResult(null);
+      return;
+    }
     const generated = `Help me make a small app for: ${idea.trim()}${
       detail.trim() ? `\nOne detail that matters: ${detail.trim()}` : ''
     }\nStart with the simplest useful version. Ask me about anything that is unclear.`;
@@ -50,14 +57,14 @@ export default function ExampleShowcase(): React.ReactNode {
     if (['blog-editor', 'yt-sensor', 'rival-voice'].includes(a.id)) {
       return <span className="ex-appinitial">{a.name[0]}</span>;
     }
-    return <img src={`/assets/app-catalog/icons/${a.id}.svg`} alt="" />;
+    return <img src={`/assets/app-catalog/icons/${a.id}.svg`} alt="" width={23} height={23} />;
   };
 
   const renderSurface = (a: AppExample, done: boolean, interactive: boolean = false) => {
     switch (a.id) {
       case 'buy-compare': {
         const quiet = !interactive || priority === 'quiet';
-        const candidates = quiet
+        const candidates: [string, number][] = quiet
           ? [
               ['Quiet Mini', 86],
               ['Everyday Keys', 78],
@@ -75,21 +82,29 @@ export default function ExampleShowcase(): React.ReactNode {
                 <legend>What matters more to you?</legend>
                 <button
                   type="button"
-                  onClick={() => setPriority('quiet')}
+                  onClick={() => {
+                    setPriority('quiet');
+                    setAfter(false);
+                  }}
                   aria-pressed={quiet}
                 >
                   Quietness
                 </button>
                 <button
                   type="button"
-                  onClick={() => setPriority('price')}
+                  onClick={() => {
+                    setPriority('price');
+                    setAfter(false);
+                  }}
                   aria-pressed={!quiet}
                 >
                   Price
                 </button>
               </fieldset>
             )}
-            <div className="ex-label">{quiet ? 'My comparison · quietness first' : 'My comparison · price first'}</div>
+            <div className="ex-label">
+              {quiet ? 'My comparison · quietness first' : 'My comparison · price first'}
+            </div>
             <h4>A keyboard for my desk</h4>
             <div className="ex-criteria">
               <div>
@@ -116,7 +131,7 @@ export default function ExampleShowcase(): React.ReactNode {
             </div>
             <div className="ex-columns">
               {candidates.map(([n, s], i) => (
-                <div key={i} className={`ex-box ${done && i === 0 ? 'ex-highlight' : ''}`}>
+                <div key={n} className={`ex-box ${done && i === 0 ? 'ex-highlight' : ''}`}>
                   <span className="ex-tiny">#{i + 1}</span>
                   <div className="ex-keyboard">
                     {Array.from({ length: 26 }, (_, k) => (
@@ -143,6 +158,7 @@ export default function ExampleShowcase(): React.ReactNode {
           </div>
         );
       }
+
       case 'travel-map':
         return (
           <div className="ex-surface">
@@ -153,10 +169,10 @@ export default function ExampleShowcase(): React.ReactNode {
               <span className="ex-pill">Your time, your pace</span>
             </div>
             <div className="ex-travel-budget">
-              <i style={{ width: '40%', background: '#6b93b8' }} />
-              <i style={{ width: '22%', background: '#e7b36d' }} />
-              <i style={{ width: '20%', background: '#80aa91' }} />
-              <i style={{ width: '18%', background: '#e5eaf0' }} />
+              <i />
+              <i />
+              <i />
+              <i />
             </div>
             <div className="ex-schedule">
               <time>09:00</time>
@@ -174,6 +190,7 @@ export default function ExampleShowcase(): React.ReactNode {
             </div>
           </div>
         );
+
       case 'workout-log':
         return (
           <div className="ex-surface ex-workout">
@@ -210,6 +227,7 @@ export default function ExampleShowcase(): React.ReactNode {
             </div>
           </div>
         );
+
       case 'buy-car':
         return (
           <div className="ex-surface">
@@ -233,6 +251,7 @@ export default function ExampleShowcase(): React.ReactNode {
             </div>
           </div>
         );
+
       case 'crewx-slide':
         return (
           <div className="ex-surface">
@@ -265,6 +284,7 @@ export default function ExampleShowcase(): React.ReactNode {
             </div>
           </div>
         );
+
       case 'wrong-answer-notes':
         return (
           <div className="ex-surface">
@@ -284,6 +304,7 @@ export default function ExampleShowcase(): React.ReactNode {
             </div>
           </div>
         );
+
       case 'timetable':
         return (
           <div className="ex-surface ex-timetable">
@@ -295,7 +316,12 @@ export default function ExampleShowcase(): React.ReactNode {
                   <b>{d}</b>
                   <div className="ex-class">School</div>
                   <div className="ex-class">{['Reading', 'Play', 'Music', 'Library', 'Play'][i]}</div>
-                  {done && i === 1 && <div className="ex-class added">Art club<br />4 pm</div>}
+                  {done && i === 1 && (
+                    <div className="ex-class added">
+                      Art club
+                      <br />4 pm
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -304,6 +330,7 @@ export default function ExampleShowcase(): React.ReactNode {
             </div>
           </div>
         );
+
       case 'html-viewer':
         return (
           <div className="ex-surface">
@@ -320,26 +347,385 @@ export default function ExampleShowcase(): React.ReactNode {
                 <i />
                 <i />
               </div>
-              {!done && <div className="ex-tiny" style={{ marginTop: 12 }}>Main button below the next section ↓</div>}
+              {!done && (
+                <div className="ex-tiny" style={{ marginTop: 12 }}>
+                  Main button below the next section ↓
+                </div>
+              )}
             </div>
-            <div className="ex-banner">
+            <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>
               {done ? 'Updated mockup · ready for your review.' : 'Look first. Then decide what to build.'}
             </div>
           </div>
         );
-      default:
-        // Generic surface representation for remaining cards
+
+      case 'blog-editor':
         return (
           <div className="ex-surface">
-            <div className="ex-label">{a.cat} · {a.name}</div>
-            <h4>{a.title}</h4>
-            <p className="ex-tiny">{a.desc}</p>
-            <div className="ex-paper" style={{ marginTop: 12 }}>
-              <div className="ex-label">Starter Idea</div>
-              <p>“{a.start}”</p>
+            <div className="ex-label">My draft</div>
+            <h4>A small thing I learned.</h4>
+            <div className="ex-paper">
+              <div className="ex-label">Opening paragraph</div>
+              <p className={done ? 'ex-highlight' : ''}>
+                {done
+                  ? 'On a rainy morning, I tried a smaller plan. One thing to finish. One thing to let go.'
+                  : 'I had been thinking for quite some time about making a change. On a rainy morning, I finally decided to try a smaller plan with just one thing to finish and one thing to let go.'}
+              </p>
+              <div className="ex-line" />
+              <div className="ex-line" style={{ width: '78%' }} />
+              <div className="ex-line" style={{ width: '91%' }} />
             </div>
-            <div className={`ex-banner ${done ? 'ex-highlight' : ''}`} style={{ marginTop: 12 }}>
-              {done ? a.review : a.manual}
+            <div className="ex-banner">
+              {done ? 'Opening revised · your detail kept.' : 'Your voice stays at the center.'}
+            </div>
+          </div>
+        );
+
+      case 'daily-planner':
+        return (
+          <div className="ex-surface">
+            <div className="ex-label">Today</div>
+            <h4>Leave a little breathing room.</h4>
+            <div className="ex-schedule">
+              <time>09:00</time>
+              <div className="ex-slot">Write the first draft</div>
+              <time>12:00</time>
+              <div className="ex-slot">Lunch</div>
+              <time>13:00</time>
+              <div className={`ex-slot ${done ? 'ex-highlight' : ''}`}>
+                {done ? 'Errands · moved here' : 'Catch up'}
+              </div>
+              <time>15:00</time>
+              <div className={`ex-slot ${done ? 'ex-mint' : ''}`}>
+                {done ? 'An hour kept free' : 'Errands'}
+              </div>
+            </div>
+            <div className="ex-banner">A plan you can change, not a rule to follow.</div>
+          </div>
+        );
+
+      case 'yt-sensor':
+        return (
+          <div className="ex-surface">
+            <div className="ex-label">My sample comments</div>
+            <h4>What people keep asking.</h4>
+            <div className="ex-columns">
+              <div className="ex-box">
+                <div className="ex-label">Setup</div>
+                <div className="ex-strong">12</div>
+              </div>
+              <div className="ex-box">
+                <div className="ex-label">Examples</div>
+                <div className="ex-strong">8</div>
+              </div>
+              <div className="ex-box">
+                <div className="ex-label">Pricing</div>
+                <div className="ex-strong">4</div>
+              </div>
+            </div>
+            <div className="ex-chart">
+              <div style={{ height: '95%' }}>
+                <span>Setup</span>
+              </div>
+              <div style={{ height: '63%' }}>
+                <span>Examples</span>
+              </div>
+              <div style={{ height: '32%' }}>
+                <span>Pricing</span>
+              </div>
+            </div>
+            <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>
+              {done ? 'Pattern to explore: “Where do I start?”' : 'Read the comments behind each theme.'}
+            </div>
+          </div>
+        );
+
+      case 'sheet':
+        return (
+          <div className="ex-surface">
+            <div className="ex-label">Weekend workshop</div>
+            <h4>A few details to check.</h4>
+            <table className="ex-sheet">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Qty</th>
+                  <th>Unit</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Notebooks</td>
+                  <td>12</td>
+                  <td>$4</td>
+                  <td>$48 ✓</td>
+                </tr>
+                <tr>
+                  <td>Pens</td>
+                  <td>20</td>
+                  <td>$2</td>
+                  <td className={done ? 'ex-highlight' : ''}>{done ? '$40' : '—'}</td>
+                </tr>
+                <tr>
+                  <td>Name cards</td>
+                  <td>12</td>
+                  <td>$1</td>
+                  <td className={done ? 'ex-highlight' : ''}>{done ? '$12' : '—'}</td>
+                </tr>
+                <tr>
+                  <td>Folders</td>
+                  <td>6</td>
+                  <td>$3</td>
+                  <td>$18 ✓</td>
+                </tr>
+              </tbody>
+            </table>
+            <div className="ex-banner">
+              {done ? '2 totals filled · 2 checked rows untouched.' : 'A simple sheet for this one event.'}
+            </div>
+          </div>
+        );
+
+      case 'notes':
+        return (
+          <div className="ex-surface">
+            <div className="ex-label">Planning together</div>
+            <h4>Let’s keep the useful bits.</h4>
+            <div className="ex-paper">
+              <div className="ex-label">The plan</div>
+              <div className="ex-row">
+                <span>Bring</span>
+                <b>A picnic blanket</b>
+              </div>
+              <div className="ex-row">
+                <span>Invite</span>
+                <b>Our usual group</b>
+              </div>
+              {done && (
+                <div className="ex-row ex-highlight">
+                  <span>Decided</span>
+                  <b>Saturday · at the park</b>
+                </div>
+              )}
+              <div className="ex-row">
+                <span>Still open</span>
+                <b>What if it rains?</b>
+              </div>
+            </div>
+            <div className="ex-banner">
+              {done ? 'Decision added to the same note.' : 'The conversation can move on. The note stays.'}
+            </div>
+          </div>
+        );
+
+      case 'relation-map':
+        return (
+          <div className="ex-surface">
+            <div className="ex-label">A small event</div>
+            <h4>What needs to happen first?</h4>
+            <div className="ex-map">
+              <div className="ex-node">Venue confirmed</div>
+              <div className="ex-arrow">→</div>
+              <div className="ex-node">Invitation design</div>
+              <div className={`ex-node ${done ? 'ex-highlight' : ''}`}>
+                {done ? 'Print approval' : 'Approval missing?'}
+              </div>
+              <div className="ex-arrow">→</div>
+              <div className="ex-node">Send invitations</div>
+            </div>
+            <div className="ex-banner">
+              {done ? 'A missing step is now in the picture.' : 'Keep the whole plan in view.'}
+            </div>
+          </div>
+        );
+
+      case 'todo':
+        return (
+          <div className="ex-surface">
+            <div className="ex-label">Saturday away</div>
+            <h4>A little list. A better day.</h4>
+            <div className="ex-row">
+              <span>☑ Pick a destination</span>
+              <b>Done</b>
+            </div>
+            <div className="ex-row">
+              <span>○ Pack a light jacket</span>
+              <b>To do</b>
+            </div>
+            {done && (
+              <>
+                <div className="ex-row ex-highlight">
+                  <span>○ Reserve a table</span>
+                  <b>Added</b>
+                </div>
+                <div className="ex-row ex-highlight">
+                  <span>○ Check the train times</span>
+                  <b>Added</b>
+                </div>
+              </>
+            )}
+            <div className="ex-banner">
+              {done ? 'Two things added. One less thing to remember.' : 'The next steps from our conversation.'}
+            </div>
+          </div>
+        );
+
+      case 'rival-voice':
+        return (
+          <div className="ex-surface">
+            <div className="ex-label">My research · Sample tools</div>
+            <h4>Keep the evidence in view.</h4>
+            <table className="ex-sheet">
+              <thead>
+                <tr>
+                  <th>Theme</th>
+                  <th>Tool A</th>
+                  <th>Tool B</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Setup</td>
+                  <td>Mentioned</td>
+                  <td>Mentioned</td>
+                </tr>
+                <tr>
+                  <td>Import</td>
+                  <td>No sample</td>
+                  <td className={done ? 'ex-highlight' : ''}>Mentioned</td>
+                </tr>
+                <tr>
+                  <td>Support</td>
+                  <td>No sample</td>
+                  <td>No sample</td>
+                </tr>
+              </tbody>
+            </table>
+            <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>
+              {done
+                ? 'Worth a closer look: importing existing work.'
+                : 'Small sample. Questions to investigate, not a verdict.'}
+            </div>
+          </div>
+        );
+
+      case 'github-issues':
+        return (
+          <div className="ex-surface">
+            <div className="ex-label">Demo project · Issue #12</div>
+            <h4>The button does not respond.</h4>
+            <div className="ex-pills">
+              <span className="ex-pill">Open</span>
+              <span className="ex-pill">Needs information</span>
+            </div>
+            <div className="ex-paper">
+              <div className="ex-label">Steps to reproduce</div>
+              <p>
+                1. Open the list
+                <br />
+                2. Select an item
+                <br />
+                3. Press Save
+              </p>
+              <div className="ex-row">
+                <span>Expected</span>
+                <b>The item is saved</b>
+              </div>
+              <div className={`ex-row ${done ? 'ex-highlight' : ''}`}>
+                <span>Browser version</span>
+                <b>{done ? 'Still missing' : 'Not provided'}</b>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'code-editor':
+        return (
+          <div className="ex-surface">
+            <div className="ex-label">Sample file · search.js</div>
+            <h4>A few lines. One good question.</h4>
+            <div className="ex-code">
+              01  function search(input) &#123;
+              <br />
+              02    {done ? <mark>if (!input) return [];</mark> : 'if (!input) return [];'}
+              <br />
+              03    const query = input.trim();
+              <br />
+              04    return findMatches(query);
+              <br />
+              05  &#125;
+            </div>
+            <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>
+              {done ? 'Early return · skips empty input.' : 'Read the code beside the explanation.'}
+            </div>
+          </div>
+        );
+
+      case 'code-map':
+        return (
+          <div className="ex-surface">
+            <div className="ex-label">Demo repository</div>
+            <h4>Get a feel for the whole.</h4>
+            <div className="ex-treemap">
+              <div className={done ? 'ex-highlight' : ''}>
+                <b>Interface</b>
+                <br />
+                <span className="ex-tiny">Views and components</span>
+              </div>
+              <div>
+                <b>Services</b>
+              </div>
+              <div>
+                <b>Tests</b>
+              </div>
+              <div>
+                <b>Utilities</b>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'timer':
+        return (
+          <div className="ex-surface">
+            <div className="ex-label">A little focus</div>
+            <h4>One thing at a time.</h4>
+            <div className="ex-timer">
+              <div className={`ex-timer-ring ${done ? 'active' : ''}`}>{done ? '25:00' : 'Ready'}</div>
+              <span className="ex-pill">
+                {done ? 'Example · session started' : 'No rush. Start when you are ready.'}
+              </span>
+            </div>
+          </div>
+        );
+
+      case 'hop-hwp-viewer':
+      default:
+        return (
+          <div className="ex-surface">
+            <div className="ex-label">HWP document · English illustration</div>
+            <h4>A workation application.</h4>
+            <div className="ex-paper">
+              <div className="ex-label">Page 2 · Required information</div>
+              <p>Before applying, prepare:</p>
+              <div className="ex-row">
+                <span>01</span>
+                <b>A short introduction</b>
+              </div>
+              <div className="ex-row">
+                <span>02</span>
+                <b>Your proposed dates</b>
+              </div>
+              <div className="ex-row">
+                <span>03</span>
+                <b>A workation plan</b>
+              </div>
+            </div>
+            <div className="ex-banner">
+              {done
+                ? 'Three requirements summarized in the conversation.'
+                : 'Keep the original page open as you work.'}
             </div>
           </div>
         );
@@ -348,7 +734,7 @@ export default function ExampleShowcase(): React.ReactNode {
 
   return (
     <div className="ex-showcase">
-      <div className="ex-demo-intro">
+      <div className="ex-demo-intro" id="ex-demo-intro">
         <div>
           <div className="ex-kicker">Explore / {current.name}</div>
           <h3 id="ex-selected-title">{current.title}</h3>
@@ -392,7 +778,9 @@ export default function ExampleShowcase(): React.ReactNode {
               <b>By hand</b>
               <span>{current.manual}</span>
             </div>
-            <div id="ex-live-screen">{renderSurface(current, after, true)}</div>
+            <div id="ex-live-screen" aria-label="Illustrated app screen">
+              {renderSurface(current, after, true)}
+            </div>
           </div>
           <div className="ex-conversation">
             <div className="ex-chat-label">With your AI</div>
@@ -425,11 +813,7 @@ export default function ExampleShowcase(): React.ReactNode {
                 </>
               )}
             </div>
-            <button
-              className="ex-action"
-              onClick={() => setAfter(!after)}
-              type="button"
-            >
+            <button className="ex-action" onClick={() => setAfter(!after)} type="button">
               {after
                 ? '↺ Reset this example'
                 : current.kind === 'read'
@@ -448,7 +832,7 @@ export default function ExampleShowcase(): React.ReactNode {
         </div>
       </div>
 
-      <div className="ex-browser-tools" id="example-library">
+      <div className="ex-browser-tools" id="example-library" aria-label="Filter examples">
         {['All', 'Life', 'Create', 'Learn', 'Work', 'Build'].map((c) => (
           <button
             key={c}
@@ -461,7 +845,7 @@ export default function ExampleShowcase(): React.ReactNode {
           </button>
         ))}
         <span className="ex-count">
-          Showing {displayedApps.length} of {filteredApps.length}
+          {displayedApps.length} of {filteredApps.length} examples
         </span>
       </div>
 
@@ -509,6 +893,7 @@ export default function ExampleShowcase(): React.ReactNode {
           <button
             className="ex-more"
             type="button"
+            aria-expanded={expanded}
             onClick={() => setExpanded(!expanded)}
           >
             {expanded ? 'Show fewer examples ↑' : `Explore all ${filteredApps.length} examples ↓`}
@@ -533,6 +918,7 @@ export default function ExampleShowcase(): React.ReactNode {
             onChange={(e) => {
               setIdea(e.target.value);
               setPromptResult(null);
+              setCopyStatus('Generate a prompt you can copy and paste straight into CrewX.');
             }}
             placeholder="Planning weekend trips with my family"
           />
@@ -546,6 +932,7 @@ export default function ExampleShowcase(): React.ReactNode {
             onChange={(e) => {
               setDetail(e.target.value);
               setPromptResult(null);
+              setCopyStatus('Generate a prompt you can copy and paste straight into CrewX.');
             }}
             placeholder="Keep the walking short"
           />

@@ -46,11 +46,13 @@ export default function HeroDemo(): React.ReactNode {
     };
 
     // Step 1: You make it
-    at(300, () => setStepsVisible((s) => [...s, 1]));
-    at(1300, () => setStepsVisible((s) => [...s, 2]));
-    at(1700, () => setAppOpen(true));
+    at(150, () => setStepsVisible((s) => [...s, 1]));
+    at(650, () => {
+      setStepsVisible((s) => [...s, 2]);
+      setAppOpen(true);
+    });
     for (let i = 0; i < 10; i++) {
-      at(1900 + i * 140, () => setCellsShown((c) => [...c, i]));
+      at(800 + i * 110, () => setCellsShown((c) => [...c, i]));
     }
 
     // Step 2: You send it
@@ -113,16 +115,49 @@ export default function HeroDemo(): React.ReactNode {
     };
   }, [play]);
 
+  const jumpToStage = (n: 1 | 2 | 3) => {
+    clearTimers();
+    setTab(n);
+    setAppOpen(true);
+    setCellsShown([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    setCursorPos({ left: '40%', top: '62%', show: false });
+    if (n === 1) {
+      setStepsVisible([1, 2]);
+      setCellsSwapped(false);
+      setShareHot(false);
+      setSentVisible(false);
+      setWhoText('Your computer · your AI');
+      setAppSubText('Week 1 · 5 days');
+      setShopText('chicken, beef, turkey, quinoa, lentils, tortillas…');
+    } else if (n === 2) {
+      setStepsVisible([1, 2, 5, 6]);
+      setCellsSwapped(false);
+      setShareHot(true);
+      setSentVisible(true);
+      setWhoText('Your computer · your AI');
+      setAppSubText('Week 1 · 5 days');
+      setShopText('chicken, beef, turkey, quinoa, lentils, tortillas…');
+    } else {
+      setStepsVisible([8, 9]);
+      setCellsSwapped(true);
+      setShareHot(false);
+      setSentVisible(false);
+      setWhoText("Sam's computer · Sam's own AI");
+      setAppSubText('Shared by you · Week 1');
+      setShopText('tofu, chickpeas, black beans, mushrooms, lentils, tortillas…');
+    }
+  };
+
   return (
     <div className="stage" id="demo" ref={containerRef}>
       <div className="stage-tabs">
-        <span className={tab === 1 ? 'on' : ''} onClick={() => setTab(1)}>
+        <span className={tab === 1 ? 'on' : ''} onClick={() => jumpToStage(1)}>
           1 · You make it
         </span>
-        <span className={tab === 2 ? 'on' : ''} onClick={() => setTab(2)}>
+        <span className={tab === 2 ? 'on' : ''} onClick={() => jumpToStage(2)}>
           2 · You send it
         </span>
-        <span className={tab === 3 ? 'on' : ''} onClick={() => setTab(3)}>
+        <span className={tab === 3 ? 'on' : ''} onClick={() => jumpToStage(3)}>
           3 · They make it theirs
         </span>
       </div>

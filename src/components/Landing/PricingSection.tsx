@@ -29,8 +29,10 @@ export default function PricingSection(): React.ReactNode {
             </a>
           </div>
           <div className="tier pro">
-            <b>Pro</b>
-            <span className="soon">Coming soon</span>
+            <div>
+              <b>Pro</b>
+              <span className="soon">Coming soon</span>
+            </div>
             <div className="price">For larger groups</div>
             <div className="per">When a few friends becomes a wider circle</div>
             <p className="sharing-description">
