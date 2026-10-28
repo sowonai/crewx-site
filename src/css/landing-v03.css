@@ -221,6 +221,14 @@
   text-decoration: none;
 }
 
+.landing-page-wrapper .logo-img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  flex: none;
+  filter: drop-shadow(0 4px 14px rgba(236, 72, 153, 0.35)) drop-shadow(0 0 20px rgba(139, 92, 246, 0.25));
+}
+
 .landing-page-wrapper .logo-mark {
   width: 26px;
   height: 26px;

@@ -162,7 +162,7 @@ export default function LandingPage(): React.ReactNode {
         <nav className="top">
           <div className="wrap">
             <Link className="logo" to="/">
-              <span className="logo-mark" />
+              <img src="/assets/crewx-logo.png" alt="CrewX" className="logo-img" />
               CrewX
             </Link>
             <div className="links">
@@ -276,7 +276,7 @@ export default function LandingPage(): React.ReactNode {
         <footer>
           <div className="wrap">
             <span className="logo" style={{ fontSize: 15 }}>
-              <span className="logo-mark" style={{ width: 20, height: 20 }} />
+              <img src="/assets/crewx-logo.png" alt="CrewX" className="logo-img" style={{ width: 20, height: 20 }} />
               CrewX
             </span>
             <Link to="/docs/intro">Docs</Link>
