@@ -166,7 +166,12 @@ export default function HeroDemo(): React.ReactNode {
           <i />
           <i />
           <i />
-          <span style={{ marginLeft: 8 }}>CrewX</span>
+          <img
+            src="/assets/crewx-logo.png"
+            alt=""
+            style={{ width: 16, height: 16, marginLeft: 6, objectFit: 'contain' }}
+          />
+          <span>CrewX</span>
           <span className="who">{whoText}</span>
         </div>
         <div className="win-body">
@@ -207,7 +212,7 @@ export default function HeroDemo(): React.ReactNode {
             </span>
             <div className={`sent ${sentVisible ? 'show' : ''}`}>
               <b>✉ Meal Plan sent to Sam</b>
-              <small>Sam installs CrewX once, signs in, and it's there.</small>
+              <small>Sam opens CrewX (Windows app or npx crewx on Mac), signs in, and it's there.</small>
             </div>
             <div className="empty">Ask your AI, and an app opens here.</div>
             <div className="appwin">

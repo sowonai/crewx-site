@@ -124,6 +124,22 @@ function LocaleDropdown(): React.ReactNode {
 export default function LandingPage(): React.ReactNode {
   const { i18n } = useDocusaurusContext();
   const showSowonLabsLink = i18n.currentLocale === 'ko';
+  const [heroCopied, setHeroCopied] = useState(false);
+
+  const handleCopyNpx = async () => {
+    try {
+      await navigator.clipboard.writeText('npx crewx');
+    } catch {
+      const ta = document.createElement('textarea');
+      ta.value = 'npx crewx';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      ta.remove();
+    }
+    setHeroCopied(true);
+    setTimeout(() => setHeroCopied(false), 1800);
+  };
 
   useEffect(() => {
     document.body.classList.add('landing-page-active');
@@ -173,9 +189,9 @@ export default function LandingPage(): React.ReactNode {
             </div>
             <div className="spacer" />
             <LocaleDropdown />
-            <Link className="btn primary" to="/download">
-              Download
-            </Link>
+            <a className="btn primary" href="#get">
+              Get CrewX
+            </a>
           </div>
         </nav>
 
@@ -233,14 +249,27 @@ export default function LandingPage(): React.ReactNode {
               </p>
               <div className="ctas">
                 <Link className="btn primary" to="/download">
-                  ⬇&nbsp; Download for Mac
+                  ⬇&nbsp; Download for Windows <small>.exe</small>
                 </Link>
-                <Link className="btn" to="/download">
-                  Download for Windows
-                </Link>
+                <div className="npx-pill" role="group" aria-label="Run on Mac with npx crewx">
+                  <span className="npx-os">Mac</span>
+                  <code className="npx-cmd">
+                    <span className="npx-prompt">$</span>npx crewx
+                  </code>
+                  <button
+                    className={`npx-copy ${heroCopied ? 'copied' : ''}`}
+                    type="button"
+                    onClick={handleCopyNpx}
+                  >
+                    {heroCopied ? 'Copied ✓' : 'Copy'}
+                  </button>
+                </div>
               </div>
               <div className="fine">
                 <span>Free</span>
+                <span>
+                  Windows app or <code>npx crewx</code> on Mac
+                </span>
                 <span>Works with your ChatGPT or Claude plan</span>
                 <span>Your files stay on your computer</span>
               </div>

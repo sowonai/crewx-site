@@ -757,6 +757,11 @@ export default function ExampleShowcase(): React.ReactNode {
           <span className="ex-dots" aria-hidden="true">
             ● ● ●
           </span>
+          <img
+            src="/assets/crewx-logo.png"
+            alt=""
+            style={{ width: 15, height: 15, objectFit: 'contain' }}
+          />
           <b>CrewX</b>
           <span>Your app. Your AI. One place.</span>
         </div>

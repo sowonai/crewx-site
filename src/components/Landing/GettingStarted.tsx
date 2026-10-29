@@ -25,8 +25,10 @@ export default function GettingStarted(): React.ReactNode {
               1
             </span>
             <div>
-              <b>Install CrewX</b>
-              <small>For Mac and Windows.</small>
+              <b>Open CrewX</b>
+              <small>
+                Download the Windows app (.exe), or run <code>npx crewx</code> in Terminal on a Mac.
+              </small>
             </div>
           </div>
           <div className="plan">
@@ -65,6 +67,14 @@ export default function GettingStarted(): React.ReactNode {
           </div>
         </div>
         <details className="setup-detail">
+          <summary>How do I start on Windows vs. Mac?</summary>
+          <p>
+            On Windows, download and run the desktop installer (<code>.exe</code>). On a Mac, open Terminal and run{' '}
+            <code>npx crewx</code> (requires Node.js 18+)—it opens the exact same CrewX desktop workspace without a
+            separate installer.
+          </p>
+        </details>
+        <details className="setup-detail">
           <summary>How does the AI connection work?</summary>
           <p>
             CrewX connects to your ChatGPT (via Codex) or Claude (via Claude Code) account so your AI can build and work
@@ -74,7 +84,8 @@ export default function GettingStarted(): React.ReactNode {
         <details className="setup-detail">
           <summary>What does a friend need?</summary>
           <p>
-            Your friend installs CrewX for free, signs in, and connects their own AI to start using the app you shared.
+            Your friend opens CrewX for free (via the Windows installer or <code>npx crewx</code> on Mac), signs in, and
+            connects their own AI to start using the app you shared.
           </p>
         </details>
         <details className="setup-detail">
