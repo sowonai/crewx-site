@@ -18,6 +18,23 @@ export interface AppExample {
 
 export const APP_EXAMPLES: AppExample[] = [
   {
+    "id": "sheet",
+    "name": "Sheet",
+    "cat": "Work",
+    "title": "The spreadsheet you know. Now with your AI.",
+    "desc": "Keep your rows, formulas, and tabs. Select a range, ask for what you want to see, and review the formula right in the cell.",
+    "prompt": "In the selected rows (B2:E5), fill Margin % with a formula, flag any channel under 15%, and explain why.",
+    "reply": "Filled E2:E5 with =(C4-D4)/C4 and flagged Row 4 (Social Video, 8.3% margin). I also opened an AI_Summary tab with the breakdown.",
+    "review": "You check the formula bar and cells. Your workflow stays yours.",
+    "why": "엑셀 UX를 그대로 유지하면서 에이전트가 선택 범위(B2:E5)에 수식·조건부 하이라이트·이상치 요약을 반자동으로 채워주는 킬러 사례. 일반 실무자와 AI 강의 유튜버 모두가 즉시 가치를 이해함.",
+    "gate": "Univer 기반 오픈소스 스프레드시트 엔진 도입 예정(기존 DuckDB Sheet 대체/보강). 셀 범위 선택·수식 입력줄·시트 탭 UX 반영.",
+    "kind": "use",
+    "origin": "도하 기획 · Univer 도입",
+    "rank": 1,
+    "start": "Open my monthly sales sheet and help me spot low-margin channels.",
+    "manual": "Pick a focus for your selected range (B2:E5)."
+  },
+  {
     "id": "buy-compare",
     "name": "Buy Compare",
     "cat": "Life",
@@ -30,7 +47,7 @@ export const APP_EXAMPLES: AppExample[] = [
     "gate": "set_weights 및 mark_candidate(note 포함) manifest 확인. 실제 실행 검증 아님. 제품·점수·응답은 가상 예시.",
     "kind": "use",
     "origin": "도하 실사용",
-    "rank": 1,
+    "rank": 2,
     "start": "Make a comparison app for keyboards that fit my quiet, small desk.",
     "manual": "Choose a priority. The sample ranking changes right away."
   },
@@ -200,26 +217,9 @@ export const APP_EXAMPLES: AppExample[] = [
     "gate": "원래 YT 청취기. 댓글·채널·숫자는 전부 가상. 읽기·분석 중심 각색이며 수집 자동 실행 시연 없음.",
     "kind": "read",
     "origin": "도하 실사용",
-    "rank": 11,
+    "rank": 12,
     "start": "Make a place to group questions from my video comments.",
     "manual": "Read the comments behind a theme."
-  },
-  {
-    "id": "sheet",
-    "name": "Sheet",
-    "cat": "Work",
-    "title": "A table you and your AI work on.",
-    "desc": "You check the details. Your AI helps fill in the gaps.",
-    "prompt": "Fill the missing totals using quantity times unit cost.",
-    "reply": "The missing totals are filled. The two checked rows are unchanged.",
-    "review": "You inspect the cells that changed.",
-    "why": "공동 작업면은 강하지만 범용 표 도구 경쟁이 커서 보조 순위.",
-    "gate": "edit_cell·set_formula 확인. 숫자는 가상 행사 물품.",
-    "kind": "use",
-    "origin": "기존 카탈로그 추가",
-    "rank": 12,
-    "start": "Make a small supply sheet for our weekend workshop.",
-    "manual": "Enter quantities and prices."
   },
   {
     "id": "notes",

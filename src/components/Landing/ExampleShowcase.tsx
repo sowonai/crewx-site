@@ -5,6 +5,7 @@ export default function ExampleShowcase(): React.ReactNode {
   const [current, setCurrent] = useState<AppExample>(APP_EXAMPLES[0]);
   const [after, setAfter] = useState<boolean>(false);
   const [priority, setPriority] = useState<'quiet' | 'price'>('quiet');
+  const [sheetFocus, setSheetFocus] = useState<'margin' | 'profit'>('margin');
   const [filter, setFilter] = useState<string>('All');
   const [expanded, setExpanded] = useState<boolean>(false);
 
@@ -20,6 +21,7 @@ export default function ExampleShowcase(): React.ReactNode {
     setCurrent(app);
     setAfter(false);
     setPriority('quiet');
+    setSheetFocus('margin');
     const demoEl = document.getElementById('ex-demo-intro');
     if (demoEl) {
       demoEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -440,52 +442,132 @@ export default function ExampleShowcase(): React.ReactNode {
           </div>
         );
 
-      case 'sheet':
+      case 'sheet': {
+        const isMargin = !interactive || sheetFocus === 'margin';
+        const ftext = done ? (isMargin ? '= (C4 - D4) / C4' : '= C4 - D4') : '= SUM(C2:C5)';
+        const cellRef = done ? 'E4 · B2:E5' : 'B2:E5';
         return (
           <div className="ex-surface">
-            <div className="ex-label">Weekend workshop</div>
-            <h4>A few details to check.</h4>
-            <table className="ex-sheet">
-              <thead>
-                <tr>
-                  <th>Item</th>
-                  <th>Qty</th>
-                  <th>Unit</th>
-                  <th>Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Notebooks</td>
-                  <td>12</td>
-                  <td>$4</td>
-                  <td>$48 ✓</td>
-                </tr>
-                <tr>
-                  <td>Pens</td>
-                  <td>20</td>
-                  <td>$2</td>
-                  <td className={done ? 'ex-highlight' : ''}>{done ? '$40' : '—'}</td>
-                </tr>
-                <tr>
-                  <td>Name cards</td>
-                  <td>12</td>
-                  <td>$1</td>
-                  <td className={done ? 'ex-highlight' : ''}>{done ? '$12' : '—'}</td>
-                </tr>
-                <tr>
-                  <td>Folders</td>
-                  <td>6</td>
-                  <td>$3</td>
-                  <td>$18 ✓</td>
-                </tr>
-              </tbody>
-            </table>
-            <div className="ex-banner">
-              {done ? '2 totals filled · 2 checked rows untouched.' : 'A simple sheet for this one event.'}
+            {interactive && (
+              <fieldset className="ex-direct-control">
+                <legend>What should your AI check in the selected range (B2:E5)?</legend>
+                <button
+                  type="button"
+                  aria-pressed={isMargin}
+                  onClick={() => {
+                    setSheetFocus('margin');
+                    setAfter(false);
+                  }}
+                >
+                  Flag low margins (&lt;15%)
+                </button>
+                <button
+                  type="button"
+                  aria-pressed={!isMargin}
+                  onClick={() => {
+                    setSheetFocus('profit');
+                    setAfter(false);
+                  }}
+                >
+                  Rank by net profit ($)
+                </button>
+              </fieldset>
+            )}
+            <div className="ex-label">Monthly Channel Review · Sheet</div>
+            <h4>Familiar grid. AI on the selected cells.</h4>
+            <div className="ex-xl">
+              <div className="ex-xl-ribbon">
+                <span className="ex-xl-btn">B</span>
+                <span className="ex-xl-btn">I</span>
+                <span className="ex-xl-sep" />
+                <span className="ex-xl-btn">$ %</span>
+                <span className="ex-xl-btn">Conditional</span>
+                <span className="ex-xl-badge">
+                  {done ? 'AI updated E2:E5 ✓' : 'Range B2:E5 selected'}
+                </span>
+              </div>
+              <div className="ex-xl-fbar">
+                <span className="ex-xl-namebox">{cellRef}</span>
+                <span className="ex-xl-fx">fx</span>
+                <span className="ex-xl-formula">
+                  <em>{ftext}</em>
+                </span>
+              </div>
+              <div className="ex-xl-grid-wrap">
+                <table className="ex-xl-grid">
+                  <thead>
+                    <tr>
+                      <th className="r-hdr" />
+                      <th>A · Channel</th>
+                      <th>B · Orders</th>
+                      <th>C · Revenue</th>
+                      <th>D · Ad + COGS</th>
+                      <th>E · {isMargin ? 'Margin %' : 'Net Profit'}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="sel">
+                      <td className="r-hdr">2</td>
+                      <td className="sel-top sel-l">Search Ads</td>
+                      <td className="num sel-top">142</td>
+                      <td className="num sel-top">$14,200</td>
+                      <td className="num sel-top">$9,800</td>
+                      <td className={`num sel-top sel-r ${done ? 'ai-cell' : ''}`}>
+                        {done ? (isMargin ? '31.0%' : '+$4,400') : '—'}
+                      </td>
+                    </tr>
+                    <tr className="sel">
+                      <td className="r-hdr">3</td>
+                      <td className="sel-l">Newsletter</td>
+                      <td className="num">88</td>
+                      <td className="num">$8,800</td>
+                      <td className="num">$3,100</td>
+                      <td className={`num sel-r ${done ? 'ai-cell' : ''}`}>
+                        {done ? (isMargin ? '64.8% ★' : '+$5,700 ★') : '—'}
+                      </td>
+                    </tr>
+                    <tr className={`sel ${done && isMargin ? 'anom' : ''}`}>
+                      <td className="r-hdr">4</td>
+                      <td className="sel-l">Social Video</td>
+                      <td className="num">210</td>
+                      <td className="num">$12,000</td>
+                      <td className="num">$11,000</td>
+                      <td className={`num sel-r ${done ? (isMargin ? '' : 'ai-cell') : ''}`}>
+                        {done ? (isMargin ? '8.3% ⚠' : '+$1,000') : '—'}
+                      </td>
+                    </tr>
+                    <tr className="sel">
+                      <td className="r-hdr">5</td>
+                      <td className="sel-bot sel-l">Affiliates</td>
+                      <td className="num sel-bot">64</td>
+                      <td className="num sel-bot">$6,400</td>
+                      <td className="num sel-bot">$4,200</td>
+                      <td className={`num sel-bot sel-r ${done ? 'ai-cell' : ''}`}>
+                        {done ? (isMargin ? '34.4%' : '+$2,200') : '—'}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div className="ex-xl-tabs">
+                <span className="ex-xl-tab on">Oct_Channels</span>
+                <span className="ex-xl-tab">Raw_Orders</span>
+                {done && <span className="ex-xl-tab ai-new">+ AI_Summary</span>}
+                <span className="ex-xl-stat">
+                  SUM: $41,400 · AVG: {done ? (isMargin ? '34.6%' : '$3,325') : '—'}
+                </span>
+              </div>
+            </div>
+            <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>
+              {done
+                ? isMargin
+                  ? 'Formula =(C-D)/C applied to E2:E5 · Row 4 flagged (Social Video ad spend spiked to 91% of revenue).'
+                  : 'Formula =C-D applied to E2:E5 · Newsletter leads net profit at +$5,700 with the lowest ad spend.'
+                : 'Select cells just like Excel, then ask your AI to write formulas or spot anomalies.'}
             </div>
           </div>
         );
+      }
 
       case 'notes':
         return (
@@ -791,7 +873,13 @@ export default function ExampleShowcase(): React.ReactNode {
             <div className="ex-chat-label">With your AI</div>
             <div className="ex-user">
               <span className="ex-sender">YOU</span>
-              <span>{current.prompt}</span>
+              <span>
+                {current.id === 'sheet'
+                  ? sheetFocus === 'margin'
+                    ? 'In the selected rows (B2:E5), fill Margin % with a formula, flag any channel under 15%, and explain why.'
+                    : 'In the selected rows (B2:E5), calculate Net Profit (=C-D) and highlight the top-earning channel.'
+                  : current.prompt}
+              </span>
             </div>
             <div className="ex-ai" aria-live="polite">
               {after ? (
@@ -802,6 +890,10 @@ export default function ExampleShowcase(): React.ReactNode {
                       ? priority === 'quiet'
                         ? 'Marked Quiet Mini for a closer look. I added a reminder to check key feel and the return policy.'
                         : 'Marked Everyday Keys for a closer look. I added a reminder to check its noise level.'
+                      : current.id === 'sheet'
+                      ? sheetFocus === 'margin'
+                        ? 'Filled E2:E5 with =(C4-D4)/C4 and flagged Row 4 (Social Video, 8.3% margin). I also opened an AI_Summary tab with the breakdown.'
+                        : 'Filled E2:E5 with =C4-D4. Newsletter leads at +$5,700 net profit with the lowest ad spend.'
                       : current.reply}
                   </p>
                 </>

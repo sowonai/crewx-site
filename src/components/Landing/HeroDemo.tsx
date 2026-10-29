@@ -4,18 +4,22 @@ export default function HeroDemo(): React.ReactNode {
   const [tab, setTab] = useState<number>(1);
   const [stepsVisible, setStepsVisible] = useState<number[]>([]);
   const [appOpen, setAppOpen] = useState(false);
-  const [cellsShown, setCellsShown] = useState<number[]>([]);
-  const [cellsSwapped, setCellsSwapped] = useState(false);
+  const [rowsShown, setRowsShown] = useState<number[]>([]);
+  const [formulasFilled, setFormulasFilled] = useState(false);
+  const [samUpdated, setSamUpdated] = useState(false);
   const [shareHot, setShareHot] = useState(false);
   const [sentVisible, setSentVisible] = useState(false);
   const [cursorPos, setCursorPos] = useState<{ left: string; top: string; show: boolean }>({
-    left: '40%',
-    top: '62%',
+    left: '68%',
+    top: '58%',
     show: false,
   });
   const [whoText, setWhoText] = useState('Your computer · your AI');
-  const [appSubText, setAppSubText] = useState('Week 1 · 5 days');
-  const [shopText, setShopText] = useState('chicken, beef, turkey, quinoa, lentils, tortillas…');
+  const [appSubText, setAppSubText] = useState('Oct_Channels · Range B2:E5 selected');
+  const [insightText, setInsightText] = useState(
+    'Select a range, and your AI writes formulas or spots anomalies right in the sheet.'
+  );
+  const [profitText, setProfitText] = useState('$13,300 · checking margins…');
 
   const containerRef = useRef<HTMLDivElement>(null);
   const timersRef = useRef<NodeJS.Timeout[]>([]);
@@ -27,61 +31,70 @@ export default function HeroDemo(): React.ReactNode {
 
   const play = useCallback(() => {
     clearTimers();
-    // Reset state
     setTab(1);
     setStepsVisible([]);
     setAppOpen(false);
-    setCellsShown([]);
-    setCellsSwapped(false);
+    setRowsShown([]);
+    setFormulasFilled(false);
+    setSamUpdated(false);
     setShareHot(false);
     setSentVisible(false);
-    setCursorPos({ left: '40%', top: '62%', show: false });
+    setCursorPos({ left: '68%', top: '58%', show: false });
     setWhoText('Your computer · your AI');
-    setAppSubText('Week 1 · 5 days');
-    setShopText('chicken, beef, turkey, quinoa, lentils, tortillas…');
+    setAppSubText('Oct_Channels · Range B2:E5 selected');
+    setInsightText(
+      'Select a range, and your AI writes formulas or spots anomalies right in the sheet.'
+    );
+    setProfitText('$13,300 · checking margins…');
 
     const at = (ms: number, fn: () => void) => {
       const id = setTimeout(fn, ms);
       timersRef.current.push(id);
     };
 
-    // Step 1: You make it
-    at(150, () => setStepsVisible((s) => [...s, 1]));
-    at(650, () => {
-      setStepsVisible((s) => [...s, 2]);
-      setAppOpen(true);
-    });
-    for (let i = 0; i < 10; i++) {
-      at(800 + i * 110, () => setCellsShown((c) => [...c, i]));
+    // Step 1: You work in it
+    at(200, () => setStepsVisible([1]));
+    at(900, () => setAppOpen(true));
+    for (let i = 0; i < 4; i++) {
+      at(1100 + i * 140, () => setRowsShown((r) => [...r, i]));
     }
+    at(2100, () => {
+      setStepsVisible([1, 2]);
+      setFormulasFilled(true);
+      setInsightText('Formula =(C-D)/C applied to E2:E5. Row 4 (Social Video, 8.3%) flagged.');
+      setProfitText('$13,300 · 1 channel under 15% (Social Video)');
+    });
 
     // Step 2: You send it
-    at(4200, () => {
+    at(4400, () => {
       setTab(2);
-      setStepsVisible((s) => [...s, 5]);
+      setStepsVisible([1, 2, 5]);
       setShareHot(true);
     });
-    at(5000, () => setSentVisible(true));
-    at(5600, () => setStepsVisible((s) => [...s, 6]));
+    at(5100, () => setSentVisible(true));
+    at(5700, () => setStepsVisible([1, 2, 5, 6]));
 
     // Step 3: They make it theirs
-    at(7200, () => {
+    at(7300, () => {
       setSentVisible(false);
       setShareHot(false);
       setTab(3);
       setStepsVisible([]);
       setWhoText("Sam's computer · Sam's own AI");
-      setAppSubText('Shared by you · Week 1');
+      setAppSubText('Shared by you · Oct_Channels');
     });
-    at(7700, () => setStepsVisible([8]));
-    at(8700, () => setCursorPos({ left: '40%', top: '62%', show: true }));
-    at(9300, () => {
-      setCellsSwapped(true);
+    at(7800, () => setStepsVisible([8]));
+    at(8700, () => setCursorPos({ left: '68%', top: '58%', show: true }));
+    at(9400, () => {
+      setSamUpdated(true);
+      setProfitText('$16,600 · All channels healthy (>30%)');
     });
-    at(10800, () => {
-      setStepsVisible((s) => [...s, 9]);
+    at(10500, () => {
+      setStepsVisible([8, 9]);
       setCursorPos((c) => ({ ...c, show: false }));
-      setShopText('tofu, chickpeas, black beans, mushrooms, lentils, tortillas…');
+      setInsightText(
+        'Sam adjusted D4 with his AI. All 4 channels now clear the 15% margin target.'
+      );
     });
   }, []);
 
@@ -93,8 +106,13 @@ export default function HeroDemo(): React.ReactNode {
       setTab(3);
       setAppOpen(true);
       setStepsVisible([8, 9]);
-      setCellsShown([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
-      setCellsSwapped(true);
+      setRowsShown([0, 1, 2, 3]);
+      setFormulasFilled(true);
+      setSamUpdated(true);
+      setProfitText('$16,600 · All channels healthy (>30%)');
+      setInsightText(
+        'Sam adjusted D4 with his AI. All 4 channels now clear the 15% margin target.'
+      );
       return;
     }
 
@@ -119,32 +137,38 @@ export default function HeroDemo(): React.ReactNode {
     clearTimers();
     setTab(n);
     setAppOpen(true);
-    setCellsShown([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
-    setCursorPos({ left: '40%', top: '62%', show: false });
+    setRowsShown([0, 1, 2, 3]);
+    setFormulasFilled(true);
+    setCursorPos({ left: '68%', top: '58%', show: false });
     if (n === 1) {
       setStepsVisible([1, 2]);
-      setCellsSwapped(false);
+      setSamUpdated(false);
       setShareHot(false);
       setSentVisible(false);
       setWhoText('Your computer · your AI');
-      setAppSubText('Week 1 · 5 days');
-      setShopText('chicken, beef, turkey, quinoa, lentils, tortillas…');
+      setAppSubText('Oct_Channels · Range B2:E5 selected');
+      setInsightText('Formula =(C-D)/C applied to E2:E5. Row 4 (Social Video, 8.3%) flagged.');
+      setProfitText('$13,300 · 1 channel under 15% (Social Video)');
     } else if (n === 2) {
       setStepsVisible([1, 2, 5, 6]);
-      setCellsSwapped(false);
+      setSamUpdated(false);
       setShareHot(true);
       setSentVisible(true);
       setWhoText('Your computer · your AI');
-      setAppSubText('Week 1 · 5 days');
-      setShopText('chicken, beef, turkey, quinoa, lentils, tortillas…');
+      setAppSubText('Oct_Channels · Range B2:E5 selected');
+      setInsightText('Formula =(C-D)/C applied to E2:E5. Row 4 (Social Video, 8.3%) flagged.');
+      setProfitText('$13,300 · 1 channel under 15% (Social Video)');
     } else {
       setStepsVisible([8, 9]);
-      setCellsSwapped(true);
+      setSamUpdated(true);
       setShareHot(false);
       setSentVisible(false);
       setWhoText("Sam's computer · Sam's own AI");
-      setAppSubText('Shared by you · Week 1');
-      setShopText('tofu, chickpeas, black beans, mushrooms, lentils, tortillas…');
+      setAppSubText('Shared by you · Oct_Channels');
+      setInsightText(
+        'Sam adjusted D4 with his AI. All 4 channels now clear the 15% margin target.'
+      );
+      setProfitText('$16,600 · All channels healthy (>30%)');
     }
   };
 
@@ -152,7 +176,7 @@ export default function HeroDemo(): React.ReactNode {
     <div className="stage" id="demo" ref={containerRef}>
       <div className="stage-tabs">
         <span className={tab === 1 ? 'on' : ''} onClick={() => jumpToStage(1)}>
-          1 · You make it
+          1 · You work in it
         </span>
         <span className={tab === 2 ? 'on' : ''} onClick={() => jumpToStage(2)}>
           2 · You send it
@@ -185,21 +209,26 @@ export default function HeroDemo(): React.ReactNode {
           <div className="chat">
             <span className="label">Chat</span>
             <div className={`msg me ${stepsVisible.includes(1) ? 'show' : ''}`}>
-              Here's the 4-week meal plan I keep sending people. Make it an app.
-              <div className="att">📄 meal-plan-notes.docx</div>
+              Open my monthly channel sheet. Fill Margin % in <b>E2:E5</b> and flag anything under
+              15%.
+              <div className="att">📊 oct-channels.xlsx</div>
             </div>
             <div className={`msg ai ${stepsVisible.includes(2) ? 'show' : ''}`}>
-              Done — opened <b>Meal Plan</b>. Swap any meal, and the shopping list updates itself.
+              Done — filled <b>E2:E5</b> with <code>=(C-D)/C</code> and flagged{' '}
+              <b>Social Video (8.3%)</b>.
             </div>
-            <div className={`msg me ${stepsVisible.includes(5) ? 'show' : ''}`}>Share it with Sam.</div>
+            <div className={`msg me ${stepsVisible.includes(5) ? 'show' : ''}`}>
+              Share this sheet app with Sam.
+            </div>
             <div className={`msg ai ${stepsVisible.includes(6) ? 'show' : ''}`}>
-              Sent. Sam gets it in CrewX and uses it with his own AI.
+              Sent. Sam opens the same sheet in CrewX and runs it with his own AI.
             </div>
             <div className={`msg me ${stepsVisible.includes(8) ? 'show' : ''}`}>
-              I'm vegetarian. Swap the meat & fish dinners.
+              Cut Social Video ad spend by 30% and recalculate my margins.
             </div>
             <div className={`msg ai ${stepsVisible.includes(9) ? 'show' : ''}`}>
-              Swapped 3 dinners. Shopping list updated.
+              Updated <b>D4</b> to $7,700. Social Video margin is now <b>35.8%</b> — no channels
+              under 15%.
             </div>
             <div className="composer">Ask your AI…</div>
           </div>
@@ -211,16 +240,16 @@ export default function HeroDemo(): React.ReactNode {
               AI
             </span>
             <div className={`sent ${sentVisible ? 'show' : ''}`}>
-              <b>✉ Meal Plan sent to Sam</b>
-              <small>Sam opens CrewX (Windows app or npx crewx on Mac), signs in, and it's there.</small>
+              <b>✉ Channel Sheet sent to Sam</b>
+              <small>Sam opens CrewX, signs in, and it's there with your formulas.</small>
             </div>
-            <div className="empty">Ask your AI, and an app opens here.</div>
+            <div className="empty">Open your sheet, select cells, and ask your AI.</div>
             <div className="appwin">
               <div className="aw-bar">
-                <span className="ico">🥗</span>
+                <span className="ico">📊</span>
                 <div>
-                  <b>Meal Plan</b>
-                  <small>Swap a meal, the shopping list follows.</small>
+                  <b>Sheet</b>
+                  <small>Familiar spreadsheet UX · AI works on the cells you select.</small>
                 </div>
                 <span className="ctl" aria-hidden="true">
                   <span className="lay">Layout</span>
@@ -232,84 +261,114 @@ export default function HeroDemo(): React.ReactNode {
               <div className="aw-body">
                 <div className="app-head">
                   <div>
-                    <b>Week plan</b>
+                    <b>Monthly Channel Review</b>
                     <div className="sub">{appSubText}</div>
                   </div>
                   <span className={`share ${shareHot ? 'hot' : ''}`}>Share</span>
                 </div>
-                <div className="grid">
-                  <span />
-                  <span className="h">Mon</span>
-                  <span className="h">Tue</span>
-                  <span className="h">Wed</span>
-                  <span className="h">Thu</span>
-                  <span className="h">Fri</span>
-                  <span className="row">Lunch</span>
-                  <div className={`cell ${cellsShown.includes(0) ? 'show' : ''}`}>
-                    <b>Quinoa bowl</b>
-                    <small>520 kcal</small>
+                <div className="xl-hero" id="grid">
+                  <div className="xl-fbar">
+                    <span className="xl-cellref">
+                      {samUpdated ? 'D4:E4' : formulasFilled ? 'E4' : 'E2:E5'}
+                    </span>
+                    <span className="xl-fx">fx</span>
+                    <span className="xl-finput">
+                      <b>=(C4-D4)/C4</b> &nbsp;·{' '}
+                      {samUpdated
+                        ? 'Ad spend -30% → 35.8% margin'
+                        : formulasFilled
+                        ? 'Low margin flagged (<15%)'
+                        : 'Margin % formula'}
+                    </span>
+                    <span className="xl-tag">
+                      {formulasFilled ? 'AI updated E2:E5 ✓' : 'B2:E5 selected'}
+                    </span>
                   </div>
-                  <div className={`cell ${cellsShown.includes(1) ? 'show' : ''}`}>
-                    <b>Lentil soup</b>
-                    <small>430 kcal</small>
-                  </div>
-                  <div className={`cell ${cellsShown.includes(2) ? 'show' : ''}`}>
-                    <b>{cellsSwapped ? 'Avocado wrap' : 'Tuna wrap'}</b>
-                    <small>{cellsSwapped ? '450 kcal' : '480 kcal'}</small>
-                  </div>
-                  <div className={`cell ${cellsShown.includes(3) ? 'show' : ''}`}>
-                    <b>Greek salad</b>
-                    <small>410 kcal</small>
-                  </div>
-                  <div className={`cell ${cellsShown.includes(4) ? 'show' : ''}`}>
-                    <b>Rice &amp; beans</b>
-                    <small>540 kcal</small>
-                  </div>
-                  <span className="row">Dinner</span>
-                  <div
-                    className={`cell dinner ${cellsShown.includes(5) ? 'show' : ''} ${
-                      cellsSwapped ? 'swap' : ''
-                    }`}
-                  >
-                    <b>{cellsSwapped ? 'Tofu stir-fry' : 'Chicken stir-fry'}</b>
-                    <small>{cellsSwapped ? 'vegetarian' : '610 kcal'}</small>
-                  </div>
-                  <div className={`cell dinner ${cellsShown.includes(6) ? 'show' : ''}`}>
-                    <b>Veggie pasta</b>
-                    <small>580 kcal</small>
-                  </div>
-                  <div
-                    className={`cell dinner ${cellsShown.includes(7) ? 'show' : ''} ${
-                      cellsSwapped ? 'swap' : ''
-                    }`}
-                  >
-                    <b>{cellsSwapped ? 'Chickpea curry' : 'Beef chili'}</b>
-                    <small>{cellsSwapped ? 'vegetarian' : '640 kcal'}</small>
-                  </div>
-                  <div
-                    className={`cell dinner ${cellsShown.includes(8) ? 'show' : ''} ${
-                      cellsSwapped ? 'swap' : ''
-                    }`}
-                  >
-                    <b>{cellsSwapped ? 'Mushroom risotto' : 'Miso salmon'}</b>
-                    <small>{cellsSwapped ? 'vegetarian' : '590 kcal'}</small>
-                  </div>
-                  <div
-                    className={`cell dinner ${cellsShown.includes(9) ? 'show' : ''} ${
-                      cellsSwapped ? 'swap' : ''
-                    }`}
-                  >
-                    <b>{cellsSwapped ? 'Black bean tacos' : 'Turkey tacos'}</b>
-                    <small>{cellsSwapped ? 'vegetarian' : '600 kcal'}</small>
+                  <table className="xl-table">
+                    <thead>
+                      <tr>
+                        <th className="rn" />
+                        <th>A · Channel</th>
+                        <th>B · Orders</th>
+                        <th>C · Revenue</th>
+                        <th>D · Ad + COGS</th>
+                        <th>E · Margin %</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className={`xl-row sel ${rowsShown.includes(0) ? 'show' : ''}`}>
+                        <td className="rn">2</td>
+                        <td>
+                          <b>Search Ads</b>
+                        </td>
+                        <td className="num">142</td>
+                        <td className="num">$14,200</td>
+                        <td className="num">$9,800</td>
+                        <td className={`num fcell ${formulasFilled ? 'filled' : ''}`}>
+                          {formulasFilled ? '31.0%' : '—'}
+                        </td>
+                      </tr>
+                      <tr className={`xl-row sel ${rowsShown.includes(1) ? 'show' : ''}`}>
+                        <td className="rn">3</td>
+                        <td>
+                          <b>Newsletter</b>
+                        </td>
+                        <td className="num">88</td>
+                        <td className="num">$8,800</td>
+                        <td className="num">$3,100</td>
+                        <td className={`num fcell ${formulasFilled ? 'filled' : ''}`}>
+                          {formulasFilled ? '64.8% ★' : '—'}
+                        </td>
+                      </tr>
+                      <tr
+                        className={`xl-row sel ${rowsShown.includes(2) ? 'show' : ''} ${
+                          formulasFilled && !samUpdated ? 'flagged' : ''
+                        }`}
+                      >
+                        <td className="rn">4</td>
+                        <td>
+                          <b>Social Video</b>
+                        </td>
+                        <td className="num">210</td>
+                        <td className="num">$12,000</td>
+                        <td className="num">{samUpdated ? '$7,700' : '$11,000'}</td>
+                        <td
+                          className={`num fcell ${
+                            formulasFilled ? (samUpdated ? 'filled' : 'warn') : ''
+                          }`}
+                        >
+                          {formulasFilled ? (samUpdated ? '35.8% ✓' : '8.3% ⚠') : '—'}
+                        </td>
+                      </tr>
+                      <tr className={`xl-row sel ${rowsShown.includes(3) ? 'show' : ''}`}>
+                        <td className="rn">5</td>
+                        <td>
+                          <b>Affiliates</b>
+                        </td>
+                        <td className="num">64</td>
+                        <td className="num">$6,400</td>
+                        <td className="num">$4,200</td>
+                        <td className={`num fcell ${formulasFilled ? 'filled' : ''}`}>
+                          {formulasFilled ? '34.4%' : '—'}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div className="xl-tabs">
+                    <span className="xl-tab on">Oct_Channels</span>
+                    <span className="xl-tab">Raw_Data</span>
+                    {formulasFilled && <span className="xl-tab new">+ AI_Summary</span>}
+                    <span className="xl-status">SUM(C2:C5): $41,400</span>
                   </div>
                 </div>
                 <div className="side">
                   <div>
-                    <b>Shopping list</b>
-                    <span>{shopText}</span>
+                    <b>AI Insight</b>
+                    <span>{insightText}</span>
                   </div>
                   <div>
-                    <b>This week</b>2,820 kcal avg · 4 prep sessions
+                    <b>Total Net Profit</b>
+                    <span>{profitText}</span>
                   </div>
                 </div>
               </div>
@@ -318,7 +377,10 @@ export default function HeroDemo(): React.ReactNode {
         </div>
       </div>
       <div className="stage-foot">
-        <span>Illustrative demo · You choose what matters. Your AI updates the app. You review the result.</span>
+        <span>
+          Illustrative demo · Keep your Excel workflow. Select cells by hand, let your AI write the
+          formulas and spot anomalies.
+        </span>
         <button className="replay" onClick={play} type="button">
           ↺ Replay
         </button>
