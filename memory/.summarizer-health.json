@@ -1,0 +1,1 @@
+{"consecutiveFailures":1,"notified":false,"lastError":{"code":"PROCESS_FAILED","message":"2026-10-29T04:14:26.934270Z ERROR rmcp::transport::worker: worker quit with fatal: Transport channel closed, when AuthRequired(AuthRequiredError { www_authenticate_header: \"[REDACTED]\\\"https://mcp.pos"}}

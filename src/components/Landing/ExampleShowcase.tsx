@@ -53,7 +53,7 @@ export default function ExampleShowcase(): React.ReactNode {
   };
 
   const filteredApps = APP_EXAMPLES.filter((a) => filter === 'All' || a.cat === filter);
-  const displayedApps = expanded ? filteredApps : filteredApps.slice(0, 3);
+  const displayedApps = expanded ? filteredApps : filteredApps.slice(0, 6);
 
   const getIcon = (a: AppExample) => {
     if (['blog-editor', 'yt-sensor', 'rival-voice'].includes(a.id)) {
@@ -66,16 +66,16 @@ export default function ExampleShowcase(): React.ReactNode {
     switch (a.id) {
       case 'buy-compare': {
         const quiet = !interactive || priority === 'quiet';
-        const candidates: [string, number][] = quiet
+        const candidates: [string, number, string][] = quiet
           ? [
-              ['Quiet Mini', 86],
-              ['Everyday Keys', 78],
-              ['Studio Board', 71],
+              ['Quiet Mini', 86, '38 dB · $149'],
+              ['Everyday Keys', 78, '44 dB · $89'],
+              ['Studio Board', 71, '46 dB · $129'],
             ]
           : [
-              ['Everyday Keys', 88],
-              ['Quiet Mini', 76],
-              ['Studio Board', 72],
+              ['Everyday Keys', 88, '$89 · Best value'],
+              ['Quiet Mini', 76, '$149 · 38 dB'],
+              ['Studio Board', 72, '$129 · 46 dB'],
             ];
         return (
           <div className="ex-surface">
@@ -129,12 +129,14 @@ export default function ExampleShowcase(): React.ReactNode {
               </div>
             </div>
             <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>
-              First choice: {candidates[0][0]}
+              First choice: {candidates[0][0]} ({candidates[0][2]})
             </div>
             <div className="ex-columns">
-              {candidates.map(([n, s], i) => (
+              {candidates.map(([n, s, spec], i) => (
                 <div key={n} className={`ex-box ${done && i === 0 ? 'ex-highlight' : ''}`}>
-                  <span className="ex-tiny">#{i + 1}</span>
+                  <span className="ex-tiny">
+                    #{i + 1} · {spec}
+                  </span>
                   <div className="ex-keyboard">
                     {Array.from({ length: 26 }, (_, k) => (
                       <i key={k} />
@@ -164,11 +166,12 @@ export default function ExampleShowcase(): React.ReactNode {
       case 'travel-map':
         return (
           <div className="ex-surface">
-            <div className="ex-label">Chiang Mai · A month away</div>
+            <div className="ex-label">Chiang Mai · 30-Day Workation</div>
             <h4>Work a little. Wander a little.</h4>
             <div className="ex-pills">
-              <span className="ex-pill">Week 1</span>
-              <span className="ex-pill">Your time, your pace</span>
+              <span className="ex-pill">Nimman Base</span>
+              <span className="ex-pill">$1,420 / $1,800 budget</span>
+              <span className="ex-pill">Fast Wi-Fi ✓</span>
             </div>
             <div className="ex-travel-budget">
               <i />
@@ -179,16 +182,16 @@ export default function ExampleShowcase(): React.ReactNode {
             <div className="ex-schedule">
               <time>09:00</time>
               <div className={`ex-slot ${done ? 'ex-highlight' : ''}`}>
-                {done ? 'Work · morning kept free' : 'Market · morning visit'}
+                {done ? 'Deep Work · Morning block protected ✓' : 'Warorot Market · Morning visit'}
               </div>
               <time>12:00</time>
-              <div className="ex-slot">Lunch near the old town</div>
+              <div className="ex-slot">Khao Soi lunch near Old Town</div>
               <time>14:00</time>
               <div className={`ex-slot ${done ? 'ex-mint' : ''}`}>
-                {done ? 'Market · moved here' : 'Open afternoon'}
+                {done ? 'Warorot Market · Moved to afternoon ✓' : 'Open afternoon · Café hop'}
               </div>
               <time>18:00</time>
-              <div className="ex-slot">Dinner, wherever looks good</div>
+              <div className="ex-slot">Sunset rooftop &amp; night bazaar</div>
             </div>
           </div>
         );
@@ -257,32 +260,38 @@ export default function ExampleShowcase(): React.ReactNode {
       case 'crewx-slide':
         return (
           <div className="ex-surface">
-            <div className="ex-label">Strategy notes · Slide 3</div>
+            <div className="ex-label">Q4 Strategy Deck · Slide 3 of 8</div>
             <div className="ex-slide-layout">
               <div className="ex-slide-strip">
-                {[1, 2, 3, 4].map((n) => (
-                  <div key={n} className={`ex-slide-thumb ${n === 3 ? 'ex-highlight' : ''}`}>
-                    {n}
+                {['01 Intro', '02 Data', '03 Decide', '04 Next'].map((t, i) => (
+                  <div key={t} className={`ex-slide-thumb ${i === 2 ? 'ex-highlight' : ''}`}>
+                    {t}
                   </div>
                 ))}
               </div>
               <div className="ex-slide-page">
-                <div className="ex-label">The next chapter</div>
-                <h4>{done ? 'Which idea should we try first?' : 'A few ideas for what comes next.'}</h4>
+                <div className="ex-label">Decision slide · 16:9</div>
+                <h4>
+                  {done
+                    ? 'Which growth loop should we launch first?'
+                    : 'Notes from today’s strategy discussion.'}
+                </h4>
                 <div className="ex-columns">
                   <div className="ex-box">
-                    <b>A small workshop</b>
-                    <p className="ex-tiny">Learn together</p>
+                    <b>Option A · Creator Collabs</b>
+                    <p className="ex-tiny">15 micro-YouTubers · Fast initial reach</p>
                   </div>
                   <div className="ex-box">
-                    <b>A useful guide</b>
-                    <p className="ex-tiny">Start at your own pace</p>
+                    <b>Option B · Remix Templates</b>
+                    <p className="ex-tiny">$0 CAC · Viral app sharing loop</p>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="ex-banner">
-              {done ? 'Title updated · same slide, clearer question.' : 'A conversation taking shape.'}
+            <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>
+              {done
+                ? 'Slide 3 restructured · Decision question + 2 options aligned ✓'
+                : 'Talk through the idea while the slide takes shape beside you.'}
             </div>
           </div>
         );
@@ -336,14 +345,16 @@ export default function ExampleShowcase(): React.ReactNode {
       case 'html-viewer':
         return (
           <div className="ex-surface">
-            <div className="ex-label">Mockup · Community garden</div>
+            <div className="ex-label">Live Mockup · Community Garden v2</div>
             <div className="ex-mockup">
               <div className="ex-mockupnav">
                 <b>the little garden</b>
-                <span>About · Visit</span>
+                <span>About · Schedule · Join</span>
               </div>
               <h4>A greener corner of the neighborhood.</h4>
-              {done ? <span className="ex-fake-button">Join a garden day ↗</span> : null}
+              {done ? (
+                <span className="ex-fake-button">Join a garden day ↗ &nbsp;· Moved above fold ✓</span>
+              ) : null}
               <div className="ex-mockup-blocks">
                 <i />
                 <i />
@@ -351,12 +362,14 @@ export default function ExampleShowcase(): React.ReactNode {
               </div>
               {!done && (
                 <div className="ex-tiny" style={{ marginTop: 12 }}>
-                  Main button below the next section ↓
+                  ⚠ Primary button currently buried below the fold ↓
                 </div>
               )}
             </div>
             <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>
-              {done ? 'Updated mockup · ready for your review.' : 'Look first. Then decide what to build.'}
+              {done
+                ? 'Updated mockup · CTA moved beside headline for instant review.'
+                : 'Point at the screen, ask your AI, and review the layout change live.'}
             </div>
           </div>
         );
@@ -409,35 +422,40 @@ export default function ExampleShowcase(): React.ReactNode {
       case 'yt-sensor':
         return (
           <div className="ex-surface">
-            <div className="ex-label">My sample comments</div>
-            <h4>What people keep asking.</h4>
+            <div className="ex-label">YouTube Comment Radar · 257 comments</div>
+            <h4>What your audience keeps asking for.</h4>
             <div className="ex-columns">
-              <div className="ex-box">
-                <div className="ex-label">Setup</div>
-                <div className="ex-strong">12</div>
+              <div className={`ex-box ${done ? 'ex-highlight' : ''}`}>
+                <div className="ex-label">Setup &amp; Install</div>
+                <div className="ex-strong">48%</div>
+                <span className="ex-tiny">124 mentions</span>
               </div>
               <div className="ex-box">
-                <div className="ex-label">Examples</div>
-                <div className="ex-strong">8</div>
+                <div className="ex-label">App Examples</div>
+                <div className="ex-strong">32%</div>
+                <span className="ex-tiny">82 mentions</span>
               </div>
               <div className="ex-box">
-                <div className="ex-label">Pricing</div>
-                <div className="ex-strong">4</div>
+                <div className="ex-label">Pricing &amp; Plans</div>
+                <div className="ex-strong">20%</div>
+                <span className="ex-tiny">51 mentions</span>
               </div>
             </div>
             <div className="ex-chart">
               <div style={{ height: '95%' }}>
-                <span>Setup</span>
+                <span>Setup (124)</span>
               </div>
               <div style={{ height: '63%' }}>
-                <span>Examples</span>
+                <span>Examples (82)</span>
               </div>
-              <div style={{ height: '32%' }}>
-                <span>Pricing</span>
+              <div style={{ height: '36%' }}>
+                <span>Pricing (51)</span>
               </div>
             </div>
             <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>
-              {done ? 'Pattern to explore: “Where do I start?”' : 'Read the comments behind each theme.'}
+              {done
+                ? '🎬 Next video brief ready: “First 3 Steps — Use Your Own Claude/ChatGPT Plan”'
+                : 'Cluster viewer comments automatically and spot your next hit video.'}
             </div>
           </div>
         );
@@ -473,7 +491,7 @@ export default function ExampleShowcase(): React.ReactNode {
                 </button>
               </fieldset>
             )}
-            <div className="ex-label">Monthly Channel Review · Sheet</div>
+            <div className="ex-label">Monthly Channel Review · Spreadsheet</div>
             <h4>Familiar grid. AI on the selected cells.</h4>
             <div className="ex-xl">
               <div className="ex-xl-ribbon">
@@ -604,20 +622,42 @@ export default function ExampleShowcase(): React.ReactNode {
       case 'relation-map':
         return (
           <div className="ex-surface">
-            <div className="ex-label">A small event</div>
+            <div className="ex-label">Launch Dependency Map · 4 nodes</div>
             <h4>What needs to happen first?</h4>
+            <div className="ex-pills">
+              <span className="ex-pill">Event Launch</span>
+              <span className="ex-pill">
+                {done ? 'All dependencies linked ✓' : '1 missing step spotted'}
+              </span>
+            </div>
             <div className="ex-map">
-              <div className="ex-node">Venue confirmed</div>
-              <div className="ex-arrow">→</div>
-              <div className="ex-node">Invitation design</div>
-              <div className={`ex-node ${done ? 'ex-highlight' : ''}`}>
-                {done ? 'Print approval' : 'Approval missing?'}
+              <div className="ex-node">
+                <b>01 · Venue</b>
+                <br />
+                <span className="ex-tiny">Confirmed ✓</span>
               </div>
               <div className="ex-arrow">→</div>
-              <div className="ex-node">Send invitations</div>
+              <div className="ex-node">
+                <b>02 · Invitation</b>
+                <br />
+                <span className="ex-tiny">Draft ready</span>
+              </div>
+              <div className={`ex-node ${done ? 'ex-highlight' : ''}`}>
+                <b>03 · {done ? 'Print Approval ✓' : 'Approval Gate?'}</b>
+                <br />
+                <span className="ex-tiny">{done ? 'Inserted before send' : 'Missing step'}</span>
+              </div>
+              <div className="ex-arrow">→</div>
+              <div className="ex-node">
+                <b>04 · Send Out</b>
+                <br />
+                <span className="ex-tiny">200 guests</span>
+              </div>
             </div>
-            <div className="ex-banner">
-              {done ? 'A missing step is now in the picture.' : 'Keep the whole plan in view.'}
+            <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>
+              {done
+                ? 'Print approval inserted between design and sending ✓'
+                : 'Map people, decisions, and blockers in one visual canvas.'}
             </div>
           </div>
         );
@@ -985,7 +1025,7 @@ export default function ExampleShowcase(): React.ReactNode {
         })}
       </div>
 
-      {filteredApps.length > 3 && (
+      {filteredApps.length > 6 && (
         <div className="ex-more-wrap">
           <button
             className="ex-more"

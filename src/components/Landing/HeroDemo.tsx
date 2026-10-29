@@ -17,7 +17,7 @@ export default function HeroDemo(): React.ReactNode {
   const [whoText, setWhoText] = useState('Your computer · your AI');
   const [appSubText, setAppSubText] = useState('Oct_Channels · Range B2:E5 selected');
   const [insightText, setInsightText] = useState(
-    'Select a range, and your AI writes formulas or spots anomalies right in the sheet.'
+    'Select a range, and your AI writes formulas or spots anomalies right in the spreadsheet.'
   );
   const [profitText, setProfitText] = useState('$13,300 · checking margins…');
 
@@ -43,7 +43,7 @@ export default function HeroDemo(): React.ReactNode {
     setWhoText('Your computer · your AI');
     setAppSubText('Oct_Channels · Range B2:E5 selected');
     setInsightText(
-      'Select a range, and your AI writes formulas or spots anomalies right in the sheet.'
+      'Select a range, and your AI writes formulas or spots anomalies right in the spreadsheet.'
     );
     setProfitText('$13,300 · checking margins…');
 
@@ -209,7 +209,7 @@ export default function HeroDemo(): React.ReactNode {
           <div className="chat">
             <span className="label">Chat</span>
             <div className={`msg me ${stepsVisible.includes(1) ? 'show' : ''}`}>
-              Open my monthly channel sheet. Fill Margin % in <b>E2:E5</b> and flag anything under
+              Open my monthly channel spreadsheet. Fill Margin % in <b>E2:E5</b> and flag anything under
               15%.
               <div className="att">📊 oct-channels.xlsx</div>
             </div>
@@ -218,10 +218,10 @@ export default function HeroDemo(): React.ReactNode {
               <b>Social Video (8.3%)</b>.
             </div>
             <div className={`msg me ${stepsVisible.includes(5) ? 'show' : ''}`}>
-              Share this sheet app with Sam.
+              Share this spreadsheet app with Sam.
             </div>
             <div className={`msg ai ${stepsVisible.includes(6) ? 'show' : ''}`}>
-              Sent. Sam opens the same sheet in CrewX and runs it with his own AI.
+              Sent. Sam opens the same spreadsheet in CrewX and runs it with his own AI.
             </div>
             <div className={`msg me ${stepsVisible.includes(8) ? 'show' : ''}`}>
               Cut Social Video ad spend by 30% and recalculate my margins.
@@ -240,15 +240,15 @@ export default function HeroDemo(): React.ReactNode {
               AI
             </span>
             <div className={`sent ${sentVisible ? 'show' : ''}`}>
-              <b>✉ Channel Sheet sent to Sam</b>
+              <b>✉ Channel Spreadsheet sent to Sam</b>
               <small>Sam opens CrewX, signs in, and it's there with your formulas.</small>
             </div>
-            <div className="empty">Open your sheet, select cells, and ask your AI.</div>
+            <div className="empty">Open your spreadsheet, select cells, and ask your AI.</div>
             <div className="appwin">
               <div className="aw-bar">
                 <span className="ico">📊</span>
                 <div>
-                  <b>Sheet</b>
+                  <b>Spreadsheet</b>
                   <small>Familiar spreadsheet UX · AI works on the cells you select.</small>
                 </div>
                 <span className="ctl" aria-hidden="true">
