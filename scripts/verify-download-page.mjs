@@ -33,49 +33,23 @@ test('Korean navbar/footer translate the Download label', () => {
   assert.equal(footer['link.item.label.Download']?.message, '다운로드');
 });
 
-test('all homepage primary CTAs use the locale-aware Windows download and share its copy', () => {
+test('all landing primary CTAs route to the locale-aware /download page', () => {
+  const nav = read('src/components/Landing/TopNav.tsx');
   const home = read('src/pages/index.tsx');
-  const headerStart = home.indexOf('{/* Top Nav */}');
-  const headerEnd = home.indexOf('{/* Hero */}', headerStart);
-  const header = home.slice(headerStart, headerEnd);
-  const heroStart = home.indexOf('<div className="mt-8 flex flex-wrap items-center gap-3">');
-  const heroEnd = home.indexOf('<div className="mt-12">', heroStart);
-  const hero = home.slice(heroStart, heroEnd);
-  const freeTierStart = home.indexOf('{/* Free */}');
-  const freeTierEnd = home.indexOf('<ul className="mt-6 space-y-2.5 text-sm text-slate-300">', freeTierStart);
-  const freeTier = home.slice(freeTierStart, freeTierEnd);
+  const finalCta = read('src/components/Landing/FinalCta.tsx');
+  const pricing = read('src/components/Landing/PricingSection.tsx');
 
-  // A raw <a href="/download"> would resolve to the English page even when rendered
-  // on /ko — the R1 review flagged this. @docusaurus/Link resolves per current locale.
-  for (const primaryCta of [header, hero, freeTier]) {
-    assert.match(primaryCta, /<Link\s+to="\/download"/);
-    assert.match(primaryCta, /to="\/download"\s+className="btn-primary/);
-    assert.match(primaryCta, /id="landing\.cta\.downloadWindows"/);
+  // A raw <a href="/download"> resolves to the English page even on /ko.
+  // @docusaurus/Link resolves per current locale.
+  assert.match(nav, /<Link className="btn primary" to="\/download">/);
+  const hero = home.slice(home.indexOf('<div className="ctas">'), home.indexOf('<div className="fine">'));
+  assert.match(hero, /<Link className="btn primary btn-lg" to="\/download">/);
+  assert.match(finalCta, /<Link className="btn primary btn-lg" to="\/download">/);
+  assert.match(pricing, /<Link className="btn" to="\/download">/);
+  for (const src of [nav, home, finalCta, pricing]) {
+    assert.doesNotMatch(src, /<a\s+[^>]*href="\/download"/);
+    assert.doesNotMatch(src, /href="#get"/);
   }
-  assert.match(hero, /<Link\s+to="\/download"/);
-  assert.doesNotMatch(home, /<a\s+href="\/download"/);
-  assert.match(hero, /<Link\s+to="\/docs\/intro"\s+className="btn-ghost/);
-  assert.ok(hero.indexOf('to="/download"') < hero.indexOf('to="/docs/intro"'));
-
-  assert.equal(
-    [...home.matchAll(/id="landing\.cta\.downloadWindows"/g)].length,
-    3,
-    'header, hero, and free-tier primary CTAs must share the Windows download copy',
-  );
-  assert.doesNotMatch(header, /href="\/docs\/intro"\s+className="btn-primary/);
-  assert.doesNotMatch(freeTier, /href="\/docs\/intro"\s+className="btn-primary/);
-
-  const cliStart = hero.indexOf('<details');
-  const cli = hero.slice(cliStart, hero.indexOf('</details>', cliStart) + '</details>'.length);
-  assert.match(cli, /Developer CLI alternative/);
-  assert.match(cli, /npx\s+<span[^>]*>crewx@latest/);
-  assert.match(cli, /onClick=\{handleCopy\}/);
-  assert.match(cli, /to="\/docs\/cli\/commands"/);
-
-  const ko = JSON.parse(read('i18n/ko/code.json'));
-  assert.equal(ko['landing.cta.downloadWindows']?.message, 'Windows용 다운로드');
-  assert.equal(ko['landing.hero.cliAlternative.summary']?.message, '개발자용 CLI 대안');
-  assert.equal(ko['landing.hero.cliAlternative.docs']?.message, 'CLI 가이드 보기');
 });
 
 test('the changelog link uses the verified release htmlUrl instead of a hardcoded Releases URL', () => {

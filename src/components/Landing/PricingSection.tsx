@@ -38,9 +38,9 @@ export default function PricingSection(): React.ReactNode {
             <p className="sharing-description">
               Everything in Personal, plus room to share privately with more people, push updates, and manage access.
             </p>
-            <a className="btn" href="#get">
+            <Link className="btn" to="/download">
               Get CrewX
-            </a>
+            </Link>
           </div>
         </div>
         <p className="tiers-note">

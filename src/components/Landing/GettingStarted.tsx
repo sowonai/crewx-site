@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from '@docusaurus/Link';
 
 export default function GettingStarted(): React.ReactNode {
   return (
@@ -27,7 +28,8 @@ export default function GettingStarted(): React.ReactNode {
             <div>
               <b>Open CrewX</b>
               <small>
-                Download the Windows app (.exe), or run <code>npx crewx</code> in Terminal on a Mac.
+                Install it on Windows, or start it with one command on a Mac.{' '}
+                <Link to="/download">Download →</Link>
               </small>
             </div>
           </div>
@@ -69,9 +71,8 @@ export default function GettingStarted(): React.ReactNode {
         <details className="setup-detail">
           <summary>How do I start on Windows vs. Mac?</summary>
           <p>
-            On Windows, download and run the desktop installer (<code>.exe</code>). On a Mac, open Terminal and run{' '}
-            <code>npx crewx</code> (requires Node.js 18+)—it opens the exact same CrewX desktop workspace without a
-            separate installer.
+            On Windows, run the installer from the <Link to="/download">download page</Link>. On a Mac, install
+            Node.js, then run <code>npx crewx@latest</code> in Terminal. CrewX opens in your browser.
           </p>
         </details>
         <details className="setup-detail">
@@ -84,8 +85,8 @@ export default function GettingStarted(): React.ReactNode {
         <details className="setup-detail">
           <summary>What does a friend need?</summary>
           <p>
-            Your friend opens CrewX for free (via the Windows installer or <code>npx crewx</code> on Mac), signs in, and
-            connects their own AI to start using the app you shared.
+            Your friend gets CrewX for free from the <Link to="/download">download page</Link>, signs in, and connects
+            their own AI to start using the app you shared.
           </p>
         </details>
         <details className="setup-detail">
