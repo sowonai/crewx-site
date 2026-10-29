@@ -14,7 +14,7 @@ export default function FinalCta(): React.ReactNode {
             Download CrewX
           </Link>
         </div>
-        <p className="download-hint">Free · Windows installer · One command on Mac</p>
+        <p className="download-hint">Free · Windows installer · One command on Mac & Linux</p>
       </div>
     </section>
   );

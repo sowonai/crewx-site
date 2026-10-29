@@ -3396,6 +3396,13 @@
   gap: 10px;
 }
 
+.landing-page-wrapper .dl-os-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+}
+
 .landing-page-wrapper .dl-os {
   width: 36px;
   height: 36px;
@@ -3418,6 +3425,11 @@
 .landing-page-wrapper .dl-os-mac {
   background: var(--violet-soft);
   color: #c084fc;
+}
+
+.landing-page-wrapper .dl-os-linux {
+  background: rgba(245, 158, 11, 0.14);
+  color: #fbbf24;
 }
 
 .landing-page-wrapper .dl-badge {

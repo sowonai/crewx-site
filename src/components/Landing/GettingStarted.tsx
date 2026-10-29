@@ -28,7 +28,7 @@ export default function GettingStarted(): React.ReactNode {
             <div>
               <b>Open CrewX</b>
               <small>
-                Install it on Windows, or start it with one command on a Mac.{' '}
+                Install it on Windows, or start it with one command on Mac or Linux.{' '}
                 <Link to="/download">Download →</Link>
               </small>
             </div>
@@ -69,9 +69,9 @@ export default function GettingStarted(): React.ReactNode {
           </div>
         </div>
         <details className="setup-detail">
-          <summary>How do I start on Windows vs. Mac?</summary>
+          <summary>How do I start on Windows vs. Mac & Linux?</summary>
           <p>
-            On Windows, run the installer from the <Link to="/download">download page</Link>. On a Mac, install
+            On Windows, run the installer from the <Link to="/download">download page</Link>. On Mac and Linux, install
             Node.js, then run <code>npx crewx@latest</code> in Terminal. CrewX opens in your browser.
           </p>
         </details>

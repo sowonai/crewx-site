@@ -7,7 +7,7 @@ export default function Download(): React.ReactElement {
     <Layout
       noFooter
       title="Download"
-      description="Download CrewX for Windows, or start it on a Mac with one command. Free.">
+      description="Download CrewX for Windows, or start it on Mac & Linux with one command. Free.">
       <DownloadPage locale="en" />
     </Layout>
   );

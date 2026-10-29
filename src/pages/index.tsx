@@ -107,7 +107,7 @@ export default function LandingPage(): React.ReactNode {
               </div>
               <div className="fine">
                 <span>Free</span>
-                <span>Windows &amp; Mac</span>
+                <span>Windows, Mac &amp; Linux</span>
                 <span>Works with your ChatGPT or Claude plan</span>
                 <span>Your files stay on your computer</span>
               </div>
