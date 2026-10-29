@@ -462,13 +462,13 @@ export default function ExampleShowcase(): React.ReactNode {
 
       case 'sheet': {
         const isMargin = !interactive || sheetFocus === 'margin';
-        const ftext = done ? (isMargin ? '= (C4 - D4) / C4' : '= C4 - D4') : '= SUM(C2:C5)';
-        const cellRef = done ? 'E4 · B2:E5' : 'B2:E5';
+        const ftext = done ? (isMargin ? '=(C5-D5)/C5' : '=C5-D5') : '=SUM(C3:C6)';
+        const cellRef = done ? 'E5 ▾' : 'A3:E6 ▾';
         return (
           <div className="ex-surface">
             {interactive && (
               <fieldset className="ex-direct-control">
-                <legend>What should your AI check in the selected range (B2:E5)?</legend>
+                <legend>What should your AI check in the selected range (A3:E6)?</legend>
                 <button
                   type="button"
                   aria-pressed={isMargin}
@@ -491,17 +491,25 @@ export default function ExampleShowcase(): React.ReactNode {
                 </button>
               </fieldset>
             )}
-            <div className="ex-label">Monthly Channel Review · Spreadsheet</div>
-            <h4>Familiar grid. AI on the selected cells.</h4>
+            <div className="ex-label">oct-channels.xlsx · Spreadsheet</div>
+            <h4>Familiar IronCalc grid. AI draft on the selected cells.</h4>
             <div className="ex-xl">
               <div className="ex-xl-ribbon">
-                <span className="ex-xl-btn">B</span>
-                <span className="ex-xl-btn">I</span>
+                <span className="ex-xl-btn">Switch file</span>
+                <span style={{ fontSize: 10, fontWeight: 700 }}>oct-channels.xlsx</span>
                 <span className="ex-xl-sep" />
-                <span className="ex-xl-btn">$ %</span>
-                <span className="ex-xl-btn">Conditional</span>
+                <span
+                  className="ex-xl-btn"
+                  style={{
+                    background: '#fff3df',
+                    borderColor: '#f2c98c',
+                    color: '#955311',
+                  }}
+                >
+                  Import report · 1
+                </span>
                 <span className="ex-xl-badge">
-                  {done ? 'AI updated E2:E5 ✓' : 'Range B2:E5 selected'}
+                  {done ? 'AI Draft on E3:E6 · Apply ✓' : 'Range A3:E6 in context'}
                 </span>
               </div>
               <div className="ex-xl-fbar">
@@ -516,16 +524,28 @@ export default function ExampleShowcase(): React.ReactNode {
                   <thead>
                     <tr>
                       <th className="r-hdr" />
-                      <th>A · Channel</th>
-                      <th>B · Orders</th>
-                      <th>C · Revenue</th>
-                      <th>D · Ad + COGS</th>
-                      <th>E · {isMargin ? 'Margin %' : 'Net Profit'}</th>
+                      <th>A</th>
+                      <th>B</th>
+                      <th>C</th>
+                      <th>D</th>
+                      <th>E</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="sel">
+                    <tr className="ic-title">
+                      <td className="r-hdr">1</td>
+                      <td colSpan={5}>OCTOBER CHANNEL PERFORMANCE</td>
+                    </tr>
+                    <tr className="ic-head">
                       <td className="r-hdr">2</td>
+                      <td>Channel</td>
+                      <td className="num">Orders</td>
+                      <td className="num">Revenue</td>
+                      <td className="num">Ad + COGS</td>
+                      <td className="num">{isMargin ? 'Margin %' : 'Net Profit'}</td>
+                    </tr>
+                    <tr className="sel">
+                      <td className="r-hdr">3</td>
                       <td className="sel-top sel-l">Search Ads</td>
                       <td className="num sel-top">142</td>
                       <td className="num sel-top">$14,200</td>
@@ -535,7 +555,7 @@ export default function ExampleShowcase(): React.ReactNode {
                       </td>
                     </tr>
                     <tr className="sel">
-                      <td className="r-hdr">3</td>
+                      <td className="r-hdr">4</td>
                       <td className="sel-l">Newsletter</td>
                       <td className="num">88</td>
                       <td className="num">$8,800</td>
@@ -545,7 +565,7 @@ export default function ExampleShowcase(): React.ReactNode {
                       </td>
                     </tr>
                     <tr className={`sel ${done && isMargin ? 'anom' : ''}`}>
-                      <td className="r-hdr">4</td>
+                      <td className="r-hdr">5</td>
                       <td className="sel-l">Social Video</td>
                       <td className="num">210</td>
                       <td className="num">$12,000</td>
@@ -555,7 +575,7 @@ export default function ExampleShowcase(): React.ReactNode {
                       </td>
                     </tr>
                     <tr className="sel">
-                      <td className="r-hdr">5</td>
+                      <td className="r-hdr">6</td>
                       <td className="sel-bot sel-l">Affiliates</td>
                       <td className="num sel-bot">64</td>
                       <td className="num sel-bot">$6,400</td>
@@ -568,20 +588,19 @@ export default function ExampleShowcase(): React.ReactNode {
                 </table>
               </div>
               <div className="ex-xl-tabs">
-                <span className="ex-xl-tab on">Oct_Channels</span>
-                <span className="ex-xl-tab">Raw_Orders</span>
-                {done && <span className="ex-xl-tab ai-new">+ AI_Summary</span>}
-                <span className="ex-xl-stat">
-                  SUM: $41,400 · AVG: {done ? (isMargin ? '34.6%' : '$3,325') : '—'}
-                </span>
+                <span style={{ padding: '0 5px', opacity: 0.65, fontSize: 10 }}>＋ ☰</span>
+                <span className="ex-xl-tab on">Oct_Channels ▾</span>
+                <span className="ex-xl-tab">Raw_Data ▾</span>
+                {done && <span className="ex-xl-tab ai-new">Channel_Summary ▾</span>}
+                <span className="ex-xl-stat">SUM $41,400 · Powered by IronCalc</span>
               </div>
             </div>
             <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>
               {done
                 ? isMargin
-                  ? 'Formula =(C-D)/C applied to E2:E5 · Row 4 flagged (Social Video ad spend spiked to 91% of revenue).'
-                  : 'Formula =C-D applied to E2:E5 · Newsletter leads net profit at +$5,700 with the lowest ad spend.'
-                : 'Select cells just like Excel, then ask your AI to write formulas or spot anomalies.'}
+                  ? 'AI Draft =(C5-D5)/C5 on E3:E6 · Row 5 flagged (Social Video ad spend hit 91.7% of revenue).'
+                  : 'AI Draft =C5-D5 on E3:E6 · Newsletter leads net profit at +$5,700 with the lowest ad spend.'
+                : 'Select cells in the IronCalc grid, then ask your AI to draft formulas or spot anomalies.'}
             </div>
           </div>
         );
@@ -916,8 +935,8 @@ export default function ExampleShowcase(): React.ReactNode {
               <span>
                 {current.id === 'sheet'
                   ? sheetFocus === 'margin'
-                    ? 'In the selected rows (B2:E5), fill Margin % with a formula, flag any channel under 15%, and explain why.'
-                    : 'In the selected rows (B2:E5), calculate Net Profit (=C-D) and highlight the top-earning channel.'
+                    ? 'In the selected rows (A3:E6), fill Margin % with a formula, flag any channel under 15%, and build a summary chart.'
+                    : 'In the selected rows (A3:E6), calculate Net Profit (=C5-D5) and highlight the top-earning channel.'
                   : current.prompt}
               </span>
             </div>
@@ -932,8 +951,8 @@ export default function ExampleShowcase(): React.ReactNode {
                         : 'Marked Everyday Keys for a closer look. I added a reminder to check its noise level.'
                       : current.id === 'sheet'
                       ? sheetFocus === 'margin'
-                        ? 'Filled E2:E5 with =(C4-D4)/C4 and flagged Row 4 (Social Video, 8.3% margin). I also opened an AI_Summary tab with the breakdown.'
-                        : 'Filled E2:E5 with =C4-D4. Newsletter leads at +$5,700 net profit with the lowest ad spend.'
+                        ? 'Prepared an AI draft on E3:E6 with =(C5-D5)/C5 and flagged Row 5 (Social Video, 8.3% margin). I also drafted a Channel_Summary tab.'
+                        : 'Prepared an AI draft on E3:E6 with =C5-D5. Newsletter leads at +$5,700 net profit with the lowest ad spend.'
                       : current.reply}
                   </p>
                 </>

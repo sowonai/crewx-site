@@ -11,13 +11,12 @@ export default function HeroDemo(): React.ReactNode {
   const [sentVisible, setSentVisible] = useState(false);
   const [cursorPos, setCursorPos] = useState<{ left: string; top: string; show: boolean }>({
     left: '68%',
-    top: '58%',
+    top: '54%',
     show: false,
   });
   const [whoText, setWhoText] = useState('Your computer · your AI');
-  const [appSubText, setAppSubText] = useState('Oct_Channels · Range B2:E5 selected');
   const [insightText, setInsightText] = useState(
-    'Select a range, and your AI writes formulas or spots anomalies right in the spreadsheet.'
+    'Select a range in IronCalc, and your AI prepares formulas + a chart draft without touching original cells.'
   );
   const [profitText, setProfitText] = useState('$13,300 · checking margins…');
 
@@ -39,11 +38,10 @@ export default function HeroDemo(): React.ReactNode {
     setSamUpdated(false);
     setShareHot(false);
     setSentVisible(false);
-    setCursorPos({ left: '68%', top: '58%', show: false });
+    setCursorPos({ left: '68%', top: '54%', show: false });
     setWhoText('Your computer · your AI');
-    setAppSubText('Oct_Channels · Range B2:E5 selected');
     setInsightText(
-      'Select a range, and your AI writes formulas or spots anomalies right in the spreadsheet.'
+      'Select a range in IronCalc, and your AI prepares formulas + a chart draft without touching original cells.'
     );
     setProfitText('$13,300 · checking margins…');
 
@@ -61,7 +59,9 @@ export default function HeroDemo(): React.ReactNode {
     at(2100, () => {
       setStepsVisible([1, 2]);
       setFormulasFilled(true);
-      setInsightText('Formula =(C-D)/C applied to E2:E5. Row 4 (Social Video, 8.3%) flagged.');
+      setInsightText(
+        'Formula =(C5-D5)/C5 drafted on E3:E6. Row 5 (Social Video, 8.3%) flagged with purple diff markers.'
+      );
       setProfitText('$13,300 · 1 channel under 15% (Social Video)');
     });
 
@@ -81,10 +81,9 @@ export default function HeroDemo(): React.ReactNode {
       setTab(3);
       setStepsVisible([]);
       setWhoText("Sam's computer · Sam's own AI");
-      setAppSubText('Shared by you · Oct_Channels');
     });
     at(7800, () => setStepsVisible([8]));
-    at(8700, () => setCursorPos({ left: '68%', top: '58%', show: true }));
+    at(8700, () => setCursorPos({ left: '68%', top: '54%', show: true }));
     at(9400, () => {
       setSamUpdated(true);
       setProfitText('$16,600 · All channels healthy (>30%)');
@@ -93,7 +92,7 @@ export default function HeroDemo(): React.ReactNode {
       setStepsVisible([8, 9]);
       setCursorPos((c) => ({ ...c, show: false }));
       setInsightText(
-        'Sam adjusted D4 with his AI. All 4 channels now clear the 15% margin target.'
+        'Sam adjusted D5 with his AI. All 4 channels now clear the 15% margin target.'
       );
     });
   }, []);
@@ -111,7 +110,7 @@ export default function HeroDemo(): React.ReactNode {
       setSamUpdated(true);
       setProfitText('$16,600 · All channels healthy (>30%)');
       setInsightText(
-        'Sam adjusted D4 with his AI. All 4 channels now clear the 15% margin target.'
+        'Sam adjusted D5 with his AI. All 4 channels now clear the 15% margin target.'
       );
       return;
     }
@@ -139,15 +138,16 @@ export default function HeroDemo(): React.ReactNode {
     setAppOpen(true);
     setRowsShown([0, 1, 2, 3]);
     setFormulasFilled(true);
-    setCursorPos({ left: '68%', top: '58%', show: false });
+    setCursorPos({ left: '68%', top: '54%', show: false });
     if (n === 1) {
       setStepsVisible([1, 2]);
       setSamUpdated(false);
       setShareHot(false);
       setSentVisible(false);
       setWhoText('Your computer · your AI');
-      setAppSubText('Oct_Channels · Range B2:E5 selected');
-      setInsightText('Formula =(C-D)/C applied to E2:E5. Row 4 (Social Video, 8.3%) flagged.');
+      setInsightText(
+        'Formula =(C5-D5)/C5 drafted on E3:E6. Row 5 (Social Video, 8.3%) flagged with purple diff markers.'
+      );
       setProfitText('$13,300 · 1 channel under 15% (Social Video)');
     } else if (n === 2) {
       setStepsVisible([1, 2, 5, 6]);
@@ -155,8 +155,9 @@ export default function HeroDemo(): React.ReactNode {
       setShareHot(true);
       setSentVisible(true);
       setWhoText('Your computer · your AI');
-      setAppSubText('Oct_Channels · Range B2:E5 selected');
-      setInsightText('Formula =(C-D)/C applied to E2:E5. Row 4 (Social Video, 8.3%) flagged.');
+      setInsightText(
+        'Formula =(C5-D5)/C5 drafted on E3:E6. Row 5 (Social Video, 8.3%) flagged with purple diff markers.'
+      );
       setProfitText('$13,300 · 1 channel under 15% (Social Video)');
     } else {
       setStepsVisible([8, 9]);
@@ -164,13 +165,14 @@ export default function HeroDemo(): React.ReactNode {
       setShareHot(false);
       setSentVisible(false);
       setWhoText("Sam's computer · Sam's own AI");
-      setAppSubText('Shared by you · Oct_Channels');
       setInsightText(
-        'Sam adjusted D4 with his AI. All 4 channels now clear the 15% margin target.'
+        'Sam adjusted D5 with his AI. All 4 channels now clear the 15% margin target.'
       );
       setProfitText('$16,600 · All channels healthy (>30%)');
     }
   };
+
+  const agentBarMode = samUpdated ? 'done' : formulasFilled ? 'draft' : 'ctx';
 
   return (
     <div className="stage" id="demo" ref={containerRef}>
@@ -209,26 +211,26 @@ export default function HeroDemo(): React.ReactNode {
           <div className="chat">
             <span className="label">Chat</span>
             <div className={`msg me ${stepsVisible.includes(1) ? 'show' : ''}`}>
-              Open my monthly channel spreadsheet. Fill Margin % in <b>E2:E5</b> and flag anything under
-              15%.
-              <div className="att">📊 oct-channels.xlsx</div>
+              In the selected range (<b>A3:E6</b>), fill Margin % with a formula, flag any channel
+              under 15%, and add a summary chart.
+              <div className="att">📗 oct-channels.xlsx · Oct_Channels!A3:E6</div>
             </div>
             <div className={`msg ai ${stepsVisible.includes(2) ? 'show' : ''}`}>
-              Done — filled <b>E2:E5</b> with <code>=(C-D)/C</code> and flagged{' '}
-              <b>Social Video (8.3%)</b>.
+              Prepared a draft on <b>E3:E6</b> with <code>=(C5-D5)/C5</code> and flagged{' '}
+              <b>Social Video (8.3%)</b>. I also drafted a <b>CrewX Chart</b> below the grid.
             </div>
             <div className={`msg me ${stepsVisible.includes(5) ? 'show' : ''}`}>
-              Share this spreadsheet app with Sam.
+              Apply the draft and share this spreadsheet app with Sam.
             </div>
             <div className={`msg ai ${stepsVisible.includes(6) ? 'show' : ''}`}>
-              Sent. Sam opens the same spreadsheet in CrewX and runs it with his own AI.
+              Applied and sent. Sam opens the same spreadsheet in CrewX and runs it with his own AI.
             </div>
             <div className={`msg me ${stepsVisible.includes(8) ? 'show' : ''}`}>
-              Cut Social Video ad spend by 30% and recalculate my margins.
+              Cut Social Video ad spend by 30% in D5 and recalculate margins.
             </div>
             <div className={`msg ai ${stepsVisible.includes(9) ? 'show' : ''}`}>
-              Updated <b>D4</b> to $7,700. Social Video margin is now <b>35.8%</b> — no channels
-              under 15%.
+              Updated <b>D5</b> to $7,700. Social Video margin is now <b>35.8%</b> — all channels
+              are above 30%.
             </div>
             <div className="composer">Ask your AI…</div>
           </div>
@@ -241,15 +243,27 @@ export default function HeroDemo(): React.ReactNode {
             </span>
             <div className={`sent ${sentVisible ? 'show' : ''}`}>
               <b>✉ Channel Spreadsheet sent to Sam</b>
-              <small>Sam opens CrewX, signs in, and it's there with your formulas.</small>
+              <small>Sam opens CrewX, signs in, and it&apos;s there with your formulas.</small>
             </div>
             <div className="empty">Open your spreadsheet, select cells, and ask your AI.</div>
             <div className="appwin">
               <div className="aw-bar">
-                <span className="ico">📊</span>
+                <span className="ico" style={{ background: 'transparent', padding: 0 }}>
+                  <svg viewBox="0 0 64 64" width="24" height="24" fill="none" aria-hidden="true">
+                    <rect x="7" y="8" width="50" height="48" rx="9" fill="#137A4B" />
+                    <rect x="15" y="17" width="34" height="30" rx="3" fill="#fff" />
+                    <path
+                      d="M15 26h34M15 36h34M26 17v30M38 17v30"
+                      stroke="#B8E0C8"
+                      strokeWidth="2"
+                    />
+                    <path d="M15 26h11v10H15z" fill="#DDF3E5" />
+                    <path d="M38 36h11v11H38z" fill="#34A970" />
+                  </svg>
+                </span>
                 <div>
-                  <b>Spreadsheet</b>
-                  <small>Familiar spreadsheet UX · AI works on the cells you select.</small>
+                  <b>oct-channels.xlsx — Spreadsheet</b>
+                  <small>IronCalc workbook · AI reads your selected range.</small>
                 </div>
                 <span className="ctl" aria-hidden="true">
                   <span className="lay">Layout</span>
@@ -259,45 +273,113 @@ export default function HeroDemo(): React.ReactNode {
                 </span>
               </div>
               <div className="aw-body">
-                <div className="app-head">
-                  <div>
-                    <b>Monthly Channel Review</b>
-                    <div className="sub">{appSubText}</div>
-                  </div>
-                  <span className={`share ${shareHot ? 'hot' : ''}`}>Share</span>
-                </div>
                 <div className="xl-hero" id="grid">
-                  <div className="xl-fbar">
-                    <span className="xl-cellref">
-                      {samUpdated ? 'D4:E4' : formulasFilled ? 'E4' : 'E2:E5'}
+                  {/* 1. CrewX Spreadsheet Viewer Header */}
+                  <div className="ic-viewer-head">
+                    <span className="ic-btn">Switch file</span>
+                    <span className="ic-fname">
+                      {samUpdated ? 'oct-channels.xlsx · Shared by you' : 'oct-channels.xlsx'}
                     </span>
-                    <span className="xl-fx">fx</span>
-                    <span className="xl-finput">
-                      <b>=(C4-D4)/C4</b> &nbsp;·{' '}
-                      {samUpdated
-                        ? 'Ad spend -30% → 35.8% margin'
-                        : formulasFilled
-                        ? 'Low margin flagged (<15%)'
-                        : 'Margin % formula'}
+                    <span className="ic-btn report">
+                      Import report <span className="ic-pill">1</span>
                     </span>
-                    <span className="xl-tag">
-                      {formulasFilled ? 'AI updated E2:E5 ✓' : 'B2:E5 selected'}
+                    <span className="ic-status">Context synced</span>
+                    <span
+                      className={`share ${shareHot ? 'hot' : ''}`}
+                      style={{
+                        marginLeft: 6,
+                        padding: '3px 9px',
+                        fontSize: 11,
+                        borderRadius: 6,
+                        border: '1px solid #d5dbe3',
+                        background: shareHot ? '#2563eb' : '#fff',
+                        color: shareHot ? '#fff' : '#0f172a',
+                        fontWeight: 700,
+                      }}
+                    >
+                      Share
                     </span>
                   </div>
+                  {/* 2. IronCalc Formula Bar */}
+                  <div className="ic-fbar">
+                    <span className="ic-namebox">
+                      {samUpdated ? 'D5:E5 ▾' : formulasFilled ? 'E5 ▾' : 'A3:E6 ▾'}
+                    </span>
+                    <span className="ic-fx">fx</span>
+                    <span className="ic-finput">
+                      =(<b className="ref-a">C5</b>-<b className="ref-b">D5</b>)/
+                      <b className="ref-a">C5</b>
+                      <span className="ic-fnote">
+                        {samUpdated
+                          ? '· D5 cut -30% ($7,700) → 35.8% margin'
+                          : formulasFilled
+                          ? '· Flag < 15% margin (Social Video 8.3%)'
+                          : '· Margin % formula'}
+                      </span>
+                    </span>
+                  </div>
+                  {/* 3. CrewX Agent Draft / Context Bar */}
+                  <div className={`ic-agent-bar ${agentBarMode}`}>
+                    <span className="ic-dot" />
+                    <span className="ic-agent-msg">
+                      {samUpdated ? (
+                        <>
+                          <b>Applied to sheet</b> · D5 updated ($7,700) · All channels &gt; 30%
+                          margin
+                        </>
+                      ) : formulasFilled ? (
+                        <>
+                          <b>AI Draft ready</b> · Original untouched · E3:E6 formula + chart preview
+                        </>
+                      ) : (
+                        <>
+                          <b>Oct_Channels!A3:E6</b> (4 rows × 5 cols) shared in AI view context
+                        </>
+                      )}
+                    </span>
+                    <span className="ic-agent-actions">
+                      {samUpdated ? (
+                        <>
+                          <span className="ic-act">Undo</span>
+                          <span className="ic-act primary green">✓ Saved</span>
+                        </>
+                      ) : (
+                        <>
+                          <span className="ic-act">Discard</span>
+                          <span className="ic-act primary">Apply to sheet</span>
+                        </>
+                      )}
+                    </span>
+                  </div>
+                  {/* 4. IronCalc Grid */}
                   <table className="xl-table">
                     <thead>
                       <tr>
                         <th className="rn" />
-                        <th>A · Channel</th>
-                        <th>B · Orders</th>
-                        <th>C · Revenue</th>
-                        <th>D · Ad + COGS</th>
-                        <th>E · Margin %</th>
+                        <th style={{ width: '26%' }}>A</th>
+                        <th style={{ width: '14%' }}>B</th>
+                        <th style={{ width: '20%' }}>C</th>
+                        <th style={{ width: '20%' }}>D</th>
+                        <th className="col-active" style={{ width: '20%' }}>
+                          E
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr className={`xl-row sel ${rowsShown.includes(0) ? 'show' : ''}`}>
+                      <tr className="ic-title-row">
+                        <td className="rn">1</td>
+                        <td colSpan={5}>OCTOBER CHANNEL PERFORMANCE REVIEW (USD)</td>
+                      </tr>
+                      <tr className="ic-header-row">
                         <td className="rn">2</td>
+                        <td>Channel</td>
+                        <td className="num">Orders</td>
+                        <td className="num">Revenue</td>
+                        <td className="num">Ad + COGS</td>
+                        <td className="num">Margin %</td>
+                      </tr>
+                      <tr className={`xl-row sel ${rowsShown.includes(0) ? 'show' : ''}`}>
+                        <td className="rn">3</td>
                         <td>
                           <b>Search Ads</b>
                         </td>
@@ -309,7 +391,7 @@ export default function HeroDemo(): React.ReactNode {
                         </td>
                       </tr>
                       <tr className={`xl-row sel ${rowsShown.includes(1) ? 'show' : ''}`}>
-                        <td className="rn">3</td>
+                        <td className="rn">4</td>
                         <td>
                           <b>Newsletter</b>
                         </td>
@@ -325,7 +407,7 @@ export default function HeroDemo(): React.ReactNode {
                           formulasFilled && !samUpdated ? 'flagged' : ''
                         }`}
                       >
-                        <td className="rn">4</td>
+                        <td className="rn">5</td>
                         <td>
                           <b>Social Video</b>
                         </td>
@@ -333,7 +415,7 @@ export default function HeroDemo(): React.ReactNode {
                         <td className="num">$12,000</td>
                         <td className="num">{samUpdated ? '$7,700' : '$11,000'}</td>
                         <td
-                          className={`num fcell ${
+                          className={`num fcell active-cell ${
                             formulasFilled ? (samUpdated ? 'filled' : 'warn') : ''
                           }`}
                         >
@@ -341,7 +423,7 @@ export default function HeroDemo(): React.ReactNode {
                         </td>
                       </tr>
                       <tr className={`xl-row sel ${rowsShown.includes(3) ? 'show' : ''}`}>
-                        <td className="rn">5</td>
+                        <td className="rn">6</td>
                         <td>
                           <b>Affiliates</b>
                         </td>
@@ -354,16 +436,76 @@ export default function HeroDemo(): React.ReactNode {
                       </tr>
                     </tbody>
                   </table>
+                  {/* 5. CrewX Chart Overlay Strip */}
+                  <div
+                    className={`ic-chart-strip ${formulasFilled ? 'show' : ''} ${
+                      samUpdated ? 'applied' : ''
+                    }`}
+                  >
+                    <div className="ic-chart-title">
+                      <b>Margin % by Channel</b>
+                      <span>Oct_Channels!A3:E6</span>
+                      <span className="ic-chart-badge">
+                        {samUpdated ? 'CrewX Chart · Synced ✓' : 'CrewX Chart · AI Draft'}
+                      </span>
+                    </div>
+                    <div className="ic-bars">
+                      <div className="ic-bar-row">
+                        <span className="lbl">Newsletter</span>
+                        <div className="trk">
+                          <div className="fill" style={{ width: '92%' }} />
+                        </div>
+                        <span className="val">64.8%</span>
+                      </div>
+                      <div className="ic-bar-row">
+                        <span className="lbl">Affiliates</span>
+                        <div className="trk">
+                          <div className="fill" style={{ width: '52%' }} />
+                        </div>
+                        <span className="val">34.4%</span>
+                      </div>
+                      <div className="ic-bar-row">
+                        <span className="lbl">Search Ads</span>
+                        <div className="trk">
+                          <div className="fill" style={{ width: '47%' }} />
+                        </div>
+                        <span className="val">31.0%</span>
+                      </div>
+                      <div className="ic-bar-row">
+                        <span className="lbl">Social Video</span>
+                        <div className="trk">
+                          <div
+                            className={`fill ${samUpdated ? '' : 'low'}`}
+                            style={{ width: samUpdated ? '55%' : '14%' }}
+                          />
+                        </div>
+                        <span className={`val ${samUpdated ? '' : 'low'}`}>
+                          {samUpdated ? '35.8% ✓' : '8.3% ⚠'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  {/* 6. IronCalc Bottom Sheet Bar */}
                   <div className="xl-tabs">
-                    <span className="xl-tab on">Oct_Channels</span>
-                    <span className="xl-tab">Raw_Data</span>
-                    {formulasFilled && <span className="xl-tab new">+ AI_Summary</span>}
-                    <span className="xl-status">SUM(C2:C5): $41,400</span>
+                    <span className="ic-nav-icons" aria-hidden="true">
+                      ＋ &nbsp;☰
+                    </span>
+                    <span className="xl-tab on">Oct_Channels ▾</span>
+                    <span className="xl-tab">Raw_Data ▾</span>
+                    {formulasFilled && (
+                      <span className="xl-tab new">
+                        Channel_Summary <i className="draft-pill">{samUpdated ? '✓' : 'Draft'}</i> ▾
+                      </span>
+                    )}
+                    <span className="xl-status">
+                      SUM $41,400 · AVG {samUpdated ? '41.5%' : '34.6%'}{' '}
+                      <span className="ic-brand">Powered by IronCalc</span>
+                    </span>
                   </div>
                 </div>
                 <div className="side">
                   <div>
-                    <b>AI Insight</b>
+                    <b>AI View Context &amp; Draft</b>
                     <span>{insightText}</span>
                   </div>
                   <div>
@@ -378,8 +520,8 @@ export default function HeroDemo(): React.ReactNode {
       </div>
       <div className="stage-foot">
         <span>
-          Illustrative demo · Keep your Excel workflow. Select cells by hand, let your AI write the
-          formulas and spot anomalies.
+          Illustrative demo · Real IronCalc spreadsheet inside CrewX. Select a range, review the AI
+          draft in purple diff cells, and apply when ready.
         </span>
         <button className="replay" onClick={play} type="button">
           ↺ Replay

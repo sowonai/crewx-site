@@ -3662,97 +3662,250 @@ html.crewx-landing .navbar,
 html.crewx-landing footer.footer { display: none !important; }
 html.crewx-landing .main-wrapper { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
 
-/* ===== Univer / Excel Spreadsheet Demo Styles (Hero & Showcase) ===== */
+/* ===== CrewX IronCalc Spreadsheet App Demo Styles (Hero & Showcase) ===== */
 .landing-page-wrapper .xl-hero {
-  margin-top: 10px;
-  border: 1px solid var(--line);
+  margin-top: 8px;
+  border: 1px solid #d5dbe3;
   border-radius: 10px;
   overflow: hidden;
-  background: var(--card);
-  font-size: 12px;
+  background: #ffffff;
+  font-size: 11.5px;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.08);
+  color: #111827;
 }
-.landing-page-wrapper .xl-fbar {
+/* 1. CrewX Spreadsheet Viewer Header (Switch file / File title / Import report) */
+.landing-page-wrapper .ic-viewer-head {
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 6px 10px;
-  background: var(--surface-subtle);
-  border-bottom: 1px solid var(--line);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 11.5px;
-}
-.landing-page-wrapper .xl-cellref {
-  padding: 2px 8px;
-  border-radius: 4px;
-  background: var(--card);
-  border: 1px solid var(--line);
-  font-weight: 700;
-  color: var(--ink);
+  background: #f5f5f5;
+  border-bottom: 1px solid #e0e0e0;
   font-size: 11px;
-  min-width: 58px;
-  text-align: center;
+  color: #1f2328;
 }
-.landing-page-wrapper .xl-fx {
-  color: #22c55e;
-  font-weight: 800;
+.landing-page-wrapper .ic-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  border-radius: 5px;
+  border: 1px solid #d5dbe3;
+  background: #ffffff;
+  color: #1f2328;
+  font-size: 10.5px;
+  font-weight: 600;
+}
+.landing-page-wrapper .ic-fname {
+  font-weight: 700;
+  font-size: 11.5px;
+  color: #111827;
+}
+.landing-page-wrapper .ic-btn.report {
+  margin-left: auto;
+}
+.landing-page-wrapper .ic-pill {
+  padding: 0 5px;
+  border-radius: 999px;
+  background: #fff3df;
+  border: 1px solid #f2c98c;
+  color: #955311;
+  font-size: 9.5px;
+  font-weight: 700;
+}
+.landing-page-wrapper .ic-status {
+  color: #5b6472;
+  font-size: 10px;
+  font-weight: 600;
+}
+/* 2. IronCalc Formula Bar (Namebox + fx + Formula) */
+.landing-page-wrapper .ic-fbar {
+  display: flex;
+  align-items: center;
+  height: 27px;
+  padding: 0 8px;
+  background: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 11px;
+}
+.landing-page-wrapper .ic-namebox {
+  width: 58px;
+  font-weight: 600;
+  color: #333333;
+  border-right: 1px solid #e0e0e0;
+  padding-right: 6px;
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 10.5px;
+  font-family: Inter, sans-serif;
+}
+.landing-page-wrapper .ic-fx {
+  color: #888888;
+  font-weight: 700;
   font-style: italic;
-  font-family: serif;
-  font-size: 13px;
+  font-family: Georgia, serif;
+  margin-right: 8px;
+  font-size: 12px;
 }
-.landing-page-wrapper .xl-finput {
-  color: var(--ink-2);
+.landing-page-wrapper .ic-finput {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  color: #222222;
   flex: 1;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.landing-page-wrapper .xl-finput b {
-  color: #60a5fa;
+.landing-page-wrapper .ic-finput .ref-a {
+  color: #1a9b8c;
   font-weight: 700;
 }
-.landing-page-wrapper .xl-tag {
-  margin-left: auto;
+.landing-page-wrapper .ic-finput .ref-b {
+  color: #d14a3b;
+  font-weight: 700;
+}
+.landing-page-wrapper .ic-finput .ic-fnote {
   font-family: Inter, sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 999px;
-  background: rgba(59, 130, 246, 0.16);
-  color: #60a5fa;
+  color: #64748b;
+  font-size: 10.5px;
+  margin-left: 6px;
 }
+/* 3. CrewX Agent Context / Draft Bar */
+.landing-page-wrapper .ic-agent-bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 10px;
+  font-size: 10.5px;
+  border-bottom: 1px solid #e0e0e0;
+  transition: all 0.25s ease;
+}
+.landing-page-wrapper .ic-agent-bar.ctx {
+  background: #f0f6ff;
+  color: #1e40af;
+}
+.landing-page-wrapper .ic-agent-bar.draft {
+  background: #f5f0ff;
+  color: #5b21b6;
+  border-bottom-color: #ddd6fe;
+}
+.landing-page-wrapper .ic-agent-bar.done {
+  background: #ecfdf5;
+  color: #065f46;
+  border-bottom-color: #a7f3d0;
+}
+.landing-page-wrapper .ic-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
+}
+.landing-page-wrapper .ic-agent-msg {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.landing-page-wrapper .ic-agent-msg b {
+  font-weight: 700;
+}
+.landing-page-wrapper .ic-agent-actions {
+  display: inline-flex;
+  gap: 4px;
+  margin-left: auto;
+}
+.landing-page-wrapper .ic-act {
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 9.5px;
+  font-weight: 700;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #ffffff;
+  color: #334155;
+}
+.landing-page-wrapper .ic-act.primary {
+  background: #7c3aed;
+  border-color: #7c3aed;
+  color: #ffffff;
+}
+.landing-page-wrapper .ic-act.primary.green {
+  background: #137a4b;
+  border-color: #137a4b;
+  color: #ffffff;
+}
+/* 4. IronCalc Grid Table */
 .landing-page-wrapper .xl-table {
   width: 100%;
   border-collapse: collapse;
   font-variant-numeric: tabular-nums;
   table-layout: fixed;
+  background: #ffffff;
   margin: 0;
+  display: table;
+}
+.landing-page-wrapper .xl-table tr {
+  background: transparent;
+  border: 0;
 }
 .landing-page-wrapper .xl-table th,
 .landing-page-wrapper .xl-table td {
-  border: 1px solid var(--line);
-  padding: 7px 8px;
-  font-size: 11.5px;
+  border: 1px solid #e4e4e4;
+  padding: 4px 7px;
+  font-size: 11px;
+  height: 22px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: var(--ink);
+  color: #1f2937;
 }
 .landing-page-wrapper .xl-table thead th {
-  background: var(--surface-subtle);
-  color: var(--muted);
-  font-weight: 700;
-  font-size: 10.5px;
+  background: #f5f5f5;
+  color: #555555;
+  font-weight: 600;
+  font-size: 10px;
   text-align: center;
-  padding: 5px 4px;
+  padding: 3px 4px;
+  border-color: #dcdcdc;
+}
+.landing-page-wrapper .xl-table thead th.col-active {
+  background: #eaeaea;
+  color: #111111;
+  font-weight: 700;
 }
 .landing-page-wrapper .xl-table .rn {
-  width: 28px;
-  background: var(--surface-subtle);
-  color: var(--muted);
+  width: 26px;
+  background: #f5f5f5 !important;
+  color: #666666 !important;
   text-align: center;
-  font-weight: 600;
+  font-weight: 500;
+  font-size: 10px;
+  padding: 3px 2px;
+  border-color: #dcdcdc;
+}
+/* Row 1: IronCalc Merged Green Banner Title */
+.landing-page-wrapper .xl-table tr.ic-title-row td:not(.rn) {
+  background: #1f8a52;
+  color: #ffffff;
+  font-weight: 700;
+  text-align: center;
   font-size: 10.5px;
-  padding: 5px 2px;
+  letter-spacing: 0.02em;
+  border-color: #197343;
+}
+/* Row 2: IronCalc Green Column Header with Freeze Line */
+.landing-page-wrapper .xl-table tr.ic-header-row td:not(.rn) {
+  background: #1f8a52;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 10.5px;
+  border-color: #197343;
+  border-bottom: 2.5px solid #c8c8c8;
+}
+.landing-page-wrapper .xl-table tr.ic-header-row td.rn {
+  border-bottom: 2.5px solid #c8c8c8;
 }
 .landing-page-wrapper .xl-table td.num {
   text-align: right;
@@ -3760,137 +3913,264 @@ html.crewx-landing .main-wrapper { max-width: 100% !important; padding: 0 !impor
 }
 .landing-page-wrapper .xl-row {
   opacity: 0;
-  transform: translateY(4px);
-  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transform: translateY(3px);
+  transition: all 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .landing-page-wrapper .xl-row.show {
   opacity: 1;
   transform: none;
 }
+/* IronCalc Warm Orange Selection Range */
 .landing-page-wrapper .xl-row.sel td:not(.rn) {
-  background: rgba(59, 130, 246, 0.07);
+  background: #fdf1e6;
 }
-.landing-page-wrapper .xl-row.flagged td:not(.rn) {
-  background: rgba(245, 158, 11, 0.16) !important;
-  color: #fcd34d;
-  font-weight: 600;
+.landing-page-wrapper .xl-table td.active-cell {
+  box-shadow: inset 0 0 0 2px #f2994a;
+  position: relative;
 }
-[data-theme='light'] .landing-page-wrapper .xl-row.flagged td:not(.rn) {
-  background: #fef3c7 !important;
-  color: #92400e;
+.landing-page-wrapper .xl-table td.active-cell::before {
+  content: "";
+  position: absolute;
+  right: -1px;
+  bottom: -1px;
+  width: 5px;
+  height: 5px;
+  background: #f2994a;
+  z-index: 2;
 }
+/* AI Draft Purple Diff Cell + Corner Triangle */
 .landing-page-wrapper .xl-table td.fcell {
   font-weight: 700;
-  color: var(--ink-2);
+  color: #64748b;
   position: relative;
 }
 .landing-page-wrapper .xl-table td.fcell.filled {
-  background: rgba(16, 185, 129, 0.16) !important;
-  color: #34d399 !important;
-  border-color: rgba(16, 185, 129, 0.4);
-  animation: flip 0.55s ease;
+  background: #f5f0ff !important;
+  color: #15803d !important;
+  animation: flip 0.5s ease;
 }
-[data-theme='light'] .landing-page-wrapper .xl-table td.fcell.filled {
-  background: #ecfdf5 !important;
-  color: #065f46 !important;
-  border-color: #6ee7b7;
+.landing-page-wrapper .xl-table td.fcell.filled::after,
+.landing-page-wrapper .xl-table td.fcell.warn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-top: 6px solid #7c3aed;
+  border-left: 6px solid transparent;
 }
 .landing-page-wrapper .xl-table td.fcell.warn {
-  background: rgba(245, 158, 11, 0.24) !important;
-  color: #fbbf24 !important;
-  border-color: rgba(245, 158, 11, 0.5);
-  animation: flip 0.55s ease;
+  background: #fef2f2 !important;
+  color: #dc2626 !important;
+  animation: flip 0.5s ease;
 }
-[data-theme='light'] .landing-page-wrapper .xl-table td.fcell.warn {
-  background: #fde68a !important;
-  color: #92400e !important;
-  border-color: #f59e0b;
+.landing-page-wrapper .xl-row.flagged td:nth-child(2) {
+  color: #b91c1c;
 }
+/* 5. CrewX Chart Overlay Strip inside Spreadsheet */
+.landing-page-wrapper .ic-chart-strip {
+  margin: 6px 8px;
+  padding: 7px 10px;
+  border-radius: 7px;
+  border: 1.5px dashed #7c3aed;
+  background: #faf7ff;
+  display: none;
+  animation: msgIn 0.35s ease;
+}
+.landing-page-wrapper .ic-chart-strip.show {
+  display: block;
+}
+.landing-page-wrapper .ic-chart-strip.applied {
+  border-style: solid;
+  border-color: #cbd5e1;
+  background: #f8fafc;
+}
+.landing-page-wrapper .ic-chart-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  color: #475569;
+  margin-bottom: 5px;
+}
+.landing-page-wrapper .ic-chart-title b {
+  color: #0f172a;
+  font-size: 10.5px;
+}
+.landing-page-wrapper .ic-chart-badge {
+  margin-left: auto;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: #ede9fe;
+  color: #6d28d9;
+  font-weight: 700;
+  font-size: 9px;
+}
+.landing-page-wrapper .ic-chart-strip.applied .ic-chart-badge {
+  background: #dcfce7;
+  color: #15803d;
+}
+.landing-page-wrapper .ic-bars {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px 12px;
+}
+.landing-page-wrapper .ic-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+}
+.landing-page-wrapper .ic-bar-row .lbl {
+  width: 68px;
+  color: #334155;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.landing-page-wrapper .ic-bar-row .trk {
+  flex: 1;
+  height: 7px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.landing-page-wrapper .ic-bar-row .fill {
+  height: 100%;
+  background: #137a4b;
+  border-radius: 3px;
+  transition: width 0.45s ease, background 0.3s ease;
+}
+.landing-page-wrapper .ic-bar-row .fill.low {
+  background: #dc2626;
+}
+.landing-page-wrapper .ic-bar-row .val {
+  width: 44px;
+  text-align: right;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 700;
+  color: #0f172a;
+  font-size: 9.5px;
+  white-space: nowrap;
+}
+.landing-page-wrapper .ic-bar-row .val.low {
+  color: #dc2626;
+}
+/* 6. IronCalc Bottom Sheet Bar */
 .landing-page-wrapper .xl-tabs {
   display: flex;
   align-items: center;
-  gap: 3px;
-  padding: 6px 10px 0;
-  background: var(--surface-subtle);
-  border-top: 1px solid var(--line);
-  font-size: 11px;
+  gap: 2px;
+  height: 27px;
+  padding: 0 8px;
+  background: #f5f5f5;
+  border-top: 1px solid #e0e0e0;
+  font-size: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.landing-page-wrapper .ic-nav-icons {
+  display: inline-flex;
+  gap: 5px;
+  color: #666666;
+  font-size: 10.5px;
+  padding-right: 6px;
+  border-right: 1px solid #e0e0e0;
+  margin-right: 3px;
+  flex: none;
 }
 .landing-page-wrapper .xl-tab {
-  padding: 4px 11px;
-  border-radius: 6px 6px 0 0;
-  background: rgba(148, 163, 184, 0.12);
-  color: var(--muted);
+  padding: 0 7px;
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: #555555;
   font-weight: 600;
-  border: 1px solid transparent;
-  border-bottom: 0;
+  border-right: 1px solid #e8e8e8;
+  white-space: nowrap;
+  flex: none;
 }
 .landing-page-wrapper .xl-tab.on {
-  background: var(--card);
-  color: #22c55e;
+  background: #ffffff;
+  color: #137a4b;
   font-weight: 700;
-  border-color: var(--line);
+  border-top: 2px solid #137a4b;
 }
 .landing-page-wrapper .xl-tab.new {
-  background: rgba(16, 185, 129, 0.15);
-  color: #34d399;
-  border-color: rgba(16, 185, 129, 0.35);
+  background: #f5f0ff;
+  color: #6d28d9;
   font-weight: 700;
+  border-top: 2px solid #7c3aed;
+}
+.landing-page-wrapper .xl-tab.new .draft-pill {
+  font-size: 8.5px;
+  background: #ede9fe;
+  color: #5b21b6;
+  padding: 0 4px;
+  border-radius: 3px;
+  font-style: normal;
 }
 .landing-page-wrapper .xl-status {
   margin-left: auto;
-  padding-bottom: 5px;
-  font-size: 10.5px;
-  color: var(--muted);
+  font-size: 9.5px;
+  color: #555555;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  flex: none;
+}
+.landing-page-wrapper .ic-brand {
+  font-family: Inter, sans-serif;
+  color: #888888;
+  font-size: 9px;
+  border-left: 1px solid #dcdcdc;
+  padding-left: 6px;
 }
 
-/* Showcase Sheet (.ex-xl) */
+/* Showcase Sheet (.ex-xl) — IronCalc Style */
 .landing-page-wrapper .ex-xl {
-  border: 1px solid var(--ex-line);
+  border: 1px solid #d5dbe3;
   border-radius: 8px;
   overflow: hidden;
-  background: rgba(15, 23, 42, 0.55);
+  background: #ffffff;
   margin: 6px 0 10px;
-}
-[data-theme='light'] .landing-page-wrapper .ex-xl {
-  background: #fff;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.05);
+  color: #1f2328;
 }
 .landing-page-wrapper .ex-xl-ribbon {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 10px;
-  background: rgba(30, 41, 59, 0.65);
-  border-bottom: 1px solid var(--ex-line);
+  padding: 5px 10px;
+  background: #f5f5f5;
+  border-bottom: 1px solid #e0e0e0;
   font-size: 10px;
-  color: var(--ex-muted);
+  color: #4b5563;
   flex-wrap: wrap;
 }
-[data-theme='light'] .landing-page-wrapper .ex-xl-ribbon {
-  background: #f8fafc;
-}
 .landing-page-wrapper .ex-xl-ribbon .ex-xl-btn {
-  padding: 2px 6px;
+  padding: 2px 7px;
   border-radius: 4px;
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid var(--ex-line);
+  background: #ffffff;
+  border: 1px solid #d5dbe3;
   font-weight: 600;
+  color: #1f2328;
   font-size: 9.5px;
-  color: var(--ex-ink);
-}
-[data-theme='light'] .landing-page-wrapper .ex-xl-ribbon .ex-xl-btn {
-  background: #fff;
 }
 .landing-page-wrapper .ex-xl-ribbon .ex-xl-sep {
   width: 1px;
   height: 14px;
-  background: var(--ex-line);
+  background: #dcdcdc;
   margin: 0 2px;
 }
 .landing-page-wrapper .ex-xl-ribbon .ex-xl-badge {
   margin-left: auto;
-  background: rgba(59, 130, 246, 0.18);
-  color: #60a5fa;
+  background: #f5f0ff;
+  border: 1px solid #ddd6fe;
+  color: #6d28d9;
   padding: 2px 7px;
   border-radius: 999px;
   font-weight: 700;
@@ -3900,34 +4180,30 @@ html.crewx-landing .main-wrapper { max-width: 100% !important; padding: 0 !impor
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 5px 10px;
-  border-bottom: 1px solid var(--ex-line);
+  padding: 4px 10px;
+  background: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
   font-size: 11px;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 .landing-page-wrapper .ex-xl-namebox {
-  padding: 2px 7px;
-  border: 1px solid var(--ex-line);
-  border-radius: 4px;
-  background: rgba(30, 41, 59, 0.6);
+  padding: 1px 7px 1px 2px;
+  border-right: 1px solid #e0e0e0;
   font-weight: 700;
-  color: var(--ex-ink);
+  color: #333333;
   font-size: 10px;
-  min-width: 54px;
-  text-align: center;
-}
-[data-theme='light'] .landing-page-wrapper .ex-xl-namebox {
-  background: #f1f5f9;
+  min-width: 52px;
+  font-family: Inter, sans-serif;
 }
 .landing-page-wrapper .ex-xl-fx {
-  color: #22c55e;
-  font-weight: 800;
+  color: #888888;
+  font-weight: 700;
   font-style: italic;
-  font-family: serif;
+  font-family: Georgia, serif;
   font-size: 12px;
 }
 .landing-page-wrapper .ex-xl-formula {
-  color: var(--ex-ink);
+  color: #222222;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -3936,8 +4212,8 @@ html.crewx-landing .main-wrapper { max-width: 100% !important; padding: 0 !impor
 }
 .landing-page-wrapper .ex-xl-formula em {
   font-style: normal;
-  color: #60a5fa;
-  font-weight: 600;
+  color: #1a9b8c;
+  font-weight: 700;
 }
 .landing-page-wrapper .ex-xl-grid-wrap {
   overflow-x: auto;
@@ -3949,101 +4225,129 @@ html.crewx-landing .main-wrapper { max-width: 100% !important; padding: 0 !impor
   font-variant-numeric: tabular-nums;
   table-layout: fixed;
   margin: 0;
+  display: table;
+}
+.landing-page-wrapper .ex-xl-grid tr {
+  background: transparent;
+  border: 0;
 }
 .landing-page-wrapper .ex-xl-grid th,
 .landing-page-wrapper .ex-xl-grid td {
-  border: 1px solid var(--ex-line);
-  padding: 5px 6px;
+  border: 1px solid #e4e4e4;
+  padding: 4px 6px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: var(--ex-ink);
+  color: #1f2937;
 }
 .landing-page-wrapper .ex-xl-grid thead th {
-  background: rgba(30, 41, 59, 0.65);
-  color: var(--ex-muted);
-  font-weight: 700;
+  background: #f5f5f5;
+  color: #555555;
+  font-weight: 600;
   text-align: center;
   font-size: 9.5px;
-  padding: 4px;
-}
-[data-theme='light'] .landing-page-wrapper .ex-xl-grid thead th {
-  background: #f1f5f9;
+  padding: 3px;
+  border-color: #dcdcdc;
 }
 .landing-page-wrapper .ex-xl-grid .r-hdr {
-  background: rgba(30, 41, 59, 0.65);
-  color: var(--ex-muted);
-  font-weight: 600;
+  background: #f5f5f5 !important;
+  color: #666666 !important;
+  font-weight: 500;
   text-align: center;
   width: 24px;
   font-size: 9.5px;
-  padding: 4px 2px;
+  padding: 3px 2px;
+  border-color: #dcdcdc;
 }
-[data-theme='light'] .landing-page-wrapper .ex-xl-grid .r-hdr {
-  background: #f1f5f9;
+.landing-page-wrapper .ex-xl-grid tr.ic-title td:not(.r-hdr) {
+  background: #1f8a52;
+  color: #ffffff;
+  font-weight: 700;
+  text-align: center;
+  font-size: 10px;
+  border-color: #197343;
+}
+.landing-page-wrapper .ex-xl-grid tr.ic-head td:not(.r-hdr) {
+  background: #1f8a52;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 10px;
+  border-color: #197343;
+  border-bottom: 2px solid #c8c8c8;
 }
 .landing-page-wrapper .ex-xl-grid td.num {
   text-align: right;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 .landing-page-wrapper .ex-xl-grid tr.sel td:not(.r-hdr) {
-  background: rgba(59, 130, 246, 0.08);
+  background: #fdf1e6;
+}
+.landing-page-wrapper .ex-xl-grid tr.sel td.sel-top {
+  border-top: 1.5px solid #f2994a;
+}
+.landing-page-wrapper .ex-xl-grid tr.sel td.sel-bot {
+  border-bottom: 1.5px solid #f2994a;
+}
+.landing-page-wrapper .ex-xl-grid tr.sel td.sel-l {
+  border-left: 1.5px solid #f2994a;
+}
+.landing-page-wrapper .ex-xl-grid tr.sel td.sel-r {
+  border-right: 1.5px solid #f2994a;
 }
 .landing-page-wrapper .ex-xl-grid tr.anom td:not(.r-hdr) {
-  background: rgba(245, 158, 11, 0.18) !important;
-  color: #fcd34d;
-  font-weight: 600;
-}
-[data-theme='light'] .landing-page-wrapper .ex-xl-grid tr.anom td:not(.r-hdr) {
-  background: #fef3c7 !important;
-  color: #92400e;
-}
-.landing-page-wrapper .ex-xl-grid td.ai-cell {
-  background: rgba(16, 185, 129, 0.16) !important;
-  color: #34d399 !important;
+  background: #fef2f2 !important;
+  color: #dc2626;
   font-weight: 700;
 }
-[data-theme='light'] .landing-page-wrapper .ex-xl-grid td.ai-cell {
-  background: #ecfdf5 !important;
-  color: #065f46 !important;
+.landing-page-wrapper .ex-xl-grid td.ai-cell {
+  background: #f5f0ff !important;
+  color: #15803d !important;
+  font-weight: 700;
+  position: relative;
+}
+.landing-page-wrapper .ex-xl-grid td.ai-cell::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-top: 5px solid #7c3aed;
+  border-left: 5px solid transparent;
 }
 .landing-page-wrapper .ex-xl-tabs {
   display: flex;
   align-items: center;
   gap: 2px;
-  padding: 5px 8px 0;
-  background: rgba(30, 41, 59, 0.65);
-  border-top: 1px solid var(--ex-line);
-  font-size: 10px;
-}
-[data-theme='light'] .landing-page-wrapper .ex-xl-tabs {
-  background: #f1f5f9;
+  padding: 0 8px;
+  height: 24px;
+  background: #f5f5f5;
+  border-top: 1px solid #e0e0e0;
+  font-size: 9.5px;
 }
 .landing-page-wrapper .ex-xl-tab {
-  padding: 4px 10px;
-  border-radius: 6px 6px 0 0;
-  background: rgba(148, 163, 184, 0.12);
-  color: var(--ex-muted);
+  padding: 0 8px;
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  color: #555555;
   font-weight: 600;
+  border-right: 1px solid #e8e8e8;
 }
 .landing-page-wrapper .ex-xl-tab.on {
-  background: rgba(15, 23, 42, 0.9);
-  color: #22c55e;
+  background: #ffffff;
+  color: #137a4b;
   font-weight: 700;
-}
-[data-theme='light'] .landing-page-wrapper .ex-xl-tab.on {
-  background: #fff;
+  border-top: 2px solid #137a4b;
 }
 .landing-page-wrapper .ex-xl-tab.ai-new {
-  background: rgba(16, 185, 129, 0.18);
-  color: #34d399;
+  background: #f5f0ff;
+  color: #6d28d9;
   font-weight: 700;
+  border-top: 2px solid #7c3aed;
 }
 .landing-page-wrapper .ex-xl-stat {
   margin-left: auto;
-  padding-bottom: 4px;
-  font-size: 9.5px;
-  color: var(--ex-muted);
+  font-size: 9px;
+  color: #666666;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 .landing-page-wrapper .ex-mini .ex-xl-ribbon,
@@ -4057,5 +4361,5 @@ html.crewx-landing .main-wrapper { max-width: 100% !important; padding: 0 !impor
 }
 .landing-page-wrapper .ex-mini .ex-xl-grid th,
 .landing-page-wrapper .ex-mini .ex-xl-grid td {
-  padding: 3px 4px;
+  padding: 2.5px 4px;
 }
