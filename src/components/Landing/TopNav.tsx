@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { useLocation } from '@docusaurus/router';
+import { useColorMode } from '@docusaurus/theme-common';
 
 function LocaleDropdown(): React.ReactNode {
   const { i18n } = useDocusaurusContext();
@@ -110,6 +111,34 @@ function LocaleDropdown(): React.ReactNode {
   );
 }
 
+function ThemeToggle(): React.ReactNode {
+  const { colorMode, setColorMode } = useColorMode();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const isDark = mounted && colorMode === 'dark';
+  const label = isDark ? 'Switch to light theme' : 'Switch to dark theme';
+  return (
+    <button
+      type="button"
+      className="btn theme-toggle"
+      onClick={() => setColorMode(isDark ? 'light' : 'dark')}
+      aria-label={label}
+      title={label}
+    >
+      {isDark ? (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.5" />
+          <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+        </svg>
+      ) : (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z" />
+        </svg>
+      )}
+    </button>
+  );
+}
+
 /**
  * Shared top bar for the landing and /download pages. On the landing the section
  * links are in-page anchors; elsewhere they point back to the landing sections.
@@ -142,7 +171,10 @@ export function TopNav({ onLanding = false }: { onLanding?: boolean }): React.Re
           )}
         </div>
         <div className="spacer" />
-        <LocaleDropdown />
+        <div className="nav-tools">
+          <ThemeToggle />
+          <LocaleDropdown />
+        </div>
         <Link className="btn primary" to="/download">
           Download
         </Link>

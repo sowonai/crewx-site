@@ -136,7 +136,8 @@ const config: Config = {
   themeConfig: {
     image: 'img/crewx_logo_512x512.png',
     colorMode: {
-      respectPrefersColorScheme: true,
+      defaultMode: 'light',
+      respectPrefersColorScheme: false,
     },
     navbar: {
       title: 'CrewX',

@@ -270,6 +270,23 @@
   font-size: 14px;
 }
 
+.landing-page-wrapper nav.top .nav-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.landing-page-wrapper nav.top .theme-toggle {
+  width: 38px;
+  padding: 0;
+  justify-content: center;
+}
+
+.landing-page-wrapper nav.top .theme-toggle svg {
+  width: 17px;
+  height: 17px;
+}
+
 .landing-page-wrapper footer {
   padding: 36px 0 54px;
   font-size: 13.5px;
@@ -3495,6 +3512,20 @@
 .landing-page-wrapper .dl-after a:hover {
   color: #bfdbfe;
   text-decoration: underline;
+}
+
+[data-theme='light'] .landing-page-wrapper .dl-meta a,
+[data-theme='light'] .landing-page-wrapper .dl-note a,
+[data-theme='light'] .landing-page-wrapper .dl-mac-steps a,
+[data-theme='light'] .landing-page-wrapper .dl-after a {
+  color: var(--blue);
+}
+
+[data-theme='light'] .landing-page-wrapper .dl-meta a:hover,
+[data-theme='light'] .landing-page-wrapper .dl-note a:hover,
+[data-theme='light'] .landing-page-wrapper .dl-mac-steps a:hover,
+[data-theme='light'] .landing-page-wrapper .dl-after a:hover {
+  color: var(--blue-strong);
 }
 
 .landing-page-wrapper .dl-tag {
