@@ -40,10 +40,10 @@ export default function PricingSection(): React.ReactNode {
             <div className="price">
               Free <small>for early adopters</small>
             </div>
-            <div className="per">When you want to share more widely without limits</div>
+            <div className="per">Share with up to 10 people, free for 30 days during early access</div>
             <ul>
               <li>Everything in Free, with expanded sharing</li>
-              <li>Share across larger groups, classes, or audiences</li>
+              <li>Share with up to 10 people instead of 3</li>
               <li>Push updates and manage your shared releases</li>
               <li>Early access to new creator and sharing tools</li>
             </ul>
@@ -58,8 +58,8 @@ export default function PricingSection(): React.ReactNode {
           </div>
         </div>
         <p className="tiers-note">
-          Everyone can download CrewX and start sharing on Free right away. Early adopters on the waitlist get Pro
-          access for free while we roll out expanded sharing.
+          Everyone can download CrewX and start sharing on Free right away. Approved early adopters on the waitlist
+          get a free 30-day Pro trial while we roll out expanded sharing.
         </p>
       </div>
     </section>
