@@ -1,14 +1,23 @@
 /**
- * Turns a GitHub Releases API response into the download manifest the
- * /download page renders from.
+ * Turns GitHub Releases API responses into the download manifest the
+ * /download page renders from (data/download-manifest.json).
  *
- * R1 review (tsk_5ou5a10a) showed the first version of this file only
- * checked for "a file named *Setup*.exe" and "a file ending in .yml", which
- * an ARM64/mac build or a mismatched RC could pass. This version requires an
- * exact filename per channel, cross-checks the GitHub asset URL, and — since
- * naming alone can lie — downloads the updater metadata and streams the
- * actual Setup.exe bytes through SHA-512 to confirm they match. That network
- * work lives behind an injected `fetchAsset`/`fetchApi` so it can still be
+ * A GitHub release can play two roles:
+ *
+ *  - Desktop APP release: its tag is the app version the page shows. It carries
+ *    the channel app feed (latest-app.yml for stable, rc-app.yml for preview),
+ *    its own verified Setup, or both.
+ *  - Setup SOURCE: a release whose Windows installer and channel updater
+ *    metadata (latest.yml / rc.yml) pass byte-level verification. The download
+ *    link and the Setup's shell version come from it. An app-only release has
+ *    the app feed and no installer, so it reuses the Setup of an older release;
+ *    the link then points at that release (windows.releaseTag).
+ *
+ * Naming alone can lie (R1 review, tsk_5ou5a10a: an ARM64 installer paired with
+ * mac metadata passed a name check). So a Setup source must have a filename the
+ * channel allows, asset URLs cross-checked against this owner/repo/tag, and
+ * installer bytes that stream through SHA-512 to match the updater metadata.
+ * The network work sits behind injected `fetchAsset`/`fetchApi`, so it can be
  * exercised with local HTTP fixtures in scripts/verify-release-manifest.mjs.
  */
 import { createHash } from 'node:crypto';
@@ -21,6 +30,9 @@ export class ManifestError extends Error {}
 // Strict semver, plus the one prerelease shape we support: -rc.N. Anything
 // else (-beta.1, -alpha, -rc without a number, ...) is an unknown channel.
 const SEMVER_RE = /^(\d+)\.(\d+)\.(\d+)(?:-([a-z]+)\.(\d+))?$/;
+
+const METADATA_FILE = { stable: 'latest.yml', preview: 'rc.yml' };
+const APP_FEED_FILE = { stable: 'latest-app.yml', preview: 'rc-app.yml' };
 
 export function assertRepo(owner, repo) {
   if (owner !== OWNER || repo !== REPO) {
@@ -72,11 +84,28 @@ function channelFor(parsedVersion, githubPrerelease) {
   return { channel: 'preview' };
 }
 
-function expectedAssetNames(version, channel) {
-  return {
-    installer: `CrewX-Setup-${version}-x64.exe`,
-    metadata: channel === 'stable' ? 'latest.yml' : 'rc.yml',
-  };
+/** Channel and app version of a release, from its tag and GitHub's prerelease flag. */
+function releaseChannel(release) {
+  const version = String(release.tag_name || '').replace(/^v/, '');
+  const result = channelFor(parseVersion(version), !!release.prerelease);
+  if (result.error) throw new ManifestError(result.error);
+  return { version, channel: result.channel };
+}
+
+/**
+ * The installer names a Setup source may use for a channel, given the shell
+ * version its updater metadata reports. Mirrors crewx-ui's helper
+ * scripts/windows/setup-asset-name.cjs; keep the two in sync. Releases publish
+ * the versionless name now. Releases from before that switch published
+ * CrewX-Setup-<shellVersion>-x64.exe, which is still accepted.
+ */
+export function setupInstallerNames(channel, shellVersion) {
+  const versionless = { stable: 'CrewX-Setup-x64.exe', preview: 'CrewX-Setup-rc-x64.exe' }[channel];
+  return [versionless, `CrewX-Setup-${shellVersion}-x64.exe`];
+}
+
+function isSetupInstallerName(name) {
+  return /^CrewX-Setup.*\.exe$/i.test(name ?? '');
 }
 
 function assetUrlMatches(url, owner, repo, tag, assetName) {
@@ -88,53 +117,19 @@ function assetUrlMatches(url, owner, repo, tag, assetName) {
   }
 }
 
-function countMatches(assets, name) {
-  return assets.filter((a) => a.name === name).length;
+function uniqueAsset(assets, name, what) {
+  const matches = assets.filter((a) => a.name === name);
+  if (matches.length !== 1) {
+    throw new ManifestError(`expected exactly one ${what} asset named exactly "${name}", found ${matches.length}`);
+  }
+  return matches[0];
 }
 
-/**
- * Shape-only, synchronous, no network: exact filenames, strict semver /
- * GitHub-prerelease-flag agreement, and asset URLs that actually point at
- * this owner/repo/tag. Returns a rejection reason string, or null if the
- * release passes. Byte-level verification is a separate, async step
- * (verifyReleaseBytes) because it needs network access.
- */
-export function describeShape(release, { owner = OWNER, repo = REPO } = {}) {
-  if (!release) return 'release not found';
-  if (release.draft) return 'release is a draft';
-  const version = String(release.tag_name || '').replace(/^v/, '');
-  const parsed = parseVersion(version);
-  const channelResult = channelFor(parsed, !!release.prerelease);
-  if (channelResult.error) return channelResult.error;
-  const { channel } = channelResult;
-  const names = expectedAssetNames(version, channel);
-  const assets = release.assets || [];
-  if (countMatches(assets, names.installer) !== 1) {
-    return `expected exactly one asset named exactly "${names.installer}"`;
-  }
-  if (countMatches(assets, names.metadata) !== 1) {
-    return `expected exactly one asset named exactly "${names.metadata}" for the ${channel} channel`;
-  }
-  const installer = assets.find((a) => a.name === names.installer);
-  const metadata = assets.find((a) => a.name === names.metadata);
-  if (!assetUrlMatches(installer.browser_download_url, owner, repo, release.tag_name, names.installer)) {
-    return `installer asset URL does not point at ${owner}/${repo} tag ${release.tag_name}`;
-  }
-  if (!assetUrlMatches(metadata.browser_download_url, owner, repo, release.tag_name, names.metadata)) {
-    return `updater metadata asset URL does not point at ${owner}/${repo} tag ${release.tag_name}`;
-  }
-  return null;
+function releaseTagPath(owner, repo, tag) {
+  return `/repos/${owner}/${repo}/releases/tags/${encodeURIComponent(tag)}`;
 }
 
-/** Shape-checked descriptor for the manifest JSON. Null if describeShape rejects. */
-export function toDesktopRelease(release, opts = {}) {
-  if (describeShape(release, opts) !== null) return null;
-  const { owner = OWNER, repo = REPO } = opts;
-  const version = String(release.tag_name).replace(/^v/, '');
-  const channel = release.prerelease ? 'preview' : 'stable';
-  const names = expectedAssetNames(version, channel);
-  const assets = release.assets || [];
-  const installer = assets.find((a) => a.name === names.installer);
+function appFields(release, version) {
   return {
     tag: release.tag_name,
     version,
@@ -142,12 +137,34 @@ export function toDesktopRelease(release, opts = {}) {
     prerelease: !!release.prerelease,
     publishedAt: release.published_at || release.created_at,
     htmlUrl: release.html_url,
-    windows: {
-      assetName: installer.name,
-      url: installer.browser_download_url,
-      sizeBytes: installer.size,
-    },
   };
+}
+
+/**
+ * Shape-only, synchronous, no network. Used by find-newer-release.mjs to list
+ * cheap candidates. Returns the app fields for a non-draft, channel-consistent
+ * release that has exactly one channel metadata asset and one installer name
+ * the channel allows, both on this owner/repo/tag. Returns null otherwise.
+ * App-only releases return null: they need an explicit --setup-tag. Bytes are
+ * checked later, by inspectRelease().
+ */
+export function ownSetupCandidate(release, { owner = OWNER, repo = REPO } = {}) {
+  if (!release || release.draft) return null;
+  let channelInfo;
+  try {
+    channelInfo = releaseChannel(release);
+  } catch {
+    return null;
+  }
+  const { version, channel } = channelInfo;
+  const assets = release.assets || [];
+  const metadata = assets.filter((a) => a.name === METADATA_FILE[channel]);
+  const installers = assets.filter((a) => setupInstallerNames(channel, version).includes(a.name));
+  if (metadata.length !== 1 || installers.length !== 1) return null;
+  const urlsOk =
+    assetUrlMatches(metadata[0].browser_download_url, owner, repo, release.tag_name, METADATA_FILE[channel]) &&
+    assetUrlMatches(installers[0].browser_download_url, owner, repo, release.tag_name, installers[0].name);
+  return urlsOk ? appFields(release, version) : null;
 }
 
 function stripQuotes(raw) {
@@ -234,16 +251,19 @@ async function sha512Base64(fetchAsset, url) {
 }
 
 /**
- * Downloads the updater metadata and the actual installer bytes for a
- * shape-checked descriptor and confirms they all agree with each other and
- * with the GitHub API's asset size. Never attaches an auth header — both
- * fetches go through `fetchAsset` against public release-asset URLs, and
- * this function never logs its own request headers.
+ * Byte-level verification of a Setup source: the channel's updater metadata
+ * and the installer it names. Never attaches an auth header — both fetches go
+ * through `fetchAsset` against public release-asset URLs. Throws ManifestError.
+ * The shell version (metadata `version`) only has to be strict semver; it does
+ * not have to equal the app version.
  */
-export async function verifyReleaseBytes(release, descriptor, { owner = OWNER, repo = REPO, fetchAsset } = {}) {
-  const channel = descriptor.prerelease ? 'preview' : 'stable';
-  const metadataName = channel === 'stable' ? 'latest.yml' : 'rc.yml';
-  const metadataAsset = (release.assets || []).find((a) => a.name === metadataName);
+async function verifySetupSource(release, channel, { owner, repo, fetchAsset }) {
+  const assets = release.assets || [];
+  const metadataName = METADATA_FILE[channel];
+  const metadataAsset = uniqueAsset(assets, metadataName, `${channel} updater metadata`);
+  if (!assetUrlMatches(metadataAsset.browser_download_url, owner, repo, release.tag_name, metadataName)) {
+    throw new ManifestError(`updater metadata asset URL does not point at ${owner}/${repo} tag ${release.tag_name}`);
+  }
 
   const metaRes = await fetchAsset(metadataAsset.browser_download_url);
   if (!metaRes.ok) {
@@ -251,112 +271,266 @@ export async function verifyReleaseBytes(release, descriptor, { owner = OWNER, r
   }
   const parsed = parseUpdaterYaml(await metaRes.text());
 
-  if (parsed.version !== descriptor.version) {
-    throw new ManifestError(`updater metadata version "${parsed.version}" does not match release version "${descriptor.version}"`);
+  if (!parseVersion(parsed.version)) {
+    throw new ManifestError(`updater metadata version "${parsed.version}" is not strict semver`);
   }
-  if (parsed.path !== descriptor.windows.assetName) {
-    throw new ManifestError(`updater metadata path "${parsed.path}" does not match installer asset "${descriptor.windows.assetName}"`);
+  const allowed = setupInstallerNames(channel, parsed.version);
+  if (!allowed.includes(parsed.path)) {
+    throw new ManifestError(
+      `updater metadata path "${parsed.path}" is not an installer name for the ${channel} channel ` +
+      `(expected ${allowed.map((n) => `"${n}"`).join(' or ')})`
+    );
   }
-  const matchingFiles = parsed.files.filter((f) => f.url === descriptor.windows.assetName);
+  const installer = uniqueAsset(assets, parsed.path, `${channel} Setup installer`);
+  if (!assetUrlMatches(installer.browser_download_url, owner, repo, release.tag_name, parsed.path)) {
+    throw new ManifestError(`installer asset URL does not point at ${owner}/${repo} tag ${release.tag_name}`);
+  }
+
+  const matchingFiles = parsed.files.filter((f) => f.url === parsed.path);
   if (matchingFiles.length !== 1) {
-    throw new ManifestError(`updater metadata files[] must have exactly one entry named "${descriptor.windows.assetName}", found ${matchingFiles.length}`);
+    throw new ManifestError(`updater metadata files[] must have exactly one entry named "${parsed.path}", found ${matchingFiles.length}`);
   }
   const fileEntry = matchingFiles[0];
   if (fileEntry.sha512 !== parsed.sha512) {
     throw new ManifestError('updater metadata top-level sha512 does not match its own files[] entry');
   }
-  if (fileEntry.size !== descriptor.windows.sizeBytes) {
-    throw new ManifestError(`updater metadata size ${fileEntry.size} does not match GitHub asset size ${descriptor.windows.sizeBytes}`);
+  if (fileEntry.size !== installer.size) {
+    throw new ManifestError(`updater metadata size ${fileEntry.size} does not match GitHub asset size ${installer.size}`);
   }
 
-  const actual = await sha512Base64(fetchAsset, descriptor.windows.url);
-  if (actual.size !== descriptor.windows.sizeBytes) {
-    throw new ManifestError(`downloaded Setup.exe is ${actual.size} bytes, GitHub reports ${descriptor.windows.sizeBytes}`);
+  const actual = await sha512Base64(fetchAsset, installer.browser_download_url);
+  if (actual.size !== installer.size) {
+    throw new ManifestError(`downloaded Setup.exe is ${actual.size} bytes, GitHub reports ${installer.size}`);
   }
   if (actual.sha512 !== fileEntry.sha512) {
     throw new ManifestError('downloaded Setup.exe sha512 does not match updater metadata — refusing to publish this link');
   }
-  return descriptor;
-}
 
-/** Full check: shape, then real bytes. Throws ManifestError on any failure. */
-export async function verifyDesktopRelease(release, { owner = OWNER, repo = REPO, fetchAsset } = {}) {
-  const reason = describeShape(release, { owner, repo });
-  if (reason) throw new ManifestError(reason);
-  const descriptor = toDesktopRelease(release, { owner, repo });
-  return verifyReleaseBytes(release, descriptor, { owner, repo, fetchAsset });
-}
-
-function newest(list) {
-  if (list.length === 0) return null;
-  return list.reduce((a, b) => (compareVersions(b.version, a.version) > 0 ? b : a));
-}
-
-/**
- * Rebuilds the whole manifest from a full release list — the "honest empty
- * state" path. Releases that fail verification are skipped (reported via
- * `onReject`, never thrown) so one bad or unrelated release can't take down
- * manifest generation for the rest; the release that resolves stays out of
- * the manifest either way, so no dead or unverified link is ever produced.
- *
- * Deliberately never calls GET /releases/latest — that endpoint returns the
- * newest non-prerelease release regardless of asset shape, which today is an
- * old CLI tag.
- */
-export async function buildManifest(releases, { owner = OWNER, repo = REPO, fetchAsset, onReject } = {}) {
-  assertRepo(owner, repo);
-  const verified = [];
-  for (const release of releases || []) {
-    try {
-      verified.push(await verifyDesktopRelease(release, { owner, repo, fetchAsset }));
-    } catch (err) {
-      if (!(err instanceof ManifestError)) throw err;
-      onReject?.(release, err);
-    }
-  }
   return {
-    generatedAt: new Date().toISOString(),
-    repo: `${owner}/${repo}`,
-    stable: newest(verified.filter((r) => !r.prerelease)),
-    preview: newest(verified.filter((r) => r.prerelease)),
+    releaseTag: release.tag_name,
+    releaseVersion: String(release.tag_name).replace(/^v/, ''),
+    shellVersion: parsed.version,
+    assetName: parsed.path,
+    url: installer.browser_download_url,
+    sizeBytes: installer.size,
   };
 }
 
 /**
- * Applies one CTO-supplied tag on top of an existing manifest. Only the
- * channel that tag belongs to is targeted, but the *other* channel is
- * re-verified against GitHub too (via fetchApi + fetchAsset) rather than
- * carried forward from the old JSON on trust — a manifest file that was
- * hand-edited or went stale should not survive silently. Refuses to move a
- * channel backwards in semver order; re-submitting the same tag is fine.
+ * Classifies one GitHub release. Returns one of:
+ *   { status: 'cli-only' }
+ *       No desktop artifacts at all (no installer, no updater metadata, no app
+ *       feed). Ignored, not an error.
+ *   { status: 'app', channel, app, setup }
+ *       app:   the fields the entry shows (see appFields).
+ *       setup: the verified Setup this release hosts, or null for an app-only release.
+ * Throws ManifestError when the release carries desktop artifacts but is a
+ * draft, is channel-inconsistent, has no Setup and no app feed, or fails
+ * verification. Only a release that carries Setup artifacts is downloaded.
  */
-export async function mergeTaggedRelease(manifest, release, { owner = OWNER, repo = REPO, fetchAsset, fetchApi } = {}) {
-  assertRepo(owner, repo);
-  const descriptor = await verifyDesktopRelease(release, { owner, repo, fetchAsset });
-  const channel = descriptor.prerelease ? 'preview' : 'stable';
-  const existing = manifest[channel];
-  if (existing && existing.tag !== descriptor.tag && compareVersions(descriptor.version, existing.version) < 0) {
+export async function inspectRelease(release, { owner = OWNER, repo = REPO, fetchAsset } = {}) {
+  if (!release) throw new ManifestError('release not found');
+  const assets = release.assets || [];
+  const hasArtifacts = assets.some(
+    (a) =>
+      isSetupInstallerName(a.name) ||
+      Object.values(METADATA_FILE).includes(a.name) ||
+      Object.values(APP_FEED_FILE).includes(a.name)
+  );
+  if (!hasArtifacts) return { status: 'cli-only' };
+  if (release.draft) throw new ManifestError(`${release.tag_name} is a draft release`);
+  const { version, channel } = releaseChannel(release);
+
+  const feedName = APP_FEED_FILE[channel];
+  const feeds = assets.filter((a) => a.name === feedName);
+  if (feeds.length > 1) {
+    throw new ManifestError(`expected at most one asset named exactly "${feedName}", found ${feeds.length}`);
+  }
+  if (feeds.length === 1 && !assetUrlMatches(feeds[0].browser_download_url, owner, repo, release.tag_name, feedName)) {
+    throw new ManifestError(`app feed asset URL does not point at ${owner}/${repo} tag ${release.tag_name}`);
+  }
+
+  const hasSetupArtifacts = assets.some((a) => a.name === METADATA_FILE[channel] || isSetupInstallerName(a.name));
+  const setup = hasSetupArtifacts
+    ? await verifySetupSource(release, channel, { owner, repo, fetchAsset })
+    : null;
+  if (!setup && feeds.length === 0) {
     throw new ManifestError(
-      `refusing to move ${channel} backwards from ${existing.version} (${existing.tag}) to ${descriptor.version} (${descriptor.tag})`
+      `${release.tag_name} is not a desktop ${channel} release: no verified Setup (installer plus ${METADATA_FILE[channel]}) and no ${feedName}`
+    );
+  }
+
+  return { status: 'app', channel, app: appFields(release, version), setup };
+}
+
+function toEntry(app, setup) {
+  return {
+    tag: app.tag,
+    version: app.version,
+    name: app.name,
+    prerelease: app.prerelease,
+    publishedAt: app.publishedAt,
+    htmlUrl: app.htmlUrl,
+    windows: {
+      assetName: setup.assetName,
+      url: setup.url,
+      sizeBytes: setup.sizeBytes,
+      releaseTag: setup.releaseTag,
+      shellVersion: setup.shellVersion,
+    },
+  };
+}
+
+function newestBy(list, versionOf) {
+  if (list.length === 0) return null;
+  return list.reduce((a, b) => (compareVersions(versionOf(b), versionOf(a)) > 0 ? b : a));
+}
+
+function channelEntry(apps, setups) {
+  const app = newestBy(apps, (a) => a.version);
+  const setup = newestBy(setups, (s) => s.releaseVersion);
+  return app && setup ? toEntry(app, setup) : null;
+}
+
+/**
+ * Rebuilds the whole manifest from a full release list — the "honest empty
+ * state" path. Per channel, the entry is the newest desktop app release
+ * combined with the newest verified Setup source. Releases with no desktop
+ * artifacts are ignored. Releases that fail verification are reported via
+ * `onReject` and skipped, never thrown, so one bad release can't take down
+ * generation for the rest. Nothing unverified is ever linked.
+ *
+ * Deliberately never calls GET /releases/latest — that endpoint returns the
+ * newest non-prerelease release regardless of asset shape.
+ */
+export async function buildManifest(releases, { owner = OWNER, repo = REPO, fetchAsset, onReject } = {}) {
+  assertRepo(owner, repo);
+  const apps = { stable: [], preview: [] };
+  const setups = { stable: [], preview: [] };
+  for (const release of releases || []) {
+    let inspected;
+    try {
+      inspected = await inspectRelease(release, { owner, repo, fetchAsset });
+    } catch (err) {
+      if (!(err instanceof ManifestError)) throw err;
+      onReject?.(release, err);
+      continue;
+    }
+    if (inspected.status === 'cli-only') continue;
+    apps[inspected.channel].push(inspected.app);
+    if (inspected.setup) setups[inspected.channel].push(inspected.setup);
+  }
+  return {
+    generatedAt: new Date().toISOString(),
+    repo: `${owner}/${repo}`,
+    stable: channelEntry(apps.stable, setups.stable),
+    preview: channelEntry(apps.preview, setups.preview),
+  };
+}
+
+/**
+ * Re-verifies a retained entry (the channel the --tag release does not
+ * belong to) against GitHub rather than trusting the old JSON: its app
+ * release, and the Setup source it names in windows.releaseTag. That source
+ * can be a different release from the app's own tag.
+ */
+async function reverifyRetained(existing, channel, { owner, repo, fetchAsset, fetchApi }) {
+  const verify = async (tag, role) => {
+    try {
+      return await inspectRelease(await fetchApi(releaseTagPath(owner, repo, tag)), { owner, repo, fetchAsset });
+    } catch (err) {
+      if (err instanceof ManifestError) {
+        throw new ManifestError(`retained ${channel} ${role} ${tag} no longer verifies: ${err.message}`);
+      }
+      throw err;
+    }
+  };
+
+  const appInspected = await verify(existing.tag, 'release');
+  if (appInspected.status === 'cli-only' || appInspected.channel !== channel) {
+    throw new ManifestError(`retained ${channel} release ${existing.tag} no longer verifies as a ${channel} desktop release`);
+  }
+  // Entries written before windows.releaseTag existed hosted their Setup on their own tag.
+  const setupTag = existing.windows?.releaseTag ?? existing.tag;
+  const setupInspected = setupTag === existing.tag ? appInspected : await verify(setupTag, 'Setup source');
+  if (!setupInspected.setup || setupInspected.channel !== channel) {
+    throw new ManifestError(`retained ${channel} Setup source ${setupTag} no longer verifies as a ${channel} Setup`);
+  }
+  return toEntry(appInspected.app, setupInspected.setup);
+}
+
+/**
+ * Applies one CTO-supplied desktop app release on top of an existing manifest.
+ * Only the channel that release belongs to is targeted, and that channel's
+ * Setup comes from:
+ *   - setupTag, when given: that release's verified Setup (same channel required);
+ *   - otherwise the release's own verified Setup.
+ * setupAsset, when given, must equal the verified updater metadata path exactly.
+ * The other channel is re-verified against GitHub (via fetchApi + fetchAsset)
+ * rather than carried forward. Refuses to move a channel backwards in semver
+ * order; re-submitting the same tag is fine.
+ */
+export async function mergeTaggedRelease(manifest, release, { owner = OWNER, repo = REPO, fetchAsset, fetchApi, setupTag, setupAsset } = {}) {
+  assertRepo(owner, repo);
+  const inspected = await inspectRelease(release, { owner, repo, fetchAsset });
+  if (inspected.status === 'cli-only') {
+    throw new ManifestError(
+      `${release.tag_name} is not a desktop app release: it has no CrewX Setup installer, no updater metadata and no app feed`
+    );
+  }
+  const { channel, app } = inspected;
+
+  const existing = manifest[channel];
+  if (existing && existing.tag !== app.tag && compareVersions(app.version, existing.version) < 0) {
+    throw new ManifestError(
+      `refusing to move ${channel} backwards from ${existing.version} (${existing.tag}) to ${app.version} (${app.tag})`
+    );
+  }
+
+  let setup = inspected.setup;
+  if (setupTag) {
+    let hosted;
+    try {
+      hosted = await inspectRelease(await fetchApi(releaseTagPath(owner, repo, setupTag)), { owner, repo, fetchAsset });
+    } catch (err) {
+      if (err instanceof ManifestError) throw new ManifestError(`--setup-tag ${setupTag} does not verify: ${err.message}`);
+      throw err;
+    }
+    if (!hosted.setup) {
+      throw new ManifestError(`--setup-tag ${setupTag} does not host a verified ${channel} Setup`);
+    }
+    if (hosted.channel !== channel) {
+      throw new ManifestError(
+        `--setup-tag ${setupTag} is a ${hosted.channel} release, but ${app.tag} is a ${channel} release; the Setup must come from the same channel`
+      );
+    }
+    setup = hosted.setup;
+  } else if (!setup) {
+    throw new ManifestError(
+      `${app.tag} is an app-only release with no Setup of its own; pass --setup-tag <tag> naming the release that hosts the Setup to link`
+    );
+  }
+  if (setupAsset !== undefined && setup.assetName !== setupAsset) {
+    throw new ManifestError(
+      `--setup-asset "${setupAsset}" does not match the verified updater metadata path "${setup.assetName}" of ${setup.releaseTag}`
     );
   }
 
   const otherChannel = channel === 'stable' ? 'preview' : 'stable';
   const otherExisting = manifest[otherChannel];
-  let otherVerified = otherExisting ?? null;
+  let otherEntry = null;
   if (otherExisting) {
     if (!fetchApi) {
       throw new ManifestError(`cannot re-verify the retained ${otherChannel} channel (${otherExisting.tag}) without fetchApi`);
     }
-    const otherRelease = await fetchApi(`/repos/${owner}/${repo}/releases/tags/${encodeURIComponent(otherExisting.tag)}`);
-    otherVerified = await verifyDesktopRelease(otherRelease, { owner, repo, fetchAsset });
+    otherEntry = await reverifyRetained(otherExisting, otherChannel, { owner, repo, fetchAsset, fetchApi });
   }
 
   return {
     ...manifest,
     generatedAt: new Date().toISOString(),
     repo: `${owner}/${repo}`,
-    [channel]: descriptor,
-    [otherChannel]: otherVerified,
+    [channel]: toEntry(app, setup),
+    [otherChannel]: otherEntry,
   };
 }

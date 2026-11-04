@@ -9,12 +9,16 @@
  * `generate-release-manifest.mjs --tag <tag>`, which the sync workflow runs
  * for every tag this script prints.
  *
+ * Only releases that host their own Setup are listed. App-only releases (app
+ * feed, no installer) need `--tag <tag> --setup-tag <setupTag>`, and this sync
+ * does not pass --setup-tag.
+ *
  * Usage: node scripts/find-newer-release.mjs [--manifest <path>]
  */
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { OWNER, REPO, toDesktopRelease, compareVersions } from './lib/release-manifest.mjs';
+import { OWNER, REPO, ownSetupCandidate, compareVersions } from './lib/release-manifest.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
@@ -28,7 +32,7 @@ if (!res.ok) {
   console.error(`GitHub API ${res.status} ${res.statusText}`);
   process.exit(1);
 }
-const candidates = (await res.json()).map((r) => toDesktopRelease(r)).filter(Boolean);
+const candidates = (await res.json()).map((r) => ownSetupCandidate(r)).filter(Boolean);
 
 for (const channel of ['stable', 'preview']) {
   const pool = candidates.filter((r) => (channel === 'preview') === r.prerelease);

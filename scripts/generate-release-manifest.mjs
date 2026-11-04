@@ -6,44 +6,69 @@
  *
  * Usage:
  *   node scripts/generate-release-manifest.mjs
- *     Rebuild the whole manifest from scratch by scanning every release.
- *     Use this once to establish a baseline (today: both channels come back
- *     empty, because no release yet ships the exact Setup.exe + updater
- *     metadata pair this script requires).
+ *     Full rebuild. For each channel (stable, preview) it takes the newest
+ *     desktop app release and the newest verified Setup source, by semver, and
+ *     links the Setup from that source. Releases with no desktop artifacts at
+ *     all (CLI-only) are ignored. Desktop releases that fail verification are
+ *     reported and skipped, never published.
  *
- *   node scripts/generate-release-manifest.mjs --tag v0.9.0
- *     CTO workflow: after publishing a Desktop release, point the manifest
- *     at that one tag. Downloads and SHA-512-verifies the actual installer
- *     bytes against the updater metadata before writing anything. Only
- *     touches the channel (stable/preview) the tag belongs to; the other
- *     channel is re-verified against GitHub rather than carried over
- *     unchecked. Fails loudly (non-zero exit) if the tag doesn't pass.
+ *   node scripts/generate-release-manifest.mjs --tag <appTag> [--setup-tag <setupTag>] [--setup-asset <name>]
+ *     Point the manifest at one desktop app release. Only that release's
+ *     channel (stable/preview) is updated; the other channel is re-verified
+ *     against GitHub rather than carried over unchecked. The Setup bytes are
+ *     downloaded and SHA-512-verified against the updater metadata before
+ *     anything is written. Fails loudly (non-zero exit) if anything does not pass.
+ *
+ *     <appTag> must be a desktop app release: a non-draft release whose tag is
+ *     channel-consistent, with a verified Setup of its own, or with the channel
+ *     app feed (latest-app.yml for stable, rc-app.yml for preview). An app-only
+ *     release has the feed and no installer, so it reuses the Setup of an older
+ *     release. The manifest then shows the app release's version and links the
+ *     Setup's own release tag and shell version.
+ *
+ *       --setup-tag <setupTag>   The release that hosts the Setup to link. Required
+ *                                for an app-only release. Must be on the same channel
+ *                                as <appTag>. Without it, <appTag> must host its own
+ *                                verified Setup.
+ *       --setup-asset <name>     Fail unless the verified updater metadata path is
+ *                                exactly <name>. Only valid together with --tag.
  *
  * Options:
  *   --repo <owner/name>   defaults to sowonlabs/crewx; any other value fails
  *   --out <path>          defaults to data/download-manifest.json
  */
 import { writeFileSync, readFileSync, existsSync, mkdirSync } from 'node:fs';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { dirname, join, resolve } from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { OWNER, REPO, assertRepo, buildManifest, mergeTaggedRelease, ManifestError } from './lib/release-manifest.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DEFAULT_OUT = join(root, 'data', 'download-manifest.json');
 const USER_AGENT = 'crewx-site-release-manifest-script';
 
-function parseArgs(argv) {
+/** Exported for scripts/verify-release-manifest.mjs. Throws on unknown or incomplete arguments. */
+export function parseArgs(argv) {
   const args = { owner: OWNER, repo: REPO, out: DEFAULT_OUT };
-  for (let i = 0; i < argv.length; i++) {
-    const a = argv[i];
-    if (a === '--tag') args.tag = argv[++i];
-    else if (a === '--repo') {
-      const value = argv[++i] || '';
-      const [owner, repo] = value.split('/');
+  let i = 0;
+  const valueOf = (flag) => {
+    const value = argv[++i];
+    if (!value || value.startsWith('--')) throw new Error(`${flag} needs a value`);
+    return value;
+  };
+  for (i = 0; i < argv.length; i++) {
+    const flag = argv[i];
+    if (flag === '--tag') args.tag = valueOf(flag);
+    else if (flag === '--setup-tag') args.setupTag = valueOf(flag);
+    else if (flag === '--setup-asset') args.setupAsset = valueOf(flag);
+    else if (flag === '--repo') {
+      const [owner, repo] = valueOf(flag).split('/');
       args.owner = owner;
       args.repo = repo;
-    } else if (a === '--out') args.out = argv[++i];
-    else throw new Error(`unknown argument: ${a}`);
+    } else if (flag === '--out') args.out = valueOf(flag);
+    else throw new Error(`unknown argument: ${flag}`);
+  }
+  if (args.tag === undefined && (args.setupTag !== undefined || args.setupAsset !== undefined)) {
+    throw new Error('--setup-tag and --setup-asset only apply together with --tag');
   }
   return args;
 }
@@ -95,10 +120,14 @@ async function main() {
       repo: args.repo,
       fetchAsset: githubAsset,
       fetchApi: githubApi,
+      setupTag: args.setupTag,
+      setupAsset: args.setupAsset,
     });
     writeFileSync(args.out, JSON.stringify(manifest, null, 2) + '\n');
     const channel = release.prerelease ? 'preview' : 'stable';
+    const { windows } = manifest[channel];
     console.log(`verified and updated ${channel} -> ${args.tag} in ${args.out}`);
+    console.log(`  Setup: ${windows.assetName} (shell ${windows.shellVersion}) from ${windows.releaseTag}`);
     return;
   }
 
@@ -116,12 +145,16 @@ async function main() {
   console.log(`  preview: ${manifest.preview ? `${manifest.preview.tag} (${manifest.preview.windows.assetName})` : '(none yet)'}`);
 }
 
-main().catch((err) => {
-  const message = redactToken(String(err && err.message ? err.message : err));
-  if (err instanceof ManifestError) {
-    console.error(`manifest error: ${message}`);
-  } else {
-    console.error(message);
-  }
-  process.exit(1);
-});
+// Run only as the entrypoint, so the test file can import parseArgs.
+const isEntrypoint = process.argv[1] !== undefined && pathToFileURL(resolve(process.argv[1])).href === import.meta.url;
+if (isEntrypoint) {
+  main().catch((err) => {
+    const message = redactToken(String(err && err.message ? err.message : err));
+    if (err instanceof ManifestError) {
+      console.error(`manifest error: ${message}`);
+    } else {
+      console.error(message);
+    }
+    process.exit(1);
+  });
+}
