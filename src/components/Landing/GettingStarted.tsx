@@ -1,23 +1,24 @@
 import React from 'react';
-import Link from '@docusaurus/Link';
+import { useLandingCopy } from './copy/useLandingCopy';
 
 export default function GettingStarted(): React.ReactNode {
+  const { t } = useLandingCopy();
+  const s = t.start;
   return (
     <section id="your-ai">
       <div className="wrap byo">
         <div>
           <span className="eyebrow">
             <span className="dot" />
-            Getting started
+            {s.eyebrow}
           </span>
           <h2 style={{ marginTop: 14 }}>
-            Your computer.
+            {s.titleFirst}
             <br />
-            Your AI. Your app.
+            {s.titleSecond}
           </h2>
           <p className="lede" style={{ marginTop: 16 }}>
-            CrewX is a desktop workspace for making and using small apps with AI. Start with an everyday request, like
-            the ones above.
+            {s.lede}
           </p>
         </div>
         <div className="plans">
@@ -26,11 +27,8 @@ export default function GettingStarted(): React.ReactNode {
               1
             </span>
             <div>
-              <b>Open CrewX</b>
-              <small>
-                Install it on Windows, or start it with one command on Mac or Linux.{' '}
-                <Link to="/download">Download →</Link>
-              </small>
+              <b>{s.step1Title}</b>
+              <small>{s.step1Body}</small>
             </div>
           </div>
           <div className="plan">
@@ -38,8 +36,8 @@ export default function GettingStarted(): React.ReactNode {
               2
             </span>
             <div>
-              <b>Connect your AI</b>
-              <small>Works with your ChatGPT or Claude account.</small>
+              <b>{s.step2Title}</b>
+              <small>{s.step2Body}</small>
             </div>
           </div>
           <div className="plan">
@@ -47,52 +45,27 @@ export default function GettingStarted(): React.ReactNode {
               3
             </span>
             <div>
-              <b>Describe your first app</b>
-              <small>Try it, check the result, and ask for changes.</small>
+              <b>{s.step3Title}</b>
+              <small>{s.step3Body}</small>
             </div>
           </div>
         </div>
       </div>
       <div className="wrap">
         <div className="start-details">
-          <div>
-            <h3>Come back to your work.</h3>
-            <p>Keep your shortlist, plan, or log in an app that stays ready whenever you open it.</p>
-          </div>
-          <div>
-            <h3>Keep working in the same app.</h3>
-            <p>Click and edit by hand, or ask your AI to update the same screen.</p>
-          </div>
-          <div>
-            <h3>Bring the AI you already use.</h3>
-            <p>Connect your existing ChatGPT or Claude plan—no extra AI subscription from us.</p>
-          </div>
+          {s.details.map((d) => (
+            <div key={d.title}>
+              <h3>{d.title}</h3>
+              <p>{d.body}</p>
+            </div>
+          ))}
         </div>
-        <details className="setup-detail">
-          <summary>How do I start on Windows vs. Mac & Linux?</summary>
-          <p>
-            On Windows, run the installer from the <Link to="/download">download page</Link>. On Mac and Linux, install
-            Node.js, then run <code>npx crewx@latest</code> in Terminal. CrewX opens in your browser.
-          </p>
-        </details>
-        <details className="setup-detail">
-          <summary>How does the AI connection work?</summary>
-          <p>
-            CrewX connects to your ChatGPT (via Codex) or Claude (via Claude Code) account so your AI can build and work
-            inside your apps.
-          </p>
-        </details>
-        <details className="setup-detail">
-          <summary>What does a friend need?</summary>
-          <p>
-            Your friend gets CrewX for free from the <Link to="/download">download page</Link>, signs in, and connects
-            their own AI to start using the app you shared.
-          </p>
-        </details>
-        <details className="setup-detail">
-          <summary>What happens to my files?</summary>
-          <p>Your apps and files live on your computer, and your AI works with the context you choose to share in chat.</p>
-        </details>
+        {s.faq.map((item) => (
+          <details className="setup-detail" key={item.q}>
+            <summary>{item.q}</summary>
+            <p>{item.a}</p>
+          </details>
+        ))}
       </div>
     </section>
   );

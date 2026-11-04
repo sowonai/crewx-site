@@ -1,16 +1,24 @@
 import React, { useState } from 'react';
-import { APP_EXAMPLES, AppExample } from './appsData';
+import { AppExample } from './appsData';
+import { getAppExamples } from './localizedApps';
+import { useLandingCopy } from './copy/useLandingCopy';
 
 export default function ExampleShowcase(): React.ReactNode {
-  const [current, setCurrent] = useState<AppExample>(APP_EXAMPLES[0]);
+  const { locale, t: copy } = useLandingCopy();
+  const t = copy.showcase;
+  const apps = getAppExamples(locale);
+
+  const [currentId, setCurrentId] = useState<string>(apps[0].id);
   const [after, setAfter] = useState<boolean>(false);
   const [priority, setPriority] = useState<'quiet' | 'price'>('quiet');
   const [sheetFocus, setSheetFocus] = useState<'margin' | 'profit'>('margin');
   const [filter, setFilter] = useState<string>('All');
   const [expanded, setExpanded] = useState<boolean>(false);
 
+  const current = apps.find((a) => a.id === currentId) ?? apps[0];
+
   const handleSelectExample = (app: AppExample) => {
-    setCurrent(app);
+    setCurrentId(app.id);
     setAfter(false);
     setPriority('quiet');
     setSheetFocus('margin');
@@ -20,7 +28,7 @@ export default function ExampleShowcase(): React.ReactNode {
     }
   };
 
-  const filteredApps = APP_EXAMPLES.filter((a) => filter === 'All' || a.cat === filter);
+  const filteredApps = apps.filter((a) => filter === 'All' || a.cat === filter);
   const displayedApps = expanded ? filteredApps : filteredApps.slice(0, 6);
 
   const getIcon = (a: AppExample) => {
@@ -31,25 +39,17 @@ export default function ExampleShowcase(): React.ReactNode {
   };
 
   const renderSurface = (a: AppExample, done: boolean, interactive: boolean = false) => {
+    const s = t.surf;
     switch (a.id) {
       case 'buy-compare': {
+        const c = s.buyCompare;
         const quiet = !interactive || priority === 'quiet';
-        const candidates: [string, number, string][] = quiet
-          ? [
-              ['Quiet Mini', 86, '38 dB · $149'],
-              ['Everyday Keys', 78, '44 dB · $89'],
-              ['Studio Board', 71, '46 dB · $129'],
-            ]
-          : [
-              ['Everyday Keys', 88, '$89 · Best value'],
-              ['Quiet Mini', 76, '$149 · 38 dB'],
-              ['Studio Board', 72, '$129 · 46 dB'],
-            ];
+        const candidates = quiet ? c.candidatesQuiet : c.candidatesPrice;
         return (
           <div className="ex-surface">
             {interactive && (
               <fieldset className="ex-direct-control">
-                <legend>What matters more to you?</legend>
+                <legend>{c.legend}</legend>
                 <button
                   type="button"
                   onClick={() => {
@@ -58,7 +58,7 @@ export default function ExampleShowcase(): React.ReactNode {
                   }}
                   aria-pressed={quiet}
                 >
-                  Quietness
+                  {c.quietness}
                 </button>
                 <button
                   type="button"
@@ -68,18 +68,16 @@ export default function ExampleShowcase(): React.ReactNode {
                   }}
                   aria-pressed={!quiet}
                 >
-                  Price
+                  {c.price}
                 </button>
               </fieldset>
             )}
-            <div className="ex-label">
-              {quiet ? 'My comparison · quietness first' : 'My comparison · price first'}
-            </div>
-            <h4>A keyboard for my desk</h4>
+            <div className="ex-label">{quiet ? c.labelQuiet : c.labelPrice}</div>
+            <h4>{c.title}</h4>
             <div className="ex-criteria">
               <div>
                 <div className="ex-weight">
-                  <b>Quietness</b>
+                  <b>{c.quietness}</b>
                   <span>{quiet ? '5' : '2'} / 5</span>
                 </div>
                 <div className="ex-weight-track">
@@ -88,7 +86,7 @@ export default function ExampleShowcase(): React.ReactNode {
               </div>
               <div>
                 <div className="ex-weight">
-                  <b>Price</b>
+                  <b>{c.price}</b>
                   <span>{quiet ? '2' : '5'} / 5</span>
                 </div>
                 <div className="ex-weight-track">
@@ -97,10 +95,10 @@ export default function ExampleShowcase(): React.ReactNode {
               </div>
             </div>
             <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>
-              First choice: {candidates[0][0]} ({candidates[0][2]})
+              {c.firstChoice(candidates[0][0], candidates[0][2])}
             </div>
             <div className="ex-columns">
-              {candidates.map(([n, s, spec], i) => (
+              {candidates.map(([n, sc, spec], i) => (
                 <div key={n} className={`ex-box ${done && i === 0 ? 'ex-highlight' : ''}`}>
                   <span className="ex-tiny">
                     #{i + 1} · {spec}
@@ -112,34 +110,30 @@ export default function ExampleShowcase(): React.ReactNode {
                   </div>
                   <b>{n}</b>
                   <div className="ex-bar">
-                    <i style={{ width: `${s}%` }} />
+                    <i style={{ width: `${sc}%` }} />
                   </div>
-                  <span className="ex-tiny">{s} fit score</span>
-                  {done && i === 0 && <span className="ex-review-mark">Review next ✓</span>}
+                  <span className="ex-tiny">{c.fitScore(sc)}</span>
+                  {done && i === 0 && <span className="ex-review-mark">{c.reviewNext}</span>}
                 </div>
               ))}
             </div>
-            {done && (
-              <div className="ex-banner ex-highlight">
-                Note added:{' '}
-                {quiet
-                  ? 'Check the key feel and return policy before choosing Quiet Mini.'
-                  : 'Check the noise level before choosing Everyday Keys.'}
-              </div>
-            )}
+            {done && <div className="ex-banner ex-highlight">{quiet ? c.noteQuiet : c.notePrice}</div>}
           </div>
         );
       }
 
-      case 'travel-map':
+      case 'travel-map': {
+        const c = s.travel;
         return (
           <div className="ex-surface">
-            <div className="ex-label">Chiang Mai · 30-Day Workation</div>
-            <h4>Work a little. Wander a little.</h4>
+            <div className="ex-label">{c.label}</div>
+            <h4>{c.title}</h4>
             <div className="ex-pills">
-              <span className="ex-pill">Nimman Base</span>
-              <span className="ex-pill">$1,420 / $1,800 budget</span>
-              <span className="ex-pill">Fast Wi-Fi ✓</span>
+              {c.pills.map((p) => (
+                <span key={p} className="ex-pill">
+                  {p}
+                </span>
+              ))}
             </div>
             <div className="ex-travel-budget">
               <i />
@@ -149,39 +143,37 @@ export default function ExampleShowcase(): React.ReactNode {
             </div>
             <div className="ex-schedule">
               <time>09:00</time>
-              <div className={`ex-slot ${done ? 'ex-highlight' : ''}`}>
-                {done ? 'Deep Work · Morning block protected ✓' : 'Warorot Market · Morning visit'}
-              </div>
+              <div className={`ex-slot ${done ? 'ex-highlight' : ''}`}>{done ? c.morningDone : c.morning}</div>
               <time>12:00</time>
-              <div className="ex-slot">Khao Soi lunch near Old Town</div>
+              <div className="ex-slot">{c.lunch}</div>
               <time>14:00</time>
-              <div className={`ex-slot ${done ? 'ex-mint' : ''}`}>
-                {done ? 'Warorot Market · Moved to afternoon ✓' : 'Open afternoon · Café hop'}
-              </div>
+              <div className={`ex-slot ${done ? 'ex-mint' : ''}`}>{done ? c.afternoonDone : c.afternoon}</div>
               <time>18:00</time>
-              <div className="ex-slot">Sunset rooftop &amp; night bazaar</div>
+              <div className="ex-slot">{c.evening}</div>
             </div>
           </div>
         );
+      }
 
-      case 'workout-log':
+      case 'workout-log': {
+        const c = s.workout;
         return (
           <div className="ex-surface ex-workout">
-            <div className="ex-label">My workout · Today</div>
-            <h4>An ordinary day. 2 of 3 sets.</h4>
+            <div className="ex-label">{c.label}</div>
+            <h4>{c.title}</h4>
             <div className="ex-columns">
               <div className="ex-box">
-                <div className="ex-label">Session</div>
-                <div className="ex-strong">Upper body</div>
+                <div className="ex-label">{c.session}</div>
+                <div className="ex-strong">{c.sessionValue}</div>
               </div>
               <div className="ex-box">
-                <div className="ex-label">Exercise</div>
-                <div className="ex-strong">Row</div>
+                <div className="ex-label">{c.exercise}</div>
+                <div className="ex-strong">{c.exerciseValue}</div>
               </div>
             </div>
             <div className="ex-row">
-              <span>SET</span>
-              <b>REPS × WEIGHT</b>
+              <span>{c.setHeader}</span>
+              <b>{c.repsHeader}</b>
             </div>
             <div className="ex-row">
               <span>01</span>
@@ -193,136 +185,132 @@ export default function ExampleShowcase(): React.ReactNode {
             </div>
             <div className="ex-row">
               <span>03</span>
-              <b>Not logged</b>
+              <b>{c.notLogged}</b>
             </div>
-            <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>
-              Last workout: 3 sets of 10 × 30 kg.
-            </div>
+            <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>{c.last}</div>
           </div>
         );
+      }
 
-      case 'buy-car':
+      case 'buy-car': {
+        const c = s.buyCar;
         return (
           <div className="ex-surface">
-            <div className="ex-label">My next car</div>
-            <h4>More than the sticker price.</h4>
+            <div className="ex-label">{c.label}</div>
+            <h4>{c.title}</h4>
             <div className="ex-van" />
             <div className="ex-row">
-              <span>Candidate</span>
-              <b>Electric van</b>
+              <span>{c.candidate}</span>
+              <b>{c.candidateValue}</b>
             </div>
             <div className="ex-row">
-              <span>What I like</span>
-              <b>Room for work + weekends</b>
+              <span>{c.like}</span>
+              <b>{c.likeValue}</b>
             </div>
             <div className="ex-row">
-              <span>What to check</span>
-              <b>Parking space</b>
+              <span>{c.check}</span>
+              <b>{c.checkValue}</b>
             </div>
-            <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>
-              {done ? 'Added: confirm home charging before deciding.' : 'One place for the questions I still have.'}
-            </div>
+            <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>{done ? c.done : c.idle}</div>
           </div>
         );
+      }
 
-      case 'crewx-slide':
+      case 'crewx-slide': {
+        const c = s.slides;
         return (
           <div className="ex-surface">
-            <div className="ex-label">Q4 Strategy Deck · Slide 3 of 8</div>
+            <div className="ex-label">{c.label}</div>
             <div className="ex-slide-layout">
               <div className="ex-slide-strip">
-                {['01 Intro', '02 Data', '03 Decide', '04 Next'].map((t, i) => (
-                  <div key={t} className={`ex-slide-thumb ${i === 2 ? 'ex-highlight' : ''}`}>
-                    {t}
+                {c.thumbs.map((th, i) => (
+                  <div key={th} className={`ex-slide-thumb ${i === 2 ? 'ex-highlight' : ''}`}>
+                    {th}
                   </div>
                 ))}
               </div>
               <div className="ex-slide-page">
-                <div className="ex-label">Decision slide · 16:9</div>
-                <h4>
-                  {done
-                    ? 'Which growth loop should we launch first?'
-                    : 'Notes from today’s strategy discussion.'}
-                </h4>
+                <div className="ex-label">{c.pageLabel}</div>
+                <h4>{done ? c.titleDone : c.title}</h4>
                 <div className="ex-columns">
                   <div className="ex-box">
-                    <b>Option A · Creator Collabs</b>
-                    <p className="ex-tiny">15 micro-YouTubers · Fast initial reach</p>
+                    <b>{c.optionA}</b>
+                    <p className="ex-tiny">{c.optionADetail}</p>
                   </div>
                   <div className="ex-box">
-                    <b>Option B · Remix Templates</b>
-                    <p className="ex-tiny">$0 CAC · Viral app sharing loop</p>
+                    <b>{c.optionB}</b>
+                    <p className="ex-tiny">{c.optionBDetail}</p>
                   </div>
                 </div>
               </div>
             </div>
-            <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>
-              {done
-                ? 'Slide 3 restructured · Decision question + 2 options aligned ✓'
-                : 'Talk through the idea while the slide takes shape beside you.'}
-            </div>
+            <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>{done ? c.done : c.idle}</div>
           </div>
         );
+      }
 
-      case 'wrong-answer-notes':
+      case 'wrong-answer-notes': {
+        const c = s.japanese;
         return (
           <div className="ex-surface">
-            <div className="ex-label">Japanese · My practice</div>
-            <h4>One more try.</h4>
+            <div className="ex-label">{c.label}</div>
+            <h4>{c.title}</h4>
             <div className="ex-paper">
-              <div className="ex-label">At a café</div>
-              <div className="ex-jp">これをください。</div>
-              <p>“This one, please.”</p>
+              <div className="ex-label">{c.paperLabel}</div>
+              <div className="ex-jp">{c.jp}</div>
+              <p>{c.gloss}</p>
               <div className="ex-pills">
-                <span className="ex-pill">これ · this one</span>
-                <span className="ex-pill">それ · that one</span>
+                {c.pills.map((p) => (
+                  <span key={p} className="ex-pill">
+                    {p}
+                  </span>
+                ))}
               </div>
             </div>
-            <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>
-              {done ? 'Read the explanation beside the app, then try again.' : 'Two expressions I want to remember.'}
-            </div>
+            <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>{done ? c.done : c.idle}</div>
           </div>
         );
+      }
 
-      case 'timetable':
+      case 'timetable': {
+        const c = s.timetable;
         return (
           <div className="ex-surface ex-timetable">
-            <div className="ex-label">My little week</div>
-            <h4>Room for the things I love.</h4>
+            <div className="ex-label">{c.label}</div>
+            <h4>{c.title}</h4>
             <div className="ex-days">
-              {['Mon', 'Tue', 'Wed', 'Thu', 'Fri'].map((d, i) => (
+              {c.days.map((d, i) => (
                 <div key={d}>
                   <b>{d}</b>
-                  <div className="ex-class">School</div>
-                  <div className="ex-class">{['Reading', 'Play', 'Music', 'Library', 'Play'][i]}</div>
+                  <div className="ex-class">{c.school}</div>
+                  <div className="ex-class">{c.classes[i]}</div>
                   {done && i === 1 && (
                     <div className="ex-class added">
-                      Art club
-                      <br />4 pm
+                      {c.artClub}
+                      <br />
+                      {c.artClubTime}
                     </div>
                   )}
                 </div>
               ))}
             </div>
-            <div className="ex-banner">
-              {done ? 'Tuesday · art club added.' : 'A week with a little color.'}
-            </div>
+            <div className="ex-banner">{done ? c.done : c.idle}</div>
           </div>
         );
+      }
 
-      case 'html-viewer':
+      case 'html-viewer': {
+        const c = s.mockup;
         return (
           <div className="ex-surface">
-            <div className="ex-label">Live Mockup · Community Garden v2</div>
+            <div className="ex-label">{c.label}</div>
             <div className="ex-mockup">
               <div className="ex-mockupnav">
-                <b>the little garden</b>
-                <span>About · Schedule · Join</span>
+                <b>{c.navTitle}</b>
+                <span>{c.navLinks}</span>
               </div>
-              <h4>A greener corner of the neighborhood.</h4>
-              {done ? (
-                <span className="ex-fake-button">Join a garden day ↗ &nbsp;· Moved above fold ✓</span>
-              ) : null}
+              <h4>{c.title}</h4>
+              {done ? <span className="ex-fake-button">{c.buttonDone}</span> : null}
               <div className="ex-mockup-blocks">
                 <i />
                 <i />
@@ -330,105 +318,87 @@ export default function ExampleShowcase(): React.ReactNode {
               </div>
               {!done && (
                 <div className="ex-tiny" style={{ marginTop: 12 }}>
-                  ⚠ Primary button currently buried below the fold ↓
+                  {c.warning}
                 </div>
               )}
             </div>
-            <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>
-              {done
-                ? 'Updated mockup · CTA moved beside headline for instant review.'
-                : 'Point at the screen, ask your AI, and review the layout change live.'}
-            </div>
+            <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>{done ? c.done : c.idle}</div>
           </div>
         );
+      }
 
-      case 'blog-editor':
+      case 'blog-editor': {
+        const c = s.blog;
         return (
           <div className="ex-surface">
-            <div className="ex-label">My draft</div>
-            <h4>A small thing I learned.</h4>
+            <div className="ex-label">{c.label}</div>
+            <h4>{c.title}</h4>
             <div className="ex-paper">
-              <div className="ex-label">Opening paragraph</div>
-              <p className={done ? 'ex-highlight' : ''}>
-                {done
-                  ? 'On a rainy morning, I tried a smaller plan. One thing to finish. One thing to let go.'
-                  : 'I had been thinking for quite some time about making a change. On a rainy morning, I finally decided to try a smaller plan with just one thing to finish and one thing to let go.'}
-              </p>
+              <div className="ex-label">{c.paperLabel}</div>
+              <p className={done ? 'ex-highlight' : ''}>{done ? c.paragraphDone : c.paragraph}</p>
               <div className="ex-line" />
               <div className="ex-line" style={{ width: '78%' }} />
               <div className="ex-line" style={{ width: '91%' }} />
             </div>
-            <div className="ex-banner">
-              {done ? 'Opening revised · your detail kept.' : 'Your voice stays at the center.'}
-            </div>
+            <div className="ex-banner">{done ? c.done : c.idle}</div>
           </div>
         );
+      }
 
-      case 'daily-planner':
+      case 'daily-planner': {
+        const c = s.planner;
         return (
           <div className="ex-surface">
-            <div className="ex-label">Today</div>
-            <h4>Leave a little breathing room.</h4>
+            <div className="ex-label">{c.label}</div>
+            <h4>{c.title}</h4>
             <div className="ex-schedule">
               <time>09:00</time>
-              <div className="ex-slot">Write the first draft</div>
+              <div className="ex-slot">{c.draft}</div>
               <time>12:00</time>
-              <div className="ex-slot">Lunch</div>
+              <div className="ex-slot">{c.lunch}</div>
               <time>13:00</time>
-              <div className={`ex-slot ${done ? 'ex-highlight' : ''}`}>
-                {done ? 'Errands · moved here' : 'Catch up'}
-              </div>
+              <div className={`ex-slot ${done ? 'ex-highlight' : ''}`}>{done ? c.errandsMoved : c.catchUp}</div>
               <time>15:00</time>
-              <div className={`ex-slot ${done ? 'ex-mint' : ''}`}>
-                {done ? 'An hour kept free' : 'Errands'}
-              </div>
+              <div className={`ex-slot ${done ? 'ex-mint' : ''}`}>{done ? c.freeHour : c.errands}</div>
             </div>
-            <div className="ex-banner">A plan you can change, not a rule to follow.</div>
+            <div className="ex-banner">{c.banner}</div>
           </div>
         );
+      }
 
-      case 'yt-sensor':
+      case 'yt-sensor': {
+        const c = s.comments;
         return (
           <div className="ex-surface">
-            <div className="ex-label">YouTube Comment Radar · 257 comments</div>
-            <h4>What your audience keeps asking for.</h4>
+            <div className="ex-label">{c.label}</div>
+            <h4>{c.title}</h4>
             <div className="ex-columns">
-              <div className={`ex-box ${done ? 'ex-highlight' : ''}`}>
-                <div className="ex-label">Setup &amp; Install</div>
-                <div className="ex-strong">48%</div>
-                <span className="ex-tiny">124 mentions</span>
-              </div>
-              <div className="ex-box">
-                <div className="ex-label">App Examples</div>
-                <div className="ex-strong">32%</div>
-                <span className="ex-tiny">82 mentions</span>
-              </div>
-              <div className="ex-box">
-                <div className="ex-label">Pricing &amp; Plans</div>
-                <div className="ex-strong">20%</div>
-                <span className="ex-tiny">51 mentions</span>
-              </div>
+              {c.topics.map(([name, pct, mentions], i) => (
+                <div key={name} className={i === 0 ? `ex-box ${done ? 'ex-highlight' : ''}` : 'ex-box'}>
+                  <div className="ex-label">{name}</div>
+                  <div className="ex-strong">{pct}</div>
+                  <span className="ex-tiny">{mentions}</span>
+                </div>
+              ))}
             </div>
             <div className="ex-chart">
               <div style={{ height: '95%' }}>
-                <span>Setup (124)</span>
+                <span>{c.bars[0]}</span>
               </div>
               <div style={{ height: '63%' }}>
-                <span>Examples (82)</span>
+                <span>{c.bars[1]}</span>
               </div>
               <div style={{ height: '36%' }}>
-                <span>Pricing (51)</span>
+                <span>{c.bars[2]}</span>
               </div>
             </div>
-            <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>
-              {done
-                ? '🎬 Next video brief ready: “First 3 Steps — Use Your Own Claude/ChatGPT Plan”'
-                : 'Cluster viewer comments automatically and spot your next hit video.'}
-            </div>
+            <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>{done ? c.done : c.idle}</div>
           </div>
         );
+      }
 
       case 'sheet': {
+        const c = s.sheet;
         const isMargin = !interactive || sheetFocus === 'margin';
         const ftext = done ? (isMargin ? '=(C5-D5)/C5' : '=C5-D5') : '=SUM(C3:C6)';
         const cellRef = done ? 'E5 ▾' : 'A3:E6 ▾';
@@ -436,7 +406,7 @@ export default function ExampleShowcase(): React.ReactNode {
           <div className="ex-surface">
             {interactive && (
               <fieldset className="ex-direct-control">
-                <legend>What should your AI check in the selected range (A3:E6)?</legend>
+                <legend>{c.legend}</legend>
                 <button
                   type="button"
                   aria-pressed={isMargin}
@@ -445,7 +415,7 @@ export default function ExampleShowcase(): React.ReactNode {
                     setAfter(false);
                   }}
                 >
-                  Flag low margins (&lt;15%)
+                  {c.flagLow}
                 </button>
                 <button
                   type="button"
@@ -455,15 +425,15 @@ export default function ExampleShowcase(): React.ReactNode {
                     setAfter(false);
                   }}
                 >
-                  Rank by net profit ($)
+                  {c.rankProfit}
                 </button>
               </fieldset>
             )}
-            <div className="ex-label">oct-channels.xlsx · Spreadsheet</div>
-            <h4>Familiar IronCalc grid. AI draft on the selected cells.</h4>
+            <div className="ex-label">{c.label}</div>
+            <h4>{c.title}</h4>
             <div className="ex-xl">
               <div className="ex-xl-ribbon">
-                <span className="ex-xl-btn">Switch file</span>
+                <span className="ex-xl-btn">{c.switchFile}</span>
                 <span style={{ fontSize: 10, fontWeight: 700 }}>oct-channels.xlsx</span>
                 <span className="ex-xl-sep" />
                 <span
@@ -474,11 +444,9 @@ export default function ExampleShowcase(): React.ReactNode {
                     color: '#955311',
                   }}
                 >
-                  Import report · 1
+                  {c.importReport}
                 </span>
-                <span className="ex-xl-badge">
-                  {done ? 'AI Draft on E3:E6 · Apply ✓' : 'Range A3:E6 in context'}
-                </span>
+                <span className="ex-xl-badge">{done ? c.badgeDone : c.badge}</span>
               </div>
               <div className="ex-xl-fbar">
                 <span className="ex-xl-namebox">{cellRef}</span>
@@ -502,19 +470,19 @@ export default function ExampleShowcase(): React.ReactNode {
                   <tbody>
                     <tr className="ic-title">
                       <td className="r-hdr">1</td>
-                      <td colSpan={5}>OCTOBER CHANNEL PERFORMANCE</td>
+                      <td colSpan={5}>{c.sheetTitle}</td>
                     </tr>
                     <tr className="ic-head">
                       <td className="r-hdr">2</td>
-                      <td>Channel</td>
-                      <td className="num">Orders</td>
-                      <td className="num">Revenue</td>
-                      <td className="num">Ad + COGS</td>
-                      <td className="num">{isMargin ? 'Margin %' : 'Net Profit'}</td>
+                      <td>{c.cols.channel}</td>
+                      <td className="num">{c.cols.orders}</td>
+                      <td className="num">{c.cols.revenue}</td>
+                      <td className="num">{c.cols.adCogs}</td>
+                      <td className="num">{isMargin ? c.cols.margin : c.cols.profit}</td>
                     </tr>
                     <tr className="sel">
                       <td className="r-hdr">3</td>
-                      <td className="sel-top sel-l">Search Ads</td>
+                      <td className="sel-top sel-l">{c.channels.search}</td>
                       <td className="num sel-top">142</td>
                       <td className="num sel-top">$14,200</td>
                       <td className="num sel-top">$9,800</td>
@@ -524,7 +492,7 @@ export default function ExampleShowcase(): React.ReactNode {
                     </tr>
                     <tr className="sel">
                       <td className="r-hdr">4</td>
-                      <td className="sel-l">Newsletter</td>
+                      <td className="sel-l">{c.channels.newsletter}</td>
                       <td className="num">88</td>
                       <td className="num">$8,800</td>
                       <td className="num">$3,100</td>
@@ -534,7 +502,7 @@ export default function ExampleShowcase(): React.ReactNode {
                     </tr>
                     <tr className={`sel ${done && isMargin ? 'anom' : ''}`}>
                       <td className="r-hdr">5</td>
-                      <td className="sel-l">Social Video</td>
+                      <td className="sel-l">{c.channels.social}</td>
                       <td className="num">210</td>
                       <td className="num">$12,000</td>
                       <td className="num">$11,000</td>
@@ -544,7 +512,7 @@ export default function ExampleShowcase(): React.ReactNode {
                     </tr>
                     <tr className="sel">
                       <td className="r-hdr">6</td>
-                      <td className="sel-bot sel-l">Affiliates</td>
+                      <td className="sel-bot sel-l">{c.channels.affiliates}</td>
                       <td className="num sel-bot">64</td>
                       <td className="num sel-bot">$6,400</td>
                       <td className="num sel-bot">$4,200</td>
@@ -560,200 +528,196 @@ export default function ExampleShowcase(): React.ReactNode {
                 <span className="ex-xl-tab on">Oct_Channels ▾</span>
                 <span className="ex-xl-tab">Raw_Data ▾</span>
                 {done && <span className="ex-xl-tab ai-new">Channel_Summary ▾</span>}
-                <span className="ex-xl-stat">SUM $41,400 · Powered by IronCalc</span>
+                <span className="ex-xl-stat">{c.statusLine}</span>
               </div>
             </div>
             <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>
-              {done
-                ? isMargin
-                  ? 'AI Draft =(C5-D5)/C5 on E3:E6 · Row 5 flagged (Social Video ad spend hit 91.7% of revenue).'
-                  : 'AI Draft =C5-D5 on E3:E6 · Newsletter leads net profit at +$5,700 with the lowest ad spend.'
-                : 'Select cells in the IronCalc grid, then ask your AI to draft formulas or spot anomalies.'}
+              {done ? (isMargin ? c.bannerMargin : c.bannerProfit) : c.bannerIdle}
             </div>
           </div>
         );
       }
 
-      case 'notes':
+      case 'notes': {
+        const c = s.notes;
         return (
           <div className="ex-surface">
-            <div className="ex-label">Planning together</div>
-            <h4>Let’s keep the useful bits.</h4>
+            <div className="ex-label">{c.label}</div>
+            <h4>{c.title}</h4>
             <div className="ex-paper">
-              <div className="ex-label">The plan</div>
+              <div className="ex-label">{c.paperLabel}</div>
               <div className="ex-row">
-                <span>Bring</span>
-                <b>A picnic blanket</b>
+                <span>{c.bring}</span>
+                <b>{c.bringValue}</b>
               </div>
               <div className="ex-row">
-                <span>Invite</span>
-                <b>Our usual group</b>
+                <span>{c.invite}</span>
+                <b>{c.inviteValue}</b>
               </div>
               {done && (
                 <div className="ex-row ex-highlight">
-                  <span>Decided</span>
-                  <b>Saturday · at the park</b>
+                  <span>{c.decided}</span>
+                  <b>{c.decidedValue}</b>
                 </div>
               )}
               <div className="ex-row">
-                <span>Still open</span>
-                <b>What if it rains?</b>
+                <span>{c.open}</span>
+                <b>{c.openValue}</b>
               </div>
             </div>
-            <div className="ex-banner">
-              {done ? 'Decision added to the same note.' : 'The conversation can move on. The note stays.'}
-            </div>
+            <div className="ex-banner">{done ? c.done : c.idle}</div>
           </div>
         );
+      }
 
-      case 'relation-map':
+      case 'relation-map': {
+        const c = s.relationMap;
         return (
           <div className="ex-surface">
-            <div className="ex-label">Launch Dependency Map · 4 nodes</div>
-            <h4>What needs to happen first?</h4>
+            <div className="ex-label">{c.label}</div>
+            <h4>{c.title}</h4>
             <div className="ex-pills">
-              <span className="ex-pill">Event Launch</span>
-              <span className="ex-pill">
-                {done ? 'All dependencies linked ✓' : '1 missing step spotted'}
-              </span>
+              <span className="ex-pill">{c.pill}</span>
+              <span className="ex-pill">{done ? c.pillDone : c.pillIdle}</span>
             </div>
             <div className="ex-map">
               <div className="ex-node">
-                <b>01 · Venue</b>
+                <b>{c.venue}</b>
                 <br />
-                <span className="ex-tiny">Confirmed ✓</span>
+                <span className="ex-tiny">{c.venueNote}</span>
               </div>
               <div className="ex-arrow">→</div>
               <div className="ex-node">
-                <b>02 · Invitation</b>
+                <b>{c.invitation}</b>
                 <br />
-                <span className="ex-tiny">Draft ready</span>
+                <span className="ex-tiny">{c.invitationNote}</span>
               </div>
               <div className={`ex-node ${done ? 'ex-highlight' : ''}`}>
-                <b>03 · {done ? 'Print Approval ✓' : 'Approval Gate?'}</b>
+                <b>{done ? c.approvalDone : c.approval}</b>
                 <br />
-                <span className="ex-tiny">{done ? 'Inserted before send' : 'Missing step'}</span>
+                <span className="ex-tiny">{done ? c.approvalNoteDone : c.approvalNote}</span>
               </div>
               <div className="ex-arrow">→</div>
               <div className="ex-node">
-                <b>04 · Send Out</b>
+                <b>{c.send}</b>
                 <br />
-                <span className="ex-tiny">200 guests</span>
+                <span className="ex-tiny">{c.sendNote}</span>
               </div>
             </div>
-            <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>
-              {done
-                ? 'Print approval inserted between design and sending ✓'
-                : 'Map people, decisions, and blockers in one visual canvas.'}
-            </div>
+            <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>{done ? c.done : c.idle}</div>
           </div>
         );
+      }
 
-      case 'todo':
+      case 'todo': {
+        const c = s.todo;
         return (
           <div className="ex-surface">
-            <div className="ex-label">Saturday away</div>
-            <h4>A little list. A better day.</h4>
+            <div className="ex-label">{c.label}</div>
+            <h4>{c.title}</h4>
             <div className="ex-row">
-              <span>☑ Pick a destination</span>
-              <b>Done</b>
+              <span>{c.pick}</span>
+              <b>{c.pickStatus}</b>
             </div>
             <div className="ex-row">
-              <span>○ Pack a light jacket</span>
-              <b>To do</b>
+              <span>{c.pack}</span>
+              <b>{c.packStatus}</b>
             </div>
             {done && (
               <>
                 <div className="ex-row ex-highlight">
-                  <span>○ Reserve a table</span>
-                  <b>Added</b>
+                  <span>{c.reserve}</span>
+                  <b>{c.added}</b>
                 </div>
                 <div className="ex-row ex-highlight">
-                  <span>○ Check the train times</span>
-                  <b>Added</b>
+                  <span>{c.trains}</span>
+                  <b>{c.added}</b>
                 </div>
               </>
             )}
-            <div className="ex-banner">
-              {done ? 'Two things added. One less thing to remember.' : 'The next steps from our conversation.'}
-            </div>
+            <div className="ex-banner">{done ? c.done : c.idle}</div>
           </div>
         );
+      }
 
-      case 'rival-voice':
+      case 'rival-voice': {
+        const c = s.research;
         return (
           <div className="ex-surface">
-            <div className="ex-label">My research · Sample tools</div>
-            <h4>Keep the evidence in view.</h4>
+            <div className="ex-label">{c.label}</div>
+            <h4>{c.title}</h4>
             <table className="ex-sheet">
               <thead>
                 <tr>
-                  <th>Theme</th>
-                  <th>Tool A</th>
-                  <th>Tool B</th>
+                  <th>{c.theme}</th>
+                  <th>{c.toolA}</th>
+                  <th>{c.toolB}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Setup</td>
-                  <td>Mentioned</td>
-                  <td>Mentioned</td>
+                  <td>{c.setup}</td>
+                  <td>{c.mentioned}</td>
+                  <td>{c.mentioned}</td>
                 </tr>
                 <tr>
-                  <td>Import</td>
-                  <td>No sample</td>
-                  <td className={done ? 'ex-highlight' : ''}>Mentioned</td>
+                  <td>{c.import}</td>
+                  <td>{c.noSample}</td>
+                  <td className={done ? 'ex-highlight' : ''}>{c.mentioned}</td>
                 </tr>
                 <tr>
-                  <td>Support</td>
-                  <td>No sample</td>
-                  <td>No sample</td>
+                  <td>{c.support}</td>
+                  <td>{c.noSample}</td>
+                  <td>{c.noSample}</td>
                 </tr>
               </tbody>
             </table>
-            <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>
-              {done
-                ? 'Worth a closer look: importing existing work.'
-                : 'Small sample. Questions to investigate, not a verdict.'}
-            </div>
+            <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>{done ? c.done : c.idle}</div>
           </div>
         );
+      }
 
-      case 'github-issues':
+      case 'github-issues': {
+        const c = s.issue;
         return (
           <div className="ex-surface">
-            <div className="ex-label">Demo project · Issue #12</div>
-            <h4>The button does not respond.</h4>
+            <div className="ex-label">{c.label}</div>
+            <h4>{c.title}</h4>
             <div className="ex-pills">
-              <span className="ex-pill">Open</span>
-              <span className="ex-pill">Needs information</span>
+              {c.pills.map((p) => (
+                <span key={p} className="ex-pill">
+                  {p}
+                </span>
+              ))}
             </div>
             <div className="ex-paper">
-              <div className="ex-label">Steps to reproduce</div>
+              <div className="ex-label">{c.stepsLabel}</div>
               <p>
-                1. Open the list
+                {c.steps[0]}
                 <br />
-                2. Select an item
+                {c.steps[1]}
                 <br />
-                3. Press Save
+                {c.steps[2]}
               </p>
               <div className="ex-row">
-                <span>Expected</span>
-                <b>The item is saved</b>
+                <span>{c.expected}</span>
+                <b>{c.expectedValue}</b>
               </div>
               <div className={`ex-row ${done ? 'ex-highlight' : ''}`}>
-                <span>Browser version</span>
-                <b>{done ? 'Still missing' : 'Not provided'}</b>
+                <span>{c.browser}</span>
+                <b>{done ? c.browserMissing : c.browserIdle}</b>
               </div>
             </div>
           </div>
         );
+      }
 
-      case 'code-editor':
+      case 'code-editor': {
+        const c = s.code;
         return (
           <div className="ex-surface">
-            <div className="ex-label">Sample file · search.js</div>
-            <h4>A few lines. One good question.</h4>
+            <div className="ex-label">{c.label}</div>
+            <h4>{c.title}</h4>
             <div className="ex-code">
               01  function search(input) &#123;
               <br />
@@ -765,79 +729,78 @@ export default function ExampleShowcase(): React.ReactNode {
               <br />
               05  &#125;
             </div>
-            <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>
-              {done ? 'Early return · skips empty input.' : 'Read the code beside the explanation.'}
-            </div>
+            <div className={`ex-banner ${done ? 'ex-highlight' : ''}`}>{done ? c.done : c.idle}</div>
           </div>
         );
+      }
 
-      case 'code-map':
+      case 'code-map': {
+        const c = s.codeMap;
         return (
           <div className="ex-surface">
-            <div className="ex-label">Demo repository</div>
-            <h4>Get a feel for the whole.</h4>
+            <div className="ex-label">{c.label}</div>
+            <h4>{c.title}</h4>
             <div className="ex-treemap">
               <div className={done ? 'ex-highlight' : ''}>
-                <b>Interface</b>
+                <b>{c.interface}</b>
                 <br />
-                <span className="ex-tiny">Views and components</span>
+                <span className="ex-tiny">{c.interfaceNote}</span>
               </div>
               <div>
-                <b>Services</b>
+                <b>{c.services}</b>
               </div>
               <div>
-                <b>Tests</b>
+                <b>{c.tests}</b>
               </div>
               <div>
-                <b>Utilities</b>
+                <b>{c.utilities}</b>
               </div>
             </div>
           </div>
         );
+      }
 
-      case 'timer':
+      case 'timer': {
+        const c = s.timer;
         return (
           <div className="ex-surface">
-            <div className="ex-label">A little focus</div>
-            <h4>One thing at a time.</h4>
+            <div className="ex-label">{c.label}</div>
+            <h4>{c.title}</h4>
             <div className="ex-timer">
-              <div className={`ex-timer-ring ${done ? 'active' : ''}`}>{done ? '25:00' : 'Ready'}</div>
-              <span className="ex-pill">
-                {done ? 'Example · session started' : 'No rush. Start when you are ready.'}
-              </span>
+              <div className={`ex-timer-ring ${done ? 'active' : ''}`}>{done ? '25:00' : c.ready}</div>
+              <span className="ex-pill">{done ? c.pillDone : c.pillIdle}</span>
             </div>
           </div>
         );
+      }
 
       case 'hop-hwp-viewer':
-      default:
+      default: {
+        const c = s.hwp;
         return (
           <div className="ex-surface">
-            <div className="ex-label">HWP document · English illustration</div>
-            <h4>A workation application.</h4>
+            <div className="ex-label">{c.label}</div>
+            <h4>{c.title}</h4>
             <div className="ex-paper">
-              <div className="ex-label">Page 2 · Required information</div>
-              <p>Before applying, prepare:</p>
+              <div className="ex-label">{c.paperLabel}</div>
+              <p>{c.intro}</p>
               <div className="ex-row">
                 <span>01</span>
-                <b>A short introduction</b>
+                <b>{c.items[0]}</b>
               </div>
               <div className="ex-row">
                 <span>02</span>
-                <b>Your proposed dates</b>
+                <b>{c.items[1]}</b>
               </div>
               <div className="ex-row">
                 <span>03</span>
-                <b>A workation plan</b>
+                <b>{c.items[2]}</b>
               </div>
             </div>
-            <div className="ex-banner">
-              {done
-                ? 'Three requirements summarized in the conversation.'
-                : 'Keep the original page open as you work.'}
-            </div>
+            <div className="ex-banner">{done ? c.done : c.idle}</div>
           </div>
         );
+      }
     }
   };
 
@@ -845,18 +808,18 @@ export default function ExampleShowcase(): React.ReactNode {
     <div className="ex-showcase">
       <div className="ex-demo-intro" id="ex-demo-intro">
         <div>
-          <div className="ex-kicker">Explore / {current.name}</div>
+          <div className="ex-kicker">{t.kicker(current.name)}</div>
           <h3 id="ex-selected-title">{current.title}</h3>
           <p id="ex-selected-description">{current.desc}</p>
         </div>
         <a className="ex-browse" href="#example-library">
-          Browse more ideas ↓
+          {t.browseMore}
         </a>
       </div>
 
       <div className="ex-origins">
         <div>
-          <b>Start with an idea</b>
+          <b>{t.startWithIdea}</b>
           <p>“{current.start}”</p>
         </div>
       </div>
@@ -872,7 +835,7 @@ export default function ExampleShowcase(): React.ReactNode {
             style={{ width: 15, height: 15, objectFit: 'contain' }}
           />
           <b>CrewX</b>
-          <span>Your app. Your AI. One place.</span>
+          <span>{t.tagline}</span>
         </div>
         <div className="ex-workspace">
           <div className="ex-rail" aria-hidden="true">
@@ -889,75 +852,63 @@ export default function ExampleShowcase(): React.ReactNode {
               </span>
             </div>
             <div className="ex-manual-note">
-              <b>By hand</b>
+              <b>{t.byHand}</b>
               <span>{current.manual}</span>
             </div>
-            <div id="ex-live-screen" aria-label="Illustrated app screen">
+            <div id="ex-live-screen" aria-label={t.screenLabel}>
               {renderSurface(current, after, true)}
             </div>
           </div>
           <div className="ex-conversation">
-            <div className="ex-chat-label">With your AI</div>
+            <div className="ex-chat-label">{t.withYourAi}</div>
             <div className="ex-user">
-              <span className="ex-sender">YOU</span>
+              <span className="ex-sender">{t.you}</span>
               <span>
-                {current.id === 'sheet'
-                  ? sheetFocus === 'margin'
-                    ? 'In the selected rows (A3:E6), fill Margin % with a formula, flag any channel under 15%, and build a summary chart.'
-                    : 'In the selected rows (A3:E6), calculate Net Profit (=C5-D5) and highlight the top-earning channel.'
-                  : current.prompt}
+                {current.id === 'sheet' ? (sheetFocus === 'margin' ? current.prompt : t.variants.sheetProfitPrompt) : current.prompt}
               </span>
             </div>
             <div className="ex-ai" aria-live="polite">
               {after ? (
                 <>
-                  <span className="ex-sender">YOUR AI</span>
+                  <span className="ex-sender">{t.yourAi}</span>
                   <p>
                     {current.id === 'buy-compare'
                       ? priority === 'quiet'
-                        ? 'Marked Quiet Mini for a closer look. I added a reminder to check key feel and the return policy.'
-                        : 'Marked Everyday Keys for a closer look. I added a reminder to check its noise level.'
+                        ? current.reply
+                        : t.variants.buyComparePriceReply
                       : current.id === 'sheet'
                       ? sheetFocus === 'margin'
-                        ? 'Prepared an AI draft on E3:E6 with =(C5-D5)/C5 and flagged Row 5 (Social Video, 8.3% margin). I also drafted a Channel_Summary tab.'
-                        : 'Prepared an AI draft on E3:E6 with =C5-D5. Newsletter leads at +$5,700 net profit with the lowest ad spend.'
+                        ? current.reply
+                        : t.variants.sheetProfitReply
                       : current.reply}
                   </p>
                 </>
               ) : (
                 <>
-                  <span className="ex-sender">SAME APP, NEXT STEP</span>
+                  <span className="ex-sender">{t.sameAppNext}</span>
                   <p className="ex-ai-idle">
-                    {current.kind === 'read'
-                      ? 'Keep the app in view while you ask a question.'
-                      : current.kind === 'shape'
-                      ? 'See a change to the mockup, then review it together.'
-                      : 'Your request can become a change you can see.'}
+                    {current.kind === 'read' ? t.idle.read : current.kind === 'shape' ? t.idle.shape : t.idle.use}
                   </p>
                 </>
               )}
             </div>
             <button className="ex-action" onClick={() => setAfter(!after)} type="button">
-              {after
-                ? '↺ Reset this example'
-                : current.kind === 'read'
-                ? 'Ask your AI →'
-                : 'Update with your AI →'}
+              {after ? t.reset : current.kind === 'read' ? t.askAi : t.updateAi}
             </button>
           </div>
         </div>
         <div className="ex-proof">
           <div className="ex-step">
-            <span className={!after ? 'on' : ''}>01 You choose</span>
-            <span className={after ? 'on' : ''}>02 AI helps</span>
-            <span className={after ? 'on' : ''}>03 You review</span>
+            <span className={!after ? 'on' : ''}>{t.steps[0]}</span>
+            <span className={after ? 'on' : ''}>{t.steps[1]}</span>
+            <span className={after ? 'on' : ''}>{t.steps[2]}</span>
           </div>
-          <strong>{after ? current.review : 'A small app shaped around your situation.'}</strong>
+          <strong>{after ? current.review : t.proofIdle}</strong>
         </div>
       </div>
 
-      <div className="ex-browser-tools" id="example-library" aria-label="Filter examples">
-        {['All', 'Life', 'Create', 'Learn', 'Work', 'Build'].map((c) => (
+      <div className="ex-browser-tools" id="example-library" aria-label={t.filterLabel}>
+        {(['All', 'Life', 'Create', 'Learn', 'Work', 'Build'] as const).map((c) => (
           <button
             key={c}
             type="button"
@@ -965,12 +916,10 @@ export default function ExampleShowcase(): React.ReactNode {
             aria-pressed={filter === c}
             onClick={() => setFilter(c)}
           >
-            {c === 'Build' ? 'For developers' : c}
+            {t.filters[c]}
           </button>
         ))}
-        <span className="ex-count">
-          {displayedApps.length} of {filteredApps.length} examples
-        </span>
+        <span className="ex-count">{t.count(displayedApps.length, filteredApps.length)}</span>
       </div>
 
       <div className="ex-cards">
@@ -982,7 +931,7 @@ export default function ExampleShowcase(): React.ReactNode {
                 <div className="ex-preview-window">
                   <div className="ex-preview-bar">
                     <b>{a.name}</b>
-                    <span>YOU + AI</span>
+                    <span>{t.youPlusAi}</span>
                   </div>
                   {renderSurface(a, true, false)}
                 </div>
@@ -990,12 +939,12 @@ export default function ExampleShowcase(): React.ReactNode {
               <div className="ex-card-copy">
                 <div className="ex-card-meta">
                   <span>
-                    {a.name} · {a.cat}
+                    {a.name} · {t.cats[a.cat] ?? a.cat}
                   </span>
                 </div>
                 <h4>{a.title}</h4>
                 <div className="ex-card-ask">
-                  <b>An idea to start with</b>
+                  <b>{t.ideaToStart}</b>
                   <br />“{a.start}”
                 </div>
               </div>
@@ -1005,7 +954,7 @@ export default function ExampleShowcase(): React.ReactNode {
                 onClick={() => handleSelectExample(a)}
                 aria-pressed={isSelected}
               >
-                Explore this example <span aria-hidden="true">↗</span>
+                {t.exploreThis} <span aria-hidden="true">↗</span>
               </button>
             </article>
           );
@@ -1020,7 +969,7 @@ export default function ExampleShowcase(): React.ReactNode {
             aria-expanded={expanded}
             onClick={() => setExpanded(!expanded)}
           >
-            {expanded ? 'Show fewer examples ↑' : `Explore all ${filteredApps.length} examples ↓`}
+            {expanded ? t.showFewer : t.exploreAll(filteredApps.length)}
           </button>
         </div>
       )}

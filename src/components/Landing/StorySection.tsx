@@ -1,59 +1,62 @@
 import React from 'react';
+import { useLandingCopy } from './copy/useLandingCopy';
 
 export default function StorySection(): React.ReactNode {
+  const { t } = useLandingCopy();
+  const s = t.story;
   return (
-    <section className="story center" aria-label="A little app, a little closer">
+    <section className="story center" aria-label={s.ariaLabel}>
       <div className="wrap">
         <span className="eyebrow" style={{ color: 'var(--orange)' }}>
           <span className="dot" style={{ background: 'var(--orange)' }} />
-          The moment
+          {s.eyebrow}
         </span>
         <h2 style={{ marginTop: 14 }}>
-          A little app.
+          {s.titleFirst}
           <br />
-          <span className="warm" style={{ color: 'var(--orange)' }}>A little closer.</span>
+          <span className="warm" style={{ color: 'var(--orange)' }}>{s.titleSecond}</span>
         </h2>
         <div className="frames">
           <figure className="frame">
             <div className="pic">
               <div className="phone">
-                <div className="bub dim">What are you making this week?</div>
-                <div className="bub r dim">I've been using a little app I made.</div>
-                <div className="bub">You made that?</div>
-                <div className="bub r">I plan in it with my AI.</div>
-                <div className="bub">Could I try it?</div>
+                <div className="bub dim">{s.chat[0]}</div>
+                <div className="bub r dim">{s.chat[1]}</div>
+                <div className="bub">{s.chat[2]}</div>
+                <div className="bub r">{s.chat[3]}</div>
+                <div className="bub">{s.chat[4]}</div>
               </div>
             </div>
             <span className="n">01</span>
-            <h3>“You made that?”</h3>
-            <p>Something you use every week turns out to be just what a friend was looking for.</p>
+            <h3>{s.f1Title}</h3>
+            <p>{s.f1Body}</p>
           </figure>
           <figure className="frame">
             <div className="pic">
               <div className="mail">
-                <div className="to">To: Sam</div>
-                This is the app I use. Try planning your week with your own AI.
+                <div className="to">{s.mailTo}</div>
+                {s.mailBody}
                 <div className="card">
                   <span>🥗</span>
                   <div>
-                    <b>Meal Plan</b>
+                    <b>{s.cardTitle}</b>
                     <br />
-                    <small style={{ color: '#888' }}>CrewX app · v1</small>
+                    <small style={{ color: '#888' }}>{s.cardMeta}</small>
                   </div>
                 </div>
-                <div className="go">Open in CrewX</div>
+                <div className="go">{s.mailGo}</div>
               </div>
             </div>
             <span className="n">02</span>
-            <h3>“Here. Try it.”</h3>
-            <p>Send your app over. Your friend opens it in CrewX and makes it their own with their AI.</p>
+            <h3>{s.f2Title}</h3>
+            <p>{s.f2Body}</p>
           </figure>
           <figure className="frame">
             <div className="pic">
               <div className="laptop">
                 <div className="scr">
                   <div className="t">
-                    Sam's Meal Plan <em>My week</em>
+                    {s.laptopTitle} <em>{s.laptopTag}</em>
                   </div>
                   <div className="mini">
                     <i />
@@ -74,8 +77,8 @@ export default function StorySection(): React.ReactNode {
               </div>
             </div>
             <span className="n">03</span>
-            <h3>Their week. Their AI.</h3>
-            <p>They choose the meals with their AI, then get on with making dinner.</p>
+            <h3>{s.f3Title}</h3>
+            <p>{s.f3Body}</p>
           </figure>
         </div>
       </div>

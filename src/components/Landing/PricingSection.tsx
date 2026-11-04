@@ -1,51 +1,50 @@
 import React from 'react';
 import Link from '@docusaurus/Link';
+import { useLandingCopy } from './copy/useLandingCopy';
 
 const EARLY_ACCESS_WAITLIST_URL = 'https://app.sowonai.com/early-access?source=crewx-dev';
 
 export default function PricingSection(): React.ReactNode {
+  const { t } = useLandingCopy();
+  const p = t.pricing;
   return (
     <section id="pricing" className="center">
       <div className="wrap">
         <span className="eyebrow">
           <span className="dot" />
-          Pricing
+          {p.eyebrow}
         </span>
-        <h2 style={{ marginTop: 14 }}>Start with your own little app.</h2>
-        <p className="pricing-lede">
-          Free to build, use, and start sharing. Join the Early Access waitlist to try Pro for free as an early adopter.
-        </p>
+        <h2 style={{ marginTop: 14 }}>{p.title}</h2>
+        <p className="pricing-lede">{p.lede}</p>
         <div className="tiers">
           <div className="tier">
-            <b>Free</b>
+            <b>{p.freeName}</b>
             <div className="price">
-              $0 <small>forever</small>
+              {p.freePrice} <small>{p.freePriceNote}</small>
             </div>
-            <div className="per">For you, your friends, and everyday use</div>
+            <div className="per">{p.freePer}</div>
             <ul>
-              <li>Make, use, and receive unlimited apps</li>
-              <li>Use with your own ChatGPT or Claude account</li>
-              <li>Starter sharing to try your apps with friends</li>
-              <li>Explore and install ready-made apps</li>
+              {p.freeFeatures.map((f) => (
+                <li key={f}>{f}</li>
+              ))}
             </ul>
             <Link className="btn" to="/download">
-              Download CrewX
+              {p.freeCta}
             </Link>
           </div>
           <div className="tier pro">
             <div>
-              <b>Pro</b>
-              <span className="soon">Early Access</span>
+              <b>{p.proName}</b>
+              <span className="soon">{p.proBadge}</span>
             </div>
             <div className="price">
-              Free <small>for early adopters</small>
+              {p.proPrice} <small>{p.proPriceNote}</small>
             </div>
-            <div className="per">Share with up to 10 people, free for 30 days during early access</div>
+            <div className="per">{p.proPer}</div>
             <ul>
-              <li>Everything in Free, with expanded sharing</li>
-              <li>Share with up to 10 people instead of 3</li>
-              <li>Push updates and manage your shared releases</li>
-              <li>Early access to new creator and sharing tools</li>
+              {p.proFeatures.map((f) => (
+                <li key={f}>{f}</li>
+              ))}
             </ul>
             <a
               className="btn primary"
@@ -53,14 +52,11 @@ export default function PricingSection(): React.ReactNode {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Request Free Pro Access
+              {p.proCta}
             </a>
           </div>
         </div>
-        <p className="tiers-note">
-          Everyone can download CrewX and start sharing on Free right away. Approved early adopters on the waitlist
-          get a free 30-day Pro trial while we roll out expanded sharing.
-        </p>
+        <p className="tiers-note">{p.note}</p>
       </div>
     </section>
   );

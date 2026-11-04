@@ -3,6 +3,7 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { useLocation } from '@docusaurus/router';
 import { useColorMode } from '@docusaurus/theme-common';
+import { useLandingCopy } from './copy/useLandingCopy';
 
 function LocaleDropdown(): React.ReactNode {
   const { i18n } = useDocusaurusContext();
@@ -112,11 +113,12 @@ function LocaleDropdown(): React.ReactNode {
 }
 
 function ThemeToggle(): React.ReactNode {
+  const { t } = useLandingCopy();
   const { colorMode, setColorMode } = useColorMode();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   const isDark = mounted && colorMode === 'dark';
-  const label = isDark ? 'Switch to light theme' : 'Switch to dark theme';
+  const label = isDark ? t.nav.switchToLight : t.nav.switchToDark;
   return (
     <button
       type="button"
@@ -144,17 +146,13 @@ function ThemeToggle(): React.ReactNode {
  * links are in-page anchors; elsewhere they point back to the landing sections.
  */
 export function TopNav({ onLanding = false }: { onLanding?: boolean }): React.ReactNode {
-  const sections = [
-    { id: 'demo', label: 'How it works' },
-    { id: 'apps', label: 'Apps' },
-    { id: 'pricing', label: 'Pricing' },
-    { id: 'your-ai', label: 'Getting started' },
-  ];
+  const { t } = useLandingCopy();
+  const sections = t.nav.sections;
   return (
     <nav className="top">
       <div className="wrap">
         <Link className="logo" to="/">
-          <img src="/assets/crewx-logo.png" alt="CrewX" className="logo-img" />
+          <img src="/assets/crewx-logo.png" alt={t.nav.logoAlt} className="logo-img" />
           CrewX
         </Link>
         <div className="links">
@@ -176,7 +174,7 @@ export function TopNav({ onLanding = false }: { onLanding?: boolean }): React.Re
           <LocaleDropdown />
         </div>
         <Link className="btn primary" to="/download">
-          Download
+          {t.nav.download}
         </Link>
       </div>
     </nav>
@@ -184,19 +182,20 @@ export function TopNav({ onLanding = false }: { onLanding?: boolean }): React.Re
 }
 
 export function LandingFooter(): React.ReactNode {
+  const { t } = useLandingCopy();
   const { i18n } = useDocusaurusContext();
   const showSowonLabsLink = i18n.currentLocale === 'ko';
   return (
     <footer>
       <div className="wrap">
         <span className="logo" style={{ fontSize: 15 }}>
-          <img src="/assets/crewx-logo.png" alt="CrewX" className="logo-img" style={{ width: 20, height: 20 }} />
+          <img src="/assets/crewx-logo.png" alt={t.nav.logoAlt} className="logo-img" style={{ width: 20, height: 20 }} />
           CrewX
         </span>
-        <Link to="/download">Download</Link>
-        <Link to="/docs/intro">Docs</Link>
-        <Link to="/blog">Blog</Link>
-        <Link to="/templates">Templates</Link>
+        <Link to="/download">{t.footer.download}</Link>
+        <Link to="/docs/intro">{t.footer.docs}</Link>
+        <Link to="/blog">{t.footer.blog}</Link>
+        <Link to="/templates">{t.footer.templates}</Link>
         <a href="https://github.com/sowonlabs/crewx" target="_blank" rel="noopener noreferrer">
           GitHub
         </a>
