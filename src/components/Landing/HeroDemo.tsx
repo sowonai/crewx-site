@@ -1,6 +1,9 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
+import { useLandingCopy } from './copy/useLandingCopy';
 
 export default function HeroDemo(): React.ReactNode {
+  const { t: copy } = useLandingCopy();
+  const t = copy.demo;
   const [tab, setTab] = useState<number>(1);
   const [stepsVisible, setStepsVisible] = useState<number[]>([]);
   const [appOpen, setAppOpen] = useState(false);
@@ -14,11 +17,9 @@ export default function HeroDemo(): React.ReactNode {
     top: '54%',
     show: false,
   });
-  const [whoText, setWhoText] = useState('Your computer · your AI');
-  const [insightText, setInsightText] = useState(
-    'Select a range in IronCalc, and your AI prepares formulas + a chart draft without touching original cells.'
-  );
-  const [profitText, setProfitText] = useState('$13,300 · checking margins…');
+  const [whoText, setWhoText] = useState(t.who.you);
+  const [insightText, setInsightText] = useState(t.insight.ctx);
+  const [profitText, setProfitText] = useState(t.profit.checking);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const timersRef = useRef<NodeJS.Timeout[]>([]);
@@ -39,11 +40,9 @@ export default function HeroDemo(): React.ReactNode {
     setShareHot(false);
     setSentVisible(false);
     setCursorPos({ left: '68%', top: '54%', show: false });
-    setWhoText('Your computer · your AI');
-    setInsightText(
-      'Select a range in IronCalc, and your AI prepares formulas + a chart draft without touching original cells.'
-    );
-    setProfitText('$13,300 · checking margins…');
+    setWhoText(t.who.you);
+    setInsightText(t.insight.ctx);
+    setProfitText(t.profit.checking);
 
     const at = (ms: number, fn: () => void) => {
       const id = setTimeout(fn, ms);
@@ -59,10 +58,8 @@ export default function HeroDemo(): React.ReactNode {
     at(2100, () => {
       setStepsVisible([1, 2]);
       setFormulasFilled(true);
-      setInsightText(
-        'Formula =(C5-D5)/C5 drafted on E3:E6. Row 5 (Social Video, 8.3%) flagged with purple diff markers.'
-      );
-      setProfitText('$13,300 · 1 channel under 15% (Social Video)');
+      setInsightText(t.insight.draft);
+      setProfitText(t.profit.flagged);
     });
 
     // Step 2: You send it
@@ -80,22 +77,20 @@ export default function HeroDemo(): React.ReactNode {
       setShareHot(false);
       setTab(3);
       setStepsVisible([]);
-      setWhoText("Sam's computer · Sam's own AI");
+      setWhoText(t.who.sam);
     });
     at(7800, () => setStepsVisible([8]));
     at(8700, () => setCursorPos({ left: '68%', top: '54%', show: true }));
     at(9400, () => {
       setSamUpdated(true);
-      setProfitText('$16,600 · All channels healthy (>30%)');
+      setProfitText(t.profit.healthy);
     });
     at(10500, () => {
       setStepsVisible([8, 9]);
       setCursorPos((c) => ({ ...c, show: false }));
-      setInsightText(
-        'Sam adjusted D5 with his AI. All 4 channels now clear the 15% margin target.'
-      );
+      setInsightText(t.insight.sam);
     });
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -108,10 +103,8 @@ export default function HeroDemo(): React.ReactNode {
       setRowsShown([0, 1, 2, 3]);
       setFormulasFilled(true);
       setSamUpdated(true);
-      setProfitText('$16,600 · All channels healthy (>30%)');
-      setInsightText(
-        'Sam adjusted D5 with his AI. All 4 channels now clear the 15% margin target.'
-      );
+      setProfitText(t.profit.healthy);
+      setInsightText(t.insight.sam);
       return;
     }
 
@@ -130,7 +123,7 @@ export default function HeroDemo(): React.ReactNode {
       clearTimers();
       observer.disconnect();
     };
-  }, [play]);
+  }, [play, t]);
 
   const jumpToStage = (n: 1 | 2 | 3) => {
     clearTimers();
@@ -144,31 +137,25 @@ export default function HeroDemo(): React.ReactNode {
       setSamUpdated(false);
       setShareHot(false);
       setSentVisible(false);
-      setWhoText('Your computer · your AI');
-      setInsightText(
-        'Formula =(C5-D5)/C5 drafted on E3:E6. Row 5 (Social Video, 8.3%) flagged with purple diff markers.'
-      );
-      setProfitText('$13,300 · 1 channel under 15% (Social Video)');
+      setWhoText(t.who.you);
+      setInsightText(t.insight.draft);
+      setProfitText(t.profit.flagged);
     } else if (n === 2) {
       setStepsVisible([1, 2, 5, 6]);
       setSamUpdated(false);
       setShareHot(true);
       setSentVisible(true);
-      setWhoText('Your computer · your AI');
-      setInsightText(
-        'Formula =(C5-D5)/C5 drafted on E3:E6. Row 5 (Social Video, 8.3%) flagged with purple diff markers.'
-      );
-      setProfitText('$13,300 · 1 channel under 15% (Social Video)');
+      setWhoText(t.who.you);
+      setInsightText(t.insight.draft);
+      setProfitText(t.profit.flagged);
     } else {
       setStepsVisible([8, 9]);
       setSamUpdated(true);
       setShareHot(false);
       setSentVisible(false);
-      setWhoText("Sam's computer · Sam's own AI");
-      setInsightText(
-        'Sam adjusted D5 with his AI. All 4 channels now clear the 15% margin target.'
-      );
-      setProfitText('$16,600 · All channels healthy (>30%)');
+      setWhoText(t.who.sam);
+      setInsightText(t.insight.sam);
+      setProfitText(t.profit.healthy);
     }
   };
 
@@ -178,13 +165,13 @@ export default function HeroDemo(): React.ReactNode {
     <div className="stage" id="demo" ref={containerRef}>
       <div className="stage-tabs">
         <span className={tab === 1 ? 'on' : ''} onClick={() => jumpToStage(1)}>
-          1 · You work in it
+          {t.tabs[0]}
         </span>
         <span className={tab === 2 ? 'on' : ''} onClick={() => jumpToStage(2)}>
-          2 · You send it
+          {t.tabs[1]}
         </span>
         <span className={tab === 3 ? 'on' : ''} onClick={() => jumpToStage(3)}>
-          3 · They make it theirs
+          {t.tabs[2]}
         </span>
       </div>
       <div className="win">
@@ -209,30 +196,27 @@ export default function HeroDemo(): React.ReactNode {
             <i className="sp" />
           </div>
           <div className="chat">
-            <span className="label">Chat</span>
+            <span className="label">{t.chatLabel}</span>
             <div className={`msg me ${stepsVisible.includes(1) ? 'show' : ''}`}>
-              In the selected range (<b>A3:E6</b>), fill Margin % with a formula, flag any channel
-              under 15%, and add a summary chart.
+              {t.msgAsk}
               <div className="att">📗 oct-channels.xlsx · Oct_Channels!A3:E6</div>
             </div>
             <div className={`msg ai ${stepsVisible.includes(2) ? 'show' : ''}`}>
-              Prepared a draft on <b>E3:E6</b> with <code>=(C5-D5)/C5</code> and flagged{' '}
-              <b>Social Video (8.3%)</b>. I also drafted a <b>CrewX Chart</b> below the grid.
+              {t.msgDraft}
             </div>
             <div className={`msg me ${stepsVisible.includes(5) ? 'show' : ''}`}>
-              Apply the draft and share this spreadsheet app with Sam.
+              {t.msgShare}
             </div>
             <div className={`msg ai ${stepsVisible.includes(6) ? 'show' : ''}`}>
-              Applied and sent. Sam opens the same spreadsheet in CrewX and runs it with his own AI.
+              {t.msgSent}
             </div>
             <div className={`msg me ${stepsVisible.includes(8) ? 'show' : ''}`}>
-              Cut Social Video ad spend by 30% in D5 and recalculate margins.
+              {t.msgEdit}
             </div>
             <div className={`msg ai ${stepsVisible.includes(9) ? 'show' : ''}`}>
-              Updated <b>D5</b> to $7,700. Social Video margin is now <b>35.8%</b> — all channels
-              are above 30%.
+              {t.msgDone}
             </div>
-            <div className="composer">Ask your AI…</div>
+            <div className="composer">{t.composer}</div>
           </div>
           <div className={`app ${appOpen ? 'on' : ''}`}>
             <span
@@ -242,10 +226,10 @@ export default function HeroDemo(): React.ReactNode {
               AI
             </span>
             <div className={`sent ${sentVisible ? 'show' : ''}`}>
-              <b>✉ Channel Spreadsheet sent to Sam</b>
-              <small>Sam opens CrewX, signs in, and it&apos;s there with your formulas.</small>
+              <b>{t.sentTitle}</b>
+              <small>{t.sentNote}</small>
             </div>
-            <div className="empty">Open your spreadsheet, select cells, and ask your AI.</div>
+            <div className="empty">{t.empty}</div>
             <div className="appwin">
               <div className="aw-bar">
                 <span className="ico" style={{ background: 'transparent', padding: 0 }}>
@@ -262,11 +246,11 @@ export default function HeroDemo(): React.ReactNode {
                   </svg>
                 </span>
                 <div>
-                  <b>oct-channels.xlsx — Spreadsheet</b>
-                  <small>IronCalc workbook · AI reads your selected range.</small>
+                  <b>{t.appTitle}</b>
+                  <small>{t.appNote}</small>
                 </div>
                 <span className="ctl" aria-hidden="true">
-                  <span className="lay">Layout</span>
+                  <span className="lay">{t.layout}</span>
                   <span>⤢</span>
                   <span>–</span>
                   <span>✕</span>
@@ -276,14 +260,14 @@ export default function HeroDemo(): React.ReactNode {
                 <div className="xl-hero" id="grid">
                   {/* 1. CrewX Spreadsheet Viewer Header */}
                   <div className="ic-viewer-head">
-                    <span className="ic-btn">Switch file</span>
+                    <span className="ic-btn">{t.switchFile}</span>
                     <span className="ic-fname">
-                      {samUpdated ? 'oct-channels.xlsx · Shared by you' : 'oct-channels.xlsx'}
+                      {samUpdated ? t.fileShared : 'oct-channels.xlsx'}
                     </span>
                     <span className="ic-btn report">
-                      Import report <span className="ic-pill">1</span>
+                      {t.importReport} <span className="ic-pill">1</span>
                     </span>
-                    <span className="ic-status">Context synced</span>
+                    <span className="ic-status">{t.contextSynced}</span>
                     <span
                       className={`share ${shareHot ? 'hot' : ''}`}
                       style={{
@@ -297,7 +281,7 @@ export default function HeroDemo(): React.ReactNode {
                         fontWeight: 700,
                       }}
                     >
-                      Share
+                      {t.share}
                     </span>
                   </div>
                   {/* 2. IronCalc Formula Bar */}
@@ -310,11 +294,7 @@ export default function HeroDemo(): React.ReactNode {
                       =(<b className="ref-a">C5</b>-<b className="ref-b">D5</b>)/
                       <b className="ref-a">C5</b>
                       <span className="ic-fnote">
-                        {samUpdated
-                          ? '· D5 cut -30% ($7,700) → 35.8% margin'
-                          : formulasFilled
-                          ? '· Flag < 15% margin (Social Video 8.3%)'
-                          : '· Margin % formula'}
+                        {samUpdated ? t.fnote.sam : formulasFilled ? t.fnote.draft : t.fnote.ctx}
                       </span>
                     </span>
                   </div>
@@ -322,31 +302,18 @@ export default function HeroDemo(): React.ReactNode {
                   <div className={`ic-agent-bar ${agentBarMode}`}>
                     <span className="ic-dot" />
                     <span className="ic-agent-msg">
-                      {samUpdated ? (
-                        <>
-                          <b>Applied to sheet</b> · D5 updated ($7,700) · All channels &gt; 30%
-                          margin
-                        </>
-                      ) : formulasFilled ? (
-                        <>
-                          <b>AI Draft ready</b> · Original untouched · E3:E6 formula + chart preview
-                        </>
-                      ) : (
-                        <>
-                          <b>Oct_Channels!A3:E6</b> (4 rows × 5 cols) shared in AI view context
-                        </>
-                      )}
+                      {samUpdated ? t.bar.done : formulasFilled ? t.bar.draft : t.bar.ctx}
                     </span>
                     <span className="ic-agent-actions">
                       {samUpdated ? (
                         <>
-                          <span className="ic-act">Undo</span>
-                          <span className="ic-act primary green">✓ Saved</span>
+                          <span className="ic-act">{t.undo}</span>
+                          <span className="ic-act primary green">{t.saved}</span>
                         </>
                       ) : (
                         <>
-                          <span className="ic-act">Discard</span>
-                          <span className="ic-act primary">Apply to sheet</span>
+                          <span className="ic-act">{t.discard}</span>
+                          <span className="ic-act primary">{t.apply}</span>
                         </>
                       )}
                     </span>
@@ -368,20 +335,20 @@ export default function HeroDemo(): React.ReactNode {
                     <tbody>
                       <tr className="ic-title-row">
                         <td className="rn">1</td>
-                        <td colSpan={5}>OCTOBER CHANNEL PERFORMANCE REVIEW (USD)</td>
+                        <td colSpan={5}>{t.sheetTitle}</td>
                       </tr>
                       <tr className="ic-header-row">
                         <td className="rn">2</td>
-                        <td>Channel</td>
-                        <td className="num">Orders</td>
-                        <td className="num">Revenue</td>
-                        <td className="num">Ad + COGS</td>
-                        <td className="num">Margin %</td>
+                        <td>{t.cols.channel}</td>
+                        <td className="num">{t.cols.orders}</td>
+                        <td className="num">{t.cols.revenue}</td>
+                        <td className="num">{t.cols.adCogs}</td>
+                        <td className="num">{t.cols.margin}</td>
                       </tr>
                       <tr className={`xl-row sel ${rowsShown.includes(0) ? 'show' : ''}`}>
                         <td className="rn">3</td>
                         <td>
-                          <b>Search Ads</b>
+                          <b>{t.channels.search}</b>
                         </td>
                         <td className="num">142</td>
                         <td className="num">$14,200</td>
@@ -393,7 +360,7 @@ export default function HeroDemo(): React.ReactNode {
                       <tr className={`xl-row sel ${rowsShown.includes(1) ? 'show' : ''}`}>
                         <td className="rn">4</td>
                         <td>
-                          <b>Newsletter</b>
+                          <b>{t.channels.newsletter}</b>
                         </td>
                         <td className="num">88</td>
                         <td className="num">$8,800</td>
@@ -409,7 +376,7 @@ export default function HeroDemo(): React.ReactNode {
                       >
                         <td className="rn">5</td>
                         <td>
-                          <b>Social Video</b>
+                          <b>{t.channels.social}</b>
                         </td>
                         <td className="num">210</td>
                         <td className="num">$12,000</td>
@@ -425,7 +392,7 @@ export default function HeroDemo(): React.ReactNode {
                       <tr className={`xl-row sel ${rowsShown.includes(3) ? 'show' : ''}`}>
                         <td className="rn">6</td>
                         <td>
-                          <b>Affiliates</b>
+                          <b>{t.channels.affiliates}</b>
                         </td>
                         <td className="num">64</td>
                         <td className="num">$6,400</td>
@@ -443,36 +410,36 @@ export default function HeroDemo(): React.ReactNode {
                     }`}
                   >
                     <div className="ic-chart-title">
-                      <b>Margin % by Channel</b>
+                      <b>{t.chartTitle}</b>
                       <span>Oct_Channels!A3:E6</span>
                       <span className="ic-chart-badge">
-                        {samUpdated ? 'CrewX Chart · Synced ✓' : 'CrewX Chart · AI Draft'}
+                        {samUpdated ? t.chartBadge.synced : t.chartBadge.draft}
                       </span>
                     </div>
                     <div className="ic-bars">
                       <div className="ic-bar-row">
-                        <span className="lbl">Newsletter</span>
+                        <span className="lbl">{t.channels.newsletter}</span>
                         <div className="trk">
                           <div className="fill" style={{ width: '92%' }} />
                         </div>
                         <span className="val">64.8%</span>
                       </div>
                       <div className="ic-bar-row">
-                        <span className="lbl">Affiliates</span>
+                        <span className="lbl">{t.channels.affiliates}</span>
                         <div className="trk">
                           <div className="fill" style={{ width: '52%' }} />
                         </div>
                         <span className="val">34.4%</span>
                       </div>
                       <div className="ic-bar-row">
-                        <span className="lbl">Search Ads</span>
+                        <span className="lbl">{t.channels.search}</span>
                         <div className="trk">
                           <div className="fill" style={{ width: '47%' }} />
                         </div>
                         <span className="val">31.0%</span>
                       </div>
                       <div className="ic-bar-row">
-                        <span className="lbl">Social Video</span>
+                        <span className="lbl">{t.channels.social}</span>
                         <div className="trk">
                           <div
                             className={`fill ${samUpdated ? '' : 'low'}`}
@@ -494,22 +461,22 @@ export default function HeroDemo(): React.ReactNode {
                     <span className="xl-tab">Raw_Data ▾</span>
                     {formulasFilled && (
                       <span className="xl-tab new">
-                        Channel_Summary <i className="draft-pill">{samUpdated ? '✓' : 'Draft'}</i> ▾
+                        Channel_Summary <i className="draft-pill">{samUpdated ? '✓' : t.draftPill}</i> ▾
                       </span>
                     )}
                     <span className="xl-status">
-                      SUM $41,400 · AVG {samUpdated ? '41.5%' : '34.6%'}{' '}
-                      <span className="ic-brand">Powered by IronCalc</span>
+                      {t.statusLine} {samUpdated ? '41.5%' : '34.6%'}{' '}
+                      <span className="ic-brand">{t.poweredBy}</span>
                     </span>
                   </div>
                 </div>
                 <div className="side">
                   <div>
-                    <b>AI View Context &amp; Draft</b>
+                    <b>{t.sideContext}</b>
                     <span>{insightText}</span>
                   </div>
                   <div>
-                    <b>Total Net Profit</b>
+                    <b>{t.sideProfit}</b>
                     <span>{profitText}</span>
                   </div>
                 </div>
@@ -519,12 +486,9 @@ export default function HeroDemo(): React.ReactNode {
         </div>
       </div>
       <div className="stage-foot">
-        <span>
-          Illustrative demo · Real IronCalc spreadsheet inside CrewX. Select a range, review the AI
-          draft in purple diff cells, and apply when ready.
-        </span>
+        <span>{t.footNote}</span>
         <button className="replay" onClick={play} type="button">
-          ↺ Replay
+          {t.replay}
         </button>
       </div>
     </div>
