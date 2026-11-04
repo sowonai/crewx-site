@@ -3,7 +3,7 @@ import Layout from '@theme/Layout';
 import TemplateCard from '@site/src/components/TemplateCard';
 import styles from './templates.module.css';
 
-export default function Templates(): JSX.Element {
+export default function Templates(): React.ReactNode {
   return (
     <Layout
       title="템플릿"

@@ -44,7 +44,7 @@ function parseVersion(version) {
   };
 }
 
-function compareVersions(a, b) {
+export function compareVersions(a, b) {
   const pa = parseVersion(a);
   const pb = parseVersion(b);
   if (pa.major !== pb.major) return pa.major - pb.major;

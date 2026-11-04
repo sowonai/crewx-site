@@ -5,8 +5,9 @@ import DownloadPage from '@site/src/components/DownloadPage';
 export default function Download(): React.ReactElement {
   return (
     <Layout
+      noFooter
       title="Download"
-      description="Download CrewX Desktop for Windows — version, size, and install steps from the latest verified GitHub Release.">
+      description="Download CrewX for Windows, or start it on Mac & Linux with one command. Free.">
       <DownloadPage locale="en" />
     </Layout>
   );
