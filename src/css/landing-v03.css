@@ -2459,105 +2459,6 @@
 .landing-page-wrapper .ex-mini .ex-van { transform: scale(0.7); transform-origin: center center; height: 60px; margin: 0 auto 5px; }
 .landing-page-wrapper #apps .ex-mini .ex-review-mark { font-size: 7px; margin-top: 4px; }
 
-/* Idea Builder (#idea-builder) */
-.landing-page-wrapper #apps .idea-builder {
-  margin: 56px 0 0;
-  padding: 32px;
-  border: 1px solid var(--line);
-  background: var(--card);
-  border-radius: 16px;
-  text-align: left;
-  box-shadow: var(--shadow);
-}
-
-[data-theme='light'] .landing-page-wrapper #apps .idea-builder {
-  border-color: #d5dfe9;
-  background: #f4f7fb;
-}
-
-.landing-page-wrapper #apps .idea-builder h3 {
-  font-size: 28px;
-  margin: 10px 0;
-  color: var(--ink);
-}
-
-.landing-page-wrapper #apps .idea-builder p {
-  font-size: 14.5px;
-  line-height: 1.7;
-  color: var(--ink-2);
-}
-
-.landing-page-wrapper #apps .idea-form {
-  display: grid;
-  gap: 10px;
-  margin: 24px 0 12px;
-  max-width: 720px;
-}
-
-.landing-page-wrapper #apps .idea-form label {
-  font-size: 13.5px;
-  font-weight: 650;
-  color: var(--ink);
-}
-
-.landing-page-wrapper #apps .idea-form label span {
-  font-weight: 400;
-  color: var(--muted);
-}
-
-.landing-page-wrapper #apps .idea-form input {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 13px 14px;
-  border-radius: 10px;
-  border: 1px solid var(--line);
-  background: var(--surface-subtle);
-  font: inherit;
-  font-size: 15.5px;
-  margin-bottom: 8px;
-  color: var(--ink);
-}
-
-[data-theme='light'] .landing-page-wrapper #apps .idea-form input {
-  background: #ffffff;
-  border-color: #bccbdc;
-  color: #172334;
-}
-
-.landing-page-wrapper #apps .idea-form button {
-  justify-self: start;
-}
-
-.landing-page-wrapper #apps .idea-note {
-  color: var(--muted);
-  font-size: 13px;
-}
-
-.landing-page-wrapper #apps .brief-result {
-  display: block;
-  white-space: pre-wrap;
-  text-align: left;
-  padding: 20px;
-  margin: 16px 0;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: var(--surface-subtle);
-  color: var(--ink);
-  line-height: 1.7;
-  font-size: 14.5px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-}
-
-[data-theme='light'] .landing-page-wrapper #apps .brief-result {
-  background: #ffffff;
-  color: #203245;
-  border-color: #ccd9e6;
-}
-
-.landing-page-wrapper #apps #copy-brief {
-  margin-top: 8px;
-}
-
 /* =========================================================================
    Story Section (3 Frames)
    ========================================================================= */
@@ -3178,7 +3079,6 @@
     padding: 17px;
   }
   .landing-page-wrapper .ex-cards { grid-template-columns: 1fr; }
-  .landing-page-wrapper #apps .idea-builder { padding: 22px; }
   .landing-page-wrapper #get .download-actions button { width: 100%; }
 }
 

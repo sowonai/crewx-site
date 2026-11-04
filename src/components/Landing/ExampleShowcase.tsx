@@ -9,14 +9,6 @@ export default function ExampleShowcase(): React.ReactNode {
   const [filter, setFilter] = useState<string>('All');
   const [expanded, setExpanded] = useState<boolean>(false);
 
-  // Idea builder state
-  const [idea, setIdea] = useState('');
-  const [detail, setDetail] = useState('');
-  const [promptResult, setPromptResult] = useState<string | null>(null);
-  const [copyStatus, setCopyStatus] = useState<string>(
-    'Generate a prompt you can copy and paste straight into CrewX.'
-  );
-
   const handleSelectExample = (app: AppExample) => {
     setCurrent(app);
     setAfter(false);
@@ -25,30 +17,6 @@ export default function ExampleShowcase(): React.ReactNode {
     const demoEl = document.getElementById('ex-demo-intro');
     if (demoEl) {
       demoEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
-
-  const handlePromptSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!idea.trim()) {
-      setCopyStatus('Add a few words about the app you want to make.');
-      setPromptResult(null);
-      return;
-    }
-    const generated = `Help me make a small app for: ${idea.trim()}${
-      detail.trim() ? `\nOne detail that matters: ${detail.trim()}` : ''
-    }\nStart with the simplest useful version. Ask me about anything that is unclear.`;
-    setPromptResult(generated);
-    setCopyStatus('Your starter prompt is ready. Copy and paste it into CrewX.');
-  };
-
-  const handleCopyPrompt = async () => {
-    if (!promptResult) return;
-    try {
-      await navigator.clipboard.writeText(promptResult);
-      setCopyStatus('Prompt copied. Paste it into CrewX when you are ready to make your app.');
-    } catch {
-      setCopyStatus('Automatic copy unavailable. Please manually select and copy the text.');
     }
   };
 
@@ -1056,58 +1024,6 @@ export default function ExampleShowcase(): React.ReactNode {
           </button>
         </div>
       )}
-
-      {/* Idea Builder */}
-      <div className="idea-builder" id="your-idea">
-        <div>
-          <span className="eyebrow">Your turn</span>
-          <h3>What would you make?</h3>
-          <p>Write a starter prompt for an app you would use.</p>
-        </div>
-        <form className="idea-form" onSubmit={handlePromptSubmit}>
-          <label htmlFor="yours-idea">I want an app for…</label>
-          <input
-            required
-            maxLength={500}
-            id="yours-idea"
-            value={idea}
-            onChange={(e) => {
-              setIdea(e.target.value);
-              setPromptResult(null);
-              setCopyStatus('Generate a prompt you can copy and paste straight into CrewX.');
-            }}
-            placeholder="Planning weekend trips with my family"
-          />
-          <label htmlFor="brief-detail">
-            One detail that matters <span>(optional)</span>
-          </label>
-          <input
-            maxLength={300}
-            id="brief-detail"
-            value={detail}
-            onChange={(e) => {
-              setDetail(e.target.value);
-              setPromptResult(null);
-              setCopyStatus('Generate a prompt you can copy and paste straight into CrewX.');
-            }}
-            placeholder="Keep the walking short"
-          />
-          <button className="btn primary" type="submit">
-            Write a starter prompt
-          </button>
-        </form>
-        <p className="idea-note" role="status">
-          {copyStatus}
-        </p>
-        {promptResult && (
-          <>
-            <output className="brief-result">{promptResult}</output>
-            <button className="btn" type="button" onClick={handleCopyPrompt}>
-              Copy prompt
-            </button>
-          </>
-        )}
-      </div>
     </div>
   );
 }
