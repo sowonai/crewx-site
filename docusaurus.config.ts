@@ -44,7 +44,20 @@ const scopePreflightPlugin = {
 const config: Config = {
   title: 'SowonAI CrewX',
   tagline: 'Bring Your Own AI(BYOA) team in Slack/IDE with your existing subscriptions',
-  favicon: 'img/favicon.ico',
+  // New file name on purpose: browsers cache favicons per URL, so a changed
+  // name forces a refresh. The old /img/favicon.ico and /favicon.ico stay in
+  // static/ with the same CrewX bytes for anything still pointing at them.
+  favicon: 'img/crewx-favicon.png',
+  headTags: [
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'apple-touch-icon',
+        sizes: '180x180',
+        href: '/img/crewx-apple-touch-icon.png',
+      },
+    },
+  ],
 
   future: {
     v4: true,
