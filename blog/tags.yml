@@ -42,3 +42,13 @@ automation:
   label: Automation
   permalink: /automation
   description: Automating repetitive work with AI agents and apps
+
+crewx-app:
+  label: CrewX App
+  permalink: /crewx-app
+  description: Mini apps that people and AI agents use together in CrewX
+
+vietnam:
+  label: Vietnam
+  permalink: /vietnam
+  description: Trips and use cases in Vietnam

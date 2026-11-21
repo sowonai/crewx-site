@@ -42,3 +42,13 @@ automation:
   label: 자동화
   permalink: /automation
   description: AI 에이전트와 앱으로 반복 업무 자동화
+
+crewx-app:
+  label: CrewX App
+  permalink: /crewx-app
+  description: 사람과 AI 에이전트가 함께 쓰는 CrewX 미니앱
+
+vietnam:
+  label: 베트남
+  permalink: /vietnam
+  description: 베트남 여행과 현지 활용 사례
