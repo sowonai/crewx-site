@@ -1,0 +1,34 @@
+# CrewX
+
+> Build an app with your AI and share it with your friends. Or run a Bring Your Own AI (BYOA) team in Slack or your IDE with your existing AI subscriptions.
+
+CrewX is a multi-AI agent collaboration platform. You work in your app by hand or with your AI, share it with a friend, and they use it with their own AI. CrewX also runs Claude, Gemini, Codex and Copilot as one development team in Slack or your IDE, through the CLI and the MCP server, on your existing subscriptions with no extra AI costs.
+
+## Docs
+
+- [Introduction](https://www.crewx.dev/docs/intro): What CrewX is and how a multi-AI development team works
+- [Slack setup](https://www.crewx.dev/docs/getting-started/slack-setup): Connect CrewX to your Slack workspace
+- [CLI commands](https://www.crewx.dev/docs/cli/commands): Reference for the CrewX command-line interface
+- [Agent configuration](https://www.crewx.dev/docs/configuration/agents): Configure custom specialist agents in crewx.yaml
+- [MCP integration](https://www.crewx.dev/docs/integration/mcp): Use CrewX as an MCP server for IDE integration and AI CLI tools
+- [Skills](https://www.crewx.dev/docs/advanced/skills): Claude Code skills format for packaging and sharing AI capabilities
+- [Remote agents](https://www.crewx.dev/docs/advanced/remote-agents): Connect CrewX instances for distributed collaboration
+- [Common issues](https://www.crewx.dev/docs/troubleshooting/common-issues): Solutions to common CrewX problems
+
+## Use cases
+
+- [Multi-agent tax calculation](https://www.crewx.dev/blog/multi-agent-tax-calculation): A coordinator-worker pattern with three specialized agents for tax calculation accuracy
+- [Building a Multi-AI Development Team with CrewX](https://www.crewx.dev/blog/introduction-crewx): Virtual development teams, WBS-driven development pipelines and remote distributed agents
+- [CrewX: From Local Development to Production Deployment](https://www.crewx.dev/blog/cli-to-api-migration-guide): Moving from the CLI provider in local development to the API provider in production
+- [Working, Splitting Expenses, and Preparing for a Date in Ho Chi Minh City with CrewX Apps](https://www.crewx.dev/blog/2026-11-20-hochiminh-crewx-apps): Travel planner, receipt-to-spreadsheet expense split, Zalo translation extension and a date-coaching app built as CrewX Apps on a Ho Chi Minh trip
+
+## Release notes
+
+- [Release notes](https://www.crewx.dev/releases): Version-by-version CrewX release notes
+
+## Optional
+
+- [Blog](https://www.crewx.dev/blog): Tutorials, stories and case studies
+- [Welcome to CrewX](https://www.crewx.dev/blog/welcome-to-crewx): Introduction post for CrewX
+- [Download](https://www.crewx.dev/download): Download CrewX
+- [GitHub](https://github.com/sowonlabs/crewx): CrewX source repository
