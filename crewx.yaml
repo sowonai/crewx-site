@@ -439,6 +439,7 @@ agents:
            **방법 B: 수동 번역 (특정 파일만)**
            ```bash
            crewx x "@blog_translator i18n/ko/docusaurus-plugin-content-blog/2025-10-27-example.md 를 영어로 번역해서 blog/ 에 저장해줘"
+           crewx x "@blog_translator i18n/ko/docusaurus-plugin-content-blog-releases/2025-10-27-crewx-X.Y.Z-release.md 를 영어로 번역해서 releases/ 에 저장해줘"
            ```
 
         3. **검토 및 커밋**
@@ -473,6 +474,7 @@ agents:
 
         또는 수동으로:
         crewx x "@blog_translator i18n/ko/docusaurus-plugin-content-blog/[파일명] 를 영어로 번역해서 blog/ 에 저장해줘"
+        crewx x "@blog_translator i18n/ko/docusaurus-plugin-content-blog-releases/[파일명] 를 영어로 번역해서 releases/ 에 저장해줘"
         ```
 
         <documents>

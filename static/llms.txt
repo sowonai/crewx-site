@@ -17,10 +17,10 @@ CrewX is a multi-AI agent collaboration platform. You work in your app by hand o
 
 ## Use cases
 
+- [Ho Chi Minh trip with CrewX Apps](https://www.crewx.dev/blog/2026-11-20-hochiminh-crewx-apps): Travel planner, receipt-to-spreadsheet expense split, Zalo translation extension and a date-coaching app built as CrewX Apps on a Ho Chi Minh trip
 - [Multi-agent tax calculation](https://www.crewx.dev/blog/multi-agent-tax-calculation): A coordinator-worker pattern with three specialized agents for tax calculation accuracy
 - [Building a Multi-AI Development Team with CrewX](https://www.crewx.dev/blog/introduction-crewx): Virtual development teams, WBS-driven development pipelines and remote distributed agents
 - [CrewX: From Local Development to Production Deployment](https://www.crewx.dev/blog/cli-to-api-migration-guide): Moving from the CLI provider in local development to the API provider in production
-- [Working, Splitting Expenses, and Preparing for a Date in Ho Chi Minh City with CrewX Apps](https://www.crewx.dev/blog/2026-11-20-hochiminh-crewx-apps): Travel planner, receipt-to-spreadsheet expense split, Zalo translation extension and a date-coaching app built as CrewX Apps on a Ho Chi Minh trip
 
 ## Release notes
 

@@ -27,3 +27,18 @@ skills:
   label: Skills
   permalink: /skills
   description: CrewX Skills 시스템 및 Claude Code 통합
+
+ai-agent:
+  label: AI 에이전트
+  permalink: /ai-agent
+  description: 앱과 워크플로에서 실제 업무를 맡는 AI 에이전트
+
+travel:
+  label: 여행
+  permalink: /travel
+  description: 여행 기록과 여행 활용 사례
+
+automation:
+  label: 자동화
+  permalink: /automation
+  description: AI 에이전트와 앱으로 반복 업무 자동화

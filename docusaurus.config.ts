@@ -83,7 +83,14 @@ const releaseRedirects = (() => {
       byFrom.set(from, {from, to: `/releases/${slug}`});
     }
   }
-  return [...byFrom.values()];
+  // Tag pages that only release posts used. Their /blog/tags URLs were indexed,
+  // so they redirect too. Release tags that /blog posts still use (crewx, ai,
+  // release) keep their /blog pages, so they need no entry.
+  for (const tag of ['skills', 'slack']) {
+    const from = `/blog/tags/${tag}`;
+    byFrom.set(from, {from, to: `/releases/tags/${tag}`});
+  }
+  return Array.from(byFrom.values());
 })();
 
 const config: Config = {

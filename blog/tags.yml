@@ -27,3 +27,18 @@ skills:
   label: Skills
   permalink: /skills
   description: CrewX Skills system and Claude Code integration
+
+ai-agent:
+  label: AI Agent
+  permalink: /ai-agent
+  description: AI agents working on real tasks in apps and workflows
+
+travel:
+  label: Travel
+  permalink: /travel
+  description: Trip notes and travel use cases
+
+automation:
+  label: Automation
+  permalink: /automation
+  description: Automating repetitive work with AI agents and apps

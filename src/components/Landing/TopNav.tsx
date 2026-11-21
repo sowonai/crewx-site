@@ -195,6 +195,7 @@ export function LandingFooter(): React.ReactNode {
         <Link to="/download">{t.footer.download}</Link>
         <Link to="/docs/intro">{t.footer.docs}</Link>
         <Link to="/blog">{t.footer.blog}</Link>
+        <Link to="/releases">{t.footer.releases}</Link>
         <Link to="/templates">{t.footer.templates}</Link>
         <a href="https://github.com/sowonlabs/crewx" target="_blank" rel="noopener noreferrer">
           GitHub
