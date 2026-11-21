@@ -38,6 +38,7 @@ export const ko: LandingCopy = {
     download: '다운로드',
     docs: '문서',
     blog: '블로그',
+    releases: '릴리즈 노트',
     templates: '템플릿',
   },
 

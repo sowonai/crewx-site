@@ -34,6 +34,7 @@ export const en = {
     download: 'Download',
     docs: 'Docs',
     blog: 'Blog',
+    releases: 'Releases',
     templates: 'Templates',
   },
 

@@ -19,6 +19,10 @@
     "message": "GitHub",
     "description": "Navbar item with label GitHub"
   },
+  "item.label.Releases": {
+    "message": "릴리즈 노트",
+    "description": "Navbar item with label Releases"
+  },
   "item.label.Templates": {
     "message": "Templates",
     "description": "Navbar item with label Templates"

@@ -17,9 +17,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const projectRoot = join(__dirname, '..');
 
-// 디렉토리 경로
-const KO_BLOG_DIR = join(projectRoot, 'i18n/ko/docusaurus-plugin-content-blog');
-const EN_BLOG_DIR = join(projectRoot, 'blog');
+// 블로그 인스턴스별 (한글 원본 폴더, 영어 번역본 폴더)
+// 릴리스 노트는 /releases 인스턴스에 따로 있다.
+const BLOG_PAIRS = [
+  { ko: 'i18n/ko/docusaurus-plugin-content-blog', en: 'blog' },
+  { ko: 'i18n/ko/docusaurus-plugin-content-blog-releases', en: 'releases' },
+];
 
 /**
  * 블로그 파일 목록 가져오기 (authors.yml, tags.yml, options.json 제외)
@@ -37,12 +40,23 @@ function getBlogFiles(dir) {
 
 /**
  * 미번역 블로그 찾기 (한글에는 있지만 영어에는 없는 파일)
+ * 반환: [{ file, koPath, enPath }]
  */
 function findUntranslatedBlogs() {
-  const koFiles = getBlogFiles(KO_BLOG_DIR);
-  const enFiles = getBlogFiles(EN_BLOG_DIR);
+  const untranslated = [];
 
-  const untranslated = koFiles.filter(file => !enFiles.includes(file));
+  for (const pair of BLOG_PAIRS) {
+    const enFiles = getBlogFiles(join(projectRoot, pair.en));
+    for (const file of getBlogFiles(join(projectRoot, pair.ko))) {
+      if (!enFiles.includes(file)) {
+        untranslated.push({
+          file,
+          koPath: `${pair.ko}/${file}`,
+          enPath: `${pair.en}/${file}`,
+        });
+      }
+    }
+  }
 
   return untranslated;
 }
@@ -50,10 +64,7 @@ function findUntranslatedBlogs() {
 /**
  * CrewX blog_translator 에이전트로 번역 실행
  */
-function translateBlog(filename) {
-  const koPath = `i18n/ko/docusaurus-plugin-content-blog/${filename}`;
-  const enPath = `blog/${filename}`;
-
+function translateBlog({ file: filename, koPath, enPath }) {
   console.log(`\n🔄 번역 중: ${filename}`);
   console.log(`   한글: ${koPath}`);
   console.log(`   영어: ${enPath}`);
@@ -94,7 +105,7 @@ function main() {
   }
 
   console.log(`\n📋 미번역 블로그: ${untranslated.length}개\n`);
-  untranslated.forEach((file, idx) => {
+  untranslated.forEach(({ file }, idx) => {
     console.log(`   ${idx + 1}. ${file}`);
   });
   console.log();
@@ -113,8 +124,8 @@ function main() {
     let successCount = 0;
     let failCount = 0;
 
-    for (const file of untranslated) {
-      const success = translateBlog(file);
+    for (const item of untranslated) {
+      const success = translateBlog(item);
       if (success) {
         successCount++;
       } else {
