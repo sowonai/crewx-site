@@ -23,6 +23,10 @@
     "message": "Blog",
     "description": "The label of footer link with label=Blog linking to /blog"
   },
+  "link.item.label.Releases": {
+    "message": "릴리즈 노트",
+    "description": "The label of footer link with label=Releases linking to /releases"
+  },
   "link.item.label.SowonLabs": {
     "message": "SowonLabs",
     "description": "The label of footer link with label=SowonLabs linking to https://sowonlabs.com"

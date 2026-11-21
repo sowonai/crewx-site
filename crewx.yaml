@@ -69,8 +69,10 @@ documents:
     - 코드 확인: `packages/sdk/src/core/providers/` 에서 실제 구현 확인
 
     ### 2. 문서 작성 순서
-    a. **릴리스 블로그 작성** (한글 우선)
-       - 파일: `i18n/ko/docusaurus-plugin-content-blog/YYYY-MM-DD-[slug].md`
+    a. **릴리스 노트 작성** (한글 우선, `/releases`에 게시)
+       - 한글 파일: `i18n/ko/docusaurus-plugin-content-blog-releases/YYYY-MM-DD-[slug]-release.md`
+       - 영문 파일: `releases/YYYY-MM-DD-[slug]-release.md` (번역 결과가 저장되는 곳)
+       - 파일명은 `-release.md`로 끝내기. 릴리스 노트는 `/blog`가 아니라 `/releases`에 올라감
        - 확인된 기능만 "현재 지원" 섹션에 포함
        - 계획된 기능은 "향후 지원 예정" 섹션에 별도 표시
 
@@ -294,6 +296,11 @@ agents:
         **파일명 규칙:**
         - `YYYY-MM-DD-slug-name.md` (예: `2025-01-15-welcome-to-crewx.md`)
         - 양쪽 언어에 동일한 파일명 사용 권장
+
+        **릴리스 노트 (별도 블로그, `/releases`):**
+        - 영어: `releases/` → URL `/releases/`
+        - 한국어: `i18n/ko/docusaurus-plugin-content-blog-releases/` → URL `/ko/releases/`
+        - 파일명: `YYYY-MM-DD-crewx-X.Y.Z-release.md`. 릴리스 노트는 `blog/`에 쓰지 않음
 
         **Front Matter 필수 항목:**
         ```yaml
@@ -586,6 +593,10 @@ agents:
         **영어 블로그 (번역본):**
         - 경로: `{{agent.workingDirectory}}/blog/`
         - URL: `/blog/`
+
+        **릴리스 노트 (`-release.md`, 번역본은 별도 폴더):**
+        - 한국어 원본: `{{agent.workingDirectory}}/i18n/ko/docusaurus-plugin-content-blog-releases/`
+        - 영어 번역본: `{{agent.workingDirectory}}/releases/` (URL `/releases/`)
 
         ## 사용 예시
 

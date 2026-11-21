@@ -1,0 +1,14 @@
+{
+  "title": {
+    "message": "릴리즈 노트",
+    "description": "The title for the release notes blog used in SEO"
+  },
+  "description": {
+    "message": "릴리즈 노트",
+    "description": "The description for the release notes blog used in SEO"
+  },
+  "sidebar.title": {
+    "message": "최근 릴리즈",
+    "description": "The label for the left sidebar of the release notes blog"
+  }
+}
