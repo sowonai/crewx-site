@@ -225,6 +225,8 @@ const config: Config = {
         redirects: releaseRedirects,
       },
     ],
+    // Click-to-zoom for pictures. Its selector and background live in themeConfig.zoom.
+    'docusaurus-plugin-image-zoom',
   ],
 
   themeConfig: {
@@ -317,6 +319,21 @@ const config: Config = {
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
+    },
+    // Picture zoom for post and doc bodies. Logos, avatars, emoji, badges and
+    // pictures wrapped in a link are left out of the selector.
+    zoom: {
+      selector: [
+        '.markdown img:not(a *)',
+        ':not([class*="emoji" i]):not([src*="emoji" i])',
+        ':not([class*="avatar" i]):not([src*="avatar" i])',
+        ':not([class*="logo" i]):not([alt*="logo" i]):not([src*="logo" i])',
+        ':not([class*="badge" i]):not([alt*="badge" i]):not([src*="badge" i]):not([src*="shields.io" i])',
+      ].join(''),
+      background: {
+        light: '#ffffff',
+        dark: '#1b1b1d', // Infima's dark page background, so the zoom blends into the page
+      },
     },
   } satisfies Preset.ThemeConfig,
 };
