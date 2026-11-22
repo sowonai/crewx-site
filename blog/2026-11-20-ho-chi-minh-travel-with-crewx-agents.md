@@ -3,7 +3,7 @@ slug: ho-chi-minh-travel-with-crewx-agents
 title: "Traveling Ho Chi Minh City with CrewX AI Agents (feat. CrewX App)"
 authors: [doha]
 tags: [crewx, crewx-app, ai-agent, travel, vietnam, automation]
-image: "/img/blog/ho-chi-minh-travel-with-crewx-agents/01-travel-planner-schedule.webp"
+image: "/img/blog/ho-chi-minh-travel-with-crewx-agents/01-travel-planner-schedule-en.webp"
 description: "How I used AI agents and CrewX Apps on a Ho Chi Minh City trip: a travel planner, a receipt-screenshot expense splitter in a spreadsheet, and a Zalo translation Chrome extension for chatting in Vietnamese."
 keywords: [Ho Chi Minh City travel, Vietnam trip, AI agent, AI travel planner, travel expense splitting, Zalo translation, Vietnamese translation, Chrome extension, CrewX, CrewX App, mini app]
 ---
@@ -27,9 +27,11 @@ On any trip, plans change on the ground more often than they go according to sch
 
 CrewX's **Travel Planner** app puts a daily timeline, map, accommodation and restaurant notes, budget, and packing checklist on a single screen.
 
-![1.00](/img/blog/ho-chi-minh-travel-with-crewx-agents/01-travel-planner-schedule.webp)
+![1.00](/img/blog/ho-chi-minh-travel-with-crewx-agents/01-travel-planner-schedule-en.webp)
 
 *Ten-day schedule based in Thảo Điền. The War Remnants Museum, which I missed on a weekday, is merged into Saturday's 'District 1 Walk' route.*
+
+*Image text translated by AI.*
 
 - **Before departure and on the move:** I had the agent research check-in and luggage storage rules confirmed with our Airbnb host, restaurant locations and hours, and estimated GrabBike distance, duration, and fare for each leg (based on the base fare for the first 2 km plus the per-km rate), and saved them as notes on each schedule card.
 - **When plans changed on the spot:** When we ended up eating bánh mì instead of going to the phở shop (Phở Nam Chính) we had planned for breakfast, or when I visited a coworking space (The Hive) at lunchtime only to find no receptionist and switched to recording a demo video in my quiet accommodation, I simply told the chat what changed and the agent automatically rearranged that slot and the rest of the timetable. Merging the War Remnants Museum visit I missed on a weekday into Saturday's District 1 walking route took just one sentence as well.
@@ -52,9 +54,11 @@ Instead of typing all of this into Excel by hand, I attached **14 screenshots in
 
 The agent read the text inside the images, created a 52-row travel expense Excel (`xlsx`) file, and opened it directly in the **Spreadsheet app**.
 
-![1.00](/img/blog/ho-chi-minh-travel-with-crewx-agents/02-spreadsheet-records.webp)
+![1.00](/img/blog/ho-chi-minh-travel-with-crewx-agents/02-spreadsheet-records-en.webp)
 
 *From flight bookings to late-night Grab rides, records scattered across multiple apps were lined up chronologically in a single table.*
+
+*Image text translated by AI.*
 
 1. **Automatic categorization and route cleanup:** Reading the Vietnamese pickup and drop-off points in the Grab screenshots, the agent organized them into clean Korean place labels like `Grab: Airport (T2 Arrival) → 1st Airbnb` and `Grab: Airbnb → Restaurant`, sorted in chronological order. By cross-checking the screenshots, it even caught a ride that showed up as November 15 in the Grab wallet history but was actually boarded at 23:59 on the night of the 14th, and corrected the date.
 2. **Settlement formulas included:** The agent converted payments made in Vietnamese đồng (VND) into Korean won, factored in the expenses my friend had paid upfront and the cash they had already handed over, and calculated the remaining balance.
@@ -81,9 +85,11 @@ How it works is simple, but the difference in practice was huge.
 - **Send with a single Enter + preserve my original text:** If the meaning looks right, pressing Enter sends the Vietnamese message immediately, and my original Korean sentence is displayed right below my Vietnamese bubble on screen.
 - **Context-aware translation across the conversation:** Feeding sentences into a translator one by one often produces awkward literal translations, so this extension passes the preceding dialogue to the agent as well, keeping the flow natural from message to message.
 
-![1.00](/img/blog/ho-chi-minh-travel-with-crewx-agents/04-zalo-translator.webp)
+![1.00](/img/blog/ho-chi-minh-travel-with-crewx-agents/04-zalo-translator-en.webp)
 
 *Each message bubble gets a Korean translation underneath, and sentences typed in Korean are previewed with the 'Vietnamese sentence to send' and a 'meaning check' first. To respect privacy, this screenshot was recreated using sample dialogue on a mock Zalo screen built for extension development.*
+
+*Image text translated by AI.*
 
 Thanks to this extension, instead of fumbling with the language barrier, I could trade jokes naturally as if I were chatting in Korean, lock in a reservation time at a cozy pasta and steak restaurant in Thảo Điền, and even add thoughtful touches like *"I'll call a Grab for you when you head out."* (As a bonus, it worked wonderfully when messaging a local motorbike rental shop about 50cc scooter availability, deposits, and early-return refunds.)
 
@@ -101,9 +107,11 @@ I looked for an app where I could type my current situation in Korean to get nat
 - **A 'Partner View' screen to show across the table:** After picking a question, playing the audio, and turning the enlarged screen toward her, she could tap one of four large Vietnamese choice buttons (1–4) or type her own reply.
 - **Date coaching agent:** Once she picked an answer, this agent read the conversation flow so far in the background, summarized the mood in one line, and immediately selected the next question card to ask along with a Vietnamese reply for me to say back. Because I threw it together the night before, I went in with it barely working.
 
-![1.00](/img/blog/ho-chi-minh-travel-with-crewx-agents/05-date-phrases-app.webp)
+![1.00](/img/blog/ho-chi-minh-travel-with-crewx-agents/05-date-phrases-app-en.webp)
 
 *From left to right: the intro screen shown to my date first ("I don't speak Vietnamese yet, so I'll ask you with this app"), a multiple-choice question card (1–4), and the 'Memorized Phrases' screen for choosing a Southern-accent voice.*
+
+*Image text translated by AI.*
 
 When the evening actually came, I barely used the app I had built. She was more comfortable with the translator app she normally used, and I had memorized a few short phrases of my own beforehand. For short expressions like *"Vui quá"* ("This is fun"), saying them directly in my own voice felt much better.
 
